@@ -15,6 +15,9 @@
 # production
 /build
 
+# wellness app (moved to separate directory)
+../wellness-app/
+
 # misc
 .DS_Store
 *.pem

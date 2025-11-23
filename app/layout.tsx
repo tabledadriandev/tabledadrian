@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Notable } from 'next/font/google'
 // Import website CSS in root layout for global styles
-import './(website)/globals.css'
+import './globals.css'
 import ScrollToTop from '@/components/ScrollToTop'
 import ScrollProgress from '@/components/ScrollProgress'
 import SkipLink from '@/components/SkipLink'
