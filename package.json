@@ -6,7 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "electron": "electron .",
+    "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "electron:build:win": "npm run build && electron-builder --win",
+    "electron:build:mac": "npm run build && electron-builder --mac",
+    "electron:build:linux": "npm run build && electron-builder --linux",
+    "electron:pack": "npm run build && electron-builder --dir",
+    "expo:start": "cd mobile && npx expo start",
+    "expo:start:tunnel": "cd mobile && npx expo start --tunnel",
+    "expo:android": "cd mobile && npx expo start --android",
+    "expo:ios": "cd mobile && npx expo start --ios",
+    "listings:scan": "node scripts/token-listing-mastermind.js",
+    "listings:submit": "node scripts/auto-submit-listings.js",
+    "listings:monitor": "node scripts/monitor-listings.js",
+    "listings:discover": "node scripts/discover-platforms.js",
+    "listings:schedule": "node scripts/schedule-monitoring.js --schedule",
+    "partnerships:scrape": "ts-node scripts/partnership-scraper.ts",
+    "posting:start": "ts-node scripts/automated-posting.ts",
+    "monitoring:start": "ts-node scripts/monitoring.ts",
+    "report:weekly": "ts-node scripts/weekly-report.ts",
+    "backup:start": "ts-node scripts/data-backup.ts",
+    "scrape:foods": "ts-node scripts/data-scraper/main.ts",
+    "scrape:medical": "ts-node scripts/data-scraper/medical-scraper.ts",
+    "validate:data": "ts-node scripts/data-validation.ts"
   },
   "engines": {
     "node": ">=22.0.0",
@@ -21,6 +45,7 @@
   ],
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@farcaster/frame-sdk": "^0.1.12",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@mantine/core": "^7.12.0",
@@ -28,28 +53,128 @@
     "@mantine/hooks": "^7.12.0",
     "@mui/material": "^5.14.20",
     "@mui/system": "^5.14.20",
+    "@prisma/client": "^7.0.0",
+    "@rainbow-me/rainbowkit": "^2.2.9",
+    "@supabase/supabase-js": "^2.84.0",
     "@svgr/webpack": "^8.1.0",
+    "@tanstack/react-query": "^5.90.10",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20.10.4",
+    "@types/node-cron": "^3.0.11",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
+    "axios": "^1.13.2",
+    "bcryptjs": "^3.0.3",
     "bulma": "^0.9.4",
+    "cheerio": "^1.1.2",
+    "critters": "^0.0.23",
+    "date-fns": "^4.1.0",
     "framer-motion": "^10.16.16",
     "gsap": "^3.13.0",
+    "ioredis": "^5.8.2",
+    "jsonwebtoken": "^9.0.2",
+    "jspdf": "^3.0.4",
     "lucide-react": "^0.294.0",
-    "next": "15.5.6",
+    "next": "^16.0.3",
+    "node-cron": "^4.2.1",
+    "openai": "^6.9.1",
+    "prisma": "^7.0.0",
+    "puppeteer": "^24.31.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.5.3",
+    "recharts": "^3.5.0",
+    "redis": "^5.10.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "swiper": "^11.0.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "viem": "^2.39.3",
+    "wagmi": "^2.19.5"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
     "eslint": "^8.55.0",
     "eslint-config-next": "15.5.6",
     "postcss": "^8.4.32",
-    "tailwindcss": "^3.3.7"
+    "tailwindcss": "^3.3.7",
+    "wait-on": "^7.2.0"
+  },
+  "main": "electron/main.js",
+  "build": {
+    "appId": "com.tabledadrian.wellness",
+    "productName": "Table d'Adrian Wellness",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      ".next/standalone/**/*",
+      ".next/static/**/*",
+      "electron/**/*",
+      "public/**/*",
+      "package.json"
+    ],
+    "extraFiles": [
+      {
+        "from": "public",
+        "to": "public",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "publisherName": "Table d'Adrian",
+      "verifyUpdateCodeSignature": false,
+      "sign": null
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Table d'Adrian Wellness"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.healthcare-fitness"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "build/icon.png",
+      "category": "Health"
+    }
   }
 }
