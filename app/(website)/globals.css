@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Chango&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,7 +16,7 @@
     --text-secondary: #6B6560;
     --text-tertiary: #8B8580;
     
-    --font-display: 'Notable', 'Impact', 'Arial Black', sans-serif;
+    --font-display: 'Chango', 'Notable', 'Impact', 'Arial Black', sans-serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
