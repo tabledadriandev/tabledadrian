@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Notable } from 'next/font/google'
-// Note: Website CSS is imported in app/(website)/layout.tsx
-// Wellness CSS is imported in app/(wellness)/app/layout.tsx
+// Import website CSS in root layout for global styles
+import './(website)/globals.css'
+// Note: Wellness CSS is imported in app/(wellness)/app/layout.tsx
 // They are kept separate and don't override each other
 import ScrollToTop from '@/components/ScrollToTop'
 import ScrollProgress from '@/components/ScrollProgress'
