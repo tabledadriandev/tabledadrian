@@ -73,6 +73,7 @@ const Navigation = () => {
     { name: 'Gallery', href: '#gallery', isHash: true },
     { name: 'Contact', href: '#contact', isHash: true },
     { name: 'Coin', href: '/coin', isHash: false },
+    { name: 'App', href: '/app-download', isHash: false },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

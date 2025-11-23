@@ -104,7 +104,7 @@ const Coin = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-6 mb-8 max-w-2xl mx-auto"
             >
-              <p className="text-sm text-text-secondary mb-2">Verified Contract Address</p>
+              <p className="text-sm text-text-secondary mb-2">Contract Address</p>
               <div className="flex items-center justify-center gap-3 flex-wrap">
                 <code className="text-text-primary font-mono text-sm sm:text-base break-all">
                   {CONTRACT_ADDRESS}

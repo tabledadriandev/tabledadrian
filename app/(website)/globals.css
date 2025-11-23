@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* OPUS Design System - CSS Variables */
+    --bg-primary: #FAF8F3;
+    --text-primary: #2B2520;
+    --accent-primary: #0F4C81;
+    --hover-state: #D4C5B9;
+    --border-light: #E8E3DC;
+    --accent-dark: #1A2332;
+    --text-secondary: #6B6560;
+    --text-tertiary: #8B8580;
+    
+    --font-display: 'Notable', 'Impact', 'Arial Black', sans-serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overflow-x: hidden;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  /* OPUS Typography Scale - Notable for titles */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.65;
+    font-size: 1rem;
+    letter-spacing: 0;
+    margin-bottom: 1rem;
+  }
+
+  /* Custom selection colors */
+  ::selection {
+    background: rgba(15, 76, 129, 0.15);
+    color: var(--text-primary);
+  }
+}
+
+@layer components {
+  /* Glassmorphism CTA Buttons */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center px-7 py-3 
+    font-sans text-base font-semibold text-text-primary 
+    backdrop-blur-md bg-white/20 border-2 border-white/30 rounded-md
+    transition-all duration-300 ease-out
+    cursor-pointer
+    shadow-[0_8px_32px_rgba(15,76,129,0.15)];
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+  }
+
+  .btn-primary:hover {
+    @apply bg-white/30 border-white/50 
+    shadow-[0_12px_40px_rgba(15,76,129,0.25)]
+    -translate-y-1;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.25));
+  }
+
+  .btn-primary:active {
+    @apply translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply relative inline-flex items-center justify-center px-7 py-3 
+    font-sans text-base font-semibold text-text-primary
+    backdrop-blur-md bg-white/15 border-2 border-white/25 rounded-md
+    transition-all duration-300 ease-out;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  }
+
+  .btn-secondary:hover {
+    @apply bg-white/25 border-white/40;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+  }
+
+  /* OPUS Link Styles */
+  a {
+    @apply text-accent-primary no-underline relative transition-colors duration-300;
+  }
+
+  a:hover {
+    @apply text-text-primary/60;
+  }
+
+  a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  a:hover::after {
+    width: 100%;
+  }
+
+  /* Glassmorphism Card Styles */
+  .card {
+    @apply transition-all duration-300 ease-out
+    backdrop-blur-md bg-white/20 border border-white/30
+    rounded-md shadow-[0_8px_32px_rgba(15,76,129,0.1)];
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+  }
+
+  .card:hover {
+    @apply bg-white/30 border-white/50 
+    shadow-[0_12px_40px_rgba(15,76,129,0.2)]
+    -translate-y-1;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.25));
+  }
+
+  /* Section padding - Mobile First */
+  .section-padding {
+    @apply py-12 sm:py-16 md:py-24 lg:py-32;
+  }
+
+  /* Container - Mobile First */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Form styles - OPUS */
+  .form-input {
+    @apply w-full px-4 py-3 bg-white border border-border-light rounded-md
+    focus:outline-none focus:ring-1 focus:ring-accent-primary/50 focus:border-accent-primary
+    transition-all duration-300 text-text-primary;
+  }
+}
+
+@layer utilities {
+  /* Blur backdrop */
+  .backdrop-blur-soft {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Remove list styles - OPUS philosophy */
+  .list-clean {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Reduce motion support */
+  @media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+      scroll-behavior: auto;
+    }
+    .btn-primary, .btn-secondary, .card, a {
+      transition: none !important;
+    }
+  }
+}
