@@ -14,9 +14,16 @@
 
 # production
 /build
+/dist
 
 # wellness app (moved to separate directory)
 ../wellness-app/
+
+# Large build files
+*.exe
+*.asar
+*.blockmap
+win-unpacked/
 
 # misc
 .DS_Store
