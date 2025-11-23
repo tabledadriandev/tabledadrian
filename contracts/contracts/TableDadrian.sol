@@ -52,6 +52,24 @@ contract TableDadrian is ERC20, ERC20Pausable, Ownable, ReentrancyGuard {
     /// @notice Mapping of addresses that have received rewards (for tracking)
     mapping(address => uint256) public totalRewardsReceived;
     
+    /// @notice Mapping of authorized booking service addresses
+    mapping(address => bool) public authorizedBookingServices;
+    
+    /// @notice Mapping of authorized NFT platform addresses
+    mapping(address => bool) public authorizedNFTPlatforms;
+    
+    /// @notice Mapping of authorized event management service addresses
+    mapping(address => bool) public authorizedEventServices;
+    
+    /// @notice Mapping to track processed bookings (bookingId => processed)
+    mapping(string => bool) public processedBookings;
+    
+    /// @notice Mapping to track processed NFT rewards (collectionId => recipient => processed)
+    mapping(string => mapping(address => bool)) public processedNFTRewards;
+    
+    /// @notice Mapping to track processed event tickets (eventId => attendee => processed)
+    mapping(string => mapping(address => bool)) public processedEventTickets;
+    
     /// @notice Governance proposal structure
     struct Proposal {
         uint256 id;
@@ -112,6 +130,38 @@ contract TableDadrian is ERC20, ERC20Pausable, Ownable, ReentrancyGuard {
     /// @notice Emitted when admin action is logged
     event AdminActionLogged(uint256 indexed logId, address indexed admin, string action);
     
+    /// @notice Emitted when a booking is processed and confirmed
+    event BookingConfirmed(
+        address indexed userAddress,
+        string indexed bookingId,
+        uint256 tokenAmount,
+        address indexed bookingService
+    );
+    
+    /// @notice Emitted when NFT-related rewards are distributed
+    event NFTRewardDistributed(
+        address indexed recipient,
+        string indexed nftCollectionId,
+        uint256 rewardAmount,
+        address indexed nftPlatform
+    );
+    
+    /// @notice Emitted when an event ticket is processed and confirmed
+    event EventTicketConfirmed(
+        address indexed attendee,
+        string indexed eventId,
+        uint256 ticketPrice,
+        address indexed eventService
+    );
+    
+    /// @notice Emitted when a service address is authorized or revoked
+    event ServiceAuthorizationChanged(
+        string indexed serviceType,
+        address indexed serviceAddress,
+        bool authorized,
+        string reason
+    );
+    
     // ============ MODIFIERS ============
     
     /// @notice Ensures address is not transfer-restricted
@@ -127,6 +177,24 @@ contract TableDadrian is ERC20, ERC20Pausable, Ownable, ReentrancyGuard {
         require(block.number >= proposal.startBlock && block.number <= proposal.endBlock, 
                 "TableDadrian: Not in voting period");
         require(!proposal.executed, "TableDadrian: Proposal already executed");
+        _;
+    }
+    
+    /// @notice Ensures caller is an authorized booking service
+    modifier onlyAuthorizedBookingService() {
+        require(authorizedBookingServices[msg.sender], "TableDadrian: Unauthorized booking service");
+        _;
+    }
+    
+    /// @notice Ensures caller is an authorized NFT platform
+    modifier onlyAuthorizedNFTPlatform() {
+        require(authorizedNFTPlatforms[msg.sender], "TableDadrian: Unauthorized NFT platform");
+        _;
+    }
+    
+    /// @notice Ensures caller is an authorized event service
+    modifier onlyAuthorizedEventService() {
+        require(authorizedEventServices[msg.sender], "TableDadrian: Unauthorized event service");
         _;
     }
     
@@ -715,73 +783,211 @@ contract TableDadrian is ERC20, ERC20Pausable, Ownable, ReentrancyGuard {
         return adminLogs.length;
     }
     
-    // ============ EXTERNAL API HOOKS (TEMPLATES) ============
+    // ============ SERVICE AUTHORIZATION MANAGEMENT ============
     
     /**
-     * @notice Template function for future booking system integration
+     * @notice Authorizes a booking service address
+     * @param serviceAddress Address of the booking service
+     * @param reason Reason for authorization
+     */
+    function authorizeBookingService(address serviceAddress, string calldata reason) external onlyOwner {
+        require(serviceAddress != address(0), "TableDadrian: Invalid service address");
+        require(!authorizedBookingServices[serviceAddress], "TableDadrian: Already authorized");
+        
+        authorizedBookingServices[serviceAddress] = true;
+        emit ServiceAuthorizationChanged("Booking", serviceAddress, true, reason);
+        _logAdminAction(msg.sender, string.concat("Authorize Booking Service: ", reason), serviceAddress, 0);
+    }
+    
+    /**
+     * @notice Revokes authorization from a booking service address
+     * @param serviceAddress Address of the booking service
+     * @param reason Reason for revocation
+     */
+    function revokeBookingService(address serviceAddress, string calldata reason) external onlyOwner {
+        require(authorizedBookingServices[serviceAddress], "TableDadrian: Not authorized");
+        
+        authorizedBookingServices[serviceAddress] = false;
+        emit ServiceAuthorizationChanged("Booking", serviceAddress, false, reason);
+        _logAdminAction(msg.sender, string.concat("Revoke Booking Service: ", reason), serviceAddress, 0);
+    }
+    
+    /**
+     * @notice Authorizes an NFT platform address
+     * @param platformAddress Address of the NFT platform
+     * @param reason Reason for authorization
+     */
+    function authorizeNFTPlatform(address platformAddress, string calldata reason) external onlyOwner {
+        require(platformAddress != address(0), "TableDadrian: Invalid platform address");
+        require(!authorizedNFTPlatforms[platformAddress], "TableDadrian: Already authorized");
+        
+        authorizedNFTPlatforms[platformAddress] = true;
+        emit ServiceAuthorizationChanged("NFT", platformAddress, true, reason);
+        _logAdminAction(msg.sender, string.concat("Authorize NFT Platform: ", reason), platformAddress, 0);
+    }
+    
+    /**
+     * @notice Revokes authorization from an NFT platform address
+     * @param platformAddress Address of the NFT platform
+     * @param reason Reason for revocation
+     */
+    function revokeNFTPlatform(address platformAddress, string calldata reason) external onlyOwner {
+        require(authorizedNFTPlatforms[platformAddress], "TableDadrian: Not authorized");
+        
+        authorizedNFTPlatforms[platformAddress] = false;
+        emit ServiceAuthorizationChanged("NFT", platformAddress, false, reason);
+        _logAdminAction(msg.sender, string.concat("Revoke NFT Platform: ", reason), platformAddress, 0);
+    }
+    
+    /**
+     * @notice Authorizes an event management service address
+     * @param serviceAddress Address of the event service
+     * @param reason Reason for authorization
+     */
+    function authorizeEventService(address serviceAddress, string calldata reason) external onlyOwner {
+        require(serviceAddress != address(0), "TableDadrian: Invalid service address");
+        require(!authorizedEventServices[serviceAddress], "TableDadrian: Already authorized");
+        
+        authorizedEventServices[serviceAddress] = true;
+        emit ServiceAuthorizationChanged("Event", serviceAddress, true, reason);
+        _logAdminAction(msg.sender, string.concat("Authorize Event Service: ", reason), serviceAddress, 0);
+    }
+    
+    /**
+     * @notice Revokes authorization from an event management service address
+     * @param serviceAddress Address of the event service
+     * @param reason Reason for revocation
+     */
+    function revokeEventService(address serviceAddress, string calldata reason) external onlyOwner {
+        require(authorizedEventServices[serviceAddress], "TableDadrian: Not authorized");
+        
+        authorizedEventServices[serviceAddress] = false;
+        emit ServiceAuthorizationChanged("Event", serviceAddress, false, reason);
+        _logAdminAction(msg.sender, string.concat("Revoke Event Service: ", reason), serviceAddress, 0);
+    }
+    
+    // ============ EXTERNAL API INTEGRATIONS ============
+    
+    /**
+     * @notice Processes a booking payment using tokens
      * @param userAddress Address of the user making booking
      * @param bookingId Unique booking identifier
      * @param tokenAmount Amount of tokens to process
      * 
-     * @dev This function can be extended to integrate with off-chain booking systems
+     * @dev This function integrates with off-chain booking systems
      * @dev Example: Process token payments for private chef bookings
-     * 
-     * TODO: Implement integration with booking API
-     * TODO: Add access control for booking service
-     * TODO: Add event emission for booking confirmation
+     * @dev Requires the booking service to be authorized by the owner
+     * @dev Prevents duplicate processing of the same booking
      */
-    // function processBooking(
-    //     address userAddress,
-    //     string memory bookingId,
-    //     uint256 tokenAmount
-    // ) external {
-    //     // Implementation for booking integration
-    //     // Transfer tokens, update booking status, emit events
-    // }
+    function processBooking(
+        address userAddress,
+        string calldata bookingId,
+        uint256 tokenAmount
+    ) external 
+        onlyAuthorizedBookingService 
+        whenNotPaused 
+        nonReentrant 
+    {
+        require(userAddress != address(0), "TableDadrian: Invalid user address");
+        require(bytes(bookingId).length > 0, "TableDadrian: Invalid booking ID");
+        require(tokenAmount > 0, "TableDadrian: Invalid token amount");
+        require(!processedBookings[bookingId], "TableDadrian: Booking already processed");
+        require(balanceOf(userAddress) >= tokenAmount, "TableDadrian: Insufficient balance");
+        require(!transferRestricted[userAddress], "TableDadrian: User is transfer-restricted");
+        
+        // Mark booking as processed
+        processedBookings[bookingId] = true;
+        
+        // Transfer tokens from user to booking service (or treasury)
+        _transfer(userAddress, msg.sender, tokenAmount);
+        
+        // Emit booking confirmation event
+        emit BookingConfirmed(userAddress, bookingId, tokenAmount, msg.sender);
+        
+        // Log admin action
+        _logAdminAction(msg.sender, string.concat("Booking Processed: ", bookingId), userAddress, tokenAmount);
+    }
     
     /**
-     * @notice Template function for future NFT drop integration
+     * @notice Processes NFT-related token rewards
      * @param recipient Address to receive NFT-related tokens
      * @param nftCollectionId Collection identifier
      * @param rewardAmount Token reward amount
      * 
-     * @dev This function can be extended to integrate with NFT platforms
+     * @dev This function integrates with NFT platforms
      * @dev Example: Distribute tokens to NFT holders or for NFT purchases
-     * 
-     * TODO: Implement integration with NFT platform API
-     * TODO: Add verification for NFT ownership
-     * TODO: Add event emission for NFT-related rewards
+     * @dev Requires the NFT platform to be authorized by the owner
+     * @dev Prevents duplicate rewards for the same collection and recipient
+     * @dev Note: NFT ownership verification should be done off-chain by the platform
      */
-    // function processNFTReward(
-    //     address recipient,
-    //     string memory nftCollectionId,
-    //     uint256 rewardAmount
-    // ) external {
-    //     // Implementation for NFT integration
-    //     // Verify NFT ownership, distribute rewards, emit events
-    // }
+    function processNFTReward(
+        address recipient,
+        string calldata nftCollectionId,
+        uint256 rewardAmount
+    ) external 
+        onlyAuthorizedNFTPlatform 
+        whenNotPaused 
+        nonReentrant 
+    {
+        require(recipient != address(0), "TableDadrian: Invalid recipient");
+        require(bytes(nftCollectionId).length > 0, "TableDadrian: Invalid collection ID");
+        require(rewardAmount > 0, "TableDadrian: Invalid reward amount");
+        require(!processedNFTRewards[nftCollectionId][recipient], "TableDadrian: Reward already processed");
+        require(totalSupply() + rewardAmount <= MAX_SUPPLY, "TableDadrian: Would exceed max supply");
+        
+        // Mark reward as processed
+        processedNFTRewards[nftCollectionId][recipient] = true;
+        
+        // Mint tokens to recipient
+        _mint(recipient, rewardAmount);
+        totalRewardsReceived[recipient] += rewardAmount;
+        
+        // Emit NFT reward event
+        emit NFTRewardDistributed(recipient, nftCollectionId, rewardAmount, msg.sender);
+        
+        // Log admin action
+        _logAdminAction(msg.sender, string.concat("NFT Reward: ", nftCollectionId), recipient, rewardAmount);
+    }
     
     /**
-     * @notice Template function for future event ticketing integration
+     * @notice Processes event ticket payment using tokens
      * @param attendee Address of event attendee
      * @param eventId Unique event identifier
      * @param ticketPrice Token price for ticket
      * 
-     * @dev This function can be extended to integrate with event management systems
+     * @dev This function integrates with event management systems
      * @dev Example: Process token payments for exclusive event tickets
-     * 
-     * TODO: Implement integration with event management API
-     * TODO: Add access control for event service
-     * TODO: Add event emission for ticket confirmation
+     * @dev Requires the event service to be authorized by the owner
+     * @dev Prevents duplicate processing of the same event ticket
      */
-    // function processEventTicket(
-    //     address attendee,
-    //     string memory eventId,
-    //     uint256 ticketPrice
-    // ) external {
-    //     // Implementation for event ticketing integration
-    //     // Process payment, issue ticket, emit events
-    // }
+    function processEventTicket(
+        address attendee,
+        string calldata eventId,
+        uint256 ticketPrice
+    ) external 
+        onlyAuthorizedEventService 
+        whenNotPaused 
+        nonReentrant 
+    {
+        require(attendee != address(0), "TableDadrian: Invalid attendee address");
+        require(bytes(eventId).length > 0, "TableDadrian: Invalid event ID");
+        require(ticketPrice > 0, "TableDadrian: Invalid ticket price");
+        require(!processedEventTickets[eventId][attendee], "TableDadrian: Ticket already processed");
+        require(balanceOf(attendee) >= ticketPrice, "TableDadrian: Insufficient balance");
+        require(!transferRestricted[attendee], "TableDadrian: Attendee is transfer-restricted");
+        
+        // Mark ticket as processed
+        processedEventTickets[eventId][attendee] = true;
+        
+        // Transfer tokens from attendee to event service (or treasury)
+        _transfer(attendee, msg.sender, ticketPrice);
+        
+        // Emit ticket confirmation event
+        emit EventTicketConfirmed(attendee, eventId, ticketPrice, msg.sender);
+        
+        // Log admin action
+        _logAdminAction(msg.sender, string.concat("Event Ticket: ", eventId), attendee, ticketPrice);
+    }
     
     // ============ VIEW FUNCTIONS ============
     

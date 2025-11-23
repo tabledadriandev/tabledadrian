@@ -5,3 +5,35 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# Force HTTPS for all domains (SSL certificates are automatically provided by Netlify)
+# Note: Add both tabledadrian.com and www.tabledadrian.com in Netlify dashboard
+# under Site settings > Domain management > Custom domains
+[[redirects]]
+  from = "http://tabledadrian.com/*"
+  to = "https://tabledadrian.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.tabledadrian.com/*"
+  to = "https://www.tabledadrian.com/:splat"
+  status = 301
+  force = true
+
+# Optional: Redirect www to non-www (uncomment if you want to redirect www to non-www)
+# [[redirects]]
+#   from = "https://www.tabledadrian.com/*"
+#   to = "https://tabledadrian.com/:splat"
+#   status = 301
+#   force = true
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 // This layout applies to all website routes: /, /coin, /app-download
-// It imports website CSS which is separate from wellness app CSS
+// It imports website CSS for the main website
 
 export const metadata: Metadata = {
   title: "Table d'Adrian - Luxury Private Chef Services | Personal Chef London",

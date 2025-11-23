@@ -2,8 +2,6 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Notable } from 'next/font/google'
 // Import website CSS in root layout for global styles
 import './(website)/globals.css'
-// Note: Wellness CSS is imported in app/(wellness)/app/layout.tsx
-// They are kept separate and don't override each other
 import ScrollToTop from '@/components/ScrollToTop'
 import ScrollProgress from '@/components/ScrollProgress'
 import SkipLink from '@/components/SkipLink'
@@ -28,7 +26,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: "Table d'Adrian Wellness",
+    title: "Table d'Adrian",
   },
   title: "Table d'Adrian - Luxury Private Chef Services | Personal Chef London",
   description: "Luxury private chef services by Table d'Adrian. Professional personal chef for private events, dinner parties, weekly meal prep. Michelin-trained chef serving London & Europe.",
