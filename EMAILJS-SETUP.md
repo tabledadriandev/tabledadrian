@@ -4,9 +4,16 @@
 
 The following environment variables need to be set in Netlify for EmailJS to work:
 
-1. `NEXT_PUBLIC_EMAILJS_SERVICE_ID` - Your EmailJS service ID
-2. `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` - Your EmailJS template ID  
+### For Contact Form:
+1. `NEXT_PUBLIC_EMAILJS_SERVICE_ID` - Your EmailJS service ID (for contact form)
+2. `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` - Your EmailJS template ID (for contact form)
 3. `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` - Your EmailJS public key
+
+### For Waitlist:
+1. `NEXT_PUBLIC_EMAILJS_WAITLIST_TEMPLATE_ID` - Your EmailJS template ID for waitlist (optional, falls back to NEXT_PUBLIC_EMAILJS_TEMPLATE_ID)
+2. `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` - Your EmailJS public key (same as contact form)
+
+**Note:** The waitlist uses a dedicated service ID (`service_8lfr95s`) that's hardcoded in the API route.
 
 ## How to Set Up in Netlify
 

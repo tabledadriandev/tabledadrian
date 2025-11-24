@@ -14,11 +14,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if EmailJS is configured
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    // Use specific waitlist service ID
+    const serviceId = 'service_8lfr95s';
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_WAITLIST_TEMPLATE_ID || process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-    if (!serviceId || !templateId || !publicKey) {
+    if (!templateId || !publicKey) {
       console.error('EmailJS environment variables are not configured');
       return NextResponse.json(
         { error: 'Email service is not configured' },
