@@ -170,32 +170,6 @@ export default function AppDownloadPage() {
               transition={{ duration: 0.8 }}
               className="text-center max-w-5xl mx-auto"
             >
-              {/* App Icon */}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={heroInView ? { scale: 1, opacity: 1 } : {}}
-                transition={{ delay: 0.2, duration: 0.6, type: 'spring' }}
-                className="inline-block mb-8"
-              >
-                <div className="relative">
-                  <div className="w-32 h-32 md:w-40 md:h-40 mx-auto bg-gradient-to-br from-accent-primary to-accent-primary/80 rounded-3xl flex items-center justify-center shadow-2xl">
-                    <Heart className="w-16 h-16 md:w-20 md:h-20 text-white" />
-                  </div>
-                  <motion.div
-                    animate={{
-                      scale: [1, 1.1, 1],
-                      opacity: [0.5, 0.8, 0.5],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }}
-                    className="absolute inset-0 bg-accent-primary/20 rounded-3xl blur-xl"
-                  />
-                </div>
-              </motion.div>
-
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
