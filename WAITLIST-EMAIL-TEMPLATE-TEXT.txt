@@ -1,0 +1,33 @@
+🎉 NEW WAITLIST SIGNUP
+Table d'Adrian Wellness App
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Hello Adrian,
+
+Great news! Someone has joined the waitlist for the Table d'Adrian Wellness App.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+USER EMAIL ADDRESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+{{user_email}}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SIGNUP DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+{{message}}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This user will be automatically notified when the app launches. You can reach out to them directly by replying to this email.
+
+Reply to: {{reply_to}}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Table d'Adrian
+Luxury Private Chef Services | Wellness App
+
+This email was sent from your website's waitlist system.
+
