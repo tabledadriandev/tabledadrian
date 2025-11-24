@@ -2,7 +2,9 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import emailjs from '@emailjs/browser';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { 
@@ -13,7 +15,9 @@ import {
   Shield, 
   Heart,
   Sparkles,
-  Smartphone as Phone
+  Smartphone as Phone,
+  X,
+  Mail
 } from 'lucide-react';
 
 export default function AppDownloadPage() {
@@ -21,6 +25,20 @@ export default function AppDownloadPage() {
   const [featuresRef, featuresInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [platformsRef, platformsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [benefitsRef, benefitsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  
+  // Waitlist form state
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistSubmitting, setWaitlistSubmitting] = useState(false);
+  const [waitlistStatus, setWaitlistStatus] = useState<string | null>(null);
+
+  // Initialize EmailJS
+  useEffect(() => {
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    if (publicKey) {
+      emailjs.init(publicKey);
+    }
+  }, []);
 
   const features = [
     {
@@ -122,6 +140,68 @@ export default function AppDownloadPage() {
       available: false,
     },
   ];
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setWaitlistSubmitting(true);
+    setWaitlistStatus('Adding you to the waitlist...');
+    
+    try {
+      // Check if EmailJS is configured
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('Email service is not configured. Please set up EmailJS environment variables.');
+      }
+
+      // Prepare template parameters for waitlist
+      const templateParams = {
+        from_email: waitlistEmail,
+        to_email: 'adrian@tabledadrian.com',
+        reply_to: waitlistEmail,
+        subject: 'New Waitlist Signup - Table d\'Adrian Wellness App',
+        message: `A new user has joined the waitlist for the Table d'Adrian Wellness App.\n\nEmail: ${waitlistEmail}\n\nThey will be notified when the app launches.`,
+        user_email: waitlistEmail,
+      };
+
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        serviceId,
+        templateId,
+        templateParams,
+        publicKey
+      );
+
+      if (result.status === 200) {
+        setWaitlistStatus('Thank you! You\'ve been added to the waitlist. We\'ll notify you when the app launches.');
+        setWaitlistEmail('');
+        setTimeout(() => {
+          setShowWaitlistModal(false);
+          setWaitlistStatus(null);
+        }, 3000);
+      } else {
+        throw new Error('Failed to send email');
+      }
+    } catch (err: any) {
+      console.error('Error sending waitlist email:', err);
+      
+      let errorMessage = 'Sorry, something went wrong. Please try again later.';
+      
+      if (err.message?.includes('not configured')) {
+        errorMessage = 'Email service is not configured. Please contact the website administrator.';
+      } else if (err.text) {
+        errorMessage = `Error: ${err.text}. Please check your EmailJS configuration.`;
+      } else if (err.message) {
+        errorMessage = `Error: ${err.message}`;
+      }
+      
+      setWaitlistStatus(errorMessage);
+    } finally {
+      setWaitlistSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -433,14 +513,7 @@ export default function AppDownloadPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-10 py-5 bg-white text-accent-primary rounded-full font-semibold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center gap-3 mx-auto"
-                onClick={() => {
-                  const contactSection = document.getElementById('contact');
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                  } else {
-                    window.location.href = '/#contact';
-                  }
-                }}
+                onClick={() => setShowWaitlistModal(true)}
               >
                 <Heart className="w-5 h-5" />
                 <span>Join the Waitlist</span>
@@ -450,6 +523,104 @@ export default function AppDownloadPage() {
         </section>
       </main>
       <Footer />
+
+      {/* Waitlist Modal */}
+      {showWaitlistModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl relative"
+          >
+            <button
+              onClick={() => {
+                setShowWaitlistModal(false);
+                setWaitlistEmail('');
+                setWaitlistStatus(null);
+              }}
+              className="absolute top-4 right-4 text-text-secondary hover:text-text-primary transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 mx-auto mb-4 bg-accent-primary/10 rounded-full flex items-center justify-center">
+                <Mail className="w-8 h-8 text-accent-primary" />
+              </div>
+              <h3 className="text-2xl font-display text-text-primary mb-2">
+                Join the Waitlist
+              </h3>
+              <p className="text-text-secondary">
+                Be the first to know when the app launches
+              </p>
+            </div>
+
+            <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="waitlist-email" className="block text-sm font-medium text-text-primary mb-2">
+                  Email Address *
+                </label>
+                <input
+                  id="waitlist-email"
+                  type="email"
+                  required
+                  value={waitlistEmail}
+                  onChange={(e) => setWaitlistEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className="w-full px-4 py-3 bg-white border border-border-light rounded-md focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:border-accent-primary transition-all duration-300 text-text-primary"
+                  disabled={waitlistSubmitting}
+                />
+              </div>
+
+              {waitlistStatus && (
+                <div className={`p-3 rounded-md text-sm ${
+                  waitlistStatus.includes('Thank you') 
+                    ? 'bg-green-50 text-green-700 border border-green-200' 
+                    : waitlistStatus.includes('Error') || waitlistStatus.includes('wrong')
+                    ? 'bg-red-50 text-red-700 border border-red-200'
+                    : 'bg-blue-50 text-blue-700 border border-blue-200'
+                }`}>
+                  {waitlistStatus}
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowWaitlistModal(false);
+                    setWaitlistEmail('');
+                    setWaitlistStatus(null);
+                  }}
+                  className="flex-1 px-4 py-3 border border-border-light rounded-md text-text-primary hover:bg-border-light transition-colors"
+                  disabled={waitlistSubmitting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={waitlistSubmitting || !waitlistEmail}
+                  className="flex-1 px-4 py-3 bg-accent-primary text-white rounded-md font-semibold hover:bg-accent-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {waitlistSubmitting ? (
+                    <>
+                      <Clock className="w-4 h-4 animate-spin" />
+                      <span>Submitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Heart className="w-4 h-4" />
+                      <span>Join Waitlist</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </>
   );
 }
