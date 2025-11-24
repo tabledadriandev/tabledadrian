@@ -147,52 +147,34 @@ export default function AppDownloadPage() {
     setWaitlistStatus('Adding you to the waitlist...');
     
     try {
-      // Check if EmailJS is configured
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+      // Use API route instead of direct EmailJS call
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: waitlistEmail }),
+      });
 
-      if (!serviceId || !templateId || !publicKey) {
-        throw new Error('Email service is not configured. Please set up EmailJS environment variables.');
-      }
+      const data = await response.json();
 
-      // Prepare template parameters for waitlist
-      const templateParams = {
-        from_email: waitlistEmail,
-        to_email: 'adrian@tabledadrian.com',
-        reply_to: waitlistEmail,
-        subject: 'New Waitlist Signup - Table d\'Adrian Wellness App',
-        message: `A new user has joined the waitlist for the Table d'Adrian Wellness App.\n\nEmail: ${waitlistEmail}\n\nThey will be notified when the app launches.`,
-        user_email: waitlistEmail,
-      };
-
-      // Send email using EmailJS
-      const result = await emailjs.send(
-        serviceId,
-        templateId,
-        templateParams,
-        publicKey
-      );
-
-      if (result.status === 200) {
-        setWaitlistStatus('Thank you! You\'ve been added to the waitlist. We\'ll notify you when the app launches.');
+      if (response.ok && data.success) {
+        setWaitlistStatus(data.message || 'Thank you! You\'ve been added to the waitlist. We\'ll notify you when the app launches.');
         setWaitlistEmail('');
         setTimeout(() => {
           setShowWaitlistModal(false);
           setWaitlistStatus(null);
         }, 3000);
       } else {
-        throw new Error('Failed to send email');
+        throw new Error(data.error || 'Failed to join waitlist');
       }
     } catch (err: any) {
       console.error('Error sending waitlist email:', err);
       
       let errorMessage = 'Sorry, something went wrong. Please try again later.';
       
-      if (err.message?.includes('not configured')) {
+      if (err.message?.includes('not configured') || err.message?.includes('Email service')) {
         errorMessage = 'Email service is not configured. Please contact the website administrator.';
-      } else if (err.text) {
-        errorMessage = `Error: ${err.text}. Please check your EmailJS configuration.`;
       } else if (err.message) {
         errorMessage = `Error: ${err.message}`;
       }
