@@ -23,8 +23,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if EmailJS is configured
+    // Using environment variables from .env.local lines 1-2 for contact form
     const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
     const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    // Public key is shared for both contact and waitlist
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
     if (!serviceId || !templateId || !publicKey) {

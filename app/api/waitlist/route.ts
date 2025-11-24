@@ -14,9 +14,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if EmailJS is configured
-    // Use specific waitlist service ID
+    // Use specific waitlist service ID (hardcoded)
     const serviceId = 'service_8lfr95s';
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_WAITLIST_TEMPLATE_ID || process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    // Using environment variables from .env.local lines 4-5 for waitlist
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_WAITLIST_TEMPLATE_ID;
+    // Public key is shared for both contact and waitlist
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
     if (!templateId || !publicKey) {
