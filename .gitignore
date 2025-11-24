@@ -19,6 +19,9 @@
 # wellness app (moved to separate directory)
 ../wellness-app/
 
+# contracts (moved to separate directory outside website and app)
+../../ta_contract/
+
 # Large build files
 *.exe
 *.asar
