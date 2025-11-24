@@ -2,20 +2,17 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { 
   Download, 
-  Smartphone, 
-  Laptop, 
   Check, 
   Clock, 
   Zap, 
   Shield, 
   Heart,
   Sparkles,
-  Apple,
-  Chrome,
   Smartphone as Phone
 } from 'lucide-react';
 
@@ -94,7 +91,7 @@ export default function AppDownloadPage() {
   const platforms = [
     {
       name: 'Windows',
-      icon: Laptop,
+      iconPath: '/icons/windows.svg',
       description: 'Desktop app for Windows 10/11',
       color: 'from-blue-500 to-blue-600',
       iconColor: 'text-blue-500',
@@ -102,7 +99,7 @@ export default function AppDownloadPage() {
     },
     {
       name: 'macOS',
-      icon: Apple,
+      iconPath: '/icons/apple.svg',
       description: 'Native app for Mac',
       color: 'from-gray-700 to-gray-800',
       iconColor: 'text-gray-600',
@@ -110,7 +107,7 @@ export default function AppDownloadPage() {
     },
     {
       name: 'iOS',
-      icon: Apple,
+      iconPath: '/icons/apple.svg',
       description: 'iPhone and iPad app',
       color: 'from-gray-800 to-black',
       iconColor: 'text-gray-700',
@@ -118,7 +115,7 @@ export default function AppDownloadPage() {
     },
     {
       name: 'Android',
-      icon: Chrome,
+      iconPath: '/icons/android-icon.svg',
       description: 'Android phone and tablet',
       color: 'from-green-500 to-green-600',
       iconColor: 'text-green-500',
@@ -210,7 +207,15 @@ export default function AppDownloadPage() {
                     className="relative group"
                   >
                     <div className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-accent-primary/20`}>
-                      <platform.icon className={`w-10 h-10 mx-auto mb-3 ${platform.iconColor} group-hover:scale-110 transition-transform duration-300`} />
+                      <div className="w-10 h-10 mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Image
+                          src={platform.iconPath}
+                          alt={platform.name}
+                          width={40}
+                          height={40}
+                          className="object-contain"
+                        />
+                      </div>
                       <h3 className="text-lg font-display text-text-primary mb-1">{platform.name}</h3>
                       <p className="text-xs text-text-secondary mb-4">{platform.description}</p>
                       <motion.button
@@ -355,8 +360,14 @@ export default function AppDownloadPage() {
                 >
                   <div className="bg-gradient-to-br from-white to-cream/30 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-cream/50 h-full flex flex-col">
                     <div className="flex items-center justify-center mb-6">
-                      <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${platform.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                        <platform.icon className="w-10 h-10 text-white" />
+                      <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${platform.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 p-3`}>
+                        <Image
+                          src={platform.iconPath}
+                          alt={platform.name}
+                          width={40}
+                          height={40}
+                          className="object-contain"
+                        />
                       </div>
                     </div>
                     <h3 className="text-2xl font-display text-text-primary mb-2 text-center">
