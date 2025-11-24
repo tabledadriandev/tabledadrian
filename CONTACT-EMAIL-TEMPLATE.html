@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Booking Inquiry - Table d'Adrian</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Inter', Arial, sans-serif; background-color: #f5f5f5;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f5f5f5;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #0F4C81 0%, #1A2332 100%); padding: 40px 30px; text-align: center;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold; font-family: 'Chango', 'Impact', Arial Black, sans-serif;">
+                📋 New Booking Inquiry
+              </h1>
+              <p style="margin: 10px 0 0 0; color: #D4C5B9; font-size: 16px;">
+                Table d'Adrian - Luxury Private Chef Services
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px 30px; background-color: #FAF8F3;">
+              <p style="margin: 0 0 20px 0; color: #2B2520; font-size: 16px; line-height: 1.6;">
+                Hello Adrian,
+              </p>
+              
+              <p style="margin: 0 0 30px 0; color: #2B2520; font-size: 16px; line-height: 1.6;">
+                You have received a new booking inquiry through your website. Here are the details:
+              </p>
+              
+              <!-- Contact Information Card -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 0 25px 0; background-color: #ffffff; border-radius: 8px; border: 1px solid #E8E3DC;">
+                <tr>
+                  <td style="padding: 25px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="padding: 0 0 15px 0; border-bottom: 1px solid #E8E3DC;">
+                          <p style="margin: 0 0 8px 0; color: #6B6560; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                            👤 Name
+                          </p>
+                          <p style="margin: 0; color: #0F4C81; font-size: 18px; font-weight: bold;">
+                            {{from_name}}
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 15px 0; border-bottom: 1px solid #E8E3DC;">
+                          <p style="margin: 0 0 8px 0; color: #6B6560; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                            ✉️ Email
+                          </p>
+                          <p style="margin: 0; color: #2B2520; font-size: 16px; word-break: break-all;">
+                            <a href="mailto:{{from_email}}" style="color: #0F4C81; text-decoration: none;">{{from_email}}</a>
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 15px 0; border-bottom: 1px solid #E8E3DC;">
+                          <p style="margin: 0 0 8px 0; color: #6B6560; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                            📞 Phone
+                          </p>
+                          <p style="margin: 0; color: #2B2520; font-size: 16px;">
+                            {{phone}}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              
+              <!-- Event Details Card -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 0 25px 0; background-color: #ffffff; border-radius: 8px; border: 1px solid #E8E3DC;">
+                <tr>
+                  <td style="padding: 25px;">
+                    <p style="margin: 0 0 20px 0; color: #2B2520; font-size: 16px; font-weight: 600; border-bottom: 2px solid #0F4C81; padding-bottom: 10px;">
+                      📅 Event Details
+                    </p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="padding: 0 0 15px 0; width: 50%;">
+                          <p style="margin: 0 0 5px 0; color: #6B6560; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                            📆 Event Date
+                          </p>
+                          <p style="margin: 0; color: #2B2520; font-size: 15px; font-weight: 500;">
+                            {{event_date}}
+                          </p>
+                        </td>
+                        <td style="padding: 0 0 15px 0; width: 50%;">
+                          <p style="margin: 0 0 5px 0; color: #6B6560; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                            👥 Number of Guests
+                          </p>
+                          <p style="margin: 0; color: #2B2520; font-size: 15px; font-weight: 500;">
+                            {{guests}}
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="padding: 15px 0 0 0; border-top: 1px solid #E8E3DC;">
+                          <p style="margin: 0 0 5px 0; color: #6B6560; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                            🍽️ Service Type
+                          </p>
+                          <p style="margin: 0; color: #0F4C81; font-size: 16px; font-weight: 600;">
+                            {{service_type}}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              
+              <!-- Dietary Requirements Card -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 0 25px 0; background-color: #ffffff; border-radius: 8px; border-left: 4px solid #D4C5B9;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="margin: 0 0 8px 0; color: #6B6560; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                      🥗 Dietary Requirements
+                    </p>
+                    <p style="margin: 0; color: #2B2520; font-size: 15px; line-height: 1.6;">
+                      {{dietary}}
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              
+              <!-- Additional Information Card -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 0 30px 0; background-color: #ffffff; border-radius: 8px; border: 1px solid #E8E3DC;">
+                <tr>
+                  <td style="padding: 25px;">
+                    <p style="margin: 0 0 15px 0; color: #2B2520; font-size: 15px; font-weight: 600; border-bottom: 2px solid #0F4C81; padding-bottom: 10px;">
+                      💬 Additional Information
+                    </p>
+                    <p style="margin: 0; color: #6B6560; font-size: 14px; line-height: 1.8; white-space: pre-wrap;">
+                      {{message}}
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              
+              <!-- Action Buttons -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 30px 0;">
+                <tr>
+                  <td align="center" style="padding: 0 10px 0 0;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td align="center" style="background: linear-gradient(135deg, #0F4C81 0%, #1A2332 100%); border-radius: 8px;">
+                          <a href="mailto:{{from_email}}?subject=Re: Booking Inquiry - Table d'Adrian&body=Hello {{from_name}},%0D%0A%0D%0AThank you for your inquiry..." style="display: inline-block; padding: 14px 30px; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 600; border-radius: 8px;">
+                            Reply to Client
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td align="center" style="padding: 0 0 0 10px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td align="center" style="background-color: #ffffff; border: 2px solid #0F4C81; border-radius: 8px;">
+                          <a href="tel:{{phone}}" style="display: inline-block; padding: 12px 28px; color: #0F4C81; text-decoration: none; font-size: 16px; font-weight: 600; border-radius: 8px;">
+                            📞 Call Client
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="margin: 20px 0 0 0; color: #8B8580; font-size: 14px; line-height: 1.6; padding-top: 20px; border-top: 1px solid #E8E3DC;">
+                <strong>Note:</strong> This is an automated notification from your website's contact form. You can reply directly to this email to contact the client at: <a href="mailto:{{from_email}}" style="color: #0F4C81; text-decoration: none;">{{from_email}}</a>
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #2B2520; padding: 30px; text-align: center;">
+              <p style="margin: 0 0 10px 0; color: #D4C5B9; font-size: 14px; font-weight: 600;">
+                Table d'Adrian
+              </p>
+              <p style="margin: 0 0 10px 0; color: #8B8580; font-size: 12px;">
+                Luxury Private Chef Services | Personal Chef London
+              </p>
+              <p style="margin: 0; color: #6B6560; font-size: 11px;">
+                This email was sent from your website's contact form system.
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
