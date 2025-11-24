@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import emailjs from '@emailjs/browser';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -270,12 +269,10 @@ export default function AppDownloadPage() {
                   >
                     <div className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-accent-primary/20`}>
                       <div className="w-10 h-10 mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <Image
+                        <img
                           src={platform.iconPath}
                           alt={platform.name}
-                          width={40}
-                          height={40}
-                          className="object-contain"
+                          className="w-10 h-10 object-contain"
                         />
                       </div>
                       <h3 className="text-lg font-display text-text-primary mb-1">{platform.name}</h3>
@@ -423,12 +420,10 @@ export default function AppDownloadPage() {
                   <div className="bg-gradient-to-br from-white to-cream/30 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-cream/50 h-full flex flex-col">
                     <div className="flex items-center justify-center mb-6">
                       <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${platform.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 p-3`}>
-                        <Image
+                        <img
                           src={platform.iconPath}
                           alt={platform.name}
-                          width={40}
-                          height={40}
-                          className="object-contain"
+                          className="w-10 h-10 object-contain"
                         />
                       </div>
                     </div>
