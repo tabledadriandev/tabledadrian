@@ -41,9 +41,20 @@ const config: Config = {
         'charcoal': '#2B2520',
       },
       fontFamily: {
-        // OPUS Typography: Elegant serif for headings, clean sans for body
+        // OPUS Typography: Chango for titles, clean sans for body
+        display: ['Chango', 'var(--font-display)', 'Impact', 'Arial Black', 'sans-serif'],
         serif: ['var(--font-serif)', 'Cormorant Garamond', 'Playfair Display', 'serif'],
         sans: ['var(--font-sans)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      fontSize: {
+        // Reduced font sizes for titles (4-5px smaller)
+        '2xl': ['1.25rem', { lineHeight: '1.2' }], // 20px (reduced from 24px)
+        '3xl': ['1.625rem', { lineHeight: '1.2' }], // 26px (reduced from 30px)
+        '4xl': ['1.9375rem', { lineHeight: '1.2' }], // 31px (reduced from 36px)
+        '5xl': ['2.6875rem', { lineHeight: '1.2' }], // 43px (reduced from 48px)
+        '6xl': ['3.4375rem', { lineHeight: '1.2' }], // 55px (reduced from 60px)
+        '7xl': ['4.1875rem', { lineHeight: '1.2' }], // 67px (reduced from 72px)
+        '8xl': ['5.6875rem', { lineHeight: '1.2' }], // 91px (reduced from 96px)
       },
       spacing: {
         // OPUS 8px baseline grid

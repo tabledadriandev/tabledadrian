@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Notable } from 'next/font/google'
+import { Inter } from 'next/font/google'
 // Import website CSS in root layout for global styles
 import './globals.css'
 import ScrollToTop from '@/components/ScrollToTop'
@@ -12,13 +12,6 @@ const inter = Inter({
   variable: '--font-sans',
   display: 'swap',
   weight: ['400', '500', '600'],
-})
-
-const notable = Notable({ 
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-  weight: ['400'],
 })
 
 export const metadata: Metadata = {
@@ -105,7 +98,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${notable.variable}`}>
+    <html lang="en" className={inter.variable}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#D4AF37" />
