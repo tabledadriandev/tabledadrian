@@ -6,9 +6,11 @@ import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const CONTRACT_ADDRESS = '0x9cb5254319f824a2393ecbf6adcf608867aa1b07';
+const CONTRACT_ADDRESS = '0xEE47670A6eD7501Aeeb9733efd0bF7D93eD3cb07';
+const POOL_ADDRESS = '0x5efe0b4afe2091e11e1c24b10c07cc1bac254ca4ed76968df3bbc138af2c804f';
 const BASE_SCAN_URL = `https://basescan.org/token/${CONTRACT_ADDRESS}`;
-const GECKOTERMINAL_URL = `https://www.geckoterminal.com/base/pools/${CONTRACT_ADDRESS}`;
+const GECKOTERMINAL_URL = `https://www.geckoterminal.com/base/pools/${POOL_ADDRESS}`;
+const UNISWAP_SWAP_URL = `https://app.uniswap.org/#/swap?chain=base&outputCurrency=${CONTRACT_ADDRESS}`;
 
 const Coin = () => {
   const [priceData, setPriceData] = useState({
@@ -26,41 +28,59 @@ const Coin = () => {
   });
 
   useEffect(() => {
-    // Fetch token data from GeckoTerminal API
+    // Fetch pool data directly from GeckoTerminal API using pool address
     const fetchTokenData = async () => {
       try {
-        const response = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${CONTRACT_ADDRESS}`);
-        const data = await response.json();
+        // Fetch pool data directly
+        const poolResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/pools/${POOL_ADDRESS}`);
+        const poolData = await poolResponse.json();
         
-        if (data.data && data.data.attributes) {
-          const attributes = data.data.attributes;
-          const priceUsd = parseFloat(attributes.price_usd || '0');
+        if (poolData.data && poolData.data.attributes) {
+          const poolAttrs = poolData.data.attributes;
           
-          // Get pool data if available
-          if (data.data.relationships && data.data.relationships.top_pool) {
-            const poolId = data.data.relationships.top_pool.data.id;
+          // Get token price from pool attributes
+          const priceUsd = parseFloat(poolAttrs.base_token_price_usd || poolAttrs.price_usd || '0');
+          
+          // Calculate market cap if available (price * total supply)
+          // Get total supply from token relationships if available
+          let marketCap = 0;
+          if (poolData.data.relationships && poolData.data.relationships.base_token) {
             try {
-              const poolResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/pools/${poolId}`);
-              const poolData = await poolResponse.json();
-              
-              if (poolData.data && poolData.data.attributes) {
-                const poolAttrs = poolData.data.attributes;
-                setPriceData({
-                  price: priceUsd.toFixed(6),
-                  marketCap: formatNumber(parseFloat(poolAttrs.market_cap_usd || '0')),
-                  volume24h: formatNumber(parseFloat(poolAttrs.volume_usd?.h24 || '0')),
-                  liquidity: formatNumber(parseFloat(poolAttrs.reserve_in_usd || '0')),
-                  holders: 'Loading...',
-                  supply: formatNumber(parseFloat(attributes.total_supply || '0')),
-                });
-                return;
+              const tokenId = poolData.data.relationships.base_token.data.id;
+              const tokenResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${tokenId.split('_').pop()}`);
+              const tokenData = await tokenResponse.json();
+              if (tokenData.data && tokenData.data.attributes) {
+                const totalSupply = parseFloat(tokenData.data.attributes.total_supply || '0');
+                marketCap = priceUsd * totalSupply;
               }
-            } catch (poolError) {
-              console.error('Error fetching pool data:', poolError);
+            } catch (tokenError) {
+              console.error('Error fetching token supply:', tokenError);
             }
           }
           
-          // Fallback to basic token data
+          // Extract volume data
+          const volume24h = poolAttrs.volume_usd?.h24 || poolAttrs.volume_usd || '0';
+          const liquidity = poolAttrs.reserve_in_usd || poolAttrs.fdv_usd || '0';
+          
+          setPriceData({
+            price: priceUsd.toFixed(6),
+            marketCap: marketCap > 0 ? formatNumber(marketCap) : formatNumber(parseFloat(poolAttrs.fdv_usd || '0')),
+            volume24h: formatNumber(parseFloat(volume24h)),
+            liquidity: formatNumber(parseFloat(liquidity)),
+            holders: 'Loading...',
+            supply: formatNumber(parseFloat(poolAttrs.base_token_price_native_currency || '0')),
+          });
+          return;
+        }
+        
+        // Fallback: try fetching by token address
+        const tokenResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${CONTRACT_ADDRESS}`);
+        const tokenData = await tokenResponse.json();
+        
+        if (tokenData.data && tokenData.data.attributes) {
+          const attributes = tokenData.data.attributes;
+          const priceUsd = parseFloat(attributes.price_usd || '0');
+          
           setPriceData({
             price: priceUsd.toFixed(6),
             marketCap: 'N/A',
@@ -71,7 +91,7 @@ const Coin = () => {
           });
         }
       } catch (error) {
-        console.error('Error fetching token data:', error);
+        console.error('Error fetching pool data:', error);
       }
     };
 
@@ -193,7 +213,7 @@ const Coin = () => {
                 </motion.div>
               ))}
             </div>
-            <div className="mt-8 text-center">
+            <div className="mt-8 text-center space-y-4">
               <a
                 href={GECKOTERMINAL_URL}
                 target="_blank"
@@ -202,6 +222,23 @@ const Coin = () => {
               >
                 View Full Chart on GeckoTerminal
               </a>
+              <div>
+                <a
+                  href={UNISWAP_SWAP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-flex items-center gap-2"
+                >
+                  <Image
+                    src="/icons/coinbase.svg"
+                    alt="Base"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                  Trade on Base
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>
