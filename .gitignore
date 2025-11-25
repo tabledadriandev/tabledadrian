@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# netlify build cache
+.netlify/
+
 # production
 /build
 /dist

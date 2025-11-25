@@ -7,13 +7,13 @@
 1. Go to your EmailJS dashboard: https://dashboard.emailjs.com/
 2. Navigate to **Email Templates** in the left sidebar
 3. Click **Create New Template**
-4. Select the service: **service_8lfr95s** (your waitlist service)
+4. Select the service: **[Your Waitlist Service ID]** (configure this in your EmailJS dashboard)
 
 ### 2. Template Settings
 
 **Template Name:** `Waitlist Signup Notification`
 
-**To Email:** `badea.adrian.stefan1@gmail.com`
+**To Email:** `your-email@example.com` (configure with your actual email address)
 
 **From Name:** `Table d'Adrian Waitlist`
 
@@ -140,7 +140,7 @@ Make sure these variables are in your template:
 - `{{user_email}}` - The user's email address
 - `{{from_email}}` - Same as user_email
 - `{{reply_to}}` - User's email (for reply-to header)
-- `{{to_email}}` - badea.adrian.stefan1@gmail.com
+- `{{to_email}}` - Your recipient email address (configure in EmailJS template)
 - `{{subject}}` - Email subject
 - `{{message}}` - The message content
 
@@ -162,7 +162,7 @@ Make sure these variables are in your template:
 2. Click "Join the Waitlist"
 3. Enter an email address
 4. Submit
-5. Check `badea.adrian.stefan1@gmail.com` for the notification
+5. Check your configured email address for the notification
 
 ---
 

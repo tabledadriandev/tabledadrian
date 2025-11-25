@@ -1,7 +1,7 @@
 # EmailJS Waitlist Template Setup
 
 ## Service Configuration
-- **Service ID**: `service_8lfr95s` (already configured in code)
+- **Service ID**: Configure this in your EmailJS dashboard and update the API route accordingly
 
 ## Template Variables
 
@@ -9,7 +9,7 @@ When creating your EmailJS template for the waitlist, use these template variabl
 
 ### Required Template Variables:
 - `{{from_email}}` - The user's email address who signed up
-- `{{to_email}}` - Recipient email (badea.adrian.stefan1@gmail.com)
+- `{{to_email}}` - Recipient email address (configure in EmailJS template)
 - `{{reply_to}}` - User's email address (for reply-to header)
 - `{{subject}}` - Email subject line
 - `{{message}}` - The email message content
@@ -117,7 +117,7 @@ Table d'Adrian Wellness App - Waitlist Management
 
 ## Template Settings in EmailJS
 
-1. **To Email**: Set to `badea.adrian.stefan1@gmail.com` (or use `{{to_email}}` variable)
+1. **To Email**: Set to your recipient email address (or use `{{to_email}}` variable)
 2. **From Name**: "Table d'Adrian Waitlist" or "Table d'Adrian Wellness App"
 3. **Reply To**: Use `{{reply_to}}` variable
 4. **Subject**: Use `{{subject}}` or hardcode "New Waitlist Signup - Table d'Adrian Wellness App"
@@ -140,5 +140,5 @@ After setting up the template:
 1. Add the template ID to Netlify environment variables
 2. Redeploy your site
 3. Test the waitlist form on `/app-download`
-4. Check your email (badea.adrian.stefan1@gmail.com) for the notification
+4. Check your configured email address for the notification
 

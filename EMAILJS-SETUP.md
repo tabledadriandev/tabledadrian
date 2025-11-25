@@ -13,7 +13,7 @@ The following environment variables need to be set in Netlify for EmailJS to wor
 1. `NEXT_PUBLIC_EMAILJS_WAITLIST_TEMPLATE_ID` - Your EmailJS template ID for waitlist (optional, falls back to NEXT_PUBLIC_EMAILJS_TEMPLATE_ID)
 2. `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` - Your EmailJS public key (same as contact form)
 
-**Note:** The waitlist uses a dedicated service ID (`service_8lfr95s`) that's hardcoded in the API route.
+**Note:** The waitlist uses a dedicated service ID that's configured in the API route. See the API route file for the actual service ID.
 
 ## How to Set Up in Netlify
 
@@ -41,7 +41,7 @@ NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
 
 Your EmailJS template should include these variables:
 - `{{from_email}}` - User's email address
-- `{{to_email}}` - badea.adrian.stefan1@gmail.com (set in template or use variable)
+- `{{to_email}}` - Your recipient email address (set in template or use variable)
 - `{{reply_to}}` - User's email address
 - `{{subject}}` - Email subject
 - `{{message}}` - Email message content
@@ -58,7 +58,7 @@ Your EmailJS template should include:
 - `{{service_type}}` - Type of service
 - `{{dietary}}` - Dietary requirements
 - `{{message}}` - Additional message
-- `{{to_email}}` - adrian@tabledadrian.com
+- `{{to_email}}` - Your recipient email address
 - `{{reply_to}}` - User's email address
 
 ## Testing
@@ -67,5 +67,5 @@ After setting up the environment variables:
 1. Redeploy your site on Netlify
 2. Test the waitlist form on `/app-download`
 3. Test the contact form on the homepage
-4. Check your email (badea.adrian.stefan1@gmail.com for waitlist, adrian@tabledadrian.com for contact)
+4. Check your configured email address for the notifications
 

@@ -13,7 +13,7 @@
 
 **Template Name:** `Contact Form - Booking Inquiry`
 
-**To Email:** `adrian@tabledadrian.com`
+**To Email:** `your-email@example.com` (configure with your actual email address)
 
 **From Name:** `Table d'Adrian Contact Form`
 
@@ -243,7 +243,7 @@ Make sure these variables are in your template:
 - `{{service_type}}` - Type of service (Private Event, Meal Prep, etc.)
 - `{{dietary}}` - Dietary requirements
 - `{{message}}` - Additional message from client
-- `{{to_email}}` - adrian@tabledadrian.com
+- `{{to_email}}` - Your recipient email address (configure in EmailJS template)
 - `{{reply_to}}` - Client's email (same as from_email)
 
 ### 5. Save and Get Template ID
@@ -278,7 +278,7 @@ NEXT_PUBLIC_EMAILJS_WAITLIST_TEMPLATE_ID=your_waitlist_template_id
 1. Go to your homepage
 2. Fill out the contact form
 3. Submit
-4. Check `adrian@tabledadrian.com` for the notification
+4. Check your configured email address for the notification
 
 ---
 
