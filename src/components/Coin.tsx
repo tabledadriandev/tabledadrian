@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const CONTRACT_ADDRESS = '0xEE47670A6eD7501Aeeb9733efd0bF7D93eD3cb07';
-const POOL_ADDRESS = '0x5efe0b4afe2091e11e1c24b10c07cc1bac254ca4ed76968df3bbc138af2c804f';
+const POOL_ADDRESS = '0xa421606ad7907968228c58d56f20ab1028db588cedb3ece882e9c55515346d7d';
 const BASE_SCAN_URL = `https://basescan.org/token/${CONTRACT_ADDRESS}`;
 const GECKOTERMINAL_URL = `https://www.geckoterminal.com/base/pools/${POOL_ADDRESS}`;
 const UNISWAP_SWAP_URL = `https://app.uniswap.org/#/swap?chain=base&outputCurrency=${CONTRACT_ADDRESS}`;
