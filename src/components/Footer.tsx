@@ -58,6 +58,22 @@ const Footer = () => {
                 />
               </a>
             ))}
+            {/* GeckoTerminal Attribution */}
+            <a
+              href="https://www.geckoterminal.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View on GeckoTerminal"
+              className="w-10 h-10 bg-accent-primary/10 border border-accent-primary/20 flex items-center justify-center hover:bg-white/20 hover:text-white/90 transition-colors duration-300 rounded-md"
+            >
+              <Image
+                src="/icons/geckoterminal icon.svg"
+                alt="GeckoTerminal"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
+            </a>
           </div>
 
           {/* Divider */}

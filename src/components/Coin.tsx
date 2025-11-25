@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 const CONTRACT_ADDRESS = '0x9cb5254319f824a2393ecbf6adcf608867aa1b07';
 const BASE_SCAN_URL = `https://basescan.org/token/${CONTRACT_ADDRESS}`;
-const DEXSCREENER_URL = `https://dexscreener.com/base/${CONTRACT_ADDRESS}`;
+const GECKOTERMINAL_URL = `https://www.geckoterminal.com/base/pools/${CONTRACT_ADDRESS}`;
 
 const Coin = () => {
   const [priceData, setPriceData] = useState({
@@ -26,21 +26,48 @@ const Coin = () => {
   });
 
   useEffect(() => {
-    // Fetch token data from DexScreener API
+    // Fetch token data from GeckoTerminal API
     const fetchTokenData = async () => {
       try {
-        const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${CONTRACT_ADDRESS}`);
+        const response = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${CONTRACT_ADDRESS}`);
         const data = await response.json();
         
-        if (data.pairs && data.pairs.length > 0) {
-          const pair = data.pairs[0];
+        if (data.data && data.data.attributes) {
+          const attributes = data.data.attributes;
+          const priceUsd = parseFloat(attributes.price_usd || '0');
+          
+          // Get pool data if available
+          if (data.data.relationships && data.data.relationships.top_pool) {
+            const poolId = data.data.relationships.top_pool.data.id;
+            try {
+              const poolResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/pools/${poolId}`);
+              const poolData = await poolResponse.json();
+              
+              if (poolData.data && poolData.data.attributes) {
+                const poolAttrs = poolData.data.attributes;
+                setPriceData({
+                  price: priceUsd.toFixed(6),
+                  marketCap: formatNumber(parseFloat(poolAttrs.market_cap_usd || '0')),
+                  volume24h: formatNumber(parseFloat(poolAttrs.volume_usd?.h24 || '0')),
+                  liquidity: formatNumber(parseFloat(poolAttrs.reserve_in_usd || '0')),
+                  holders: 'Loading...',
+                  supply: formatNumber(parseFloat(attributes.total_supply || '0')),
+                });
+                return;
+              }
+            } catch (poolError) {
+              console.error('Error fetching pool data:', poolError);
+            }
+          }
+          
+          // Fallback to basic token data
           setPriceData({
-            price: parseFloat(pair.priceUsd || '0').toFixed(6),
-            marketCap: formatNumber(parseFloat(pair.marketCap || '0')),
-            volume24h: formatNumber(parseFloat(pair.volume?.h24 || '0')),
-            liquidity: formatNumber(parseFloat(pair.liquidity?.usd || '0')),
+            price: priceUsd.toFixed(6),
+            marketCap: 'N/A',
+            volume24h: 'N/A',
+            liquidity: 'N/A',
             holders: 'Loading...',
-            supply: formatNumber(parseFloat(pair.liquidity?.base || '0')),
+            supply: formatNumber(parseFloat(attributes.total_supply || '0')),
           });
         }
       } catch (error) {
@@ -49,7 +76,7 @@ const Coin = () => {
     };
 
     fetchTokenData();
-    const interval = setInterval(fetchTokenData, 30000); // Update every 30 seconds
+    const interval = setInterval(fetchTokenData, 60000); // Update every 60 seconds (GeckoTerminal has 30 calls/min limit)
     return () => clearInterval(interval);
   }, []);
 
@@ -168,12 +195,12 @@ const Coin = () => {
             </div>
             <div className="mt-8 text-center">
               <a
-                href={DEXSCREENER_URL}
+                href={GECKOTERMINAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary inline-block"
               >
-                View Full Chart on DexScreener
+                View Full Chart on GeckoTerminal
               </a>
             </div>
           </motion.div>
