@@ -111,6 +111,19 @@ export default function RootLayout({
         <ScrollProgress />
         <ScrollToTop />
         <InstallPWA />
+        <style
+          // Block printing of pages that should not be printed (e.g. whitepaper)
+          // This is a global rule but is primarily intended to protect sensitive views.
+          dangerouslySetInnerHTML={{
+            __html: `
+              @media print {
+                body { 
+                  display: none !important;
+                }
+              }
+            `,
+          }}
+        />
         {children}
         <script
           dangerouslySetInnerHTML={{

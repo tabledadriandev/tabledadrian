@@ -22,6 +22,9 @@ const Coin = () => {
     supply: '0',
   });
 
+  const [showAddress, setShowAddress] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -141,30 +144,59 @@ const Coin = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-2xl sm:text-3xl text-accent-primary mb-4 font-display"
+            className="text-2xl sm:text-3xl text-accent-primary mb-4 font-display"
             >
-              TA
+            $tabledadrian
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-6 mb-8 max-w-2xl mx-auto"
+            className="bg-white/80 dark:bg-accent-dark/40 backdrop-blur-md border border-border-light/70 rounded-2xl p-6 sm:p-7 mb-8 max-w-2xl mx-auto shadow-sm"
             >
-              <p className="text-sm text-text-secondary mb-2">Contract Address</p>
-              <div className="flex items-center justify-center gap-3 flex-wrap">
-                <code className="text-text-primary font-mono text-sm sm:text-base break-all">
+            <p className="text-sm uppercase tracking-wide text-text-secondary mb-3 text-center">
+              Contract details
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+              <button
+                type="button"
+                onClick={() => setShowAddress((prev) => !prev)}
+                className="btn-primary inline-flex items-center justify-center gap-2 px-4 py-2 text-sm"
+              >
+                <span>{showAddress ? 'Hide Address' : 'Show Address'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(CONTRACT_ADDRESS);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  } catch (err) {
+                    console.error('Failed to copy address', err);
+                  }
+                }}
+                className="btn-secondary inline-flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm"
+              >
+                <span>Copy Address</span>
+                {copied && <span className="text-[11px] text-accent-primary">Copied</span>}
+              </button>
+              <a
+                href={BASE_SCAN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary inline-flex items-center justify-center gap-2 px-4 py-2 text-sm"
+              >
+                <span>View on BaseScan</span>
+              </a>
+            </div>
+            {showAddress && (
+              <div className="mt-4 rounded-lg bg-bg-primary/80 dark:bg-accent-dark/60 px-3 py-2 text-center">
+                <code className="text-text-primary font-mono text-xs sm:text-sm break-all">
                   {CONTRACT_ADDRESS}
                 </code>
-                <a
-                  href={BASE_SCAN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent-primary hover:text-accent-primary/80 text-sm underline"
-                >
-                  View on BaseScan
-                </a>
               </div>
+            )}
             </motion.div>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -292,55 +324,8 @@ const Coin = () => {
         </div>
       </section>
 
-      {/* Whitepaper Section */}
+      {/* Pitch Deck Section */}
       <section className="section-padding bg-accent-dark/5">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-3xl md:text-4xl font-display text-text-primary mb-8"
-            >
-              Whitepaper
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg text-text-secondary mb-8 leading-relaxed"
-            >
-              Our comprehensive whitepaper details the Table d&apos;Adrian Coin&apos;s purpose, economic model, 
-              technical architecture, community structure, and real-world business applications. This document 
-              demonstrates our commitment to transparency and trust.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="card p-8 max-w-2xl mx-auto"
-            >
-              <h3 className="text-xl font-display text-text-primary mb-4">Key Highlights</h3>
-              <ul className="text-left text-text-secondary space-y-3 mb-6">
-                <li>• Purpose-driven tokenomics aligned with business growth</li>
-                <li>• Technical specifications and security measures</li>
-                <li>• Community governance and decision-making framework</li>
-                <li>• Real-world utility and business integration plans</li>
-                <li>• Roadmap for global expansion and partnerships</li>
-              </ul>
-              <button className="btn-primary">
-                Download Whitepaper (Coming Soon)
-              </button>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Roadmap Section */}
-      <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-6xl mx-auto">
             <motion.h2
@@ -348,75 +333,90 @@ const Coin = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-3xl md:text-4xl font-display text-text-primary mb-12 text-center"
+              className="text-3xl md:text-4xl font-display text-text-primary mb-4 text-center"
             >
-              Business Roadmap
+              Investor Pitch Deck
             </motion.h2>
-            <div className="space-y-8">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-sm sm:text-base text-text-secondary mb-8 max-w-3xl mx-auto text-center leading-relaxed"
+            >
+              Explore the full vision behind Table d&apos;Adrian Coin – from the problem we&apos;re solving
+              to our token model, go‑to‑market strategy, and roadmap. These cards highlight the key slides
+              from our official pitch deck.
+            </motion.p>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-10">
               {[
                 {
-                  quarter: 'Q1 2026',
-                  title: 'Foundation & Launch',
-                  items: [
-                    'Token launch on Base network',
-                    'Initial liquidity provision',
-                    'Community building and engagement',
-                    'Partnership development',
+                  title: '1. Vision & Problem',
+                  points: [
+                    'Bridging luxury dining with Web3 membership',
+                    'Fragmented loyalty across restaurants & events',
+                    'Lack of transparent value capture for communities',
                   ],
                 },
                 {
-                  quarter: 'Q2 2026',
-                  title: 'Integration & Expansion',
-                  items: [
-                    'Token integration for booking system',
-                    'Loyalty and rewards program launch',
-                    'First NFT-based membership tier',
-                    'Enhanced community governance',
+                  title: '2. Solution & Product',
+                  points: [
+                    'TA token as the unified experience currency',
+                    'Private chef network, events, and digital access',
+                    'Integrated wallet, marketplace, and governance',
                   ],
                 },
                 {
-                  quarter: 'Q3 2026',
-                  title: 'Digital Assets & Partnerships',
-                  items: [
-                    'Exclusive NFT collection launch',
-                    'Luxury brand partnerships',
-                    'Integrated event ticketing system',
-                    'Global market expansion planning',
+                  title: '3. Market & Timing',
+                  points: [
+                    'Rapid growth in experiential luxury & food tech',
+                    'Web3 infrastructure on Base maturing fast',
+                    'First‑mover advantage in fine‑dining x crypto',
                   ],
                 },
                 {
-                  quarter: 'Q4 2026',
-                  title: 'Scale & Innovation',
-                  items: [
-                    'Regulatory compliance framework',
-                    'Advanced governance features',
-                    'International market entry',
-                    'New utility integrations',
+                  title: '4. Tokenomics Snapshot',
+                  points: [
+                    'Balanced allocations for community, liquidity, team',
+                    'Earn TA for on‑chain and off‑chain engagement',
+                    'Deflationary design through utility sinks',
                   ],
                 },
-              ].map((milestone, index) => (
+                {
+                  title: '5. Traction & Proof',
+                  points: [
+                    'Sold‑out private events and collaborations',
+                    'Existing brand and audience across platforms',
+                    'Early partners in hospitality and Web3',
+                  ],
+                },
+                {
+                  title: '6. Roadmap Highlights',
+                  points: [
+                    'Scale chef network and experiential offerings',
+                    'Launch governance and advanced staking',
+                    'Expand into new cities and brand partnerships',
+                  ],
+                },
+              ].map((slide, index) => (
                 <motion.div
-                  key={milestone.quarter}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  key={slide.title}
+                  initial={{ opacity: 0, y: 20, scale: 0.97 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="card p-6 md:p-8"
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                  className="card p-6 flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl transition-transform duration-300"
                 >
-                  <div className="flex flex-col md:flex-row md:items-start gap-4">
-                    <div className="md:w-1/4">
-                      <h3 className="text-xl font-display text-accent-primary mb-2">
-                        {milestone.quarter}
-                      </h3>
-                      <h4 className="text-lg font-semibold text-text-primary">
-                        {milestone.title}
-                      </h4>
-                    </div>
-                    <ul className="md:w-3/4 space-y-2">
-                      {milestone.items.map((item, itemIndex) => (
-                        <li key={itemIndex} className="text-text-secondary flex items-start">
-                          <span className="text-accent-primary mr-2">•</span>
-                          {item}
+                  <div>
+                    <h3 className="text-lg font-display text-text-primary mb-3">
+                      {slide.title}
+                    </h3>
+                    <ul className="space-y-2 text-sm text-text-secondary">
+                      {slide.points.map((p) => (
+                        <li key={p} className="flex items-start">
+                          <span className="mr-2 text-accent-primary">•</span>
+                          <span>{p}</span>
                         </li>
                       ))}
                     </ul>
@@ -424,6 +424,36 @@ const Coin = () => {
                 </motion.div>
               ))}
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col items-center gap-3 text-center"
+            >
+              <a
+                href="/tabledadrian-pitch.docx"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                <span>Download Full Pitch Deck (DOCX)</span>
+              </a>
+              <p className="text-xs sm:text-sm text-text-secondary max-w-xl">
+                The downloadable deck includes detailed financial projections, technical architecture,
+                token distribution tables, and extended roadmap – ideal for investors and partners.
+              </p>
+              <Link
+                href="/whitepaper"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    sessionStorage.setItem('td_whitepaper_allowed', '1');
+                  }
+                }}
+                className="btn-secondary inline-flex items-center gap-2 mt-2"
+              >
+                <span>Read Whitepaper</span>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -510,48 +540,6 @@ const Coin = () => {
                   </li>
                 </ul>
               </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Document Library Section */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-3xl md:text-4xl font-display text-text-primary mb-12 text-center"
-            >
-              Document Library
-            </motion.h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                { title: 'How to Buy', description: 'Step-by-step guide for purchasing Table d\'Adrian Coin' },
-                { title: 'Holder Benefits', description: 'Complete overview of rewards and privileges for token holders' },
-                { title: 'Partner Integration', description: 'Information for businesses interested in partnerships' },
-                { title: 'Governance Guide', description: 'How to participate in community decision-making' },
-                { title: 'Security Best Practices', description: 'Protecting your tokens and wallet security' },
-                { title: 'FAQ', description: 'Frequently asked questions about the token and ecosystem' },
-              ].map((doc, index) => (
-                <motion.div
-                  key={doc.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-6 hover:scale-105 transition-transform duration-300"
-                >
-                  <h3 className="text-xl font-display text-text-primary mb-3">{doc.title}</h3>
-                  <p className="text-text-secondary mb-4">{doc.description}</p>
-                  <button className="text-accent-primary hover:text-accent-primary/80 text-sm font-semibold">
-                    View Document →
-                  </button>
-                </motion.div>
-              ))}
             </div>
           </div>
         </div>
