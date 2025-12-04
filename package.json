@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
+    "build:cloudflare": "next build --webpack",
     "start": "next start",
     "lint": "next lint",
     "electron": "electron .",

@@ -71,16 +71,16 @@ const Hero = () => {
           <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
               href="mailto:adrian@tabledadrian.com"
-              className="btn-primary"
+              className="btn-primary group"
             >
-              Book Your Private Chef
+              <span>Book Your Private Chef</span>
             </a>
             <button
               onClick={handleServicesClick}
-              className="btn-secondary"
+              className="btn-secondary group"
               type="button"
             >
-              Explore Services
+              <span>Explore Services</span>
             </button>
           </div>
         </div>

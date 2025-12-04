@@ -20,7 +20,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-accent-dark text-bg-primary py-16">
+    <footer className="bg-accent-primary text-white py-16">
       <div className="container-custom">
         <div className="text-center">
           {/* Tagline */}

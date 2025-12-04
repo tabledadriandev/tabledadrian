@@ -167,10 +167,10 @@ const About = () => {
               e.preventDefault();
               document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="btn-primary inline-block"
+            className="btn-primary inline-block group"
             type="button"
           >
-            Book Your Private Chef Consultation Today
+            <span>Book Your Private Chef Consultation Today</span>
           </button>
         </div>
       </div>

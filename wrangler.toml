@@ -1,0 +1,9 @@
+name = "tabledadrian"
+compatibility_date = "2024-12-01"
+
+# Cloudflare Pages configuration
+# Note: For Next.js 16, we need to use the standard build output
+# The build command should be set in Cloudflare Pages dashboard:
+# Build command: npm run build
+# Build output directory: .next
+

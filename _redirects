@@ -1,0 +1,6 @@
+# Cloudflare Pages redirects and headers
+# HTTP to HTTPS redirects
+http://tabledadrian.com/* https://tabledadrian.com/:splat 301
+http://www.tabledadrian.com/* https://www.tabledadrian.com/:splat 301
+
+

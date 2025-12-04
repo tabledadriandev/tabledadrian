@@ -44,34 +44,60 @@ const Coin = () => {
           // Get token price from pool attributes
           const priceUsd = parseFloat(poolAttrs.base_token_price_usd || poolAttrs.price_usd || '0');
           
-          // Calculate market cap if available (price * total supply)
-          // Get total supply from token relationships if available
+          // Get token data for supply and market cap calculation
+          let totalSupply = 0;
           let marketCap = 0;
+          let holders = 'N/A';
+          
           if (poolData.data.relationships && poolData.data.relationships.base_token) {
             try {
               const tokenId = poolData.data.relationships.base_token.data.id;
-              const tokenResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${tokenId.split('_').pop()}`);
+              const tokenAddress = tokenId.split('_').pop();
+              const tokenResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${tokenAddress}`);
               const tokenData = await tokenResponse.json();
+              
               if (tokenData.data && tokenData.data.attributes) {
-                const totalSupply = parseFloat(tokenData.data.attributes.total_supply || '0');
-                marketCap = priceUsd * totalSupply;
+                const tokenAttrs = tokenData.data.attributes;
+                // Total supply is usually in the token attributes
+                totalSupply = parseFloat(tokenAttrs.total_supply || tokenAttrs.circulating_supply || '0');
+                
+                // Calculate market cap: price * total supply
+                if (priceUsd > 0 && totalSupply > 0) {
+                  marketCap = priceUsd * totalSupply;
+                }
               }
             } catch (tokenError) {
-              console.error('Error fetching token supply:', tokenError);
+              console.error('Error fetching token data:', tokenError);
             }
           }
           
-          // Extract volume data
-          const volume24h = poolAttrs.volume_usd?.h24 || poolAttrs.volume_usd || '0';
-          const liquidity = poolAttrs.reserve_in_usd || poolAttrs.fdv_usd || '0';
+          // Extract volume data - check for proper structure
+          const volume24h = poolAttrs.volume_usd?.h24 || 
+                           (typeof poolAttrs.volume_usd === 'object' ? poolAttrs.volume_usd.h24 : poolAttrs.volume_usd) || 
+                           '0';
+          
+          // Liquidity from reserve_in_usd (pool reserves)
+          const liquidity = poolAttrs.reserve_in_usd || 
+                           poolAttrs.fdv_usd || 
+                           (poolAttrs.base_token_reserve_in_usd ? parseFloat(poolAttrs.base_token_reserve_in_usd) * priceUsd : '0') ||
+                           '0';
+          
+          // Use FDV (Fully Diluted Valuation) if market cap calculation failed
+          if (marketCap === 0 && poolAttrs.fdv_usd) {
+            const fdv = parseFloat(poolAttrs.fdv_usd);
+            // Only use FDV if it's a reasonable number (not in trillions)
+            if (fdv > 0 && fdv < 1e15) {
+              marketCap = fdv;
+            }
+          }
           
           setPriceData({
-            price: priceUsd.toFixed(6),
-            marketCap: marketCap > 0 ? formatNumber(marketCap) : formatNumber(parseFloat(poolAttrs.fdv_usd || '0')),
-            volume24h: formatNumber(parseFloat(volume24h)),
-            liquidity: formatNumber(parseFloat(liquidity)),
-            holders: 'Loading...',
-            supply: formatNumber(parseFloat(poolAttrs.base_token_price_native_currency || '0')),
+            price: priceUsd > 0 ? priceUsd.toFixed(6) : '0.00',
+            marketCap: marketCap > 0 ? formatNumber(marketCap) : 'N/A',
+            volume24h: volume24h && volume24h !== '0' ? formatNumber(parseFloat(volume24h)) : '0',
+            liquidity: liquidity && liquidity !== '0' ? formatNumber(parseFloat(liquidity)) : '0',
+            holders: holders,
+            supply: totalSupply > 0 ? formatNumber(totalSupply) : 'N/A',
           });
           return;
         }
@@ -83,18 +109,25 @@ const Coin = () => {
         if (tokenData.data && tokenData.data.attributes) {
           const attributes = tokenData.data.attributes;
           const priceUsd = parseFloat(attributes.price_usd || '0');
+          const totalSupply = parseFloat(attributes.total_supply || attributes.circulating_supply || '0');
+          const marketCap = priceUsd > 0 && totalSupply > 0 ? priceUsd * totalSupply : 0;
           
           setPriceData({
-            price: priceUsd.toFixed(6),
-            marketCap: 'N/A',
+            price: priceUsd > 0 ? priceUsd.toFixed(6) : '0.00',
+            marketCap: marketCap > 0 ? formatNumber(marketCap) : 'N/A',
             volume24h: 'N/A',
             liquidity: 'N/A',
-            holders: 'Loading...',
-            supply: formatNumber(parseFloat(attributes.total_supply || '0')),
+            holders: 'N/A',
+            supply: totalSupply > 0 ? formatNumber(totalSupply) : 'N/A',
           });
         }
       } catch (error) {
         console.error('Error fetching pool data:', error);
+        // Set error state
+        setPriceData(prev => ({
+          ...prev,
+          price: prev.price === '0.00' ? 'Error' : prev.price,
+        }));
       }
     };
 
@@ -104,6 +137,8 @@ const Coin = () => {
   }, []);
 
   const formatNumber = (num: number): string => {
+    if (isNaN(num) || !isFinite(num) || num <= 0) return '0';
+    if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
     if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
     if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
     if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
@@ -152,16 +187,16 @@ const Coin = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-            className="bg-white/80 dark:bg-accent-dark/40 backdrop-blur-md border border-border-light/70 rounded-2xl p-6 sm:p-7 mb-8 max-w-2xl mx-auto shadow-sm"
+            className="bg-bg-primary rounded-2xl p-6 sm:p-7 mb-8 max-w-2xl mx-auto"
             >
             <p className="text-sm uppercase tracking-wide text-text-secondary mb-3 text-center">
               Contract details
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <div className="flex flex-row flex-wrap items-center justify-center gap-2 sm:gap-3">
               <button
                 type="button"
                 onClick={() => setShowAddress((prev) => !prev)}
-                className="btn-primary inline-flex items-center justify-center gap-2 px-4 py-2 text-sm"
+                className="btn-primary inline-flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm group"
               >
                 <span>{showAddress ? 'Hide Address' : 'Show Address'}</span>
               </button>
@@ -176,16 +211,16 @@ const Coin = () => {
                     console.error('Failed to copy address', err);
                   }
                 }}
-                className="btn-secondary inline-flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm"
+                className="btn-secondary inline-flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm group"
               >
                 <span>Copy Address</span>
-                {copied && <span className="text-[11px] text-accent-primary">Copied</span>}
+                {copied && <span className="text-[11px] text-bg-primary">Copied</span>}
               </button>
               <a
                 href={BASE_SCAN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary inline-flex items-center justify-center gap-2 px-4 py-2 text-sm"
+                className="btn-secondary inline-flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm group"
               >
                 <span>View on BaseScan</span>
               </a>
@@ -224,51 +259,51 @@ const Coin = () => {
             <h2 className="text-3xl md:text-4xl font-display text-text-primary mb-12 text-center">
               Live Market Data
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-              {[
-                { label: 'Price (USD)', value: `$${priceData.price}` },
-                { label: 'Market Cap', value: `$${priceData.marketCap}` },
-                { label: '24h Volume', value: `$${priceData.volume24h}` },
-                { label: 'Liquidity', value: `$${priceData.liquidity}` },
-                { label: 'Holders', value: priceData.holders },
-                { label: 'Supply', value: priceData.supply },
-              ].map((metric, index) => (
-                <motion.div
-                  key={metric.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-6 text-center"
-                >
-                  <p className="text-sm text-text-secondary mb-2">{metric.label}</p>
-                  <p className="text-xl md:text-2xl font-semibold text-text-primary">{metric.value}</p>
-                </motion.div>
-              ))}
+            
+            {/* GeckoTerminal Embed */}
+            <div className="mb-8">
+              <div className="bg-bg-primary rounded-2xl p-4 overflow-hidden">
+                <iframe
+                  height="600"
+                  width="100%"
+                  id="geckoterminal-embed"
+                  title="GeckoTerminal Embed"
+                  src="https://www.geckoterminal.com/base/pools/0xa421606ad7907968228c58d56f20ab1028db588cedb3ece882e9c55515346d7d?embed=1&info=1&swaps=1&grayscale=0&light_chart=0&chart_type=price&resolution=15m"
+                  frameBorder="0"
+                  allow="clipboard-write"
+                  allowFullScreen
+                  className="w-full rounded-lg"
+                  style={{ minHeight: '600px' }}
+                />
+              </div>
             </div>
+
             <div className="mt-8 text-center space-y-4">
               <a
                 href={GECKOTERMINAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary inline-block"
+                className="btn-primary inline-block group"
               >
-                View Full Chart on GeckoTerminal
+                <span>View Full Chart on GeckoTerminal</span>
               </a>
               <div>
                 <a
                   href={UNISWAP_SWAP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary inline-flex items-center gap-2"
+                  className="btn-primary inline-flex items-center gap-2 group"
                 >
-                  <Image
-                    src="/icons/coinbase.svg"
-                    alt="Base"
-                    width={20}
-                    height={20}
-                    className="object-contain"
-                  />
-                  Trade on Base
+                  <span className="flex items-center gap-2">
+                    <Image
+                      src="/icons/coinbase.svg"
+                      alt="Base"
+                      width={20}
+                      height={20}
+                      className="object-contain"
+                    />
+                    Trade on Base
+                  </span>
                 </a>
               </div>
             </div>
@@ -434,7 +469,7 @@ const Coin = () => {
             >
               <a
                 href="/tabledadrian-pitch.docx"
-                className="btn-primary inline-flex items-center gap-2"
+                className="btn-primary inline-flex items-center gap-2 group"
               >
                 <span>Download Full Pitch Deck (DOCX)</span>
               </a>
@@ -449,7 +484,7 @@ const Coin = () => {
                     sessionStorage.setItem('td_whitepaper_allowed', '1');
                   }
                 }}
-                className="btn-secondary inline-flex items-center gap-2 mt-2"
+                className="btn-secondary inline-flex items-center gap-2 mt-2 group"
               >
                 <span>Read Whitepaper</span>
               </Link>
@@ -714,13 +749,10 @@ const Coin = () => {
                 className="card p-8"
               >
                 <h3 className="text-2xl font-display text-text-primary mb-6">Business Inquiries</h3>
-                <p className="text-text-secondary mb-6 leading-relaxed">
+                <p className="text-text-secondary leading-relaxed">
                   For investor relations, media inquiries, or business partnership opportunities, please 
                   contact us through our premium contact form.
                 </p>
-                <Link href="/#contact" className="btn-primary inline-block">
-                  Contact Us
-                </Link>
               </motion.div>
             </div>
           </div>

@@ -380,9 +380,9 @@ const Contact = () => {
                   whileHover={{ scale: submitting ? 1 : 1.05 }}
                   whileTap={{ scale: submitting ? 1 : 0.95 }}
                   disabled={submitting}
-                  className={`btn-primary w-full ${submitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                  className={`btn-primary w-full group ${submitting ? 'opacity-75 cursor-not-allowed' : ''}`}
                 >
-                  {submitting ? 'Sending…' : 'Send Booking Inquiry'}
+                  <span>{submitting ? 'Sending…' : 'Send Booking Inquiry'}</span>
                 </motion.button>
                 {statusMessage && (
                   <p className="mt-3 text-sm text-text-secondary" aria-live="polite">{statusMessage}</p>

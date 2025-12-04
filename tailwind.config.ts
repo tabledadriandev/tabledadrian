@@ -10,13 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // OPUS Design System - Masterful Palette
-        'bg-primary': '#FAF8F3', // Light Cream
-        'text-primary': '#2B2520', // Dark Walnut
-        'accent-primary': '#0F4C81', // Cobalt Blue
-        'hover-state': '#D4C5B9', // Coffee Beige
-        'border-light': '#E8E3DC', // Soft Gray
-        'accent-dark': '#1A2332', // Deep Navy
+        // Updated Design System
+        'bg-primary': '#F1F3F8',
+        'text-primary': '#2D2C25',
+        'accent-primary': '#6F94C7',
+        'hover-state': '#D4C5B9',
+        'border-light': '#E8E3DC',
+        'accent-dark': '#1A2332',
         
         // Semantic Colors
         'success': '#4CAF50',
@@ -27,24 +27,25 @@ const config: Config = {
         'text-secondary': '#6B6560',
         'text-tertiary': '#8B8580',
         
-        // Legacy support (will be replaced gradually)
+        // Legacy support
         'gold': {
-          DEFAULT: '#0F4C81', // Cobalt Blue as primary accent
-          light: '#D4C5B9', // Coffee Beige
-          dark: '#1A2332', // Deep Navy
+          DEFAULT: '#6F94C7',
+          light: '#D4C5B9',
+          dark: '#1A2332',
         },
         'cream': {
-          DEFAULT: '#FAF8F3',
-          light: '#FAF8F3',
+          DEFAULT: '#F1F3F8',
+          light: '#F1F3F8',
           dark: '#E8E3DC',
         },
-        'charcoal': '#2B2520',
+        'charcoal': '#2D2C25',
       },
       fontFamily: {
-        // OPUS Typography: Chango for titles, clean sans for body
-        display: ['Chango', 'var(--font-display)', 'Impact', 'Arial Black', 'sans-serif'],
-        serif: ['var(--font-serif)', 'Cormorant Garamond', 'Playfair Display', 'serif'],
-        sans: ['var(--font-sans)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        // Updated Typography: Bitter for titles, Google Sans Code for body, Space Grotesk for buttons
+        display: ['var(--font-display)', 'Bitter', 'serif'],
+        serif: ['var(--font-display)', 'Bitter', 'serif'],
+        sans: ['var(--font-sans)', 'Google Sans Code', 'system-ui', '-apple-system', 'sans-serif'],
+        button: ['var(--font-button)', 'Space Grotesk', 'sans-serif'],
       },
       fontSize: {
         // Reduced font sizes for titles (4-5px smaller)

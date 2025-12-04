@@ -129,51 +129,54 @@ const Services = () => {
             return (
               <article
                 key={index}
-                className="card p-6 sm:p-8"
+                className="card"
                 itemScope
                 itemType="https://schema.org/Service"
               >
-                {/* Icon */}
-                <div className={`inline-flex p-4 rounded-md border ${color.bg} ${color.text} border-current/20 mb-6`}>
-                  <IconComponent
-                    size={32}
-                    className={color.text}
-                    strokeWidth={1.5}
-                  />
+                <span></span>
+                <div className="content p-6 sm:p-8">
+                  {/* Icon */}
+                  <div className={`inline-flex p-4 rounded-md border ${color.bg} ${color.text} border-current/20 mb-6`}>
+                    <IconComponent
+                      size={32}
+                      className={color.text}
+                      strokeWidth={1.5}
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="text-2xl font-display text-text-primary mb-4" itemProp="name">
+                    {service.title}
+                  </h3>
+                  <p className="text-text-secondary mb-6 leading-relaxed" itemProp="description">
+                    {service.description}
+                  </p>
+
+                  {/* Features */}
+                  <div className="space-y-3 mb-6">
+                    {service.features.map((feature, featureIndex) => (
+                      <div
+                        key={featureIndex}
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-1 h-1 rounded-full bg-accent-primary flex-shrink-0" />
+                        <span className="text-text-secondary">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* CTA */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="btn-secondary text-sm group"
+                    type="button"
+                  >
+                    <span>Learn More →</span>
+                  </button>
                 </div>
-
-                {/* Content */}
-                <h3 className="text-2xl font-display text-text-primary mb-4" itemProp="name">
-                  {service.title}
-                </h3>
-                <p className="text-text-secondary mb-6 leading-relaxed" itemProp="description">
-                  {service.description}
-                </p>
-
-                {/* Features - OPUS style, no bullets */}
-                <div className="space-y-3 mb-6">
-                  {service.features.map((feature, featureIndex) => (
-                    <div
-                      key={featureIndex}
-                      className="flex items-center gap-3"
-                    >
-                      <div className="w-1 h-1 rounded-full bg-accent-primary flex-shrink-0" />
-                      <span className="text-text-secondary">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="btn-secondary text-sm"
-                  type="button"
-                >
-                  Learn More →
-                </button>
               </article>
             );
           })}
@@ -182,10 +185,12 @@ const Services = () => {
         {/* FAQ Section */}
         <div
           ref={faqRef}
-          className="mt-12 sm:mt-20 card p-6 sm:p-10"
+          className="mt-12 sm:mt-20 card"
           itemScope
           itemType="https://schema.org/FAQPage"
         >
+          <span></span>
+          <div className="content p-6 sm:p-10">
           <h3 className="text-3xl font-display text-text-primary mb-8 text-center">
             Frequently Asked Questions About Private Chef Services
           </h3>
@@ -352,11 +357,12 @@ const Services = () => {
                 e.preventDefault();
                 document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="btn-primary"
+              className="btn-primary group"
               type="button"
             >
-              Book Your Private Chef Experience
+              <span>Book Your Private Chef Experience</span>
             </button>
+          </div>
           </div>
         </div>
       </div>

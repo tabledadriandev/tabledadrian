@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ChevronUp, X } from 'lucide-react';
 
 // OPUS-style animated text for navigation
 const AnimatedNavText = ({ text, className }: { text: string; className?: string }) => {
@@ -145,9 +146,9 @@ const Navigation = () => {
               e.preventDefault();
               document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="btn-primary text-sm px-6 py-2.5"
+            className="btn-primary text-sm px-6 py-2.5 group"
           >
-            Book Chef
+            <span>Book Chef</span>
           </button>
         </div>
 
@@ -210,7 +211,26 @@ const Navigation = () => {
                 role="dialog"
                 aria-modal="true"
               >
-                <div className="container-custom py-8 min-h-screen flex flex-col items-center justify-center space-y-8">
+                {/* Close Button - Arrow at top */}
+                <div className="container-custom pt-6 pb-4 flex justify-center">
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex flex-col items-center gap-2 text-accent-primary hover:text-accent-primary/80 transition-colors"
+                    aria-label="Close menu"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <motion.div
+                      animate={{ y: [0, -4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                    >
+                      <ChevronUp size={32} strokeWidth={2} />
+                    </motion.div>
+                    <span className="text-xs font-button uppercase tracking-wide">Close</span>
+                  </motion.button>
+                </div>
+                <div className="container-custom pb-8 min-h-[calc(100vh-120px)] flex flex-col items-center justify-center space-y-8">
                   {navItems.map((item, index) => {
                     if (item.isHash) {
                       return (
@@ -257,9 +277,9 @@ const Navigation = () => {
                       document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
                       setIsMobileMenuOpen(false);
                     }}
-                    className="btn-primary text-lg sm:text-xl px-8 py-4"
+                    className="btn-primary text-lg sm:text-xl px-8 py-4 group"
                   >
-                    Book Chef
+                    <span>Book Chef</span>
                   </motion.button>
                 </div>
               </motion.div>
