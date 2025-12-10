@@ -15,7 +15,7 @@ const Footer = () => {
     { name: 'Truth Social', icon: '/icons/truthsocial.svg', href: 'https://truthsocial.com/@tabledadrian' },
     { name: 'Farcaster', icon: '/icons/Farcaster--Streamline-Simple-Icons (1).svg', href: 'https://farcaster.xyz/adrsteph.base.eth' },
     { name: 'Base', icon: '/icons/coinbase.svg', href: 'https://base.app/profile/adrsteph' },
-    { name: 'Zora', icon: '/icons/zora.svg', href: 'https://zora.co/@adrianstefan' },
+    { name: 'Zora', icon: '/icons/zora.svg', href: 'https://zora.co/@tabledadrian' },
     { name: 'Gronda', icon: '/icons/Gronda.svg', href: 'https://chefadrianstefan.gronda.com' },
   ];
 

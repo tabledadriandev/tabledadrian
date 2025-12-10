@@ -460,7 +460,7 @@ const Contact = () => {
                     { name: 'truth-social', icon: '/icons/truthsocial.svg', href: 'https://truthsocial.com/@tabledadrian' },
                     { name: 'farcaster', icon: '/icons/Farcaster--Streamline-Simple-Icons (1).svg', href: 'https://farcaster.xyz/adrsteph.base.eth' },
                     { name: 'base', icon: '/icons/coinbase.svg', href: 'https://base.app/profile/adrsteph' },
-                    { name: 'zora', icon: '/icons/zora.svg', href: 'https://zora.co/@adrianstefan' },
+                    { name: 'zora', icon: '/icons/zora.svg', href: 'https://zora.co/@tabledadrian' },
                     { name: 'gronda', icon: '/icons/Gronda.svg', href: 'https://chefadrianstefan.gronda.com' }
                   ].map(({ name, icon, href }) => (
                     <a
