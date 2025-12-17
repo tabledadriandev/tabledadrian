@@ -12,8 +12,6 @@
     "start:custom": "node --max-old-space-size=4096 server.js",
     "lint": "next lint",
     "kill:port": "node scripts/kill-port.js",
-    "expo:start": "npx expo start --web",
-    "expo:tunnel": "npx expo start --tunnel",
     "electron": "npm run kill:port && electron ./electron/main.js",
     "electron:dev": "npm run kill:port && concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron ./electron/main.js\"",
     "electron:build": "npm run build && electron-builder",
@@ -23,8 +21,8 @@
     "electron:pack": "npm run build && electron-builder --dir"
   },
   "engines": {
-    "node": ">=22.0.0",
-    "npm": ">=10.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   },
   "browserslist": [
     "last 2 Chrome versions",
@@ -42,7 +40,6 @@
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@rainbow-me/rainbowkit": "^2.2.9",
-    "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-spring/web": "^10.0.3",
     "@stripe/stripe-js": "^2.0.0",
     "@tanstack/react-query": "^5.90.10",
@@ -57,8 +54,6 @@
     "clsx": "^2.1.1",
     "critters": "^0.0.23",
     "date-fns": "^4.1.0",
-    "expo": "^54.0.25",
-    "expo-router": "^6.0.15",
     "framer-motion": "^10.16.16",
     "gsap": "^3.13.0",
     "ioredis": "^5.8.2",
