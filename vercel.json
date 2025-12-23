@@ -4,7 +4,6 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["iad1"],
-  "nodeVersion": "22.x",
   "env": {
     "NODE_ENV": "production"
   },
