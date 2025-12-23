@@ -1,9 +1,10 @@
 {
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "installCommand": "npm ci",
+  "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["iad1"],
+  "nodeVersion": "22.x",
   "env": {
     "NODE_ENV": "production"
   },
