@@ -1,11 +1,13 @@
 {
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "installCommand": "npm install",
+  "installCommand": "npm install --legacy-peer-deps",
   "framework": "nextjs",
   "regions": ["iad1"],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1",
+    "SKIP_ENV_VALIDATION": "true"
   },
   "headers": [
     {
