@@ -61,7 +61,7 @@ export function NumberCounter({
   }, [value, duration]);
 
   const rounded = decimals > 0 ? displayValue.toFixed(decimals) : Math.floor(displayValue);
-  return React.createElement('span', null, `${prefix}${rounded}${suffix}`);
+  return <span>{`${prefix}${rounded}${suffix}`}</span>;
 }
 
 /**
