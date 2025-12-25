@@ -81,7 +81,7 @@ export class AuthService {
       }
 
       // Look for existing social account
-      let social = await prisma.socialAccount.findFirst({
+      const social = await prisma.socialAccount.findFirst({
         where: { provider, providerId },
         include: { user: true },
       });

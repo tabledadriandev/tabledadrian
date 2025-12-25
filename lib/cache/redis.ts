@@ -4,9 +4,15 @@
  */
 
 let Redis: any = null;
+
+// Dynamically load ioredis (optional dependency)
+// Using require() for optional dependencies that may not be installed
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 try {
-  Redis = require('ioredis').default || require('ioredis');
-} catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const ioredis = require('ioredis');
+  Redis = ioredis.default || ioredis;
+} catch {
   // ioredis is optional - app works without it
   console.warn('ioredis not installed - Redis caching disabled');
 }

@@ -187,7 +187,8 @@ export class WebSocketService {
       // return session?.isActive && session.expiryTimestamp > new Date();
 
       // Simplified: Verify JWT token (session validation handled in auth service)
-      const jwt = require('jsonwebtoken');
+      const jwtModule = await import('jsonwebtoken');
+      const jwt = jwtModule.default || jwtModule;
       const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
       try {
         jwt.verify(sessionToken, JWT_SECRET);

@@ -111,7 +111,7 @@ export default function NutritionPage() {
       'Steamed Broccoli': { calories: 35, protein: 2.8, carbs: 7, fats: 0.4, fiber: 2.6 },
     };
 
-    let totals = { calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 };
+    const totals = { calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 };
     
     foods.forEach((food) => {
       const nutrition = nutritionDB[food.name] || { calories: 100, protein: 5, carbs: 15, fats: 3, fiber: 2 };
