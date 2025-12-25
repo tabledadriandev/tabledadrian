@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
       activity: latestActivity?.value || 30,
     };
 
-    const medicalData = medicalResults.map(result => ({
+    const medicalData = medicalResults.map((result: any) => ({
       biomarkers: (result.biomarkers as any[]).map((b: any) => ({
         name: b.name,
         value: b.value,
