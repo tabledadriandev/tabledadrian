@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authService } from '@/lib/auth';
-import { withApiProtection, apiProtection, rateLimitConfigs } from '@/lib/middleware/api-protection';
+import { withApiProtection, apiProtection } from '@/lib/middleware/api-protection';
+import { rateLimitConfigs } from '@/lib/middleware/rate-limit';
 import { validateRequest } from '@/lib/validation/schemas';
 import { authSchemas } from '@/lib/validation/schemas';
 import { z } from 'zod';
