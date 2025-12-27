@@ -80,52 +80,11 @@ export async function POST(request: NextRequest) {
           );
         }
 
-        // Create subscription record (payment will be processed on-chain)
-        const subscription = await prisma.subscription.create({
-          data: {
-            userId: user.id,
-            tier: tier as SubscriptionTier,
-            billingCycle: billingCycle as BillingCycle,
-            price: priceInTA,
-            currency: 'TA',
-            paymentMethod: 'crypto',
-            status: 'pending',
-            currentPeriodStart: new Date(),
-            currentPeriodEnd: new Date(
-              Date.now() + (billingCycle === 'monthly' ? 30 * 24 * 60 * 60 * 1000 : 365 * 24 * 60 * 60 * 1000)
-            ),
-          },
-        });
-
-        // Create payment record
-        await prisma.payment.create({
-          data: {
-            userId: user.id,
-            amount: priceInTA,
-            currency: 'TA',
-            paymentMethod: 'crypto',
-            type: 'subscription',
-            description: `${tier} subscription - ${billingCycle}`,
-            subscriptionId: subscription.id,
-            status: 'pending',
-          },
-        });
-
-        return NextResponse.json({
-          success: true,
-          paymentMethod: 'crypto',
-          subscription: {
-            id: subscription.id,
-            tier: subscription.tier,
-            billingCycle: subscription.billingCycle,
-            price: subscription.price,
-            currency: subscription.currency,
-            status: subscription.status,
-          },
-          requiresOnChainTransaction: true,
-          amount: priceInTA,
-          currency: 'TA',
-        });
+        // TODO: Subscription and Payment models not yet implemented
+        return NextResponse.json(
+          { error: 'Subscription and Payment models not yet implemented' },
+          { status: 501 }
+        );
       } else {
         // Fiat subscription payment (use existing subscription create endpoint logic)
         // Redirect to subscription creation
@@ -166,16 +125,18 @@ export async function POST(request: NextRequest) {
           );
         }
 
-        // Create payment record
-        const payment = await prisma.payment.create({
+        // TODO: Payment model not yet implemented, use Transaction instead
+        const payment = await prisma.transaction.create({
           data: {
             userId: user.id,
-            amount,
-            currency: currency.toUpperCase(),
-            paymentMethod: 'crypto',
-            type: 'one_time',
+            type: 'purchase',
+            amount: -amount, // Negative for purchase
             description,
             status: 'pending',
+            metadata: {
+              currency: currency.toUpperCase(),
+              paymentMethod: 'crypto',
+            },
           },
         });
 
@@ -184,8 +145,8 @@ export async function POST(request: NextRequest) {
           paymentMethod: 'crypto',
           payment: {
             id: payment.id,
-            amount: payment.amount,
-            currency: payment.currency,
+            amount: Math.abs(payment.amount),
+            currency: (payment.metadata as Record<string, unknown>)?.currency as string || 'USD',
             status: payment.status,
           },
           requiresOnChainTransaction: true,
@@ -201,17 +162,19 @@ export async function POST(request: NextRequest) {
           description
         );
 
-        // Create payment record
-        await prisma.payment.create({
+        // TODO: Payment model not yet implemented, use Transaction instead
+        await prisma.transaction.create({
           data: {
             userId: user.id,
-            amount: amount,
-            currency: currency.toUpperCase(),
-            paymentMethod: 'stripe_card',
-            type: 'one_time',
+            type: 'purchase',
+            amount: -amount, // Negative for purchase
             description,
-            stripePaymentIntentId: paymentIntent.id,
-            status: paymentIntent.status === 'succeeded' ? 'succeeded' : 'pending',
+            status: paymentIntent.status === 'succeeded' ? 'completed' : 'pending',
+            metadata: {
+              currency: currency.toUpperCase(),
+              paymentMethod: 'stripe_card',
+              stripePaymentIntentId: paymentIntent.id,
+            },
           },
         });
 
@@ -228,10 +191,11 @@ export async function POST(request: NextRequest) {
       { error: 'Invalid payment type. Must be "subscription" or "one_time"' },
       { status: 400 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error processing unified payment:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to process payment';
     return NextResponse.json(
-      { error: error.message || 'Failed to process payment' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

@@ -16,17 +16,13 @@ async function getUserContext(userId: string) {
       OR: [{ walletAddress: userId }, { email: userId }],
     },
     include: {
-      profile: true,
-      healthData: { take: 10, orderBy: { recordedAt: 'desc' } },
-      biomarkers: { take: 5, orderBy: { recordedAt: 'desc' } },
+            biomarkerReadings: { take: 10, orderBy: { date: 'desc' } },
       mealLogs: { take: 5, orderBy: { createdAt: 'desc' } },
     },
   });
 
   return {
-    profile: user?.profile,
-    healthData: user?.healthData || [],
-    biomarkers: user?.biomarkers || [],
+    biomarkers: user?.biomarkerReadings || [],
     mealLogs: user?.mealLogs || [],
   };
 }
@@ -60,7 +56,7 @@ export async function POST(request: NextRequest) {
 
       case 'generate_workout_today':
         const fitnessModule = new FitnessMovementModule();
-        const goals = userContext.profile?.healthGoals || ['General fitness'];
+        const goals = ['General fitness']; // Health goals can be extracted from user preferences if needed
         result = await fitnessModule.generateWorkoutPlan(goals, userContext, 1);
         break;
 

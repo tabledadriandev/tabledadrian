@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     const tokenReward = 5; // 5 $TA for medical result upload
 
     // Record DeSci contribution
-    await prisma.desciContribution.create({
+    await prisma.deSciContribution.create({
       data: {
         userId,
         dataPoints: biomarkers.length,

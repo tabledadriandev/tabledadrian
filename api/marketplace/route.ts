@@ -13,16 +13,15 @@ export async function GET(request: NextRequest) {
     if (type) where.type = type;
     if (category) where.category = category;
 
-    const items = await prisma.marketplaceItem.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-    });
+    // TODO: MarketplaceItem model not yet implemented
+    const items: unknown[] = [];
 
     return NextResponse.json(items);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching marketplace items:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch items';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch items' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

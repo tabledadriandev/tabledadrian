@@ -31,22 +31,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const record = await prisma.medicalRecord.create({
+    // TODO: MedicalRecord model not yet implemented, use MedicalResult instead
+    const record = await prisma.medicalResult.create({
       data: {
         userId: user.id,
-        providerId: providerId ?? null,
-        title,
-        description: description ?? null,
-        fileUrl: fileUrl ?? null,
-        sharedWithProviderIds: [],
+        pdfUrl: fileUrl ?? null,
+        extractedData: {},
+        biomarkers: {},
+        testDate: new Date(),
+        testType: 'general',
+        labName: description ?? null,
+        doctorNotes: description ?? null,
       },
     });
 
     return NextResponse.json({ success: true, record });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error uploading medical record:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to upload record';
     return NextResponse.json(
-      { error: 'Failed to upload record', details: error.message },
+      { error: 'Failed to upload record', details: errorMessage },
       { status: 500 },
     );
   }

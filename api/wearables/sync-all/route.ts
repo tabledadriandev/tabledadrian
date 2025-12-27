@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
 
     // Record DeSci contribution
     if (totalDataPoints > 0) {
-      await prisma.desciContribution.create({
+      await prisma.deSciContribution.create({
         data: {
           userId,
           dataPoints: totalDataPoints,

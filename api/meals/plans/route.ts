@@ -23,17 +23,18 @@ export async function GET(request: NextRequest) {
       return NextResponse.json([]);
     }
 
-    const mealPlans = await prisma.mealPlan.findMany({
+    // TODO: MealPlan model not yet implemented, use ChefMealPlan instead
+    const mealPlans = await prisma.chefMealPlan.findMany({
       where: { userId: user.id },
-      include: { meals: true },
       orderBy: { createdAt: 'desc' },
     });
 
     return NextResponse.json(mealPlans);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching meal plans:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch meal plans';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch meal plans' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

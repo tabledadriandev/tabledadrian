@@ -41,7 +41,8 @@ export async function GET(request: NextRequest) {
 
     // Get invoice for payment
     if (paymentId) {
-      const payment = await prisma.payment.findFirst({
+      // TODO: Payment model not yet implemented, use Transaction instead
+      const payment = await prisma.transaction.findFirst({
         where: {
           id: paymentId,
           userId: user.id,
@@ -55,20 +56,21 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      // For Stripe payments, get invoice PDF
-      if (payment.stripeInvoiceId) {
-        const invoiceUrl = await stripeService.getInvoicePdfUrl(payment.stripeInvoiceId);
-        
+      // TODO: Transaction model doesn't have stripeInvoiceId, check metadata instead
+      const paymentMetadata = payment.metadata as Record<string, unknown> | null;
+      const stripeInvoiceId = paymentMetadata?.stripeInvoiceId as string | undefined;
+      if (stripeInvoiceId) {
+        const invoiceUrl = await stripeService.getInvoicePdfUrl(stripeInvoiceId);
         return NextResponse.json({
           success: true,
           invoice: {
             paymentId: payment.id,
             amount: payment.amount,
-            currency: payment.currency,
+            currency: (paymentMetadata?.currency as string) || 'USD',
             description: payment.description,
-            paidAt: payment.paidAt,
-            invoiceUrl: invoiceUrl || payment.invoiceUrl,
-            invoiceNumber: payment.invoiceNumber,
+            paidAt: payment.createdAt,
+            invoiceUrl: invoiceUrl || (paymentMetadata?.invoiceUrl as string) || null,
+            invoiceNumber: (paymentMetadata?.invoiceNumber as string) || null,
           },
         });
       }
@@ -79,78 +81,28 @@ export async function GET(request: NextRequest) {
         invoice: {
           paymentId: payment.id,
           amount: payment.amount,
-          currency: payment.currency,
+          currency: (paymentMetadata?.currency as string) || 'USD',
           description: payment.description,
-          paidAt: payment.paidAt,
+          paidAt: payment.createdAt,
           txHash: payment.txHash,
           invoiceNumber: `INV-${payment.id.slice(0, 8).toUpperCase()}`,
         },
       });
     }
 
-    // Get invoices for subscription
+    // TODO: Subscription and Payment models not yet implemented
     if (subscriptionId) {
-      const subscription = await prisma.subscription.findFirst({
-        where: {
-          id: subscriptionId,
-          userId: user.id,
-        },
-      });
-
-      if (!subscription) {
-        return NextResponse.json(
-          { error: 'Subscription not found' },
-          { status: 404 }
-        );
-      }
-
-      // Get all payments for this subscription
-      const payments = await prisma.payment.findMany({
-        where: {
-          subscriptionId: subscription.id,
-          status: 'succeeded',
-        },
-        orderBy: {
-          paidAt: 'desc',
-        },
-      });
-
-      const invoices = await Promise.all(
-        payments.map(async (payment: any) => {
-          let invoiceUrl = payment.invoiceUrl;
-          
-          if (payment.stripeInvoiceId && !invoiceUrl) {
-            invoiceUrl = await stripeService.getInvoicePdfUrl(payment.stripeInvoiceId) || null;
-          }
-
-          return {
-            paymentId: payment.id,
-            amount: payment.amount,
-            currency: payment.currency,
-            description: payment.description,
-            paidAt: payment.paidAt,
-            invoiceUrl,
-            invoiceNumber: payment.invoiceNumber || `INV-${payment.id.slice(0, 8).toUpperCase()}`,
-          };
-        })
+      return NextResponse.json(
+        { error: 'Subscription model not yet implemented' },
+        { status: 501 }
       );
-
-      return NextResponse.json({
-        success: true,
-        subscription: {
-          id: subscription.id,
-          tier: subscription.tier,
-          billingCycle: subscription.billingCycle,
-        },
-        invoices,
-      });
     }
 
     return NextResponse.json(
       { error: 'Invalid request' },
       { status: 400 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching invoice:', error);
     return NextResponse.json(
       { error: 'Failed to fetch invoice' },

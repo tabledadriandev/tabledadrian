@@ -39,30 +39,16 @@ export async function POST(request: NextRequest) {
         })
       : null;
 
-    const provider = await prisma.healthcareProvider.create({
-      data: {
-        userId: linkedUser?.id,
-        fullName,
-        type,
-        specialties: Array.isArray(specialties) ? specialties : [],
-        languages: Array.isArray(languages) ? languages : ['English'],
-        bio: bio ?? null,
-        yearsExperience: yearsExperience ?? null,
-        licenseNumber: licenseNumber ?? null,
-        licenseCountry: licenseCountry ?? null,
-        // For now, providers are not auto-verified; a manual admin step would be needed.
-        licenseVerified: false,
-        consultationPrice: consultationPrice ?? null,
-        timezone: timezone ?? null,
-        availability: availability ?? null,
-      },
-    });
-
-    return NextResponse.json({ success: true, provider });
-  } catch (error: any) {
-    console.error('Error registering provider:', error);
+    // TODO: HealthcareProvider model not yet implemented
     return NextResponse.json(
-      { error: 'Failed to register provider', details: error.message },
+      { error: 'HealthcareProvider model not yet implemented' },
+      { status: 501 }
+    );
+  } catch (error: unknown) {
+    console.error('Error registering provider:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to register provider';
+    return NextResponse.json(
+      { error: 'Failed to register provider', details: errorMessage },
       { status: 500 },
     );
   }

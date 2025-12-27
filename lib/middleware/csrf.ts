@@ -158,7 +158,7 @@ export function addCsrfTokenToResponse(
 ): NextResponse {
   response.cookies.set('csrf-token', token, {
     httpOnly: false, // Must be accessible to JavaScript for double-submit
-    secure: env.isProduction,
+    secure: env.NODE_ENV === 'production',
     sameSite: 'strict',
     maxAge: CSRF_TOKEN_EXPIRY,
     path: '/',

@@ -72,22 +72,26 @@ export class GutBrainAxisTracker {
         break;
     }
 
-    const microbiomeResults = await prisma.microbiomeResult.findMany({
-      where: {
-        userId,
-        testDate: { gte: startDate },
-      },
-      orderBy: { testDate: 'asc' },
-    });
+    // TODO: MicrobiomeResult model not yet implemented
+    const microbiomeResults: any[] = [];
+    // const microbiomeResults = await prisma.microbiomeResult.findMany({
+    //   where: {
+    //     userId,
+    //     testDate: { gte: startDate },
+    //   },
+    //   orderBy: { testDate: 'asc' },
+    // });
 
     // Get mood/symptom data within timeframe
-    const symptomLogs = await prisma.symptomLog.findMany({
-      where: {
-        userId,
-        date: { gte: startDate },
-      },
-      orderBy: { date: 'asc' },
-    });
+    // TODO: SymptomLog model not yet implemented
+    const symptomLogs: any[] = [];
+    // const symptomLogs = await prisma.symptomLog.findMany({
+    //   where: {
+    //     userId,
+    //     date: { gte: startDate },
+    //   },
+    //   orderBy: { date: 'asc' },
+    // });
 
     const healthData = await prisma.healthData.findMany({
       where: {

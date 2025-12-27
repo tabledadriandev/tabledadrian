@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     let user = await prisma.user.findUnique({
       where: { walletAddress: address },
       include: {
-        stakes: {
+        stakings: {
           where: { status: 'active' },
         },
       },
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
       user = await prisma.user.create({
         data: { walletAddress: address },
         include: {
-          stakes: {
+          stakings: {
             where: { status: 'active' },
           },
         },
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Calculate available balance (total - already staked)
-    const totalStaked = user.stakes.reduce((sum, s) => sum + s.amount, 0);
+    const totalStaked = user.stakings.reduce((sum, s) => sum + s.amount, 0);
     const availableBalance = balanceNum - totalStaked;
 
     if (amountNum > availableBalance) {
@@ -87,14 +87,15 @@ export async function POST(request: NextRequest) {
     lockedUntil.setDate(lockedUntil.getDate() + lockUpPeriod);
 
     // Create stake
-    const stake = await prisma.stake.create({
+    const stake = await prisma.staking.create({
       data: {
         userId: user.id,
         amount: amountNum,
-        lockUpPeriod,
-        multiplier,
-        lockedUntil,
+        startDate: new Date(),
+        unlockDate: lockedUntil,
         status: 'active',
+        apy: 0, // TODO: Calculate APY based on lock-up period
+        rewardsEarned: 0,
       },
     });
 
@@ -102,7 +103,7 @@ export async function POST(request: NextRequest) {
     await prisma.user.update({
       where: { id: user.id },
       data: {
-        stakedAmount: { increment: amountNum },
+        stakedTokens: { increment: amountNum },
       },
     });
 
@@ -111,15 +112,16 @@ export async function POST(request: NextRequest) {
       stake: {
         id: stake.id,
         amount: stake.amount,
-        lockUpPeriod: stake.lockUpPeriod,
-        multiplier: stake.multiplier,
-        lockedUntil: stake.lockedUntil,
+        lockUpPeriod,
+        multiplier,
+        lockedUntil: stake.unlockDate,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating lock-up stake:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create lock-up stake';
     return NextResponse.json(
-      { error: error.message || 'Failed to create lock-up stake' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -140,7 +142,7 @@ export async function GET(request: NextRequest) {
     const user = await prisma.user.findUnique({
       where: { walletAddress: address },
       include: {
-        stakes: {
+        stakings: {
           orderBy: { createdAt: 'desc' },
         },
       },
@@ -154,20 +156,21 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const activeStakes = user.stakes.filter(
-      (s) => s.status === 'active' && s.lockedUntil > new Date()
+    const activeStakes = user.stakings.filter(
+      (s) => s.status === 'active' && s.unlockDate !== null && s.unlockDate > new Date()
     );
 
     return NextResponse.json({
-      stakes: user.stakes,
-      totalStaked: user.stakes.reduce((sum, s) => sum + s.amount, 0),
+      stakes: user.stakings,
+      totalStaked: user.stakings.reduce((sum, s) => sum + s.amount, 0),
       activeStakes,
       lockUpOptions: LOCK_UP_OPTIONS,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching lock-up stakes:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch lock-up stakes';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch lock-up stakes' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

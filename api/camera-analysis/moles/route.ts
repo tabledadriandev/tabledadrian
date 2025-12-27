@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       });
       if (existingMole) {
         // Get previous primary image URL and fetch base64 if needed
-        previousImageBase64 = existingMole.primaryImageUrl; // Would fetch actual image in production
+        previousImageBase64 = existingMole.primaryImageUrl || undefined; // Would fetch actual image in production
       }
     }
 
@@ -76,16 +76,17 @@ export async function POST(request: NextRequest) {
     let mole;
     if (existingMole) {
       // Update existing mole with new image and analysis
-      const updatedComparisonImages = [...(existingMole.comparisonImages || []), imageUrl];
+      const existingImages = Array.isArray(existingMole.comparisonImages) ? existingMole.comparisonImages : [];
+      const updatedComparisonImages = [...existingImages, imageUrl];
 
       mole = await prisma.moleTracking.update({
         where: { moleId: finalMoleId },
         data: {
           primaryImageUrl: imageUrl,
-          comparisonImages: updatedComparisonImages,
+          comparisonImages: updatedComparisonImages as any,
           asymmetry: analysisResult.asymmetry as any,
           border: analysisResult.border as any,
-          color: analysisResult.color,
+          color: analysisResult.color as any,
           diameter: analysisResult.diameter,
           evolution: {
             hasChanged: analysisResult.evolution.hasChanged,
@@ -97,7 +98,7 @@ export async function POST(request: NextRequest) {
           // Store full AI analysis as JSON
           aiAnalysis: analysisResult as any,
           lastChecked: new Date(),
-          checkFrequency: calculateCheckFrequency(analysisResult.melanomaRisk || 0),
+          checkFrequency: String(calculateCheckFrequency(analysisResult.melanomaRisk || 0)),
           referredToDermatologist: analysisResult.melanomaRisk > 70 ? true : existingMole.referredToDermatologist,
         },
       });
@@ -114,7 +115,7 @@ export async function POST(request: NextRequest) {
           comparisonImages: [],
           asymmetry: analysisResult.asymmetry as any,
           border: analysisResult.border as any,
-          color: analysisResult.color,
+          color: Array.isArray(analysisResult.color) ? analysisResult.color.join(', ') : (analysisResult.color as any),
           diameter: analysisResult.diameter,
           evolution: {
             hasChanged: false,
@@ -124,7 +125,7 @@ export async function POST(request: NextRequest) {
           riskLevel: analysisResult.riskLevel as any,
           // Store full AI analysis as JSON
           aiAnalysis: analysisResult as any,
-          checkFrequency: calculateCheckFrequency(analysisResult.melanomaRisk || 0),
+          checkFrequency: String(calculateCheckFrequency(analysisResult.melanomaRisk || 0)),
           referredToDermatologist: analysisResult.melanomaRisk > 70,
           referralDate: analysisResult.melanomaRisk > 70 ? new Date() : null,
         },

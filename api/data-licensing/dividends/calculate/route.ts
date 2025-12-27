@@ -18,45 +18,49 @@ export async function GET(request: NextRequest) {
     let licensePurchases: any[] = [];
 
     if (licenseId) {
-      // Calculate for specific license
-      const license = await prisma.dataLicensePurchase.findUnique({
-        where: { id: licenseId },
-      });
-
-      if (!license || license.paymentStatus !== 'paid') {
-        return NextResponse.json(
-          { error: 'License not found or not paid' },
-          { status: 400 }
-        );
-      }
-
-      totalRevenue = license.userRevenueShare; // 40% already calculated
-      licensePurchases = [license];
-    } else {
-      // Calculate for all paid licenses in period
-      const now = new Date();
-      let startDate: Date | undefined;
-
-      if (period === 'quarterly') {
-        const quarter = Math.floor(now.getMonth() / 3);
-        startDate = new Date(now.getFullYear(), quarter * 3, 1);
-      } else if (period === 'monthly') {
-        startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-      }
-
-      const where: any = { paymentStatus: 'paid' };
-      if (startDate) {
-        where.paidAt = { gte: startDate };
-      }
-
-      licensePurchases = await prisma.dataLicensePurchase.findMany({
-        where,
-      });
-
-      totalRevenue = licensePurchases.reduce(
-        (sum, l) => sum + l.userRevenueShare,
-        0
+      // Calculate for specific license (DataLicensePurchase model not in schema)
+      // const license = await prisma.dataLicensePurchase.findUnique({
+      //   where: { id: licenseId },
+      // });
+      // if (!license || license.paymentStatus !== 'paid') {
+      //   return NextResponse.json(
+      //     { error: 'License not found or not paid' },
+      //     { status: 400 }
+      //   );
+      // }
+      // totalRevenue = license.userRevenueShare; // 40% already calculated
+      // licensePurchases = [license];
+      return NextResponse.json(
+        { error: 'DataLicensePurchase model not implemented' },
+        { status: 501 }
       );
+    } else {
+      // Calculate for all paid licenses in period (DataLicensePurchase model not in schema)
+      // const now = new Date();
+      // let startDate: Date | undefined;
+      //
+      // if (period === 'quarterly') {
+      //   const quarter = Math.floor(now.getMonth() / 3);
+      //   startDate = new Date(now.getFullYear(), quarter * 3, 1);
+      // } else if (period === 'monthly') {
+      //   startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      // }
+      //
+      // const where: any = { paymentStatus: 'paid' };
+      // if (startDate) {
+      //   where.paidAt = { gte: startDate };
+      // }
+      //
+      // licensePurchases = await prisma.dataLicensePurchase.findMany({
+      //   where,
+      // });
+      //
+      // totalRevenue = licensePurchases.reduce(
+      //   (sum, l) => sum + l.userRevenueShare,
+      //   0
+      // );
+      totalRevenue = 0;
+      licensePurchases = [];
     }
 
     // Get all opted-in users
@@ -67,8 +71,8 @@ export async function GET(request: NextRequest) {
           select: {
             id: true,
             walletAddress: true,
-            tokenBalance: true,
-            stakedAmount: true,
+            totalTokensEarned: true,
+            stakedTokens: true,
           },
         },
       },
@@ -86,18 +90,26 @@ export async function GET(request: NextRequest) {
     // Calculate proportional distribution based on:
     // 1. Token holdings (weighted 60%)
     // 2. Staked amount (weighted 40%)
+    interface OptInUserWithDetails {
+      user: {
+        id: string;
+        walletAddress: string | null;
+        totalTokensEarned: number | null;
+        stakedTokens: number | null;
+      };
+    }
     const totalTokenWeight = optedInUsers.reduce(
-      (sum, opt) => sum + (opt.user.tokenBalance || 0),
+      (sum: number, opt: OptInUserWithDetails) => sum + (opt.user.totalTokensEarned || 0),
       0
     );
     const totalStakedWeight = optedInUsers.reduce(
-      (sum, opt) => sum + (opt.user.stakedAmount || 0),
+      (sum: number, opt: OptInUserWithDetails) => sum + (opt.user.stakedTokens || 0),
       0
     );
 
-    const dividends = optedInUsers.map((opt) => {
-      const tokenWeight = opt.user.tokenBalance || 0;
-      const stakedWeight = opt.user.stakedAmount || 0;
+    const dividends = optedInUsers.map((opt: OptInUserWithDetails) => {
+      const tokenWeight = opt.user.totalTokensEarned || 0;
+      const stakedWeight = opt.user.stakedTokens || 0;
 
       // Weighted share
       const tokenShare = totalTokenWeight > 0 ? tokenWeight / totalTokenWeight : 0;
@@ -109,8 +121,8 @@ export async function GET(request: NextRequest) {
       return {
         userId: opt.user.id,
         walletAddress: opt.user.walletAddress,
-        tokenBalance: opt.user.tokenBalance,
-        stakedAmount: opt.user.stakedAmount,
+        tokenBalance: opt.user.totalTokensEarned || 0,
+        stakedAmount: opt.user.stakedTokens || 0,
         share: combinedShare,
         dividendAmount,
         currency: 'TA', // Token holders get $tabledadrian

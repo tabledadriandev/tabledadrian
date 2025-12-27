@@ -14,23 +14,24 @@ export async function GET(request: NextRequest) {
 
     const user = await prisma.user.findUnique({
       where: { walletAddress: address },
-      include: { dataLicenseOptIns: true },
+      include: { dataLicenseOptIn: true },
     });
 
     if (!user) {
       return NextResponse.json({ optedIn: false, dataTypes: [] });
     }
 
-    const optIn = user.dataLicenseOptIns[0];
+    const optIn = user.dataLicenseOptIn;
     return NextResponse.json({
       optedIn: optIn?.optedIn ?? false,
-      dataTypes: optIn?.dataTypes ?? [],
-      optedInAt: optIn?.optedInAt ?? null,
+      dataTypes: optIn?.licenseType ? [optIn.licenseType] : [],
+      optedInAt: optIn?.createdAt ?? null,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching opt-in status:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch opt-in status';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch opt-in status' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -38,7 +39,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { address, optedIn, dataTypes } = await request.json();
+    const { address, optedIn, licenseType } = await request.json();
 
     if (!address) {
       return NextResponse.json({ error: 'Address required' }, { status: 400 });
@@ -55,26 +56,17 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Update user's dataSharingOptIn flag
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { dataSharingOptIn: optedIn === true },
-    });
-
     // Upsert opt-in record
     const optIn = await prisma.dataLicenseOptIn.upsert({
       where: { userId: user.id },
       update: {
-        optedIn,
-        dataTypes: dataTypes || ['all'],
-        optedOutAt: optedIn === false ? new Date() : null,
-        optedInAt: optedIn === true ? new Date() : undefined,
+        optedIn: optedIn === true,
+        licenseType: licenseType || null,
       },
       create: {
         userId: user.id,
         optedIn: optedIn === true,
-        dataTypes: dataTypes || ['all'],
-        optedInAt: optedIn === true ? new Date() : undefined,
+        licenseType: licenseType || null,
       },
     });
 
@@ -82,14 +74,15 @@ export async function POST(request: NextRequest) {
       success: true,
       data: {
         optedIn: optIn.optedIn,
-        dataTypes: optIn.dataTypes,
-        optedInAt: optIn.optedInAt,
+        licenseType: optIn.licenseType,
+        optedInAt: optIn.createdAt,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating opt-in:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to update opt-in';
     return NextResponse.json(
-      { error: error.message || 'Failed to update opt-in' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

@@ -1,14 +1,29 @@
 /**
  * Sentry Error Tracking Integration
  * Monitors errors and performance in production
+ * Optional dependency - gracefully handles when @sentry/nextjs is not installed
  */
 
-import * as Sentry from '@sentry/nextjs';
+let Sentry: any = null;
+
+// Try to load Sentry (optional dependency)
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  Sentry = require('@sentry/nextjs');
+} catch {
+  // Sentry not installed - functions will be no-ops
+  console.warn('@sentry/nextjs not installed - error tracking disabled');
+}
 
 /**
  * Initialize Sentry
  */
 export function initSentry() {
+  if (!Sentry) {
+    console.warn('Sentry not available - error tracking disabled');
+    return;
+  }
+
   const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
   
   if (!dsn) {
@@ -33,6 +48,7 @@ export function initSentry() {
  * Capture exception
  */
 export function captureException(error: Error, context?: Record<string, any>) {
+  if (!Sentry) return;
   Sentry.captureException(error, {
     extra: context,
   });
@@ -41,7 +57,8 @@ export function captureException(error: Error, context?: Record<string, any>) {
 /**
  * Capture message
  */
-export function captureMessage(message: string, level: Sentry.SeverityLevel = 'info') {
+export function captureMessage(message: string, level: 'info' | 'warning' | 'error' | 'fatal' | 'debug' = 'info') {
+  if (!Sentry) return;
   Sentry.captureMessage(message, level);
 }
 
@@ -49,13 +66,15 @@ export function captureMessage(message: string, level: Sentry.SeverityLevel = 'i
  * Set user context
  */
 export function setUser(user: { id: string; email?: string; username?: string }) {
+  if (!Sentry) return;
   Sentry.setUser(user);
 }
 
 /**
  * Add breadcrumb
  */
-export function addBreadcrumb(message: string, category?: string, level?: Sentry.SeverityLevel) {
+export function addBreadcrumb(message: string, category?: string, level?: 'info' | 'warning' | 'error' | 'fatal' | 'debug') {
+  if (!Sentry) return;
   Sentry.addBreadcrumb({
     message,
     category,

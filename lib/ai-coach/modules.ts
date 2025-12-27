@@ -301,7 +301,7 @@ export class SleepOptimizationModule {
     userContext: UserHealthContext
   ): Promise<CoachingResponse> {
     const systemPrompt = `You are a sleep optimization specialist. Design a personalized bedtime routine considering:
-- User's current sleep patterns: ${userContext.healthData?.find(d => d.type === 'sleep')?.value || 'Not tracked'}
+- User's current sleep patterns: ${userContext.biomarkers?.find((d: any) => d.metric === 'sleep')?.value || 'Not tracked'}
 - Sleep goals: ${userContext.profile?.healthGoals?.includes('sleep') ? 'Optimize sleep' : 'General sleep improvement'}
 - Lifestyle factors
 

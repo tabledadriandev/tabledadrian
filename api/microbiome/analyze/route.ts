@@ -17,52 +17,16 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get specific result or latest result
-    let microbiomeResult;
-    if (resultId) {
-      microbiomeResult = await prisma.microbiomeResult.findFirst({
-        where: {
-          id: resultId,
-          userId,
-        },
-      });
-    } else {
-      microbiomeResult = await prisma.microbiomeResult.findFirst({
-        where: { userId },
-        orderBy: { testDate: 'desc' },
-      });
-    }
-
-    if (!microbiomeResult) {
-      return NextResponse.json(
-        { error: 'Microbiome result not found' },
-        { status: 404 }
-      );
-    }
-
-    // Get all results for trend analysis
-    const allResults = await prisma.microbiomeResult.findMany({
-      where: { userId },
-      orderBy: { testDate: 'asc' },
-      take: 10, // Last 10 results
-    });
-
-    // Calculate trends
-    const trends = calculateTrends(allResults);
-
-    // Generate insights
-    const insights = generateInsights(microbiomeResult, trends);
-
-    return NextResponse.json({
-      success: true,
-      result: microbiomeResult,
-      trends,
-      insights,
-    });
-  } catch (error: any) {
-    console.error('Microbiome analysis error:', error);
+    // TODO: MicrobiomeResult model not yet implemented
     return NextResponse.json(
-      { error: error.message || 'Failed to analyze microbiome' },
+      { error: 'Microbiome analysis not yet implemented' },
+      { status: 501 }
+    );
+  } catch (error: unknown) {
+    console.error('Microbiome analysis error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to analyze microbiome';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 }
     );
   }

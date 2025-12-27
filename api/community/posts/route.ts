@@ -13,17 +13,6 @@ export async function GET(request: NextRequest) {
             username: true,
           },
         },
-        recipe: true,
-        comments: {
-          take: 3,
-          include: {
-            user: {
-              select: {
-                username: true,
-              },
-            },
-          },
-        },
       },
       orderBy: { createdAt: 'desc' },
       take: 50,

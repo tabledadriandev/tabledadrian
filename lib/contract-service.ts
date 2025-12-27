@@ -10,9 +10,9 @@ import { createWalletClient, http, parseUnits } from 'viem';
 import { base } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { TABLEDADRIAN_ABI } from './web3';
-import { TA_CONTRACT_ADDRESS } from '../../ta_contract/contract-address';
 
-const TA_CONTRACT = TA_CONTRACT_ADDRESS;
+// Contract address from environment variable or default
+const TA_CONTRACT = (process.env.TA_CONTRACT_ADDRESS || '0x0000000000000000000000000000000000000000') as `0x${string}`;
 
 export class ContractService {
   private walletClient;
@@ -62,9 +62,9 @@ export class ContractService {
       });
 
       return hash;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error processing booking on-chain:', error);
-      throw new Error(error.message || 'Failed to process booking on-chain');
+      throw new Error(error instanceof Error ? error.message : 'Failed to process booking on-chain');
     }
   }
 
@@ -92,9 +92,9 @@ export class ContractService {
       });
 
       return hash;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error processing NFT reward on-chain:', error);
-      throw new Error(error.message || 'Failed to process NFT reward on-chain');
+      throw new Error(error instanceof Error ? error.message : 'Failed to process NFT reward on-chain');
     }
   }
 
@@ -122,9 +122,9 @@ export class ContractService {
       });
 
       return hash;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error processing event ticket on-chain:', error);
-      throw new Error(error.message || 'Failed to process event ticket on-chain');
+      throw new Error(error instanceof Error ? error.message : 'Failed to process event ticket on-chain');
     }
   }
 

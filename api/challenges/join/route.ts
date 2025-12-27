@@ -45,15 +45,16 @@ export async function POST(request: NextRequest) {
       data: {
         userId: user.id,
         challengeId,
-        progress: { started: true, completed: 0 },
+        progress: 0,
       },
     });
 
     return NextResponse.json({ success: true, data: progress });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error joining challenge:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to join challenge';
     return NextResponse.json(
-      { error: error.message || 'Failed to join challenge' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

@@ -10,16 +10,12 @@ async function getUserContext(userId: string) {
       OR: [{ walletAddress: userId }, { email: userId }],
     },
     include: {
-      profile: true,
-      healthData: { take: 10, orderBy: { recordedAt: 'desc' } },
-      biomarkers: { take: 5, orderBy: { recordedAt: 'desc' } },
+            biomarkerReadings: { take: 10, orderBy: { date: 'desc' } },
     },
   });
 
   return {
-    profile: user?.profile,
-    healthData: user?.healthData || [],
-    biomarkers: user?.biomarkers || [],
+    biomarkers: user?.biomarkerReadings || [],
   };
 }
 
@@ -38,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     switch (action) {
       case 'reduce_biological_age':
-        const currentAge = data?.currentAge || userContext.profile?.age || 40;
+        const currentAge = data?.currentAge || 40; // Age can be passed in data or default to 40
         const biologicalAge = data?.biologicalAge || currentAge;
         response = await longevityModule.reduceBiologicalAge(
           currentAge,

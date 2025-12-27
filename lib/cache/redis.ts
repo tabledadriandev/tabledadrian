@@ -39,13 +39,13 @@ export function initRedis() {
   try {
     redis = new Redis(redisUrl, {
       maxRetriesPerRequest: 3,
-      retryStrategy: (times) => {
+      retryStrategy: (times: number) => {
         const delay = Math.min(times * 50, 2000);
         return delay;
       },
     });
 
-    redis.on('error', (err) => {
+    redis.on('error', (err: unknown) => {
       console.error('Redis error:', err);
     });
 

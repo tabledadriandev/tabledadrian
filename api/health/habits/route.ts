@@ -29,23 +29,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(null);
     }
 
-    const targetDate = date ? new Date(date) : new Date();
-    targetDate.setHours(0, 0, 0, 0);
-    const nextDay = new Date(targetDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-
-    const habits = await prisma.dailyHabits.findFirst({
-      where: {
-        userId: user.id,
-        date: {
-          gte: targetDate,
-          lt: nextDay,
-        },
-      },
-    });
-
-    return NextResponse.json(habits);
-  } catch (error: any) {
+    // TODO: DailyHabits model not yet implemented in schema
+    return NextResponse.json(null);
+  } catch (error: unknown) {
     console.error('Error fetching habits:', error);
     return NextResponse.json(
       { error: 'Failed to fetch habits' },
@@ -77,63 +63,16 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const targetDate = date ? new Date(date) : new Date();
-    targetDate.setHours(0, 0, 0, 0);
-    const nextDay = new Date(targetDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-
-    // Find existing or create new
-    const existing = await prisma.dailyHabits.findFirst({
-      where: {
-        userId: user.id,
-        date: {
-          gte: targetDate,
-          lt: nextDay,
-        },
-      },
-    });
-
-    let habits;
-    if (existing) {
-      habits = await prisma.dailyHabits.update({
-        where: { id: existing.id },
-        data: {
-          ...habitData,
-          mealsLogged: habitData.mealsLogged ?? existing.mealsLogged,
-        },
-      });
-    } else {
-      // Calculate streak
-      const yesterday = new Date(targetDate);
-      yesterday.setDate(yesterday.getDate() - 1);
-      const yesterdayHabits = await prisma.dailyHabits.findFirst({
-        where: {
-          userId: user.id,
-          date: {
-            gte: yesterday,
-            lt: targetDate,
-          },
-        },
-      });
-
-      const newStreak = yesterdayHabits ? (yesterdayHabits.streak + 1) : 1;
-
-      habits = await prisma.dailyHabits.create({
-        data: {
-          userId: user.id,
-          date: targetDate,
-          ...habitData,
-          streak: newStreak,
-          mealsLogged: habitData.mealsLogged ?? 0,
-        },
-      });
-    }
-
-    return NextResponse.json({ success: true, habits });
-  } catch (error: any) {
-    console.error('Error saving habits:', error);
+    // TODO: DailyHabits model not yet implemented in schema
     return NextResponse.json(
-      { error: 'Failed to save habits', details: error.message },
+      { error: 'Daily habits not yet implemented' },
+      { status: 501 }
+    );
+  } catch (error: unknown) {
+    console.error('Error saving habits:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to save habits';
+    return NextResponse.json(
+      { error: 'Failed to save habits', details: errorMessage },
       { status: 500 }
     );
   }

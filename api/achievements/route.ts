@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     const achievements = await prisma.achievement.findMany({
       where: { userId: user.id },
-      orderBy: { earnedAt: 'desc' },
+      orderBy: { unlockedAt: 'desc' },
     });
 
     return NextResponse.json(achievements);

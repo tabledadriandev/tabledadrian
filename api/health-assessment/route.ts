@@ -4,9 +4,8 @@
  * Example of using error handling, auth, and rate limiting middleware
  */
 
-import { NextRequest } from 'next/server';
 import { withErrorHandler, ApiException } from '@/lib/api/errorHandler';
-import { withAuth } from '@/lib/api/auth';
+import { withAuth, type AuthUser } from '@/lib/api/auth';
 import { withRateLimit } from '@/lib/api/rateLimit';
 import { z } from 'zod';
 
@@ -24,7 +23,7 @@ const assessmentSchema = z.object({
   dietType: z.enum(['omnivore', 'vegetarian', 'vegan', 'paleo']),
 });
 
-async function handleAssessment(req: NextRequest, user: { userId: string }) {
+async function handleAssessment(req: Request, user: AuthUser) {
   const body = await req.json();
 
   // Validate input
@@ -64,15 +63,14 @@ async function handleAssessment(req: NextRequest, user: { userId: string }) {
   });
 }
 
-// Apply rate limiting (100 requests per hour)
+// Apply authentication first, then rate limiting, then error handling
+const authenticatedHandler = withAuth(handleAssessment);
+
 const rateLimitedHandler = withRateLimit({
   limit: 100,
   window: 3600,
-})(handleAssessment);
-
-// Apply authentication
-const authenticatedHandler = withAuth(rateLimitedHandler);
+})(authenticatedHandler);
 
 // Apply error handling
-export const POST = withErrorHandler(authenticatedHandler);
+export const POST = withErrorHandler(rateLimitedHandler);
 

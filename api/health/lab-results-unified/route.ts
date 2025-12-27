@@ -34,61 +34,54 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get all biomarkers
-    const biomarkers = await prisma.biomarker.findMany({
+    // Get all biomarkers (using BiomarkerReading model)
+    const biomarkers = await prisma.biomarkerReading.findMany({
       where: { userId: user.id },
-      orderBy: { recordedAt: 'desc' },
+      orderBy: { date: 'desc' },
     });
 
-    // Get all test results
-    const testResults = await prisma.testResult.findMany({
+    // Get all medical results (using MedicalResult model instead of testResult)
+    const medicalResults = await prisma.medicalResult.findMany({
       where: {
         userId: user.id,
-        status: 'completed',
       },
-      include: {
-        order: {
-          include: {
-            kit: {
-              select: {
-                name: true,
-                kitType: true,
-                category: true,
-              },
-            },
-          },
-        },
-      },
-      orderBy: { processingCompletedAt: 'desc' },
+      orderBy: { testDate: 'desc' },
     });
 
-    // Extract biomarker data from test results
-    const testResultBiomarkers: any[] = [];
-    for (const result of testResults) {
-      if (result.biomarkerEntries && Array.isArray(result.biomarkerEntries)) {
-        for (const entry of result.biomarkerEntries as any[]) {
-          testResultBiomarkers.push({
-            ...(entry || {}),
-            source: 'test_result',
-            testResultId: result.id,
-            testName: result.testName,
-            testType: result.testType,
-            date: result.processingCompletedAt || result.createdAt,
-            provider: result.provider,
-          });
+    // Extract biomarker data from medical results
+    const testResultBiomarkers: Array<Record<string, unknown>> = [];
+    for (const result of medicalResults) {
+      if (result.biomarkers && typeof result.biomarkers === 'object') {
+        const biomarkers = result.biomarkers as Record<string, unknown>;
+        for (const [key, value] of Object.entries(biomarkers)) {
+          if (value !== null && value !== undefined) {
+            testResultBiomarkers.push({
+              [key]: value,
+              source: 'medical_result',
+              testResultId: result.id,
+              testName: result.testType,
+              testType: result.testType,
+              date: result.testDate,
+              labName: result.labName,
+            });
+          }
         }
       }
     }
 
     // Combine and format all results
     const allResults = [
-      ...biomarkers.map((b: any) => ({
+      ...biomarkers.map((b) => ({
         ...b,
         source: 'manual_entry',
-        date: b.recordedAt || b.createdAt,
+        date: b.date || b.createdAt,
       })),
       ...testResultBiomarkers,
-    ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    ].sort((a, b) => {
+      const dateA = a.date instanceof Date ? a.date.getTime() : new Date(a.date as string).getTime();
+      const dateB = b.date instanceof Date ? b.date.getTime() : new Date(b.date as string).getTime();
+      return dateB - dateA;
+    });
 
     // Calculate trends for each biomarker
     const trends = calculateTrends(allResults, biomarkerName);
@@ -104,8 +97,9 @@ export async function GET(request: NextRequest) {
       ];
 
       for (const field of biomarkerFields) {
-        if (result[field] !== null && result[field] !== undefined) {
-          statusMap[field] = getStatus(result[field], field);
+        const value = (result as Record<string, unknown>)[field];
+        if (value !== null && value !== undefined && typeof value === 'number') {
+          statusMap[field] = getStatus(value, field);
         }
       }
 
@@ -121,7 +115,7 @@ export async function GET(request: NextRequest) {
       trends,
       summary: {
         totalResults: allResults.length,
-        totalTestResults: testResults.length,
+        totalTestResults: medicalResults.length,
         totalBiomarkerEntries: biomarkers.length,
         dateRange: {
           earliest: allResults.length > 0 ? allResults[allResults.length - 1].date : null,
@@ -129,10 +123,11 @@ export async function GET(request: NextRequest) {
         },
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Get unified lab results error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to get lab results';
     return NextResponse.json(
-      { error: error.message || 'Failed to get lab results' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -142,7 +137,7 @@ export async function GET(request: NextRequest) {
  * Calculate trends for biomarkers
  */
 function calculateTrends(
-  results: any[],
+  results: Array<Record<string, unknown>>,
   biomarkerName?: string | null
 ): Record<string, {
   trend: 'improving' | 'declining' | 'stable' | 'insufficient_data';
@@ -151,7 +146,13 @@ function calculateTrends(
   previousValue?: number;
   dataPoints: Array<{ date: string; value: number }>;
 }> {
-  const trends: Record<string, any> = {};
+  const trends: Record<string, {
+    trend: 'improving' | 'declining' | 'stable' | 'insufficient_data';
+    change: number;
+    latestValue: number;
+    previousValue?: number;
+    dataPoints: Array<{ date: string; value: number }>;
+  }> = {};
 
   // Group results by biomarker field
   const biomarkerFields = [
@@ -164,11 +165,18 @@ function calculateTrends(
     if (biomarkerName && field !== biomarkerName) continue;
 
     const dataPoints = results
-      .filter(r => r[field] !== null && r[field] !== undefined)
-      .map(r => ({
-        date: new Date(r.date).toISOString(),
-        value: r[field],
-      }))
+      .filter(r => {
+        const value = (r as Record<string, unknown>)[field];
+        return value !== null && value !== undefined;
+      })
+      .map(r => {
+        const dateValue = r.date instanceof Date ? r.date : new Date(r.date as string);
+        const value = (r as Record<string, unknown>)[field] as number;
+        return {
+          date: dateValue.toISOString(),
+          value,
+        };
+      })
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     if (dataPoints.length < 2) {

@@ -22,38 +22,32 @@ export async function GET(request: NextRequest) {
           { email: userId },
         ],
       },
-      include: {
-        profile: true,
-        healthAssessments: {
-          orderBy: { createdAt: 'desc' },
-          take: 1,
-        },
-        healthScores: {
-          orderBy: { date: 'desc' },
-          take: 1,
-        },
-        biomarkers: {
-          orderBy: { recordedAt: 'desc' },
-          take: 5,
-        },
-      },
     });
 
     if (!user) {
       return NextResponse.json(null);
     }
 
-    return NextResponse.json({
-      healthScore: user.healthScores[0]?.overallScore,
-      riskScores: user.healthAssessments[0] ? {
-        heartDisease: user.healthAssessments[0].heartDiseaseRisk,
-        diabetes: user.healthAssessments[0].diabetesRisk,
-        hypertension: user.healthAssessments[0].hypertensionRisk,
-      } : null,
-      recentBiomarkers: user.biomarkers,
-      profile: user.profile,
+    // Get health score
+    const healthScore = await prisma.healthScore.findFirst({
+      where: { userId: user.id },
+      orderBy: { calculatedAt: 'desc' },
     });
-  } catch (error: any) {
+
+    // Get recent biomarker readings
+    const recentBiomarkers = await prisma.biomarkerReading.findMany({
+      where: { userId: user.id },
+      orderBy: { date: 'desc' },
+      take: 5,
+    });
+
+    return NextResponse.json({
+      healthScore: healthScore?.score,
+      riskScores: null, // HealthAssessment model not yet implemented
+      recentBiomarkers,
+      profile: null, // Profile not in User model
+    });
+  } catch (error: unknown) {
     console.error('Error fetching health context:', error);
     return NextResponse.json(
       { error: 'Failed to fetch health context' },

@@ -5,21 +5,15 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(_request: NextRequest) {
   try {
-    const providers = await prisma.healthcareProvider.findMany({
-      where: {
-        telemedicine: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      take: 20,
-    });
+    // TODO: HealthcareProvider model not yet implemented
+    const providers: unknown[] = [];
 
     return NextResponse.json({ success: true, providers });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error listing providers:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to list providers';
     return NextResponse.json(
-      { error: 'Failed to list providers', details: error.message },
+      { error: 'Failed to list providers', details: errorMessage },
       { status: 500 },
     );
   }

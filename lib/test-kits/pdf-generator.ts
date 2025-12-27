@@ -22,23 +22,12 @@ export class LabResultsPDFGenerator {
     options: PDFReportOptions = {}
   ): Promise<Buffer> {
     // Get test results
-    const testResults = await prisma.testResult.findMany({
+    // TODO: TestOrder and TestKit models not yet implemented
+    // MedicalResult doesn't have order relation
+    const testResults = await prisma.medicalResult.findMany({
       where: {
         id: { in: testResultIds },
         userId,
-      },
-      include: {
-        order: {
-          include: {
-            kit: {
-              select: {
-                name: true,
-                kitType: true,
-                category: true,
-              },
-            },
-          },
-        },
       },
     });
 
@@ -49,17 +38,14 @@ export class LabResultsPDFGenerator {
     // Get user info
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      include: {
-        profile: true,
-      },
     });
 
     // Get historical biomarkers for trends if requested
     let trends: any[] = [];
     if (options.includeTrends) {
-      const biomarkers = await prisma.biomarker.findMany({
+      const biomarkers = await prisma.biomarkerReading.findMany({
         where: { userId },
-        orderBy: { recordedAt: 'asc' },
+        orderBy: { date: 'asc' },
       });
       trends = biomarkers;
     }

@@ -26,18 +26,25 @@ export async function getTodayTaskSummary(userId: string): Promise<DailyTaskSumm
 
   if (!user) return null;
 
-  const plan = await prisma.wellnessPlan.findFirst({
+  const plan = await prisma.longevityPlan.findFirst({
     where: {
       userId: user.id,
-      isActive: true,
+      status: 'active',
     },
   });
 
-  if (!plan || !Array.isArray(plan.weeklyTasks)) return null;
+  if (!plan) return null;
+
+  // LongevityPlan uses JSON fields (recommendations, mealPlan, exercisePlan)
+  // Extract tasks from recommendations or return null if structure doesn't match
+  const recommendations = plan.recommendations as any;
+  const weeklyTasks = recommendations?.weeklyTasks;
+  
+  if (!Array.isArray(weeklyTasks)) return null;
 
   const todayIndex = new Date().getDay(); // 0-6, Sunday-Saturday
   const normalizedIndex = todayIndex === 0 ? 6 : todayIndex - 1; // Shift so Monday=0
-  const today = (plan.weeklyTasks as any[])[normalizedIndex];
+  const today = weeklyTasks[normalizedIndex];
 
   if (!today || !Array.isArray(today.tasks)) {
     return null;

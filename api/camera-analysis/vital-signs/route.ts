@@ -81,28 +81,36 @@ export async function POST(request: NextRequest) {
         type: 'vital_signs',
         imageUrl,
         imageData: imageBase64 ? imageBase64.substring(0, 1000) : null,
-        heartRate: analysisResult.heartRate,
-        breathingRate: analysisResult.breathingRate,
+        heartRateEstimate: analysisResult.heartRate,
+        respiratoryRate: analysisResult.breathingRate,
         bloodOxygenEstimate: analysisResult.bloodOxygen,
-        temperature: analysisResult.temperature,
-        stressIndicators: analysisResult.stressIndicators,
+        measurements: { stressIndicators: analysisResult.stressIndicators },
         recommendations: generateVitalSignsRecommendations(analysisResult),
       },
     });
 
     // Also create biomarker entry if values are available
-    if (analysisResult.heartRate || analysisResult.breathingRate) {
-      await prisma.biomarker.create({
+    if (analysisResult.heartRate) {
+      await prisma.biomarkerReading.create({
         data: {
-          // Link to user via relation
-          user: {
-            connect: { id: user.id },
-          },
-          heartRate: analysisResult.heartRate || null,
-          breathingRate: analysisResult.breathingRate || null,
+          userId: user.id,
+          metric: 'heart_rate',
+          value: analysisResult.heartRate,
+          unit: 'bpm',
           source: 'camera',
-          // Required JSON field, store empty/custom metadata for now
-          customValues: [],
+          date: new Date(),
+        },
+      });
+    }
+    if (analysisResult.breathingRate) {
+      await prisma.biomarkerReading.create({
+        data: {
+          userId: user.id,
+          metric: 'breathing_rate',
+          value: analysisResult.breathingRate,
+          unit: 'breaths/min',
+          source: 'camera',
+          date: new Date(),
         },
       });
     }
@@ -111,11 +119,10 @@ export async function POST(request: NextRequest) {
       success: true,
       analysis: {
         id: analysis.id,
-        heartRate: analysis.heartRate,
-        breathingRate: analysis.breathingRate,
+        heartRate: analysis.heartRateEstimate,
+        breathingRate: analysis.respiratoryRate,
         bloodOxygen: analysis.bloodOxygenEstimate,
-        temperature: analysis.temperature,
-        stressIndicators: analysis.stressIndicators,
+        measurements: analysis.measurements,
         recommendations: analysis.recommendations,
         analyzedAt: analysis.analyzedAt,
       },

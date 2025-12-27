@@ -43,35 +43,35 @@ export async function POST(request: NextRequest) {
     }
 
     // Get wearable data (latest readings)
-    const latestHRV = await prisma.biomarkerReading.findFirst({
+    const latestHRV = await (prisma as any).biomarkerReading.findFirst({
       where: { userId, metric: 'hrv' },
       orderBy: { date: 'desc' },
     });
 
-    const latestSleep = await prisma.biomarkerReading.findFirst({
+    const latestSleep = await (prisma as any).biomarkerReading.findFirst({
       where: { userId, metric: 'sleep_score' },
       orderBy: { date: 'desc' },
     });
 
-    const latestRecovery = await prisma.biomarkerReading.findFirst({
+    const latestRecovery = await (prisma as any).biomarkerReading.findFirst({
       where: { userId, metric: 'recovery' },
       orderBy: { date: 'desc' },
     });
 
-    const latestActivity = await prisma.biomarkerReading.findFirst({
+    const latestActivity = await (prisma as any).biomarkerReading.findFirst({
       where: { userId, metric: 'active_minutes' },
       orderBy: { date: 'desc' },
     });
 
     // Get medical results
-    const medicalResults = await prisma.medicalResult.findMany({
+    const medicalResults = await (prisma as any).medicalResult.findMany({
       where: { userId },
       orderBy: { testDate: 'desc' },
       take: 1,
     });
 
     // Get food logs (last 7 days)
-    const foodLogs = await prisma.mealLog.findMany({
+    const foodLogs = await (prisma as any).mealLog.findMany({
       where: {
         userId,
         date: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
@@ -80,12 +80,13 @@ export async function POST(request: NextRequest) {
     });
 
     // Prepare data for AI
+    const userAny = user as any;
     const userData = {
-      age: user.biologicalAge ? Math.round((Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24 * 365.25)) : 40,
+      age: userAny.biologicalAge ? Math.round((Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24 * 365.25)) : 40,
       gender: 'unknown', // Would come from user profile
-      biologicalAge: user.biologicalAge || undefined,
-      goals: (user.preferences as any)?.goals || ['longevity', 'performance'],
-      preferences: user.preferences || {},
+      biologicalAge: userAny.biologicalAge || undefined,
+      goals: (userAny.preferences as any)?.goals || ['longevity', 'performance'],
+      preferences: userAny.preferences || {},
     };
 
     const wearableData = {
@@ -121,7 +122,7 @@ export async function POST(request: NextRequest) {
     );
 
     // Store in database
-    const longevityPlan = await prisma.longevityPlan.create({
+    const longevityPlan = await (prisma as any).longevityPlan.create({
       data: {
         userId,
         planType: 'combined',

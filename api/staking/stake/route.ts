@@ -37,11 +37,24 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Create staking record
+    await prisma.staking.create({
+      data: {
+        userId: user.id,
+        amount: amount,
+        startDate: new Date(),
+        unlockDate: null, // No lock-up for regular staking
+        status: 'active',
+        apy: 0, // TODO: Set appropriate APY
+        rewardsEarned: 0,
+      },
+    });
+
     // Update staked amount
     await prisma.user.update({
       where: { id: user.id },
       data: {
-        stakedAmount: {
+        stakedTokens: {
           increment: amount,
         },
       },
@@ -65,10 +78,11 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Staking initiated. Please confirm the transaction in your wallet.',
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error staking:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to stake';
     return NextResponse.json(
-      { error: error.message || 'Failed to stake' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

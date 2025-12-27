@@ -31,33 +31,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const provider = await prisma.healthcareProvider.findUnique({
-      where: { id: providerId },
-    });
-
-    if (!provider) {
-      return NextResponse.json(
-        { error: 'Provider not found' },
-        { status: 404 },
-      );
-    }
-
-    const appointment = await prisma.appointment.create({
-      data: {
-        userId: user.id,
-        providerId: provider.id,
-        startTime: new Date(startTime),
-        endTime: endTime ? new Date(endTime) : null,
-        reason: reason ?? null,
-        status: 'pending',
-      },
-    });
-
-    return NextResponse.json({ success: true, appointment });
-  } catch (error: any) {
-    console.error('Error booking appointment:', error);
+    // TODO: HealthcareProvider model not yet implemented
     return NextResponse.json(
-      { error: 'Failed to book appointment', details: error.message },
+      { error: 'HealthcareProvider model not yet implemented' },
+      { status: 501 },
+    );
+  } catch (error: unknown) {
+    console.error('Error booking appointment:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to book appointment';
+    return NextResponse.json(
+      { error: 'Failed to book appointment', details: errorMessage },
       { status: 500 },
     );
   }

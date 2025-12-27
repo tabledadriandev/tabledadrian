@@ -28,11 +28,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ correlations: [] });
     }
 
-    const symptoms = await prisma.symptomLog.findMany({
-      where: { userId: user.id },
-      orderBy: { date: 'desc' },
-      take: 30,
-    });
+    // TODO: SymptomLog model not yet implemented
+    const symptoms: unknown[] = [];
 
     if (symptoms.length < 5) {
       return NextResponse.json({

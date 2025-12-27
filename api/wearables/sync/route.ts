@@ -100,20 +100,11 @@ export async function POST(request: NextRequest) {
       data: healthDataEntries,
     });
 
-    // Award reward for syncing
-    await prisma.reward.create({
-      data: {
-        userId: user.id,
-        type: 'wearable_sync',
-        amount: 5, // 5 TA tokens
-        description: `Synced ${device} data`,
-      },
-    });
-
+    // TODO: Reward model not yet implemented, update user's totalTokensEarned directly
     await prisma.user.update({
       where: { id: user.id },
       data: {
-        tokenBalance: { increment: 5 },
+        totalTokensEarned: { increment: 5 },
       },
     });
 

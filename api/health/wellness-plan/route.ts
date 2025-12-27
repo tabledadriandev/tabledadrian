@@ -28,16 +28,17 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(null);
     }
 
-    const plan = await prisma.wellnessPlan.findFirst({
+    // TODO: WellnessPlan model not yet implemented, use LongevityPlan instead
+    const plan = await prisma.longevityPlan.findFirst({
       where: {
         userId: user.id,
-        isActive: true,
+        status: 'active',
       },
       orderBy: { createdAt: 'desc' },
     });
 
     return NextResponse.json(plan);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching wellness plan:', error);
     return NextResponse.json(
       { error: 'Failed to fetch wellness plan' },
@@ -67,10 +68,11 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const plan = await prisma.wellnessPlan.findFirst({
+    // TODO: WellnessPlan model not yet implemented, use LongevityPlan instead
+    const plan = await prisma.longevityPlan.findFirst({
       where: {
         userId: user.id,
-        isActive: true,
+        status: 'active',
       },
     });
 
@@ -81,16 +83,17 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const updated = await prisma.wellnessPlan.update({
+    const updated = await prisma.longevityPlan.update({
       where: { id: plan.id },
       data: updateData,
     });
 
     return NextResponse.json({ success: true, plan: updated });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating wellness plan:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to update plan';
     return NextResponse.json(
-      { error: 'Failed to update plan', details: error.message },
+      { error: 'Failed to update plan', details: errorMessage },
       { status: 500 }
     );
   }

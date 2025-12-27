@@ -66,6 +66,7 @@ export async function POST(request: NextRequest) {
         mealType: mealType || 'snack',
         imageUrl,
         cameraAnalysisId: analysis.id,
+        foods: recognitionResult.foods, // Required field
         foodsIdentified: recognitionResult.foods.map((f: any) => f.name),
         portionSizes: recognitionResult.foods.map((f: any) => ({
           food: f.name,
@@ -76,6 +77,7 @@ export async function POST(request: NextRequest) {
         calories: recognitionResult.nutritionAnalysis.calories,
         protein: recognitionResult.nutritionAnalysis.protein,
         carbs: recognitionResult.nutritionAnalysis.carbs,
+        fat: recognitionResult.nutritionAnalysis.fats || 0, // Required field
         fats: recognitionResult.nutritionAnalysis.fats,
         fiber: recognitionResult.nutritionAnalysis.fiber,
         polyphenols: recognitionResult.nutritionAnalysis.polyphenols,
@@ -88,6 +90,7 @@ export async function POST(request: NextRequest) {
         chefId: chefId || null,
         chefName: chefName || null,
         chefVerified: chefId ? true : false,
+        date: new Date(), // Required field
       },
     });
 

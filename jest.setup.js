@@ -46,6 +46,13 @@ class ResizeObserver {
 // @ts-ignore
 global.ResizeObserver = global.ResizeObserver || ResizeObserver
 
+// Polyfill for TextEncoder/TextDecoder (required by viem)
+if (typeof global.TextEncoder === 'undefined') {
+  const { TextEncoder, TextDecoder } = require('util');
+  global.TextEncoder = TextEncoder;
+  global.TextDecoder = TextDecoder;
+}
+
 // Suppress console errors in tests (optional - remove if you want to see them)
 global.console = {
   ...console,

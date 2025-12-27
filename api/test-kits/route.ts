@@ -32,52 +32,18 @@ export async function GET(request: NextRequest) {
       where.provider = provider;
     }
 
-    // Get test kits
-    const testKits = await prisma.testKit.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-    });
-
-    // Filter by price range if specified
-    const filteredKits = (minPrice || maxPrice)
-      ? testKits.filter((kit: typeof testKits[number]) => {
-        const price = currency === 'TA' ? kit.priceInTA : kit.priceInUSD;
-        if (!price) return false;
-        if (minPrice && price < parseFloat(minPrice)) return false;
-        if (maxPrice && price > parseFloat(maxPrice)) return false;
-        return true;
-      })
-      : testKits;
-
-    // Format response with pricing based on currency
-    const formattedKits = filteredKits.map((kit: typeof filteredKits[number]) => ({
-      id: kit.id,
-      name: kit.name,
-      description: kit.description,
-      kitType: kit.kitType,
-      category: kit.category,
-      biomarkersTested: kit.biomarkersTested,
-      price: currency === 'TA' ? kit.priceInTA : kit.priceInUSD,
-      currency,
-      sampleType: kit.sampleType,
-      processingTime: kit.processingTime,
-      provider: kit.provider,
-      instructions: kit.instructions,
-      videoUrl: kit.videoUrl,
-      imageUrl: kit.imageUrl,
-      categoryTags: kit.categoryTags,
-      stockCount: kit.stockCount,
-      createdAt: kit.createdAt,
-    }));
+    // TODO: TestKit model not yet implemented
+    const testKits: unknown[] = [];
 
     return NextResponse.json({
       success: true,
-      testKits: formattedKits,
+      testKits,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Get test kits error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to get test kits';
     return NextResponse.json(
-      { error: error.message || 'Failed to get test kits' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -112,36 +78,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const testKit = await prisma.testKit.create({
-      data: {
-        name,
-        description,
-        kitType,
-        category,
-        biomarkersTested: biomarkersTested || [],
-        priceInTA: priceInTA || null,
-        priceInUSD: priceInUSD || null,
-        sampleType,
-        processingTime: processingTime || null,
-        provider: provider || null,
-        providerId: providerId || null,
-        instructions: instructions || null,
-        videoUrl: videoUrl || null,
-        imageUrl: imageUrl || null,
-        categoryTags: categoryTags || [],
-        stockCount: stockCount || null,
-        isAvailable: true,
-      },
-    });
-
-    return NextResponse.json({
-      success: true,
-      testKit,
-    });
-  } catch (error: any) {
-    console.error('Create test kit error:', error);
+    // TODO: TestKit model not yet implemented
     return NextResponse.json(
-      { error: error.message || 'Failed to create test kit' },
+      { error: 'TestKit model not yet implemented' },
+      { status: 501 }
+    );
+  } catch (error: unknown) {
+    console.error('Create test kit error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create test kit';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 }
     );
   }

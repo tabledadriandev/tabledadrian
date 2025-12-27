@@ -15,42 +15,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const provider = await prisma.healthcareProvider.findUnique({
-      where: { id: providerId },
-    });
-
-    if (!provider) {
-      return NextResponse.json(
-        { error: 'Provider not found' },
-        { status: 404 },
-      );
-    }
-
-    const record = await prisma.medicalRecord.findUnique({
-      where: { id: recordId },
-    });
-
-    if (!record) {
-      return NextResponse.json(
-        { error: 'Record not found' },
-        { status: 404 },
-      );
-    }
-
-    const updated = await prisma.medicalRecord.update({
-      where: { id: recordId },
-      data: {
-        sharedWithProviderIds: Array.from(
-          new Set([...(record.sharedWithProviderIds ?? []), providerId]),
-        ),
-      },
-    });
-
-    return NextResponse.json({ success: true, record: updated });
-  } catch (error: any) {
-    console.error('Error sharing medical record:', error);
+    // TODO: HealthcareProvider and MedicalRecord models not yet implemented
     return NextResponse.json(
-      { error: 'Failed to share record', details: error.message },
+      { error: 'HealthcareProvider and MedicalRecord models not yet implemented' },
+      { status: 501 },
+    );
+  } catch (error: unknown) {
+    console.error('Error sharing medical record:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to share record';
+    return NextResponse.json(
+      { error: 'Failed to share record', details: errorMessage },
       { status: 500 },
     );
   }

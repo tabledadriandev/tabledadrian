@@ -34,10 +34,10 @@ export async function GET(request: NextRequest) {
     const user = await prisma.user.findUnique({
       where: { walletAddress: address },
       include: {
-        stakes: {
+        stakings: {
           where: {
             status: 'active',
-            lockedUntil: {
+            unlockDate: {
               gt: new Date(),
             },
           },
@@ -51,13 +51,23 @@ export async function GET(request: NextRequest) {
     let maxMultiplier = 1.0;
 
     if (user) {
-      for (const stake of user.stakes) {
+      for (const stake of user.stakings) {
         totalStaked += stake.amount;
-        const stakeWeightedPower = stake.amount * stake.multiplier;
+        // Calculate multiplier based on lock-up period (Staking model doesn't have multiplier field)
+        const daysLocked = stake.unlockDate 
+          ? Math.floor((stake.unlockDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+          : 0;
+        let multiplier = 1.0;
+        if (daysLocked >= 365) multiplier = 5.0;
+        else if (daysLocked >= 180) multiplier = 3.0;
+        else if (daysLocked >= 90) multiplier = 2.0;
+        else if (daysLocked >= 30) multiplier = 1.5;
+        
+        const stakeWeightedPower = stake.amount * multiplier;
         totalWeightedPower += stakeWeightedPower;
         // Subtract base weight for staked amount (already counted in baseWeight)
         totalWeightedPower -= stake.amount;
-        maxMultiplier = Math.max(maxMultiplier, stake.multiplier);
+        maxMultiplier = Math.max(maxMultiplier, multiplier);
       }
     }
 
@@ -70,13 +80,24 @@ export async function GET(request: NextRequest) {
       breakdown: {
         unstaked: baseWeight - totalStaked,
         staked: totalStaked,
-        weightedStaked: user?.stakes.reduce((sum, s) => sum + (s.amount * s.multiplier), 0) || 0,
+        weightedStaked: user?.stakings.reduce((sum, s) => {
+          const daysLocked = s.unlockDate 
+            ? Math.floor((s.unlockDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+            : 0;
+          let multiplier = 1.0;
+          if (daysLocked >= 365) multiplier = 5.0;
+          else if (daysLocked >= 180) multiplier = 3.0;
+          else if (daysLocked >= 90) multiplier = 2.0;
+          else if (daysLocked >= 30) multiplier = 1.5;
+          return sum + (s.amount * multiplier);
+        }, 0) || 0,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error calculating voting power:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to calculate voting power';
     return NextResponse.json(
-      { error: error.message || 'Failed to calculate voting power' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

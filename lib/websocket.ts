@@ -4,18 +4,30 @@
  */
 
 import { Server as HTTPServer } from 'http';
-import { Server as SocketIOServer } from 'socket.io';
 import { prisma } from './prisma';
 import { redisCache } from './redis';
 
+// Optional dependency - gracefully handles when socket.io is not installed
+let SocketIOServer: any = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  SocketIOServer = require('socket.io').Server;
+} catch {
+  console.warn('socket.io not installed - WebSocket functionality disabled');
+}
+
 export class WebSocketService {
-  private io: SocketIOServer | null = null;
+  private io: any = null;
   private userSockets: Map<string, Set<string>> = new Map(); // userId -> Set of socketIds
 
   /**
    * Initialize WebSocket server
    */
   initialize(httpServer: HTTPServer) {
+    if (!SocketIOServer) {
+      console.warn('Socket.IO not available - WebSocket server not initialized');
+      return;
+    }
     this.io = new SocketIOServer(httpServer, {
       cors: {
         origin: process.env.NEXT_PUBLIC_APP_URL || '*',
@@ -24,7 +36,7 @@ export class WebSocketService {
       transports: ['websocket', 'polling'],
     });
 
-    this.io.on('connection', (socket) => {
+    this.io.on('connection', (socket: any) => {
       console.log('Client connected:', socket.id);
 
       // Authenticate and register user
@@ -204,7 +216,7 @@ export class WebSocketService {
   /**
    * Get WebSocket server instance
    */
-  getIO(): SocketIOServer | null {
+  getIO(): any {
     return this.io;
   }
 }

@@ -94,7 +94,8 @@ export function validateFormLabels(form: HTMLFormElement): {
 
   inputs.forEach((input) => {
     if (!hasAriaLabel(input as HTMLElement)) {
-      missingLabels.push(input.id || input.name || 'unnamed');
+      const htmlInput = input as HTMLInputElement;
+      missingLabels.push(htmlInput.id || htmlInput.name || 'unnamed');
     }
   });
 

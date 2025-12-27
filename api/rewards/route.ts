@@ -27,31 +27,32 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Create reward
-    const reward = await prisma.reward.create({
-      data: {
-        userId: user.id,
-        type,
-        amount: parseFloat(amount),
-        description: description || `Reward for ${type}`,
-      },
-    });
-
-    // Update user token balance
+    // TODO: Reward model not yet implemented, update user's totalTokensEarned directly
+    const rewardAmount = parseFloat(amount);
+    
     await prisma.user.update({
       where: { id: user.id },
       data: {
-        tokenBalance: {
-          increment: parseFloat(amount),
+        totalTokensEarned: {
+          increment: rewardAmount,
         },
       },
     });
 
-    return NextResponse.json({ success: true, data: reward });
-  } catch (error: any) {
+    return NextResponse.json({ 
+      success: true, 
+      data: {
+        userId: user.id,
+        type,
+        amount: rewardAmount,
+        description: description || `Reward for ${type}`,
+      }
+    });
+  } catch (error: unknown) {
     console.error('Error creating reward:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create reward';
     return NextResponse.json(
-      { error: error.message || 'Failed to create reward' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

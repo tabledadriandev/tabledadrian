@@ -66,9 +66,10 @@ export async function POST(request: NextRequest) {
         imageUrl: imageUrl || null,
         foodsIdentified: foodsIdentified || null,
         portionSizes: portionSizes || null,
-        calories: calories || null,
-        protein: protein || null,
-        carbs: carbs || null,
+        calories: calories || 0,
+        protein: protein || 0,
+        carbs: carbs || 0,
+        fat: fats || 0, // Required field
         fats: fats || null,
         fiber: fiber || null,
         polyphenols: polyphenols || null,

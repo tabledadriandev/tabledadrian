@@ -37,7 +37,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const payment = await prisma.payment.findFirst({
+      // TODO: Payment model not yet implemented, use Transaction instead
+      const payment = await prisma.transaction.findFirst({
       where: {
         id: paymentId,
         userId: user.id,
@@ -51,8 +52,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // TODO: Transaction model doesn't have paymentMethod, check metadata instead
+    const paymentMetadata = payment.metadata as Record<string, unknown> | null;
+    const paymentMethod = (paymentMetadata?.paymentMethod as string) || payment.type;
+    
     // Check if payment is eligible for refund (14 days for fiat, no refunds for crypto)
-    if (payment.paymentMethod === 'crypto') {
+    if (paymentMethod === 'crypto' || payment.txHash) {
       return NextResponse.json(
         { error: 'Crypto payments are non-refundable' },
         { status: 400 }
@@ -61,7 +66,7 @@ export async function POST(request: NextRequest) {
 
     // Check if payment was made within last 14 days
     const daysSincePayment = Math.floor(
-      (Date.now() - (payment.paidAt?.getTime() || payment.createdAt.getTime())) / (1000 * 60 * 60 * 24)
+      (Date.now() - payment.createdAt.getTime()) / (1000 * 60 * 60 * 24)
     );
 
     if (daysSincePayment > 14) {
@@ -87,54 +92,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Process Stripe refund
-    if (payment.stripeChargeId) {
+    // TODO: Transaction model doesn't have stripeChargeId, check metadata instead
+    const stripeChargeId = (paymentMetadata?.stripeChargeId as string) || null;
+    if (stripeChargeId) {
       const refundAmount = amount ? amount * 100 : undefined; // Convert to cents if partial refund
       const refund = await stripeService.createRefund(
-        payment.stripeChargeId,
+        stripeChargeId,
         refundAmount,
         reason || 'requested_by_customer'
       );
 
-      // Update payment record
+      // Update transaction record
       const finalRefundAmount = refund.amount / 100; // Convert from cents
-      const isFullRefund = finalRefundAmount >= payment.amount;
+      const isFullRefund = finalRefundAmount >= Math.abs(payment.amount);
 
-      await prisma.payment.update({
+      await prisma.transaction.update({
         where: { id: payment.id },
         data: {
           status: isFullRefund ? 'refunded' : 'partially_refunded',
-          refundAmount: finalRefundAmount,
-          refundedAt: new Date(),
-          refundReason: reason || 'requested_by_customer',
+          metadata: {
+            ...(paymentMetadata || {}),
+            refundAmount: finalRefundAmount,
+            refundedAt: new Date().toISOString(),
+            refundReason: reason || 'requested_by_customer',
+          },
         },
       });
-
-      // If subscription payment was refunded, cancel subscription
-      if (payment.subscriptionId) {
-        const subscription = await prisma.subscription.findUnique({
-          where: { id: payment.subscriptionId },
-        });
-
-        if (subscription && subscription.status === 'active') {
-          await prisma.subscription.update({
-            where: { id: subscription.id },
-            data: {
-              status: 'canceled',
-              canceledAt: new Date(),
-            },
-          });
-
-          // Cancel Stripe subscription if exists
-          if (subscription.stripeSubscriptionId) {
-            try {
-              await stripeService.cancelSubscription(subscription.stripeSubscriptionId, false);
-            } catch (error) {
-              console.error('Error canceling Stripe subscription:', error);
-            }
-          }
-        }
-      }
 
       // Create refund transaction
       await prisma.transaction.create({
@@ -157,7 +140,7 @@ export async function POST(request: NextRequest) {
         },
         message: isFullRefund 
           ? 'Full refund processed successfully' 
-          : `Partial refund of ${finalRefundAmount} ${payment.currency} processed successfully`,
+          : `Partial refund of ${finalRefundAmount} processed successfully`,
       });
     }
 
@@ -165,10 +148,11 @@ export async function POST(request: NextRequest) {
       { error: 'Refund not available for this payment method' },
       { status: 400 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error processing refund:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to process refund';
     return NextResponse.json(
-      { error: error.message || 'Failed to process refund' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

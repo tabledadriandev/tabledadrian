@@ -31,19 +31,18 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const records = await prisma.medicalRecord.findMany({
+    // TODO: MedicalRecord model not yet implemented, use MedicalResult instead
+    const records = await prisma.medicalResult.findMany({
       where: { userId: user.id },
-      include: {
-        provider: true,
-      },
       orderBy: { createdAt: 'desc' },
     });
 
     return NextResponse.json({ success: true, records });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error listing medical records:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to list records';
     return NextResponse.json(
-      { error: 'Failed to list records', details: error.message },
+      { error: 'Failed to list records', details: errorMessage },
       { status: 500 },
     );
   }

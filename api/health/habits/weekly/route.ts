@@ -28,67 +28,16 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ days: [], completedDays: 0, totalDays: 7 });
     }
 
-    // Get last 7 days
-    const endDate = new Date();
-    endDate.setHours(23, 59, 59, 999);
-    const startDate = new Date(endDate);
-    startDate.setDate(startDate.getDate() - 6);
-    startDate.setHours(0, 0, 0, 0);
-
-    const habits = await prisma.dailyHabits.findMany({
-      where: {
-        userId: user.id,
-        date: {
-          gte: startDate,
-          lte: endDate,
-        },
-      },
-      orderBy: { date: 'asc' },
-    });
-
-    const days = [];
-    let completedDays = 0;
-    const waterValues: number[] = [];
-    const stepValues: number[] = [];
-    let exerciseDays = 0;
-
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date(endDate);
-      date.setDate(date.getDate() - i);
-      const dateStr = date.toISOString().split('T')[0];
-
-      const dayHabits = habits.find((h: any) => h.date.toISOString().split('T')[0] === dateStr);
-      const completed = dayHabits && (
-        ((dayHabits as any).waterIntake && (dayHabits as any).waterIntake >= 2) ||
-        ((dayHabits as any).steps && (dayHabits as any).steps >= 5000) ||
-        dayHabits.exerciseCompleted
-      );
-
-      if (completed) completedDays++;
-
-      if (dayHabits?.waterIntake) waterValues.push(dayHabits.waterIntake);
-      if (dayHabits?.steps) stepValues.push(dayHabits.steps);
-      if (dayHabits?.exerciseCompleted) exerciseDays++;
-
-      days.push({
-        date: date.getDate().toString(),
-        completed: !!completed,
-      });
-    }
-
+    // TODO: DailyHabits model not yet implemented in schema
     return NextResponse.json({
-      days,
-      completedDays,
+      days: [],
+      completedDays: 0,
       totalDays: 7,
-      avgWater: waterValues.length > 0
-        ? waterValues.reduce((a, b) => a + b, 0) / waterValues.length
-        : 0,
-      avgSteps: stepValues.length > 0
-        ? stepValues.reduce((a, b) => a + b, 0) / stepValues.length
-        : 0,
-      exerciseDays,
+      avgWater: 0,
+      avgSteps: 0,
+      exerciseDays: 0,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching weekly summary:', error);
     return NextResponse.json(
       { error: 'Failed to fetch weekly summary' },

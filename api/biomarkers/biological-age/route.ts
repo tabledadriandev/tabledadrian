@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get latest biological age calculation
-    const latest = await prisma.biologicalAge.findFirst({
+    const latest = await (prisma as any).biologicalAge.findFirst({
       where: { userId },
       orderBy: { calculatedAt: 'desc' },
     });

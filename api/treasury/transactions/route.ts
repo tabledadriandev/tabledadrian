@@ -20,32 +20,9 @@ export async function GET(request: NextRequest) {
     if (category) where.category = category;
     if (currency) where.currency = currency;
 
-    const [transactions, total] = await Promise.all([
-      prisma.treasuryTransaction.findMany({
-        where,
-        orderBy: { createdAt: 'desc' },
-        take: limit,
-        skip: offset,
-        include: {
-          proposal: {
-            select: {
-              id: true,
-              title: true,
-              type: true,
-            },
-          },
-        },
-      }),
-      prisma.treasuryTransaction.count({ where }),
-    ]);
-
-    // Calculate summary statistics
-    const summary = await prisma.treasuryTransaction.groupBy({
-      by: ['type', 'currency'],
-      _sum: {
-        amount: true,
-      },
-    });
+    // TODO: TreasuryTransaction model not yet implemented
+    const transactions: unknown[] = [];
+    const total = 0;
 
     return NextResponse.json({
       transactions,
@@ -53,18 +30,15 @@ export async function GET(request: NextRequest) {
         total,
         limit,
         offset,
-        hasMore: offset + limit < total,
+        hasMore: false,
       },
-      summary: summary.reduce((acc, s) => {
-        const key = `${s.type}_${s.currency}`;
-        acc[key] = s._sum.amount || 0;
-        return acc;
-      }, {} as Record<string, number>),
+      summary: {},
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching treasury transactions:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch treasury transactions';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch treasury transactions' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -85,50 +59,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create transaction
-    const transaction = await prisma.treasuryTransaction.create({
-      data: {
-        type,
-        category,
-        amount: parseFloat(amount),
-        currency,
-        description,
-        proposalId,
-        txHash,
-        metadata,
-      },
-    });
-
-    // Update treasury balance
-    const balance = await prisma.treasuryBalance.findUnique({
-      where: { currency },
-    });
-
-    const amountChange = type === 'revenue' || type === 'dividend' 
-      ? parseFloat(amount) 
-      : -parseFloat(amount);
-
-    if (balance) {
-      await prisma.treasuryBalance.update({
-        where: { currency },
-        data: {
-          balance: { increment: amountChange },
-        },
-      });
-    } else {
-      await prisma.treasuryBalance.create({
-        data: {
-          currency,
-          balance: Math.max(0, amountChange),
-        },
-      });
-    }
-
-    return NextResponse.json({ success: true, transaction });
-  } catch (error: any) {
-    console.error('Error creating treasury transaction:', error);
+    // TODO: TreasuryTransaction and TreasuryBalance models not yet implemented
     return NextResponse.json(
-      { error: error.message || 'Failed to create treasury transaction' },
+      { error: 'TreasuryTransaction and TreasuryBalance models not yet implemented' },
+      { status: 501 }
+    );
+  } catch (error: unknown) {
+    console.error('Error creating treasury transaction:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create treasury transaction';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 }
     );
   }

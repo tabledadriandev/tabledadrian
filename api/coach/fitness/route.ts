@@ -10,14 +10,12 @@ async function getUserContext(userId: string) {
       OR: [{ walletAddress: userId }, { email: userId }],
     },
     include: {
-      profile: true,
-      healthData: { take: 10, orderBy: { recordedAt: 'desc' } },
+            biomarkerReadings: { take: 10, orderBy: { date: 'desc' } },
     },
   });
 
   return {
-    profile: user?.profile,
-    healthData: user?.healthData || [],
+    biomarkers: user?.biomarkerReadings || [],
   };
 }
 

@@ -23,17 +23,8 @@ export async function POST(request: NextRequest) {
           { email: userId },
         ],
       },
-      include: {
-        profile: true,
-        healthAssessments: {
-          orderBy: { createdAt: 'desc' },
-          take: 1,
-        },
-        healthScores: {
-          orderBy: { date: 'desc' },
-          take: 1,
-        },
-      },
+      // TODO: HealthAssessments and healthScores relations not yet implemented
+      // Fetch separately if needed
     });
 
     if (!user) {
@@ -43,11 +34,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const assessment = user.healthAssessments[0];
-    const healthScore = user.healthScores[0];
-    const profile = user.profile;
+    // Fetch health score separately
+    const healthScore = await prisma.healthScore.findFirst({
+      where: { userId: user.id },
+      orderBy: { calculatedAt: 'desc' },
+    });
 
-    if (!assessment) {
+    // TODO: HealthAssessment model not yet implemented
+    const assessment = null;
+    const profile = null;
+
+    if (!healthScore) {
       return NextResponse.json(
         { error: 'Please complete a health assessment first.' },
         { status: 400 },
@@ -62,30 +59,35 @@ export async function POST(request: NextRequest) {
       reason: 'initial',
     });
 
+    // TODO: WellnessPlan model not yet implemented, use LongevityPlan instead
     // Deactivate old plans
-    await prisma.wellnessPlan.updateMany({
+    await prisma.longevityPlan.updateMany({
       where: {
         userId: user.id,
-        isActive: true,
+        status: 'active',
       },
       data: {
-        isActive: false,
+        status: 'paused',
       },
     });
 
-    // Create new plan
-    const newPlan = await prisma.wellnessPlan.create({
+    // Create new plan using LongevityPlan model
+    const newPlan = await prisma.longevityPlan.create({
       data: {
         userId: user.id,
-        ...planData,
+        planType: 'combined',
+        recommendations: planData,
+        startDate: new Date(),
+        status: 'active',
       },
     });
 
     return NextResponse.json({ success: true, plan: newPlan });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error generating wellness plan:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to generate plan';
     return NextResponse.json(
-      { error: 'Failed to generate plan', details: error.message },
+      { error: 'Failed to generate plan', details: errorMessage },
       { status: 500 },
     );
   }

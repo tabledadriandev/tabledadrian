@@ -34,8 +34,18 @@ export async function GET(request: NextRequest) {
       .filter((d) => d.status === 'completed')
       .reduce((sum, d) => sum + d.amount, 0);
 
+    interface DividendPayment {
+      id: string;
+      amount: number;
+      currency: string;
+      usdValue: number | null;
+      distributionDate: Date;
+      status: string;
+      txHash: string | null;
+      sourceType: string;
+    }
     return NextResponse.json({
-      dividends: dividends.map((d) => ({
+      dividends: dividends.map((d: DividendPayment) => ({
         id: d.id,
         amount: d.amount,
         currency: d.currency,

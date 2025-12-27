@@ -168,7 +168,7 @@ function BiomarkerInputGroup({
               ? 'border-yellow-300 focus:ring-yellow-500'
               : 'border-slate-300 focus:ring-blue-500'
           )}
-          placeholder={`Normal: ${normalRange.min}−${normalRange.high}`}
+          placeholder={`Normal: ${normalRange.min}−${normalRange.max}`}
           aria-describedby={`${biomarker}-help`}
         />
         <button

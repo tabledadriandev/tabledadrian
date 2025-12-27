@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json(meals);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching meal logs:', error);
     return NextResponse.json(
       { error: 'Failed to fetch meal logs' },
@@ -89,17 +89,18 @@ export async function POST(request: NextRequest) {
         calories: mealData.calories || 0,
         protein: mealData.protein || 0,
         carbs: mealData.carbs || 0,
-        fats: mealData.fats || 0,
+        fat: mealData.fats || mealData.fat || 0, // Schema requires 'fat', not 'fats'
         fiber: mealData.fiber || 0,
         notes: mealData.notes,
       },
     });
 
     return NextResponse.json({ success: true, meal });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error saving meal log:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to save meal log';
     return NextResponse.json(
-      { error: 'Failed to save meal log', details: error.message },
+      { error: 'Failed to save meal log', details: errorMessage },
       { status: 500 }
     );
   }

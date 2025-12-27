@@ -257,13 +257,13 @@ export default function Navigation() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-medium text-text-primary truncate">
-                          {user.firstName || user.email?.split('@')[0] || 'User'}
+                          {(user as any).name || (user as any).username || user.email?.split('@')[0] || 'User'}
                         </p>
                         <p className="text-[10px] text-text-tertiary truncate">
-                          {user.authMethod === 'wallet' ? `${user.walletAddress?.slice(0, 6)}...` : user.email}
+                          {(user as any).authMethod === 'wallet' ? `${(user as any).walletAddress?.slice(0, 6)}...` : user.email}
                         </p>
                       </div>
-                      {user.authMethod === 'wallet' && (
+                      {(user as any).authMethod === 'wallet' && (
                         <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-accent-primary/10">
                           <Sparkles className="w-2.5 h-2.5 text-accent-primary" />
                         </div>
@@ -309,7 +309,7 @@ export default function Navigation() {
                       </>
                     )}
                   </button>
-                  {isAuthenticated && user?.authMethod === 'wallet' && (
+                  {isAuthenticated && (user as any)?.authMethod === 'wallet' && (
                   <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-accent-primary/10 text-accent-primary">
                     <Sparkles className="w-3 h-3" />
                       <span className="text-[10px] font-medium">Earns $TA</span>
@@ -383,7 +383,7 @@ export default function Navigation() {
                         <User className="w-3 h-3 text-accent-primary" />
                       </div>
                       <span className="text-xs font-medium text-text-primary hidden sm:block max-w-[80px] truncate">
-                        {user.firstName || user.email?.split('@')[0] || 'User'}
+                        {user.name || user.email?.split('@')[0] || 'User'}
                       </span>
                     </button>
                     <AnimatePresence>
@@ -395,8 +395,8 @@ export default function Navigation() {
                           className="absolute right-0 top-full mt-2 w-48 bg-bg-surface border border-border-light rounded-xl shadow-lg overflow-hidden z-50"
                         >
                           <div className="p-2 border-b border-border-light">
-                            <p className="text-xs font-medium text-text-primary truncate">{user.firstName} {user.lastName}</p>
-                            <p className="text-[10px] text-text-tertiary truncate">{user.email || user.walletAddress?.slice(0, 12) + '...'}</p>
+                            <p className="text-xs font-medium text-text-primary truncate">{user.name || user.email?.split('@')[0] || 'User'}</p>
+                            <p className="text-[10px] text-text-tertiary truncate">{user.email || (user as any).walletAddress?.slice(0, 12) + '...'}</p>
                           </div>
                           <div className="p-1">
                             <Link href="/settings" className="flex items-center gap-2 px-3 py-2 text-xs text-text-secondary hover:bg-bg-elevated rounded-lg transition-colors">

@@ -28,11 +28,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json([]);
     }
 
-    const reports = await prisma.healthReport.findMany({
-      where: { userId: user.id },
-      orderBy: { reportDate: 'desc' },
-      take: 20,
-    });
+    // TODO: HealthReport model not yet implemented
+    const reports: unknown[] = [];
 
     return NextResponse.json(reports);
   } catch (error: any) {

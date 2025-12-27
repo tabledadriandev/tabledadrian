@@ -32,12 +32,12 @@ export async function POST(request: NextRequest) {
     // Get test result IDs if not provided
     let resultIds = testResultIds;
     if (!resultIds || resultIds.length === 0) {
-      const recentResults = await prisma.testResult.findMany({
+      // TODO: TestResult model not yet implemented, use MedicalResult instead
+      const recentResults = await prisma.medicalResult.findMany({
         where: {
           userId: user.id,
-          status: 'completed',
         },
-        orderBy: { processingCompletedAt: 'desc' },
+        orderBy: { testDate: 'desc' },
         take: 5,
         select: { id: true },
       });

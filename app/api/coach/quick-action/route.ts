@@ -15,18 +15,16 @@ async function getUserContext(userId: string) {
     where: {
       OR: [{ walletAddress: userId }, { email: userId }],
     },
-    include: {
-      profile: true,
-      healthData: { take: 10, orderBy: { recordedAt: 'desc' } },
-      biomarkers: { take: 5, orderBy: { recordedAt: 'desc' } },
-      mealLogs: { take: 5, orderBy: { date: 'desc' } },
+      include: {
+        biomarkerReadings: { take: 5, orderBy: { date: 'desc' } },
+        mealLogs: { take: 5, orderBy: { date: 'desc' } },
     },
   });
 
   return {
-    profile: user?.profile,
-    healthData: user?.healthData || [],
-    biomarkers: user?.biomarkers || [],
+    profile: null, // TODO: UserProfile model not yet implemented
+    healthData: [], // TODO: HealthData model not yet implemented
+    biomarkers: user?.biomarkerReadings || [],
     mealLogs: user?.mealLogs || [],
   };
 }
@@ -60,7 +58,7 @@ export async function POST(request: NextRequest) {
 
       case 'generate_workout_today':
         const fitnessModule = new FitnessMovementModule();
-        const goals = userContext.profile?.healthGoals || ['General fitness'];
+        const goals = ['General fitness']; // TODO: Get from user preferences when UserProfile is implemented
         response = await fitnessModule.generateWorkoutPlan(goals, userContext, 1);
         break;
 
@@ -99,10 +97,11 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(response);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Quick action error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to process quick action';
     return NextResponse.json(
-      { error: error.message || 'Failed to process quick action' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

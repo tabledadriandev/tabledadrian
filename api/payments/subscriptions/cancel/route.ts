@@ -37,80 +37,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const subscription = await prisma.subscription.findFirst({
-      where: {
-        id: subscriptionId,
-        userId: user.id,
-      },
-    });
-
-    if (!subscription) {
-      return NextResponse.json(
-        { error: 'Subscription not found' },
-        { status: 404 }
-      );
-    }
-
-    if (subscription.status === 'canceled') {
-      return NextResponse.json(
-        { error: 'Subscription is already canceled' },
-        { status: 400 }
-      );
-    }
-
-    // Handle crypto subscription cancellation
-    if (subscription.paymentMethod === 'crypto') {
-      await prisma.subscription.update({
-        where: { id: subscription.id },
-        data: {
-          status: 'canceled',
-          canceledAt: new Date(),
-          cancelAtPeriodEnd: !cancelImmediately,
-        },
-      });
-
-      return NextResponse.json({
-        success: true,
-        message: cancelImmediately 
-          ? 'Subscription canceled immediately' 
-          : 'Subscription will be canceled at the end of the current period',
-      });
-    }
-
-    // Handle Stripe subscription cancellation
-    if (subscription.stripeSubscriptionId) {
-      const stripeSubscription = await stripeService.cancelSubscription(
-        subscription.stripeSubscriptionId,
-        !cancelImmediately
-      );
-
-      await prisma.subscription.update({
-        where: { id: subscription.id },
-        data: {
-          status: stripeSubscription.status,
-          cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
-          canceledAt: stripeSubscription.canceled_at 
-            ? new Date(stripeSubscription.canceled_at * 1000) 
-            : new Date(),
-        },
-      });
-
-      return NextResponse.json({
-        success: true,
-        message: cancelImmediately 
-          ? 'Subscription canceled immediately' 
-          : 'Subscription will be canceled at the end of the current period',
-      });
-    }
-
+    // TODO: Subscription model not yet implemented
     return NextResponse.json(
-      { error: 'Failed to cancel subscription' },
-      { status: 500 }
+      { error: 'Subscription model not yet implemented' },
+      { status: 501 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error canceling subscription:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to cancel subscription';
     return NextResponse.json(
-      { error: error.message || 'Failed to cancel subscription' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

@@ -34,28 +34,27 @@ export async function POST(request: NextRequest) {
     });
     const existingTypes = new Set(existing.map((a) => a.type));
 
-    const unlocked: any[] = [];
+    const unlocked: Array<{ id: string; type: string; unlockedAt: Date }> = [];
 
     // Microbiota Master – Shannon Index > 4.0
-    if (!existingTypes.has(ACHIEVEMENT_TYPES.MICROBIOTA_MASTER)) {
-      const bestMicrobiome = await prisma.microbiomeResult.findFirst({
-        where: { userId: user.id },
-        orderBy: { shannonIndex: 'desc' },
-      });
-      if (bestMicrobiome?.shannonIndex && bestMicrobiome.shannonIndex > 4.0) {
-        const meta = getAchievementMetadata(ACHIEVEMENT_TYPES.MICROBIOTA_MASTER);
-        const created = await prisma.achievement.create({
-          data: {
-            userId: user.id,
-            type: ACHIEVEMENT_TYPES.MICROBIOTA_MASTER,
-            name: meta.name,
-            description: meta.description,
-            icon: meta.icon,
-          },
-        });
-        unlocked.push(created);
-      }
-    }
+    // TODO: MicrobiomeResult model not yet implemented in schema
+    // if (!existingTypes.has(ACHIEVEMENT_TYPES.MICROBIOTA_MASTER)) {
+    //   const bestMicrobiome = await prisma.microbiomeResult.findFirst({
+    //     where: { userId: user.id },
+    //     orderBy: { shannonIndex: 'desc' },
+    //   });
+    //   if (bestMicrobiome?.shannonIndex && bestMicrobiome.shannonIndex > 4.0) {
+    //     const meta = getAchievementMetadata(ACHIEVEMENT_TYPES.MICROBIOTA_MASTER);
+    //     const created = await prisma.achievement.create({
+    //       data: {
+    //         userId: user.id,
+    //         type: ACHIEVEMENT_TYPES.MICROBIOTA_MASTER,
+    //         tokenReward: meta.tokenReward || 0,
+    //       },
+    //     });
+    //     unlocked.push(created);
+    //   }
+    // }
 
     // Chef Collaborator – 10 chef-designed meals logged
     if (!existingTypes.has(ACHIEVEMENT_TYPES.CHEF_COLLABORATOR)) {
@@ -66,49 +65,55 @@ export async function POST(request: NextRequest) {
         },
       });
       if (chefMeals >= 10) {
-        const meta = getAchievementMetadata(ACHIEVEMENT_TYPES.CHEF_COLLABORATOR);
         const created = await prisma.achievement.create({
           data: {
             userId: user.id,
             type: ACHIEVEMENT_TYPES.CHEF_COLLABORATOR,
-            name: meta.name,
-            description: meta.description,
-            icon: meta.icon,
+            tokenReward: 0,
           },
         });
         unlocked.push(created);
       }
     }
 
-    // Biomarker Champion – improvement >30% in a cardiometabolic biomarker (e.g. bloodGlucose or triglycerides)
+    // Biomarker Champion – improvement >30% in a cardiometabolic biomarker
     if (!existingTypes.has(ACHIEVEMENT_TYPES.BIOMARKER_CHAMPION)) {
-      const biomarkerHistory = await prisma.biomarker.findMany({
-        where: { userId: user.id },
-        orderBy: { recordedAt: 'asc' },
+      const biomarkerHistory = await prisma.biomarkerReading.findMany({
+        where: { 
+          userId: user.id,
+          metric: { in: ['bloodGlucose', 'triglycerides'] },
+        },
+        orderBy: { date: 'asc' },
         take: 20,
       });
       if (biomarkerHistory.length >= 2) {
-        const first = biomarkerHistory[0];
-        const last = biomarkerHistory[biomarkerHistory.length - 1];
+        // Group by metric and check improvements
+        const byMetric = new Map<string, typeof biomarkerHistory>();
+        for (const reading of biomarkerHistory) {
+          if (!byMetric.has(reading.metric)) {
+            byMetric.set(reading.metric, []);
+          }
+          byMetric.get(reading.metric)!.push(reading);
+        }
 
         const improvements: number[] = [];
-        if (first.bloodGlucose && last.bloodGlucose && first.bloodGlucose > 0) {
-          improvements.push((first.bloodGlucose - last.bloodGlucose) / first.bloodGlucose);
-        }
-        if (first.triglycerides && last.triglycerides && first.triglycerides > 0) {
-          improvements.push((first.triglycerides - last.triglycerides) / first.triglycerides);
+        for (const [metric, readings] of byMetric.entries()) {
+          if (readings.length >= 2) {
+            const first = readings[0];
+            const last = readings[readings.length - 1];
+            if (first.value > 0) {
+              improvements.push((first.value - last.value) / first.value);
+            }
+          }
         }
 
         const maxImprovement = improvements.length ? Math.max(...improvements) : 0;
         if (maxImprovement >= 0.3) {
-          const meta = getAchievementMetadata(ACHIEVEMENT_TYPES.BIOMARKER_CHAMPION);
           const created = await prisma.achievement.create({
             data: {
               userId: user.id,
               type: ACHIEVEMENT_TYPES.BIOMARKER_CHAMPION,
-              name: meta.name,
-              description: meta.description,
-              icon: meta.icon,
+              tokenReward: 0,
             },
           });
           unlocked.push(created);
@@ -127,14 +132,11 @@ export async function POST(request: NextRequest) {
         },
       });
       if (polyphenolMeals >= 30) {
-        const meta = getAchievementMetadata(ACHIEVEMENT_TYPES.POLYPHENOL_PRO);
         const created = await prisma.achievement.create({
           data: {
             userId: user.id,
             type: ACHIEVEMENT_TYPES.POLYPHENOL_PRO,
-            name: meta.name,
-            description: meta.description,
-            icon: meta.icon,
+            tokenReward: 0,
           },
         });
         unlocked.push(created);
@@ -145,10 +147,11 @@ export async function POST(request: NextRequest) {
       success: true,
       unlocked,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error checking achievements:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to check achievements';
     return NextResponse.json(
-      { error: 'Failed to check achievements', details: error.message },
+      { error: 'Failed to check achievements', details: errorMessage },
       { status: 500 },
     );
   }

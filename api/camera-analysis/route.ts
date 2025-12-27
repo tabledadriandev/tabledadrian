@@ -51,8 +51,8 @@ export async function GET(request: NextRequest) {
         stressLevel: true,
         estimatedAge: true,
         bodyFatEstimate: true,
-        heartRate: true,
-        breathingRate: true,
+        heartRateEstimate: true,
+        respiratoryRate: true,
         eyeHealthRisks: true,
       },
     });

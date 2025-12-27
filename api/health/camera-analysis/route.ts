@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     const analysis = await prisma.cameraAnalysis.create({
       data: {
         userId: user.id,
-        type,
+        type: type || 'facial',
         imageUrl,
         imageData: imageData?.substring(0, 1000), // Store first 1000 chars as reference
         skinHealth: analysisData.skinHealth,
@@ -42,21 +42,27 @@ export async function POST(request: NextRequest) {
         facialSymmetry: analysisData.facialSymmetry,
         stressLevel: analysisData.stressLevel,
         estimatedAge: analysisData.estimatedAge,
+        actualAge: analysisData.actualAge,
         measurements: analysisData.measurements,
         bodyFatEstimate: analysisData.bodyFatEstimate,
+        leanMuscleMass: analysisData.leanMuscleMass,
         muscleSymmetry: analysisData.muscleSymmetry,
         postureAnalysis: analysisData.postureAnalysis,
-        heartRate: analysisData.heartRate,
-        breathingRate: analysisData.breathingRate,
-        stressIndicators: analysisData.stressIndicators,
+        heartRateEstimate: analysisData.heartRate || analysisData.heartRateEstimate,
+        respiratoryRate: analysisData.breathingRate || analysisData.respiratoryRate,
+        bloodOxygenEstimate: analysisData.bloodOxygenEstimate,
+        foodsIdentified: analysisData.foodsIdentified,
+        nutritionAnalysis: analysisData.nutritionAnalysis,
+        recommendations: analysisData.stressIndicators ? { stressIndicators: analysisData.stressIndicators } : undefined,
       },
     });
 
     return NextResponse.json({ success: true, analysis });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error saving camera analysis:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to save analysis';
     return NextResponse.json(
-      { error: 'Failed to save analysis', details: error.message },
+      { error: 'Failed to save analysis', details: errorMessage },
       { status: 500 }
     );
   }

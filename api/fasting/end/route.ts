@@ -36,28 +36,21 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Award reward
-    await prisma.reward.create({
-      data: {
-        userId: user.id,
-        type: 'fasting_completed',
-        amount: 5, // 5 TA tokens
-        description: 'Completed fasting session',
-      },
-    });
-
+    // Award tokens (Reward model not yet implemented)
+    const tokenReward = 5; // 5 TA tokens
     await prisma.user.update({
       where: { id: user.id },
       data: {
-        tokenBalance: { increment: 5 },
+        totalTokensEarned: { increment: tokenReward },
       },
     });
 
-    return NextResponse.json({ success: true });
-  } catch (error: any) {
+    return NextResponse.json({ success: true, tokensEarned: tokenReward });
+  } catch (error: unknown) {
     console.error('Error ending fast:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to end fast';
     return NextResponse.json(
-      { error: 'Failed to end fast' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

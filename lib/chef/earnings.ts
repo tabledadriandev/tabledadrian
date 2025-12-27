@@ -149,7 +149,6 @@ export class ChefEarningsCalculator {
         amount: bonusAmount,
         currency: 'TA',
         description: `Biomarker improvement bonus: ${improvementPercentage.toFixed(1)}% improvement`,
-        biomarkerImprovement: improvementPercentage,
       },
     });
 
@@ -179,11 +178,12 @@ export class ChefEarningsCalculator {
     currency: 'TA' | 'USD' = 'TA'
   ): Promise<number> {
     // Check if referral already processed
+    // Note: referralUserId field not in ChefEarning model, using description to check
     const existing = await prisma.chefEarning.findFirst({
       where: {
         chefId,
         type: 'referral',
-        referralUserId: referredUserId,
+        description: { contains: referredUserId },
       },
     });
 
@@ -216,8 +216,7 @@ export class ChefEarningsCalculator {
         type: 'referral',
         amount: bonusAmount,
         currency,
-        referralUserId: referredUserId,
-        description: `Client referral bonus`,
+        description: `Client referral bonus for user ${referredUserId}`,
       },
     });
 

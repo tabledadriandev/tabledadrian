@@ -23,9 +23,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json([]);
     }
 
-    const nfts = await prisma.nFT.findMany({
+    // TODO: NFT model not yet implemented, use HealthBadge instead
+    const nfts = await prisma.healthBadge.findMany({
       where: { userId: user.id },
-      orderBy: { mintedAt: 'desc' },
+      orderBy: { issuedAt: 'desc' },
     });
 
     return NextResponse.json(nfts);

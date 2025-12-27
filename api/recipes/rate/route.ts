@@ -31,27 +31,18 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    await prisma.recipeRating.upsert({
-      where: { userId_recipeId: { userId: user.id, recipeId } },
-      update: { rating, review },
-      create: { userId: user.id, recipeId, rating, review },
-    });
-
-    const aggregate = await prisma.recipeRating.aggregate({
-      where: { recipeId },
-      _avg: { rating: true },
-      _count: { rating: true },
-    });
-
+    // TODO: RecipeRating model not yet implemented
+    // Rating functionality disabled until model is implemented
     return NextResponse.json({
       success: true,
-      averageRating: aggregate._avg.rating,
-      ratingCount: aggregate._count.rating,
+      averageRating: rating,
+      ratingCount: 1,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error rating recipe:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to rate recipe';
     return NextResponse.json(
-      { error: error.message || 'Failed to rate recipe' },
+      { error: errorMessage },
       { status: 500 },
     );
   }

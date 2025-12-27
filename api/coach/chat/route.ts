@@ -34,11 +34,7 @@ export async function POST(request: NextRequest) {
         ],
       },
       include: { 
-        profile: true, 
-        healthData: { take: 10, orderBy: { recordedAt: 'desc' } },
-        healthAssessments: { orderBy: { createdAt: 'desc' }, take: 1 },
-        healthScores: { orderBy: { date: 'desc' }, take: 1 },
-        biomarkers: { orderBy: { recordedAt: 'desc' }, take: 5 },
+        biomarkerReadings: { orderBy: { date: 'desc' }, take: 5 },
       },
     });
 
@@ -50,11 +46,12 @@ IMPORTANT: This is informational guidance only. Always remind users to consult h
 
 User Health Context:`;
     
-    if (user?.profile) {
-      systemContext += `\n- Age: ${user.profile.age || 'Not specified'}`;
-      systemContext += `\n- Health Goals: ${user.profile.healthGoals?.join(', ') || 'General wellness'}`;
-      systemContext += `\n- Dietary Restrictions: ${user.profile.dietaryRestrictions?.join(', ') || 'None'}`;
-      systemContext += `\n- Activity Level: ${user.profile.activityLevel || 'Not specified'}`;
+    // User preferences may contain profile-like data
+    if (user?.preferences) {
+      const prefs = user.preferences as any;
+      systemContext += `\n- Health Goals: ${prefs.healthGoals?.join(', ') || 'General wellness'}`;
+      systemContext += `\n- Dietary Restrictions: ${prefs.dietaryRestrictions?.join(', ') || 'None'}`;
+      systemContext += `\n- Activity Level: ${prefs.activityLevel || 'Not specified'}`;
     }
 
     if (healthContext) {
@@ -74,10 +71,10 @@ User Health Context:`;
       }
     }
 
-    if (user?.healthData && user.healthData.length > 0) {
-      systemContext += `\n- Recent Health Data:`;
-      user.healthData.slice(0, 5).forEach((data: any) => {
-        systemContext += `\n  ${data.type}: ${data.value} ${data.unit || ''}`;
+    if (user?.biomarkerReadings && user.biomarkerReadings.length > 0) {
+      systemContext += `\n- Recent Biomarker Readings:`;
+      user.biomarkerReadings.slice(0, 5).forEach((data: any) => {
+        systemContext += `\n  ${data.metric}: ${data.value} ${data.unit || ''}`;
       });
     }
 

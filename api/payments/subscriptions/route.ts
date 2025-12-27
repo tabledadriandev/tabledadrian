@@ -27,44 +27,12 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const subscription = await prisma.subscription.findFirst({
-      where: {
-        userId: user.id,
-        status: {
-          in: ['active', 'trialing', 'past_due'],
-        },
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-
-    if (!subscription) {
-      return NextResponse.json({
-        success: true,
-        subscription: null,
-      });
-    }
-
+    // TODO: Subscription model not yet implemented
     return NextResponse.json({
       success: true,
-      subscription: {
-        id: subscription.id,
-        tier: subscription.tier,
-        billingCycle: subscription.billingCycle,
-        price: subscription.price,
-        currency: subscription.currency,
-        paymentMethod: subscription.paymentMethod,
-        status: subscription.status,
-        currentPeriodStart: subscription.currentPeriodStart,
-        currentPeriodEnd: subscription.currentPeriodEnd,
-        cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
-        canceledAt: subscription.canceledAt,
-        trialStart: subscription.trialStart,
-        trialEnd: subscription.trialEnd,
-      },
+      subscription: null,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching subscription:', error);
     return NextResponse.json(
       { error: 'Failed to fetch subscription' },

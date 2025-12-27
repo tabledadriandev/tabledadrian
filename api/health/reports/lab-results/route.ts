@@ -37,16 +37,16 @@ export async function GET(request: NextRequest) {
     // If no test result IDs provided, get all recent test results
     let resultIds = testResultIds;
     if (resultIds.length === 0) {
-      const recentResults = await prisma.testResult.findMany({
+      // TODO: TestResult model not yet implemented, use MedicalResult instead
+      const recentResults = await prisma.medicalResult.findMany({
         where: {
           userId: user.id,
-          status: 'completed',
         },
-        orderBy: { processingCompletedAt: 'desc' },
+        orderBy: { testDate: 'desc' },
         take: 5,
         select: { id: true },
       });
-      resultIds = recentResults.map((r: any) => r.id);
+      resultIds = recentResults.map((r) => r.id);
     }
 
     if (resultIds.length === 0) {

@@ -5,24 +5,15 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const recipes = await prisma.recipe.findMany({
-      where: { isPublic: true },
-      include: {
-        user: {
-          select: {
-            username: true,
-          },
-        },
-      },
-      orderBy: { createdAt: 'desc' },
-      take: 100,
-    });
+    // TODO: Recipe model not yet implemented
+    const recipes: unknown[] = [];
 
     return NextResponse.json(recipes);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching recipes:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch recipes';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch recipes' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -61,34 +52,16 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Create recipe
-    const recipe = await prisma.recipe.create({
-      data: {
-        userId: user.id,
-        name,
-        description,
-        prepTime: prepTime || null,
-        cookTime: cookTime || null,
-        servings: servings || null,
-        ingredients: ingredients || [],
-        instructions: instructions || [],
-        tags: tags || [],
-        isPublic: isPublic !== false,
-      },
-      include: {
-        user: {
-          select: {
-            username: true,
-          },
-        },
-      },
-    });
-
-    return NextResponse.json({ success: true, data: recipe });
-  } catch (error: any) {
-    console.error('Error creating recipe:', error);
+    // TODO: Recipe model not yet implemented
     return NextResponse.json(
-      { error: error.message || 'Failed to create recipe' },
+      { error: 'Recipe model not yet implemented' },
+      { status: 501 }
+    );
+  } catch (error: unknown) {
+    console.error('Error creating recipe:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create recipe';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 }
     );
   }

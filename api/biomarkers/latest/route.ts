@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     const latestReadings: Record<string, any> = {};
 
     for (const metric of metrics) {
-      const reading = await prisma.biomarkerReading.findFirst({
+      const reading = await (prisma as any).biomarkerReading.findFirst({
         where: {
           userId,
           metric,
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get latest sleep score
-    const sleepReading = await prisma.biomarkerReading.findFirst({
+      const sleepReading = await (prisma as any).biomarkerReading.findFirst({
       where: {
         userId,
         metric: 'sleep_score',
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Get latest recovery
-    const recoveryReading = await prisma.biomarkerReading.findFirst({
+      const recoveryReading = await (prisma as any).biomarkerReading.findFirst({
       where: {
         userId,
         metric: 'recovery',

@@ -58,25 +58,19 @@ export async function GET(request: NextRequest) {
     });
 
     const totals = meals.reduce(
-      (acc: any, meal: any) => ({
+      (acc, meal) => ({
         calories: acc.calories + (meal.calories || 0),
         protein: acc.protein + (meal.protein || 0),
         carbs: acc.carbs + (meal.carbs || 0),
-        fats: acc.fats + (meal.fats || 0),
+        fats: acc.fats + (meal.fat || meal.fats || 0), // Use fat field from schema
         fiber: acc.fiber + (meal.fiber || 0),
       }),
       { calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 }
     );
 
-    // Get user profile for personalized targets
-    const profile = await prisma.userProfile.findUnique({
-      where: { userId: user.id },
-    });
-
-    // Calculate targets based on profile (simplified)
-    const baseCalories = profile?.activityLevel === 'very_active' ? 2500 :
-                         profile?.activityLevel === 'active' ? 2200 :
-                         profile?.activityLevel === 'moderate' ? 2000 : 1800;
+    // TODO: UserProfile model not yet implemented in schema
+    // Use default targets for now
+    const baseCalories = 2000; // Default calorie target
 
     return NextResponse.json({
       ...totals,
@@ -88,7 +82,7 @@ export async function GET(request: NextRequest) {
         fiber: 30,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error calculating totals:', error);
     return NextResponse.json(
       { error: 'Failed to calculate totals' },

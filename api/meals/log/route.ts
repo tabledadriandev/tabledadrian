@@ -119,20 +119,12 @@ export async function POST(request: NextRequest) {
     //   },
     // });
 
-    // Award reward
-    await prisma.reward.create({
-      data: {
-        userId: user.id,
-        type: 'meal_logged',
-        amount: 1, // 1 TA token
-        description: 'Logged a meal',
-      },
-    });
-
+    // TODO: Reward model not yet implemented
+    // Award tokens directly to user instead
     await prisma.user.update({
       where: { id: user.id },
       data: {
-        tokenBalance: { increment: 1 },
+        totalTokensEarned: { increment: 1 }, // 1 token for logging a meal
       },
     });
 

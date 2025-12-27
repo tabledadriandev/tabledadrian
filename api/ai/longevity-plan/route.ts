@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get latest active plan
-    const plan = await prisma.longevityPlan.findFirst({
+    const plan = await (prisma as any).longevityPlan.findFirst({
       where: {
         userId,
         status: 'active',

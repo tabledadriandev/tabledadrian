@@ -20,13 +20,14 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json({
-      stakedAmount: user?.stakedAmount || 0,
-      tokenBalance: user?.tokenBalance || 0,
+      stakedAmount: user?.stakedTokens || 0,
+      totalTokensEarned: user?.totalTokensEarned || 0,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching staking info:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch staking info';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch staking info' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

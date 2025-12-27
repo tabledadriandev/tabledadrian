@@ -3,33 +3,15 @@ import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const type = searchParams.get('type');
-    const status = searchParams.get('status');
-    const category = searchParams.get('category');
-
-    const where: any = {};
-    if (type) where.type = type;
-    if (status) where.status = status;
-    if (category) where.category = category;
-
-    const proposals = await prisma.governanceProposal.findMany({
-      where,
-      include: {
-        votes: {
-          orderBy: { createdAt: 'desc' },
-        },
-      },
-      orderBy: { createdAt: 'desc' },
-    });
-
-    return NextResponse.json(proposals);
-  } catch (error: any) {
+    // TODO: GovernanceProposal model not yet implemented in schema
+    return NextResponse.json([]);
+  } catch (error: unknown) {
     console.error('Error fetching proposals:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch proposals';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch proposals' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -37,7 +19,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { address, title, description, type } = await request.json();
+    const { address, title, description } = await request.json();
 
     if (!address || !title || !description) {
       return NextResponse.json(
@@ -46,26 +28,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check minimum balance (100 TA to create proposals)
-    // This would be checked on-chain in production
-
-    // Create proposal
-    const proposal = await prisma.governanceProposal.create({
-      data: {
-        title,
-        description,
-        type: type || 'feature',
-        proposer: address,
-        endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
-        category: type || 'feature', // Use type as category for now
-      },
-    });
-
-    return NextResponse.json({ success: true, data: proposal });
-  } catch (error: any) {
-    console.error('Error creating proposal:', error);
+    // TODO: GovernanceProposal model not yet implemented in schema
     return NextResponse.json(
-      { error: error.message || 'Failed to create proposal' },
+      { error: 'Governance proposals not yet implemented' },
+      { status: 501 }
+    );
+  } catch (error: unknown) {
+    console.error('Error creating proposal:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create proposal';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 }
     );
   }

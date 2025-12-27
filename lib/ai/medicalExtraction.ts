@@ -245,7 +245,7 @@ export class MedicalExtractionClient {
           const suboptimalLow = thresholds.low * 1.2;
           
           if (biomarker.value >= suboptimalHigh || biomarker.value <= suboptimalLow) {
-            biomarker.flag = 'high' || 'low';
+            biomarker.flag = biomarker.value >= suboptimalHigh ? 'high' : 'low';
             flagged.yellow.push(biomarker);
           } else {
             biomarker.flag = 'normal';

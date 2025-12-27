@@ -15,18 +15,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const updated = await prisma.healthcareProvider.update({
-      where: { id: providerId },
-      data: {
-        licenseVerified: !!verified,
-      },
-    });
-
-    return NextResponse.json({ success: true, provider: updated });
-  } catch (error: any) {
-    console.error('Error verifying provider:', error);
+    // TODO: HealthcareProvider model not yet implemented
     return NextResponse.json(
-      { error: 'Failed to verify provider', details: error.message },
+      { error: 'HealthcareProvider model not yet implemented' },
+      { status: 501 }
+    );
+  } catch (error: unknown) {
+    console.error('Error verifying provider:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to verify provider';
+    return NextResponse.json(
+      { error: 'Failed to verify provider', details: errorMessage },
       { status: 500 },
     );
   }

@@ -39,7 +39,16 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      if (achievement.nftMinted) {
+      // TODO: Achievement model doesn't have nftMinted field
+      // Check HealthBadge instead
+      const existingBadge = await prisma.healthBadge.findFirst({
+        where: {
+          userId: user.id,
+          badgeType: achievement.type,
+        },
+      });
+      
+      if (existingBadge && existingBadge.tokenId) {
         return NextResponse.json(
           { error: 'NFT already minted for this achievement' },
           { status: 400 }
@@ -73,33 +82,23 @@ export async function POST(request: NextRequest) {
         // Continue with off-chain NFT creation if on-chain fails
       }
 
-      // Create NFT
-      const nft = await prisma.nFT.create({
+      // TODO: NFT model not yet implemented, use HealthBadge instead
+      const nft = await prisma.healthBadge.create({
         data: {
           userId: user.id,
+          badgeType: achievement.type || 'achievement',
           tokenId,
-          type: achievement.type || 'achievement',
-          name: achievement.name,
-          description: achievement.description,
-          image: achievement.icon || 'https://via.placeholder.com/400',
+          mintTxHash: txHash || null,
           metadata: {
             achievementId: achievement.id,
-            earnedAt: achievement.earnedAt,
+            unlockedAt: achievement.unlockedAt,
             collectionId,
             rewardAmount,
-            txHash,
           },
         },
       });
 
-      // Update achievement
-      await prisma.achievement.update({
-        where: { id: achievementId },
-        data: {
-          nftMinted: true,
-          nftTokenId: tokenId,
-        },
-      });
+      // Achievement model doesn't have nftMinted field, so we don't update it
 
       // Create reward transaction if on-chain was successful
       if (txHash) {
@@ -108,7 +107,7 @@ export async function POST(request: NextRequest) {
             userId: user.id,
             type: 'reward',
             amount: rewardAmount,
-            description: `NFT Reward: ${achievement.name}`,
+            description: `NFT Reward: ${achievement.type}`,
             status: 'confirmed',
             txHash,
           },
@@ -136,23 +135,26 @@ export async function POST(request: NextRequest) {
 
     const tokenId = `TA-${type.toUpperCase()}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-    const nft = await prisma.nFT.create({
+    // TODO: NFT model not yet implemented, use HealthBadge instead
+    const nft = await prisma.healthBadge.create({
       data: {
         userId: user.id,
+        badgeType: type,
         tokenId,
-        type,
-        name,
-        description,
-        image: image || 'https://via.placeholder.com/400',
-        metadata: {},
+        metadata: {
+          name,
+          description,
+          image: image || 'https://via.placeholder.com/400',
+        },
       },
     });
 
     return NextResponse.json({ success: true, data: nft });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error minting NFT:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to mint NFT';
     return NextResponse.json(
-      { error: error.message || 'Failed to mint NFT' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

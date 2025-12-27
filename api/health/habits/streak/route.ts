@@ -28,14 +28,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ streak: 0 });
     }
 
-    // Get most recent habit entry
-    const latest = await prisma.dailyHabits.findFirst({
-      where: { userId: user.id },
-      orderBy: { date: 'desc' },
-    });
-
-    return NextResponse.json({ streak: latest?.streak || 0 });
-  } catch (error: any) {
+    // TODO: DailyHabits model not yet implemented in schema
+    return NextResponse.json({ streak: 0 });
+  } catch (error: unknown) {
     console.error('Error fetching streak:', error);
     return NextResponse.json(
       { error: 'Failed to fetch streak' },

@@ -69,36 +69,43 @@ export async function GET(request: NextRequest) {
         ? new Date(Date.now() + expires_in * 1000)
         : null;
 
-      await prisma.wearableConnection.upsert({
+      const existing = await prisma.wearableConnection.findFirst({
         where: {
-          userId_provider: {
-            userId: state,
-            provider: 'google',
-          },
-        },
-        create: {
           userId: state,
           provider: 'google',
-          accessToken: access_token,
-          refreshToken: refresh_token,
-          expiresAt,
-          lastSyncAt: new Date(),
-          isActive: true,
-        },
-        update: {
-          accessToken: access_token,
-          refreshToken: refresh_token,
-          expiresAt,
-          lastSyncAt: new Date(),
-          isActive: true,
         },
       });
+
+      if (existing) {
+        await prisma.wearableConnection.update({
+          where: { id: existing.id },
+          data: {
+            accessToken: access_token,
+            refreshToken: refresh_token,
+            expiresAt,
+            lastSyncAt: new Date(),
+            isActive: true,
+          },
+        });
+      } else {
+        await prisma.wearableConnection.create({
+          data: {
+            userId: state,
+            provider: 'google',
+            accessToken: access_token,
+            refreshToken: refresh_token,
+            expiresAt,
+            lastSyncAt: new Date(),
+            isActive: true,
+          },
+        });
+      }
     }
 
     return NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/wearables?connected=google-fit&success=true`
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Google Fit OAuth callback error:', error);
     return NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/wearables?error=callback_failed`

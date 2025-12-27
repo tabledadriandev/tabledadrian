@@ -36,8 +36,7 @@ export async function POST(request: NextRequest) {
       data: {
         userId: user.id,
         content,
-        images: images || [],
-        recipeId: recipeId || null,
+        imageUrl: images?.[0] || null, // Use first image for imageUrl field
         // store a simple post type hint for richer rendering (e.g. "achievement", "meal", "progress")
         // without changing schema yet, we can overload description/tags in future.
       },
@@ -48,8 +47,6 @@ export async function POST(request: NextRequest) {
             username: true,
           },
         },
-        recipe: true,
-        comments: true,
       },
     });
 

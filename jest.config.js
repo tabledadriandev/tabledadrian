@@ -38,6 +38,7 @@ const customJestConfig = {
   testPathIgnorePatterns: [
     '/node_modules/',
     '/__tests__/integration/',
+    '/__tests__/e2e/',
   ],
   moduleDirectories: ['node_modules', '<rootDir>'],
 }

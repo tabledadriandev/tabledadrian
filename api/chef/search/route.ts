@@ -70,11 +70,6 @@ export async function GET(request: NextRequest) {
     const chefs = await prisma.chefProfile.findMany({
       where,
       include: {
-        reviews: {
-          where: { isPublic: true, isApproved: true },
-          take: 10,
-          orderBy: { createdAt: 'desc' },
-        },
         services: {
           where: { isActive: true },
         },
@@ -88,7 +83,6 @@ export async function GET(request: NextRequest) {
         _count: {
           select: {
             bookings: true,
-            reviews: true,
             mealPlans: true,
           },
         },
@@ -109,12 +103,9 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Calculate average ratings from reviews
+    // Use rating from chef profile
     const chefsWithRatings = filteredChefs.map((chef: any) => {
-      const reviews = chef.reviews || [];
-      const avgRating = reviews.length > 0
-        ? reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length
-        : chef.reputationScore;
+      const avgRating = chef.rating || 0;
 
       // Calculate service prices (min/max)
       const services = chef.services || [];
@@ -133,7 +124,6 @@ export async function GET(request: NextRequest) {
         reputationScore: avgRating,
         averageRating: avgRating,
         totalBookings: chef._count.bookings,
-        totalReviews: chef._count.reviews,
         totalMealPlans: chef._count.mealPlans,
         yearsExperience: chef.yearsExperience,
         certifications: chef.certifications,
@@ -145,7 +135,6 @@ export async function GET(request: NextRequest) {
         maxServicePrice,
         portfolioPhotos: chef.portfolioPhotos || [],
         sampleMenus: chef.sampleMenus || [],
-        recentReviews: reviews.slice(0, 3),
         serviceCount: services.length,
       };
     });

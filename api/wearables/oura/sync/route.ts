@@ -6,6 +6,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createOuraClient } from '@/lib/wearables/oura';
 import { prisma } from '@/lib/prisma';
+import {
+  createDeviceAttestationTypedData,
+  hashBiomarkerData,
+  type DeviceAttestationData,
+} from '@/lib/crypto/eip712';
 
 export const dynamic = 'force-dynamic';
 
@@ -58,26 +63,33 @@ export async function POST(request: NextRequest) {
     const activityData = await ouraClient.getActivityData(startDate, endDate);
 
     // Store or update wearable connection
-    await prisma.wearableConnection.upsert({
+    const existing = await prisma.wearableConnection.findFirst({
       where: {
-        userId_provider: {
-          userId,
-          provider: 'oura',
-        },
-      },
-      create: {
         userId,
         provider: 'oura',
-        accessToken,
-        lastSyncAt: new Date(),
-        isActive: true,
-      },
-      update: {
-        accessToken,
-        lastSyncAt: new Date(),
-        isActive: true,
       },
     });
+
+    if (existing) {
+      await prisma.wearableConnection.update({
+        where: { id: existing.id },
+        data: {
+          accessToken,
+          lastSyncAt: new Date(),
+          isActive: true,
+        },
+      });
+    } else {
+      await prisma.wearableConnection.create({
+        data: {
+          userId,
+          provider: 'oura',
+          accessToken,
+          lastSyncAt: new Date(),
+          isActive: true,
+        },
+      });
+    }
 
     // Store biomarker readings
     const biomarkerReadings = [];
@@ -127,6 +139,7 @@ export async function POST(request: NextRequest) {
 
     // Store readiness scores
     for (const readiness of readinessData) {
+      if (!readiness || readiness.score === null || readiness.score === undefined) continue;
       biomarkerReadings.push({
         userId,
         metric: 'readiness',
@@ -175,7 +188,7 @@ export async function POST(request: NextRequest) {
     const tokenReward = dataPoints * 0.1; // 0.1 $TA per data point
 
     // Record DeSci contribution
-    await prisma.desciContribution.create({
+    await prisma.deSciContribution.create({
       data: {
         userId,
         dataPoints,
@@ -192,6 +205,56 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Generate EIP-712 attestations for synced data (Phase 2.5)
+    const attestations = [];
+    const deviceId = 'oura_ring';
+    const timestamp = Math.floor(Date.now() / 1000);
+
+    // Create attestations for key metrics
+    for (const reading of biomarkerReadings.slice(0, 10)) { // Limit to first 10 for performance
+      const dataHash = hashBiomarkerData(
+        userId,
+        reading.metric,
+        reading.value,
+        timestamp,
+        reading.metadata
+      );
+
+      const typedData = createDeviceAttestationTypedData({
+        userId,
+        deviceId,
+        dataHash,
+        timestamp,
+        metric: reading.metric,
+        value: reading.value,
+      });
+
+      // Store attestation record (signature will be added by device wallet)
+      try {
+        await (prisma as any).deviceAttestation.create({
+          data: {
+            userId,
+            deviceId,
+            devicePubKey: '', // Will be set when signature is verified
+            dataHash,
+            signature: '', // Device wallet will sign
+            metric: reading.metric,
+            value: reading.value,
+            timestamp: new Date(timestamp * 1000),
+          },
+        });
+
+        attestations.push({
+          metric: reading.metric,
+          dataHash,
+          typedData,
+        });
+      } catch (error) {
+        // Skip if attestation already exists
+        console.warn(`Attestation already exists for ${reading.metric}`);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       data: {
@@ -201,6 +264,10 @@ export async function POST(request: NextRequest) {
         hrv: hrvData.length,
         readiness: readinessData.length,
         activity: activityData.length,
+        attestations: attestations.length,
+        message: attestations.length > 0
+          ? `${attestations.length} device attestations created. Sign with device wallet to submit onchain.`
+          : undefined,
       },
     });
   } catch (error: any) {
@@ -225,12 +292,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Get connection status
-    const connection = await prisma.wearableConnection.findUnique({
+    const connection = await prisma.wearableConnection.findFirst({
       where: {
-        userId_provider: {
-          userId,
-          provider: 'oura',
-        },
+        userId,
+        provider: 'oura',
       },
     });
 

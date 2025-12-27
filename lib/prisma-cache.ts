@@ -46,7 +46,6 @@ export class PrismaCache {
 
     const user = await prisma.user.findUnique({
       where: { id },
-      include: { profile: true },
     });
 
     if (user) {
@@ -69,7 +68,6 @@ export class PrismaCache {
 
     const user = await prisma.user.findUnique({
       where: { walletAddress },
-      include: { profile: true },
     });
 
     if (user) {
@@ -92,7 +90,6 @@ export class PrismaCache {
 
     const user = await prisma.user.findFirst({
       where: { email },
-      include: { profile: true },
     });
 
     if (user) {
@@ -138,7 +135,7 @@ export class PrismaCache {
 
     const session = await prisma.userSession.findUnique({
       where: { sessionToken },
-      include: { user: { include: { profile: true } } },
+      include: { user: true },
     });
 
     if (session && session.isActive) {

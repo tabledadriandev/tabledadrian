@@ -40,12 +40,12 @@ export async function GET(request: NextRequest) {
     try {
       current = await prisma.healthScore.findFirst({
         where: { userId: user.id },
-        orderBy: { date: 'desc' },
+        orderBy: { calculatedAt: 'desc' },
       });
 
       history = await prisma.healthScore.findMany({
         where: { userId: user.id },
-        orderBy: { date: 'desc' },
+        orderBy: { calculatedAt: 'desc' },
         take: 30,
       });
     } catch (e) {

@@ -70,24 +70,22 @@ export class ZkTlsService {
     
     switch (dataType) {
       case 'biomarker':
-        healthData = await prisma.biomarker.findUnique({
+        healthData = await prisma.biomarkerReading.findUnique({
           where: { id: dataId },
         });
         break;
       case 'lab-result':
-        healthData = await prisma.testResult.findUnique({
+        healthData = await prisma.medicalResult.findUnique({
           where: { id: dataId },
         });
         break;
       case 'symptom':
-        healthData = await prisma.symptomLog.findUnique({
-          where: { id: dataId },
-        });
+        // TODO: SymptomLog model not yet implemented
+        healthData = null;
         break;
       case 'health-assessment':
-        healthData = await prisma.healthAssessment.findUnique({
-          where: { id: dataId },
-        });
+        // TODO: HealthAssessment model not yet implemented
+        healthData = null;
         break;
     }
 

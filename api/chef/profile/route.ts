@@ -25,20 +25,6 @@ export async function GET(request: NextRequest) {
         services: {
           where: { isActive: true },
         },
-        reviews: {
-          where: { isPublic: true, isApproved: true },
-          take: 10,
-          orderBy: { createdAt: 'desc' },
-          include: {
-            user: {
-              select: {
-                id: true,
-                username: true,
-                email: true,
-              },
-            },
-          },
-        },
         user: {
           select: {
             id: true,
@@ -49,9 +35,7 @@ export async function GET(request: NextRequest) {
         _count: {
           select: {
             bookings: true,
-            reviews: true,
             mealPlans: true,
-            loggedMeals: true,
           },
         },
       },
@@ -65,10 +49,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Calculate average rating
-    const reviews = chefProfile.reviews || [];
-    const averageRating = reviews.length > 0
-      ? reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length
-      : chefProfile.reputationScore;
+    const averageRating = chefProfile.rating || 0;
 
     return NextResponse.json({
       success: true,
@@ -76,9 +57,7 @@ export async function GET(request: NextRequest) {
         ...chefProfile,
         averageRating,
         totalBookings: chefProfile._count.bookings,
-        totalReviews: chefProfile._count.reviews,
         totalMealPlans: chefProfile._count.mealPlans,
-        totalMealsLogged: chefProfile._count.loggedMeals,
       },
     });
   } catch (error: any) {

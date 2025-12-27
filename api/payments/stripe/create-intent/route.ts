@@ -63,18 +63,20 @@ export async function POST(request: NextRequest) {
       metadata
     );
 
-    // Create payment record in database
-    await prisma.payment.create({
+    // TODO: Payment model not yet implemented, use Transaction instead
+    await prisma.transaction.create({
       data: {
         userId: user.id,
+        type: 'purchase',
         amount: amount / 100, // Convert from cents to dollars
-        currency: currency.toUpperCase(),
-        paymentMethod: 'stripe_card',
-        type: 'one_time',
         description,
-        stripePaymentIntentId: paymentIntent.id,
-        status: paymentIntent.status === 'succeeded' ? 'succeeded' : 'pending',
-        metadata: metadata || {},
+        status: paymentIntent.status === 'succeeded' ? 'completed' : 'pending',
+        metadata: {
+          currency: currency.toUpperCase(),
+          paymentMethod: 'stripe_card',
+          stripePaymentIntentId: paymentIntent.id,
+          ...(metadata || {}),
+        },
       },
     });
 
@@ -83,10 +85,11 @@ export async function POST(request: NextRequest) {
       clientSecret: paymentIntent.client_secret,
       paymentIntentId: paymentIntent.id,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating payment intent:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create payment intent';
     return NextResponse.json(
-      { error: error.message || 'Failed to create payment intent' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

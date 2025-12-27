@@ -15,16 +15,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get user's latest microbiome result for personalized predictions
-    const latestMicrobiome = await prisma.microbiomeResult.findFirst({
-      where: { userId },
-      orderBy: { testDate: 'desc' },
-    });
+    // TODO: MicrobiomeResult model not yet implemented
+    const latestMicrobiome = null;
 
-    const userMicrobiome = latestMicrobiome ? {
-      shannonIndex: latestMicrobiome.shannonIndex || undefined,
-      scfaProducers: latestMicrobiome.scfaProducers as Array<{ species: string; abundance: number; scfaType: string }> || undefined,
-    } : undefined;
+    // TODO: MicrobiomeResult model not yet implemented
+    const userMicrobiome = undefined;
 
     // Predict fermentation
     const prediction = await fermentationPredictor.predictFermentation(

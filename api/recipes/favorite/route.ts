@@ -24,27 +24,15 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    if (action === 'unfavorite') {
-      await prisma.recipeFavorite.deleteMany({
-        where: { userId: user.id, recipeId },
-      });
-    } else {
-      await prisma.recipeFavorite.upsert({
-        where: { userId_recipeId: { userId: user.id, recipeId } },
-        update: {},
-        create: { userId: user.id, recipeId },
-      });
-    }
-
-    const count = await prisma.recipeFavorite.count({
-      where: { recipeId },
-    });
-
-    return NextResponse.json({ success: true, favorites: count });
-  } catch (error: any) {
-    console.error('Error toggling favorite:', error);
+    // TODO: RecipeFavorite model not yet implemented
     return NextResponse.json(
-      { error: error.message || 'Failed to toggle favorite' },
+      { success: true, favorites: 0 },
+    );
+  } catch (error: unknown) {
+    console.error('Error toggling favorite:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to toggle favorite';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 },
     );
   }

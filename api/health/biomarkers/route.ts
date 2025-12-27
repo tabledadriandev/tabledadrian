@@ -29,15 +29,15 @@ export async function GET(request: NextRequest) {
       return NextResponse.json([]);
     }
 
-    // Get biomarkers
-    const biomarkers = await prisma.biomarker.findMany({
+    // Get biomarkers (using BiomarkerReading model)
+    const biomarkers = await prisma.biomarkerReading.findMany({
       where: { userId: user.id },
-      orderBy: { recordedAt: 'desc' },
+      orderBy: { date: 'desc' },
       take: 100,
     });
 
     return NextResponse.json(biomarkers);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching biomarkers:', error);
     return NextResponse.json(
       { error: 'Failed to fetch biomarkers' },
@@ -71,46 +71,62 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Create biomarker entry
-    const biomarker = await prisma.biomarker.create({
-      data: {
-        userId: user.id,
-        bloodPressureSystolic: biomarkerData.bloodPressureSystolic,
-        bloodPressureDiastolic: biomarkerData.bloodPressureDiastolic,
-        heartRate: biomarkerData.heartRate,
-        temperature: biomarkerData.temperature,
-        breathingRate: biomarkerData.breathingRate,
-        weight: biomarkerData.weight,
-        bmi: biomarkerData.bmi,
-        bodyFatPercentage: biomarkerData.bodyFatPercentage,
-        muscleMass: biomarkerData.muscleMass,
-        bloodGlucose: biomarkerData.bloodGlucose,
-        cholesterolTotal: biomarkerData.cholesterolTotal,
-        cholesterolLDL: biomarkerData.cholesterolLDL,
-        cholesterolHDL: biomarkerData.cholesterolHDL,
-        triglycerides: biomarkerData.triglycerides,
-        vitaminD: biomarkerData.vitaminD,
-        vitaminB12: biomarkerData.vitaminB12,
-        iron: biomarkerData.iron,
-        ferritin: biomarkerData.ferritin,
-        testosterone: biomarkerData.testosterone,
-        cortisol: biomarkerData.cortisol,
-        tsh: biomarkerData.tsh,
-        t3: biomarkerData.t3,
-        t4: biomarkerData.t4,
-        customValues: biomarkerData.customValues || [],
-        labDate: biomarkerData.labDate ? new Date(biomarkerData.labDate) : null,
-        notes: biomarkerData.notes,
-        source: biomarkerData.source || 'manual',
-        recordedAt: biomarkerData.labDate ? new Date(biomarkerData.labDate) : new Date(),
-      },
-    });
+    // BiomarkerReading model has: metric, value, unit, source, date, metadata
+    // Create multiple biomarker readings from the data
+    const biomarkerEntries = [];
+    const labDate = biomarkerData.labDate ? new Date(biomarkerData.labDate) : new Date();
+    
+    // Map each biomarker field to a BiomarkerReading entry
+    const biomarkerFields: Array<{ key: string; metric: string; unit: string }> = [
+      { key: 'bloodGlucose', metric: 'bloodGlucose', unit: 'mg/dL' },
+      { key: 'cholesterolTotal', metric: 'cholesterolTotal', unit: 'mg/dL' },
+      { key: 'cholesterolLDL', metric: 'cholesterolLDL', unit: 'mg/dL' },
+      { key: 'cholesterolHDL', metric: 'cholesterolHDL', unit: 'mg/dL' },
+      { key: 'triglycerides', metric: 'triglycerides', unit: 'mg/dL' },
+      { key: 'heartRate', metric: 'heartRate', unit: 'bpm' },
+      { key: 'weight', metric: 'weight', unit: 'kg' },
+      { key: 'bmi', metric: 'bmi', unit: 'kg/m²' },
+      { key: 'bodyFatPercentage', metric: 'bodyFatPercentage', unit: '%' },
+      { key: 'muscleMass', metric: 'muscleMass', unit: 'kg' },
+      { key: 'vitaminD', metric: 'vitaminD', unit: 'ng/mL' },
+      { key: 'vitaminB12', metric: 'vitaminB12', unit: 'pg/mL' },
+      { key: 'iron', metric: 'iron', unit: 'μg/dL' },
+      { key: 'ferritin', metric: 'ferritin', unit: 'ng/mL' },
+      { key: 'testosterone', metric: 'testosterone', unit: 'ng/dL' },
+      { key: 'cortisol', metric: 'cortisol', unit: 'μg/dL' },
+      { key: 'tsh', metric: 'tsh', unit: 'mIU/L' },
+      { key: 't3', metric: 't3', unit: 'ng/dL' },
+      { key: 't4', metric: 't4', unit: 'μg/dL' },
+    ];
 
-    return NextResponse.json({ success: true, biomarker });
-  } catch (error: any) {
+    for (const field of biomarkerFields) {
+      const value = biomarkerData[field.key] as number | undefined;
+      if (value !== undefined && value !== null) {
+        const reading = await prisma.biomarkerReading.create({
+          data: {
+            userId: user.id,
+            metric: field.metric,
+            value,
+            unit: field.unit,
+            source: biomarkerData.source || 'manual',
+            date: labDate,
+            metadata: {
+              notes: biomarkerData.notes,
+              ...(biomarkerData.bloodPressureSystolic && { bloodPressureSystolic: biomarkerData.bloodPressureSystolic }),
+              ...(biomarkerData.bloodPressureDiastolic && { bloodPressureDiastolic: biomarkerData.bloodPressureDiastolic }),
+            },
+          },
+        });
+        biomarkerEntries.push(reading);
+      }
+    }
+
+    return NextResponse.json({ success: true, biomarkers: biomarkerEntries });
+  } catch (error: unknown) {
     console.error('Error saving biomarker:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to save biomarker';
     return NextResponse.json(
-      { error: 'Failed to save biomarker', details: error.message },
+      { error: 'Failed to save biomarker', details: errorMessage },
       { status: 500 }
     );
   }

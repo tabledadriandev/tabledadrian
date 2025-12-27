@@ -62,11 +62,18 @@ export async function POST(request: NextRequest) {
     // 3. Update user token balances
     // 4. Send notifications
 
+    interface Payment {
+      id: string;
+      userId: string;
+      amount: number;
+      currency: string;
+      status: string;
+    }
     return NextResponse.json({
       success: true,
-      totalDividends: payments.reduce((sum, p) => sum + p.amount, 0),
+      totalDividends: payments.reduce((sum: number, p: Payment) => sum + p.amount, 0),
       userCount: payments.length,
-      payments: payments.map((p) => ({
+      payments: payments.map((p: Payment) => ({
         id: p.id,
         userId: p.userId,
         amount: p.amount,

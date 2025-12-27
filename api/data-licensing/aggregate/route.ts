@@ -28,7 +28,12 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const userIds = optedInUsers.map((opt) => opt.userId);
+    interface OptInUser {
+      userId: string;
+      optedIn: boolean;
+      user?: unknown;
+    }
+    const userIds = optedInUsers.map((opt: OptInUser) => opt.userId);
     const aggregates: any = {
       totalUsers: userIds.length,
       dataType,
@@ -37,53 +42,34 @@ export async function GET(request: NextRequest) {
 
     // Aggregate biomarkers (anonymized)
     if (!dataType || dataType === 'biomarkers' || dataType === 'all') {
-      const biomarkers = await prisma.biomarker.findMany({
+      const biomarkers = await prisma.biomarkerReading.findMany({
         where: { userId: { in: userIds } },
         select: {
-          bloodGlucose: true,
-          cholesterolTotal: true,
-          cholesterolLDL: true,
-          cholesterolHDL: true,
-          triglycerides: true,
-          vitaminD: true,
-          vitaminB12: true,
-          iron: true,
-          ferritin: true,
-          weight: true,
-          bmi: true,
-          bodyFatPercentage: true,
-          muscleMass: true,
-          recordedAt: true,
+          metric: true,
+          value: true,
+          unit: true,
+          date: true,
         },
       });
 
-      // Calculate aggregate statistics for numeric fields
-      const numericFields = [
-        'bloodGlucose',
-        'cholesterolTotal',
-        'cholesterolLDL',
-        'cholesterolHDL',
-        'triglycerides',
-        'vitaminD',
-        'vitaminB12',
-        'iron',
-        'ferritin',
-        'weight',
-        'bmi',
-        'bodyFatPercentage',
-        'muscleMass',
-      ];
-
+      // Group biomarkers by metric and calculate aggregate statistics
       const biomarkerStats: any[] = [];
-      numericFields.forEach((field) => {
-        const values = biomarkers
-          .map((bm: any) => bm[field])
-          .filter((v: any) => v !== null && v !== undefined && !isNaN(Number(v)))
-          .map((v: any) => Number(v));
+      const metricGroups: Record<string, number[]> = {};
+      
+      biomarkers.forEach((bm: any) => {
+        if (bm.metric && bm.value !== null && bm.value !== undefined && !isNaN(Number(bm.value))) {
+          if (!metricGroups[bm.metric]) {
+            metricGroups[bm.metric] = [];
+          }
+          metricGroups[bm.metric].push(Number(bm.value));
+        }
+      });
 
+      Object.keys(metricGroups).forEach((metric) => {
+        const values = metricGroups[metric];
         if (values.length > 0) {
           biomarkerStats.push({
-            name: field,
+            name: metric,
             count: values.length,
             avg: values.reduce((a, b) => a + b, 0) / values.length,
             min: Math.min(...values),
@@ -139,58 +125,58 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Aggregate microbiome results
-    if (!dataType || dataType === 'microbiome' || dataType === 'all') {
-      const microbiomeResults = await prisma.microbiomeResult.findMany({
-        where: { userId: { in: userIds } },
-        select: {
-          shannonIndex: true,
-          simpsonIndex: true,
-          speciesRichness: true,
-          createdAt: true,
-        },
-        take: 5000,
-      });
+    // Aggregate microbiome results (commented out - MicrobiomeResult model not in schema)
+    // if (!dataType || dataType === 'microbiome' || dataType === 'all') {
+    //   const microbiomeResults = await prisma.microbiomeResult.findMany({
+    //     where: { userId: { in: userIds } },
+    //     select: {
+    //       shannonIndex: true,
+    //       simpsonIndex: true,
+    //       speciesRichness: true,
+    //       createdAt: true,
+    //     },
+    //     take: 5000,
+    //   });
+    //
+    //   aggregates.microbiome = {
+    //     totalRecords: microbiomeResults.length,
+    //     avgShannonIndex:
+    //       microbiomeResults.length > 0
+    //         ? microbiomeResults.reduce((sum, m) => sum + (m.shannonIndex || 0), 0) /
+    //           microbiomeResults.length
+    //         : 0,
+    //     avgSimpsonIndex:
+    //       microbiomeResults.length > 0
+    //         ? microbiomeResults.reduce((sum, m) => sum + (m.simpsonIndex || 0), 0) /
+    //           microbiomeResults.length
+    //         : 0,
+    //     avgSpeciesRichness:
+    //       microbiomeResults.length > 0
+    //         ? microbiomeResults.reduce((sum, m) => sum + (m.speciesRichness || 0), 0) /
+    //           microbiomeResults.length
+    //         : 0,
+    //   };
+    // }
 
-      aggregates.microbiome = {
-        totalRecords: microbiomeResults.length,
-        avgShannonIndex:
-          microbiomeResults.length > 0
-            ? microbiomeResults.reduce((sum, m) => sum + (m.shannonIndex || 0), 0) /
-              microbiomeResults.length
-            : 0,
-        avgSimpsonIndex:
-          microbiomeResults.length > 0
-            ? microbiomeResults.reduce((sum, m) => sum + (m.simpsonIndex || 0), 0) /
-              microbiomeResults.length
-            : 0,
-        avgSpeciesRichness:
-          microbiomeResults.length > 0
-            ? microbiomeResults.reduce((sum, m) => sum + (m.speciesRichness || 0), 0) /
-              microbiomeResults.length
-            : 0,
-      };
-    }
-
-    // Aggregate health assessments
-    if (!dataType || dataType === 'health_assessments' || dataType === 'all') {
-      const assessments = await prisma.healthAssessment.findMany({
-        where: { userId: { in: userIds } },
-        select: {
-          overallRiskScore: true,
-          completedAt: true,
-        },
-        take: 5000,
-      });
-
-      aggregates.healthAssessments = {
-        totalRecords: assessments.length,
-        avgOverallRiskScore:
-          assessments.length > 0
-            ? assessments.reduce((sum, a) => sum + (a.overallRiskScore || 0), 0) / assessments.length
-            : 0,
-      };
-    }
+    // Aggregate health assessments (commented out - HealthAssessment model not in schema)
+    // if (!dataType || dataType === 'health_assessments' || dataType === 'all') {
+    //   const assessments = await prisma.healthAssessment.findMany({
+    //     where: { userId: { in: userIds } },
+    //     select: {
+    //       overallRiskScore: true,
+    //       completedAt: true,
+    //     },
+    //     take: 5000,
+    //   });
+    //
+    //   aggregates.healthAssessments = {
+    //     totalRecords: assessments.length,
+    //     avgOverallRiskScore:
+    //       assessments.length > 0
+    //         ? assessments.reduce((sum, a) => sum + (a.overallRiskScore || 0), 0) / assessments.length
+    //         : 0,
+    //   };
+    // }
 
     return NextResponse.json(aggregates);
   } catch (error: any) {

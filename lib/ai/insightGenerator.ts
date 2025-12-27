@@ -27,6 +27,15 @@ export interface UserData {
   gender?: string;
   biologicalAge?: number;
   goals?: string[];
+  biomarkers?: Array<{ metric: string; value: number; date: Date }>;
+  advancedMetrics?: {
+    hrvCoherence?: number;
+    sleepDebt?: number;
+    parasympatheticTone?: number;
+    longevityScore?: number;
+  };
+  recentMeals?: Array<{ calories: number; protein: number; carbs: number; fat: number; date: Date }>;
+  activeProtocols?: Array<{ name: string; adherence: number }>;
 }
 
 export class InsightGenerator {
@@ -112,7 +121,7 @@ export class InsightGenerator {
     // Get latest advanced metrics
     const latestAdvancedMetrics = await prisma.advancedMetric.findFirst({
       where: { userId },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { calculatedAt: 'desc' },
     });
 
     // Get recent meal logs
@@ -134,17 +143,17 @@ export class InsightGenerator {
       userId,
       biologicalAge: user?.biologicalAge || undefined,
       goals: (user?.preferences as any)?.goals || [],
-      biomarkerReadings: latestReadings.map((r) => ({
+      biomarkers: latestReadings.map((r) => ({
         metric: r.metric,
         value: r.value,
         date: r.date,
       })),
       advancedMetrics: latestAdvancedMetrics
         ? {
-            hrvCoherence: latestAdvancedMetrics.hrvCoherence || 0,
-            sleepDebt: latestAdvancedMetrics.sleepDebt || 0,
-            parasympatheticTone: latestAdvancedMetrics.parasympatheticTone || 0,
-            longevityScore: latestAdvancedMetrics.longevityScore || 0,
+            hrvCoherence: latestAdvancedMetrics.metricType === 'hrv_coherence' ? latestAdvancedMetrics.value : 0,
+            sleepDebt: latestAdvancedMetrics.metricType === 'sleep_debt' ? latestAdvancedMetrics.value : 0,
+            parasympatheticTone: latestAdvancedMetrics.metricType === 'parasympathetic_tone' ? latestAdvancedMetrics.value : 0,
+            longevityScore: latestAdvancedMetrics.metricType === 'longevity_score' ? latestAdvancedMetrics.value : 0,
           }
         : undefined,
       recentMeals: recentMeals.map((m) => ({

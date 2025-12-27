@@ -31,19 +31,15 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const appointments = await prisma.appointment.findMany({
-      where: { userId: user.id },
-      include: {
-        provider: true,
-      },
-      orderBy: { startTime: 'desc' },
-    });
+    // TODO: Appointment model not yet implemented
+    const appointments: unknown[] = [];
 
     return NextResponse.json({ success: true, appointments });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error listing appointments:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to list appointments';
     return NextResponse.json(
-      { error: 'Failed to list appointments', details: error.message },
+      { error: 'Failed to list appointments', details: errorMessage },
       { status: 500 },
     );
   }
