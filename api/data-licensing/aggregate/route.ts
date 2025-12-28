@@ -103,16 +103,16 @@ export async function GET(request: NextRequest) {
       aggregates.mealLogs = {
         totalRecords: mealLogs.length,
         avgCalories: mealLogs.length > 0
-          ? mealLogs.reduce((sum, m) => sum + (m.calories || 0), 0) / mealLogs.length
+          ? mealLogs.reduce((sum: number, m) => sum + (m.calories || 0), 0) / mealLogs.length
           : 0,
         avgProtein: mealLogs.length > 0
-          ? mealLogs.reduce((sum, m) => sum + (m.protein || 0), 0) / mealLogs.length
+          ? mealLogs.reduce((sum: number, m) => sum + (m.protein || 0), 0) / mealLogs.length
           : 0,
         avgCarbs: mealLogs.length > 0
-          ? mealLogs.reduce((sum, m) => sum + (m.carbs || 0), 0) / mealLogs.length
+          ? mealLogs.reduce((sum: number, m) => sum + (m.carbs || 0), 0) / mealLogs.length
           : 0,
         avgFat: mealLogs.length > 0
-          ? mealLogs.reduce((sum, m) => sum + (m.fats || 0), 0) / mealLogs.length
+          ? mealLogs.reduce((sum: number, m) => sum + (m.fats || 0), 0) / mealLogs.length
           : 0,
         mealTypeDistribution: {} as Record<string, number>,
       };
