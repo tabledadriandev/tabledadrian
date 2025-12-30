@@ -265,7 +265,7 @@ export default function WhitepaperClient() {
                 <li>Token name: Table d&apos;Adrian Token</li>
                 <li>Ticker: $tabledadrian</li>
                 <li>Network: Base (chain id 8453)</li>
-                <li>Contract address: 0xEE47670A6eD7501Aeeb9733efd0bF7D93eD3cb07</li>
+                <li>Contract address: Coming soon</li>
                 <li>Standard: ERC‑20 utility and governance token</li>
               </ul>
 

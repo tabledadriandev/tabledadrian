@@ -1,149 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const CONTRACT_ADDRESS = '0xEE47670A6eD7501Aeeb9733efd0bF7D93eD3cb07';
-const POOL_ADDRESS = '0xa421606ad7907968228c58d56f20ab1028db588cedb3ece882e9c55515346d7d';
-const BASE_SCAN_URL = `https://basescan.org/token/${CONTRACT_ADDRESS}`;
-const GECKOTERMINAL_URL = `https://www.geckoterminal.com/base/pools/${POOL_ADDRESS}`;
-const UNISWAP_SWAP_URL = `https://app.uniswap.org/#/swap?chain=base&outputCurrency=${CONTRACT_ADDRESS}`;
-
 const Coin = () => {
-  const [priceData, setPriceData] = useState({
-    price: '0.00',
-    marketCap: '0',
-    volume24h: '0',
-    liquidity: '0',
-    holders: '0',
-    supply: '0',
-  });
 
-  const [showAddress, setShowAddress] = useState(false);
-  const [copied, setCopied] = useState(false);
-
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  useEffect(() => {
-    // Fetch pool data directly from GeckoTerminal API using pool address
-    const fetchTokenData = async () => {
-      try {
-        // Fetch pool data directly
-        const poolResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/pools/${POOL_ADDRESS}`);
-        const poolData = await poolResponse.json();
-        
-        if (poolData.data && poolData.data.attributes) {
-          const poolAttrs = poolData.data.attributes;
-          
-          // Get token price from pool attributes
-          const priceUsd = parseFloat(poolAttrs.base_token_price_usd || poolAttrs.price_usd || '0');
-          
-          // Get token data for supply and market cap calculation
-          let totalSupply = 0;
-          let marketCap = 0;
-          let holders = 'N/A';
-          
-          if (poolData.data.relationships && poolData.data.relationships.base_token) {
-            try {
-              const tokenId = poolData.data.relationships.base_token.data.id;
-              const tokenAddress = tokenId.split('_').pop();
-              const tokenResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${tokenAddress}`);
-              const tokenData = await tokenResponse.json();
-              
-              if (tokenData.data && tokenData.data.attributes) {
-                const tokenAttrs = tokenData.data.attributes;
-                // Total supply is usually in the token attributes
-                totalSupply = parseFloat(tokenAttrs.total_supply || tokenAttrs.circulating_supply || '0');
-                
-                // Calculate market cap: price * total supply
-                if (priceUsd > 0 && totalSupply > 0) {
-                  marketCap = priceUsd * totalSupply;
-                }
-              }
-            } catch (tokenError) {
-              console.error('Error fetching token data:', tokenError);
-            }
-          }
-          
-          // Extract volume data - check for proper structure
-          const volume24h = poolAttrs.volume_usd?.h24 || 
-                           (typeof poolAttrs.volume_usd === 'object' ? poolAttrs.volume_usd.h24 : poolAttrs.volume_usd) || 
-                           '0';
-          
-          // Liquidity from reserve_in_usd (pool reserves)
-          const liquidity = poolAttrs.reserve_in_usd || 
-                           poolAttrs.fdv_usd || 
-                           (poolAttrs.base_token_reserve_in_usd ? parseFloat(poolAttrs.base_token_reserve_in_usd) * priceUsd : '0') ||
-                           '0';
-          
-          // Use FDV (Fully Diluted Valuation) if market cap calculation failed
-          if (marketCap === 0 && poolAttrs.fdv_usd) {
-            const fdv = parseFloat(poolAttrs.fdv_usd);
-            // Only use FDV if it's a reasonable number (not in trillions)
-            if (fdv > 0 && fdv < 1e15) {
-              marketCap = fdv;
-            }
-          }
-          
-          setPriceData({
-            price: priceUsd > 0 ? priceUsd.toFixed(6) : '0.00',
-            marketCap: marketCap > 0 ? formatNumber(marketCap) : 'N/A',
-            volume24h: volume24h && volume24h !== '0' ? formatNumber(parseFloat(volume24h)) : '0',
-            liquidity: liquidity && liquidity !== '0' ? formatNumber(parseFloat(liquidity)) : '0',
-            holders: holders,
-            supply: totalSupply > 0 ? formatNumber(totalSupply) : 'N/A',
-          });
-          return;
-        }
-        
-        // Fallback: try fetching by token address
-        const tokenResponse = await fetch(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${CONTRACT_ADDRESS}`);
-        const tokenData = await tokenResponse.json();
-        
-        if (tokenData.data && tokenData.data.attributes) {
-          const attributes = tokenData.data.attributes;
-          const priceUsd = parseFloat(attributes.price_usd || '0');
-          const totalSupply = parseFloat(attributes.total_supply || attributes.circulating_supply || '0');
-          const marketCap = priceUsd > 0 && totalSupply > 0 ? priceUsd * totalSupply : 0;
-          
-          setPriceData({
-            price: priceUsd > 0 ? priceUsd.toFixed(6) : '0.00',
-            marketCap: marketCap > 0 ? formatNumber(marketCap) : 'N/A',
-            volume24h: 'N/A',
-            liquidity: 'N/A',
-            holders: 'N/A',
-            supply: totalSupply > 0 ? formatNumber(totalSupply) : 'N/A',
-          });
-        }
-      } catch (error) {
-        console.error('Error fetching pool data:', error);
-        // Set error state
-        setPriceData(prev => ({
-          ...prev,
-          price: prev.price === '0.00' ? 'Error' : prev.price,
-        }));
-      }
-    };
-
-    fetchTokenData();
-    const interval = setInterval(fetchTokenData, 60000); // Update every 60 seconds (GeckoTerminal has 30 calls/min limit)
-    return () => clearInterval(interval);
-  }, []);
-
-  const formatNumber = (num: number): string => {
-    if (isNaN(num) || !isFinite(num) || num <= 0) return '0';
-    if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
-    if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
-    if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
-    if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
-    return num.toFixed(2);
-  };
 
   const socialLinks = [
     { name: 'X', icon: '/icons/x_dark.svg', href: 'https://x.com/tabledadrian?s=21' },
@@ -179,59 +41,22 @@ const Coin = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-2xl sm:text-3xl text-accent-primary mb-4 font-display"
+              className="text-2xl sm:text-3xl text-accent-primary mb-4 font-display"
             >
-            $tabledadrian
+              $tabledadrian
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-            className="bg-bg-primary rounded-2xl p-6 sm:p-7 mb-8 max-w-2xl mx-auto"
+              className="bg-bg-primary rounded-2xl p-6 sm:p-7 mb-8 max-w-2xl mx-auto"
             >
-            <p className="text-sm uppercase tracking-wide text-text-secondary mb-3 text-center">
-              Contract details
-            </p>
-            <div className="flex flex-row flex-wrap items-center justify-center gap-2 sm:gap-3">
-              <button
-                type="button"
-                onClick={() => setShowAddress((prev) => !prev)}
-                className="btn-primary inline-flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm group"
-              >
-                <span>{showAddress ? 'Hide Address' : 'Show Address'}</span>
-              </button>
-              <button
-                type="button"
-                onClick={async () => {
-                  try {
-                    await navigator.clipboard.writeText(CONTRACT_ADDRESS);
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                  } catch (err) {
-                    console.error('Failed to copy address', err);
-                  }
-                }}
-                className="btn-secondary inline-flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm group"
-              >
-                <span>Copy Address</span>
-                {copied && <span className="text-[11px] text-bg-primary">Copied</span>}
-              </button>
-              <a
-                href={BASE_SCAN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary inline-flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm group"
-              >
-                <span>View on BaseScan</span>
-              </a>
-            </div>
-            {showAddress && (
-              <div className="mt-4 rounded-lg bg-bg-primary/80 dark:bg-accent-dark/60 px-3 py-2 text-center">
-                <code className="text-text-primary font-mono text-xs sm:text-sm break-all">
-                  {CONTRACT_ADDRESS}
-                </code>
-              </div>
-            )}
+              <p className="text-sm uppercase tracking-wide text-text-secondary mb-3 text-center">
+                Contract address
+              </p>
+              <p className="text-base sm:text-lg text-text-primary text-center font-medium">
+                Coming soon
+              </p>
             </motion.div>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -246,66 +71,68 @@ const Coin = () => {
         </div>
       </section>
 
-      {/* Live Data Section */}
-      <section className="section-padding bg-accent-dark/5">
+      {/* Q1 Relaunch Section */}
+      <section className="section-padding bg-gradient-to-br from-accent-primary/10 via-accent-dark/5 to-accent-primary/10">
         <div className="container-custom">
           <motion.div
-            ref={ref}
             initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-6xl mx-auto"
+            className="max-w-5xl mx-auto text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-display text-text-primary mb-12 text-center">
-              Live Market Data
-            </h2>
-            
-            {/* GeckoTerminal Embed */}
-            <div className="mb-8">
-              <div className="bg-bg-primary rounded-2xl p-4 overflow-hidden">
-                <iframe
-                  height="600"
-                  width="100%"
-                  id="geckoterminal-embed"
-                  title="GeckoTerminal Embed"
-                  src="https://www.geckoterminal.com/base/pools/0xa421606ad7907968228c58d56f20ab1028db588cedb3ece882e9c55515346d7d?embed=1&info=1&swaps=1&grayscale=0&light_chart=0&chart_type=price&resolution=15m"
-                  frameBorder="0"
-                  allow="clipboard-write"
-                  allowFullScreen
-                  className="w-full rounded-lg"
-                  style={{ minHeight: '600px' }}
-                />
-              </div>
-            </div>
-
-            <div className="mt-8 text-center space-y-4">
-              <a
-                href={GECKOTERMINAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-block group"
+            <div className="bg-bg-primary rounded-3xl p-8 md:p-12 shadow-2xl border border-accent-primary/20">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="mb-6"
               >
-                <span>View Full Chart on GeckoTerminal</span>
-              </a>
-              <div>
-                <a
-                  href={UNISWAP_SWAP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary inline-flex items-center gap-2 group"
-                >
-                  <span className="flex items-center gap-2">
-                    <Image
-                      src="/icons/coinbase.svg"
-                      alt="Base"
-                      width={20}
-                      height={20}
-                      className="object-contain"
-                    />
-                    Trade on Base
-                  </span>
-                </a>
-              </div>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-text-primary mb-4 bg-gradient-to-r from-accent-primary to-accent-primary/70 bg-clip-text text-transparent">
+                  Q1 Relaunch
+                </h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-accent-primary to-accent-primary/50 mx-auto mb-6 rounded-full"></div>
+              </motion.div>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-xl md:text-2xl text-text-primary mb-6 font-medium leading-relaxed"
+              >
+                Exciting updates coming soon for the token and the app
+              </motion.p>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="text-base md:text-lg text-text-secondary leading-relaxed max-w-3xl mx-auto"
+              >
+                Stay tuned for announcements, new features, and major improvements. 
+                We&apos;re building something special, and we&apos;ll share every update as it happens.
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="mt-8 flex flex-wrap justify-center gap-4"
+              >
+                <div className="px-6 py-3 bg-accent-primary/10 rounded-full border border-accent-primary/30">
+                  <span className="text-accent-primary font-semibold text-sm md:text-base">🚀 Token Relaunch</span>
+                </div>
+                <div className="px-6 py-3 bg-accent-primary/10 rounded-full border border-accent-primary/30">
+                  <span className="text-accent-primary font-semibold text-sm md:text-base">📱 App Updates</span>
+                </div>
+                <div className="px-6 py-3 bg-accent-primary/10 rounded-full border border-accent-primary/30">
+                  <span className="text-accent-primary font-semibold text-sm md:text-base">✨ New Features</span>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
