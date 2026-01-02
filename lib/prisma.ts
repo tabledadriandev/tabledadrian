@@ -1,0 +1,93 @@
+import { PrismaClient } from '@prisma/client'
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
+}
+
+// Skip Prisma initialization during Next.js build or if DATABASE_URL is missing
+const isBuildTime = process.env.NEXT_PHASE === 'phase-production-build'
+const hasDatabaseUrl = !!process.env.DATABASE_URL
+
+// Generic mock function for all Prisma operations
+const createMockModel = () => ({
+  findUnique: async () => null,
+  findFirst: async () => null,
+  findMany: async () => [],
+  create: async (args?: { data?: Record<string, unknown> }) => ({ id: 'mock', createdAt: new Date(), ...args?.data }),
+  update: async (args?: { data?: Record<string, unknown> }) => ({ id: 'mock', ...args?.data }),
+  updateMany: async () => ({ count: 0 }),
+  delete: async () => null,
+  deleteMany: async () => ({ count: 0 }),
+  count: async () => 0,
+  aggregate: async () => ({}),
+});
+
+export const prisma: PrismaClient = (() => {
+  if (isBuildTime || !hasDatabaseUrl) {
+    // Return a comprehensive mock client during build or when DATABASE_URL is missing
+    return {
+      user: createMockModel(),
+      healthData: createMockModel(),
+      healthScore: createMockModel(),
+      marketplaceItem: createMockModel(),
+      socialAccount: createMockModel(),
+      userAuth: createMockModel(),
+      userSession: createMockModel(),
+      biomarkerReading: createMockModel(),
+      medicalResult: createMockModel(),
+      mealLog: createMockModel(),
+      longevityPlan: createMockModel(),
+      protocolExperiment: createMockModel(),
+      wearableConnection: createMockModel(),
+      biologicalAge: createMockModel(),
+      advancedMetric: createMockModel(),
+      desciContribution: createMockModel(),
+      achievement: createMockModel(),
+      staking: createMockModel(),
+      leaderboard: createMockModel(),
+      cameraAnalysis: createMockModel(),
+      proofOfHealth: createMockModel(),
+      healthBadge: createMockModel(),
+      deviceAttestation: createMockModel(),
+      moleTracking: createMockModel(),
+      challengeProgress: createMockModel(),
+      challenge: createMockModel(),
+      transaction: createMockModel(),
+      chefProfile: createMockModel(),
+      chefService: createMockModel(),
+      chefBooking: createMockModel(),
+      chefEarning: createMockModel(),
+      chefMealPlan: createMockModel(),
+      post: createMockModel(),
+      dataLicenseOptIn: createMockModel(),
+      dividendPayment: createMockModel(),
+      $connect: async () => {},
+      $disconnect: async () => {},
+      $transaction: async (fn: unknown) => (typeof fn === 'function' ? fn({}) : Promise.resolve({})),
+      $queryRaw: async () => [],
+      $queryRawUnsafe: async () => [],
+      $executeRaw: async () => 0,
+      $executeRawUnsafe: async () => 0,
+    } as unknown as PrismaClient
+  }
+  
+  if (globalForPrisma.prisma) {
+    return globalForPrisma.prisma
+  }
+  
+  try {
+    const client = new PrismaClient({
+      log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
+    })
+    
+    if (process.env.NODE_ENV !== 'production') {
+      globalForPrisma.prisma = client
+    }
+    
+    return client
+  } catch (error) {
+    console.warn('Prisma initialization failed, using mock client:', error)
+    return {} as unknown as PrismaClient
+  }
+})()
+

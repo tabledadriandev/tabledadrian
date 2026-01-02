@@ -1,0 +1,723 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==========================================
+// USER & AUTHENTICATION
+// ==========================================
+
+model User {
+  id                    String    @id @default(cuid())
+  email                 String?   @unique
+  username              String?   @unique
+  walletAddress         String?   @unique
+  name                  String?
+  avatar                String?
+  biologicalAge         Float?
+  stakedTokens          Float     @default(0)
+  totalTokensEarned     Float     @default(0)
+  preferences           Json?     // Food preferences, dietary restrictions, etc.
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Relations
+  auth                  UserAuth?
+  sessions              UserSession[]
+  wearableConnections   WearableConnection[]
+  biomarkerReadings     BiomarkerReading[]
+  biologicalAges        BiologicalAge[]
+  protocolExperiments   ProtocolExperiment[]
+  desciContributions    DeSciContribution[]
+  advancedMetrics       AdvancedMetric[]
+  mealLogs              MealLog[]
+  medicalResults        MedicalResult[]
+  longevityPlans        LongevityPlan[]
+  achievements          Achievement[]
+  stakings              Staking[]
+  leaderboardEntries    Leaderboard[]
+  proofOfHealth         ProofOfHealth[]
+  healthBadges          HealthBadge[]
+  deviceAttestations    DeviceAttestation[]
+  cameraAnalyses        CameraAnalysis[]
+  moleTrackings         MoleTracking[]
+  challengeProgresses   ChallengeProgress[]
+  transactions          Transaction[]
+  chefProfile           ChefProfile?
+  chefBookings          ChefBooking[]
+  chefMealPlans         ChefMealPlan[]
+  posts                 Post[]
+  dataLicenseOptIn      DataLicenseOptIn?
+  dividendPayments      DividendPayment[]
+
+  @@index([walletAddress])
+  @@index([email])
+}
+
+model UserAuth {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  passwordHash          String
+  passwordResetToken    String?
+  passwordResetExpires  DateTime?
+  twoFactorEnabled      Boolean   @default(false)
+  twoFactorSecret       String?
+  twoFactorBackupCodes  String[]
+  loginAttempts         Int       @default(0)
+  lockUntil             DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model UserSession {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionToken    String    @unique
+  refreshToken    String?   @unique
+  walletAddress   String?
+  loginTimestamp  DateTime  @default(now())
+  expiryTimestamp DateTime
+  lastActivity    DateTime  @default(now())
+  deviceInfo      Json?
+  ipAddress       String?
+  userAgent       String?
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([sessionToken])
+}
+
+// ==========================================
+// WEARABLES & BIOMETRICS
+// ==========================================
+
+model WearableConnection {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider      String   // "oura", "apple", "google", "whoop", "strava", "fitbit"
+  accessToken   String   @db.Text
+  refreshToken  String?  @db.Text
+  expiresAt     DateTime?
+  lastSyncAt    DateTime?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId, provider])
+}
+
+model BiomarkerReading {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  metric        String   // "hrv", "sleep_score", "readiness", "strain", etc.
+  value         Float
+  unit          String   // "ms", "%", "score"
+  source        String   // "oura", "apple", "google", "whoop", "strava", "fitbit"
+  date          DateTime
+  metadata      Json?    // Additional data (sleep phases, HR zones, etc.)
+  createdAt     DateTime @default(now())
+  
+  @@index([userId, metric, date])
+}
+
+model BiologicalAge {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chronologicalAge  Int
+  biologicalAge     Float
+  cardiacAge        Float?   // HRV-based
+  sleepAge          Float?   // Sleep quality-based
+  activityAge       Float?   // Movement-based
+  recoveryAge       Float?   // Recovery-based
+  calculatedAt      DateTime @default(now())
+  factors           Json?    // What's driving the score
+
+  @@index([userId, calculatedAt])
+}
+
+model AdvancedMetric {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  metricType    String   // "hrv_coherence", "sleep_debt", "parasympathetic_tone", etc.
+  value         Float
+  date          DateTime
+  calculatedAt  DateTime @default(now())
+
+  @@index([userId, metricType, date])
+}
+
+// ==========================================
+// PROTOCOLS & EXPERIMENTS
+// ==========================================
+
+model ProtocolExperiment {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name              String   // "cold_plunge", "meditation", "fasting", etc.
+  startDate         DateTime
+  endDate           DateTime?
+  status            String   // "active", "completed", "paused"
+  notes             String?  @db.Text
+  correlatedMetrics Json?    // { "hrv": 8, "sleep": 12 }
+  adherence         Float?   // 0-100%
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId, status])
+}
+
+// ==========================================
+// FOOD & NUTRITION
+// ==========================================
+
+model MealLog {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  photoUrl        String?  // Food photo
+  imageUrl        String?  // Food photo (alternative field name)
+  aiIdentified    Json?    // AI food identification results
+  foods           Json     // Array of foods with portions
+  foodsIdentified Json?    // Array of food names
+  portionSizes    Json?    // Portion size information
+  calories        Float
+  protein         Float
+  carbs           Float
+  fat             Float
+  fats            Float?   // Alternative field name (optional)
+  fiber           Float?   // Dietary fiber
+  polyphenols     Json?    // Polyphenol content (object with quercetin, anthocyanins, etc.)
+  resistantStarch Json?    // Resistant starch content (object with type1, type2, type3, etc.)
+  glycemicLoad   Float?   // Glycemic load
+  glycemicIndex   Float?   // Glycemic index
+  allergens       Json?    // Allergen information
+  vitamins        Json?    // Vitamin content
+  minerals        Json?    // Mineral content
+  chefId          String?  // Chef who created the meal
+  chefName        String?  // Chef name
+  chefVerified    Boolean? // Whether the meal is chef-verified
+  antioxidants    Json?    // Antioxidant content
+  notes           String?  @db.Text // Additional notes about the meal
+  micronutrients  Json?    // Omega-3, polyphenols, NAD+ boosters, etc.
+  mealType        String   // "breakfast", "lunch", "dinner", "snack"
+  cameraAnalysisId String? // Reference to camera analysis
+  date            DateTime
+  createdAt       DateTime @default(now())
+  
+  @@index([userId, date])
+}
+
+// ==========================================
+// MEDICAL RESULTS
+// ==========================================
+
+model MedicalResult {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pdfUrl          String?  // Uploaded PDF/image
+  extractedData   Json     // AI-extracted biomarkers
+  biomarkers      Json     // Structured biomarker data
+  testDate        DateTime
+  testType        String   // "blood", "hormone", "metabolic", etc.
+  labName         String?
+  doctorNotes     String?  @db.Text
+  flags           Json?    // Red/yellow/green flags
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([userId, testDate])
+}
+
+// ==========================================
+// AI LONGEVITY PLANS
+// ==========================================
+
+model LongevityPlan {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planType        String   // "nutrition", "exercise", "sleep", "supplements", "stress", "combined"
+  recommendations Json     // Structured recommendations
+  mealPlan        Json?    // 30-day meal plan
+  exercisePlan    Json?    // Workout schedule
+  supplementStack Json?   // Supplement recommendations
+  expectedResults Json?    // Expected improvements
+  startDate       DateTime
+  endDate         DateTime?
+  status          String   // "active", "completed", "paused"
+  adherence       Float?   // 0-100%
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userId, status])
+}
+
+// ==========================================
+// DESCI & TOKEN REWARDS
+// ==========================================
+
+model DeSciContribution {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dataPoints    Int
+  tokenReward   Float    // $TA tokens earned
+  researchStudy String?
+  transactionHash String? // Blockchain transaction
+  date          DateTime @default(now())
+
+  @@index([userId, date])
+}
+
+// ==========================================
+// GAMIFICATION
+// ==========================================
+
+model Achievement {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type            String   // "sleep_optimizer", "hrv_master", "protocol_warrior", etc.
+  unlockedAt      DateTime @default(now())
+  tokenReward     Float    // $TA tokens earned
+  badgeUrl        String?
+
+  @@index([userId, type])
+}
+
+model Staking {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount          Float    // $TA tokens staked
+  apy             Float    // Current APY (8-12%)
+  rewardsEarned   Float    // Total rewards earned
+  startDate       DateTime
+  unlockDate      DateTime? // For locked staking
+  status          String   // "active", "withdrawn"
+  createdAt       DateTime @default(now())
+
+  @@index([userId, status])
+}
+
+model Leaderboard {
+  id              String   @id @default(cuid())
+  competitionId   String
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  metric          String   // "biological_age", "hrv", "sleep", etc.
+  value           Float
+  rank            Int
+  period          String   // "daily", "weekly", "monthly"
+  date            DateTime
+  createdAt       DateTime @default(now())
+  
+  @@index([competitionId, rank])
+}
+
+// ==========================================
+// LEGACY MODELS (for backward compatibility)
+// ==========================================
+
+model HealthData {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String
+  value       Float
+  unit        String?
+  notes       String?  @db.Text
+  source      String?
+  recordedAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId, recordedAt])
+}
+
+// ==========================================
+// PROOF-OF-HEALTH PRIMITIVES
+// ==========================================
+
+model ProofOfHealth {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  proofType     String   // "merkle_biomarker", "device_attestation", "sbt", "commitment", "zk_range"
+  merkleRoot    String?  // For Merkle tree proofs
+  weekStart     DateTime? // Week boundary for aggregation
+  onchainTxHash String?  // Transaction hash when posted to chain
+  metadata      Json?    // Proof-specific data
+  createdAt     DateTime @default(now())
+
+  @@index([userId, proofType, weekStart])
+}
+
+model HealthBadge {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badgeType     String   // "30_day_adherence", "clinician_attested", "sleep_improvement"
+  tokenId       String?  // Onchain NFT token ID
+  mintTxHash    String?  // Mint transaction hash
+  metadata      Json     // Badge-specific data (streak length, protocol ID, etc.)
+  issuedAt      DateTime @default(now())
+  expiresAt     DateTime? // For time-limited badges
+
+  @@unique([userId, badgeType, tokenId])
+  @@index([userId, badgeType])
+}
+
+model DeviceAttestation {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deviceId      String   // Device identifier (e.g., "apple_health", "oura_ring")
+  devicePubKey  String   // Device's public key/address
+  dataHash      String   // Hash of the attested data
+  signature     String   // EIP-712 signature
+  metric        String   // Metric type (e.g., "hrv", "sleep_score")
+  value         Float    // Metric value
+  timestamp     DateTime
+  onchainTxHash String?  // Transaction hash if submitted to chain
+  createdAt     DateTime @default(now())
+
+  @@index([userId, deviceId, timestamp])
+  @@index([devicePubKey])
+}
+
+model HealthScore {
+  id          String   @id @default(cuid())
+  userId      String
+  score       Float
+  factors     Json?
+  calculatedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId, calculatedAt])
+}
+
+model CameraAnalysis {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type            String   // "body_composition", "food", "eye_health", "facial", etc.
+  imageUrl        String?
+  imageData       String?  @db.Text
+  measurements    Json?
+  bodyFatEstimate Float?
+  leanMuscleMass  Float?
+  muscleSymmetry  Json?
+  postureAnalysis Json?
+  bodyModel3D     Json?
+  eyeAnalysis     Json?    // For eye health analysis
+  visualAcuityScore Float?
+  retinalImageUrl String?
+  eyeHealthRisks  Json?    // Eye health risk assessment
+  skinHealth      Json?    // For facial analysis
+  facialSymmetry  Json?    // For facial analysis
+  stressLevel     Float?   // For facial analysis
+  estimatedAge    Float?   // For facial analysis
+  actualAge       Float?   // For facial analysis
+  heartRateEstimate Float? // For facial analysis
+  respiratoryRate Float?   // For facial analysis
+  bloodOxygenEstimate Float? // For facial analysis
+  foodsIdentified     Json?  // For food recognition
+  nutritionAnalysis   Json?  // For food recognition
+  comparisonId    String?
+  progress        Json?
+  recommendations Json?
+  analyzedAt      DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  @@index([userId, type, analyzedAt])
+}
+
+model MoleTracking {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moleId          String   @unique // Unique identifier for the mole
+  name            String?  // Optional name for the mole
+  bodyLocation    String   // Body location (e.g., "left arm", "back")
+  locationCoordinates Json? // Coordinates on body map
+  primaryImageUrl String?  // Current primary image URL
+  comparisonImages Json?   // Array of previous image URLs for comparison
+  imageBase64     String?  @db.Text // Image data
+  measurements    Json?    // Size measurements over time
+  color           String?  // Mole color
+  shape           String?  // Mole shape
+  border          Json?    // Border characteristics
+  asymmetry       Json?    // Asymmetry analysis
+  diameter        Float?   // Diameter in mm
+  evolution       Json?    // Evolution tracking data
+  melanomaRisk    Float?   // Risk assessment score (0-100)
+  riskLevel       String?  // Risk level (low, medium, high)
+  aiAnalysis      Json?    // AI analysis results
+  checkFrequency  String?  // Recommended check frequency
+  referredToDermatologist Boolean? // Whether referred
+  referralDate    DateTime? // Date of referral
+  notes           String?  @db.Text
+  lastChecked     DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userId, moleId])
+  @@index([userId, lastChecked])
+}
+
+model Challenge {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  type        String   // "protocol", "fitness", "nutrition", etc.
+  duration    Int?     // Duration in days
+  reward      Float?   // Token reward
+  metadata    Json?    // Challenge-specific data
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  progresses  ChallengeProgress[]
+
+  @@index([type, isActive])
+}
+
+model ChallengeProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  progress    Float    @default(0) // 0-100
+  completed   Boolean  @default(false)
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  metadata    Json?    // Additional progress data
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, challengeId])
+  @@index([userId, challengeId])
+  @@index([challengeId])
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String   // "purchase", "reward", "staking", etc.
+  amount      Float    // Positive for credits, negative for debits
+  description String?  @db.Text
+  status      String?  // "pending", "completed", "failed"
+  txHash      String?  // Blockchain transaction hash
+  metadata    Json?    // Additional transaction data
+  createdAt   DateTime @default(now())
+
+  @@index([userId, type, createdAt])
+  @@index([txHash])
+}
+
+model ChefProfile {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name                String?
+  chefName            String?
+  bio                 String?  @db.Text
+  avatar              String?
+  location            String?
+  specialties         Json?    // Array of specialties
+  specializations     Json?    // Array of specializations
+  cuisineTypes        Json?    // Array of cuisine types
+  certifications      Json?    // Array of certifications
+  yearsExperience     Int?
+  restaurantBackground Json?   // Array of restaurant backgrounds
+  defaultPricePerHour Float?
+  acceptsCrypto       Boolean? @default(true)
+  acceptsFiat         Boolean? @default(true)
+  portfolioPhotos     Json?    // Array of photo URLs
+  sampleMenus         Json?    // Sample menu data
+  rating              Float?   @default(0)
+  totalEarnings       Float?   @default(0)
+  taTokenBalance      Float?   @default(0)
+  taEarningsTotal     Float?   @default(0)
+  cryptoEarningsTotal Float?   @default(0)
+  fiatEarningsTotal   Float?   @default(0)
+  totalMealsLogged    Int?     @default(0)
+  isActive            Boolean  @default(true)
+  services            ChefService[]
+  bookings            ChefBooking[]
+  earnings            ChefEarning[]
+  mealPlans           ChefMealPlan[]
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([userId])
+  @@index([isActive])
+}
+
+model ChefService {
+  id            String   @id @default(cuid())
+  chefId        String
+  chef          ChefProfile @relation(fields: [chefId], references: [id], onDelete: Cascade)
+  serviceType   String   // "consultation", "meal_plan", "meal_logging"
+  name          String
+  description   String?  @db.Text
+  price         Float
+  duration      Int?     // Duration in minutes
+  isActive      Boolean  @default(true)
+  metadata      Json?    // Service-specific data
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([chefId, serviceType, isActive])
+}
+
+model ChefBooking {
+  id            String   @id @default(cuid())
+  chefId        String
+  chef          ChefProfile @relation(fields: [chefId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serviceType   String   // "consultation", "meal_plan", "meal_logging"
+  serviceName   String
+  serviceId     String?  // Reference to ChefService
+  scheduledAt   DateTime
+  duration      Int?     // Duration in minutes
+  location      String?  // "remote", "in-person", etc.
+  status        String   @default("pending") // "pending", "confirmed", "completed", "cancelled"
+  paymentStatus String?  @default("pending") // "pending", "paid", "refunded"
+  price         Float
+  currency      String?  @default("USD")
+  paymentMethodId String?
+  clientNotes   String?  @db.Text
+  chefNotes     String?  @db.Text
+  videoCallUrl  String?  // Video call URL for remote consultations
+  metadata      Json?    // Additional booking data
+  mealPlans     ChefMealPlan[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([chefId, status, scheduledAt])
+  @@index([userId, status, scheduledAt])
+}
+
+model ChefEarning {
+  id            String   @id @default(cuid())
+  chefId        String
+  chef          ChefProfile @relation(fields: [chefId], references: [id], onDelete: Cascade)
+  bookingId     String?  // Reference to ChefBooking
+  mealLogId     String?  // Reference to MealLog
+  amount        Float
+  currency      String   @default("USD") // "USD", "ETH", "TA", etc.
+  type          String   // "consultation", "meal_plan", "meal_logging"
+  description   String?  @db.Text
+  status        String   @default("pending") // "pending", "paid", "cancelled"
+  txHash        String?  // Blockchain transaction hash if paid in crypto
+  paidAt        DateTime?
+  createdAt     DateTime @default(now())
+
+  @@index([chefId, createdAt])
+  @@index([chefId, status])
+}
+
+model ChefMealPlan {
+  id                  String   @id @default(cuid())
+  chefId              String
+  chef                ChefProfile @relation(fields: [chefId], references: [id], onDelete: Cascade)
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookingId           String?  // Reference to ChefBooking
+  booking             ChefBooking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  name                String
+  description         String?  @db.Text
+  startDate           DateTime
+  endDate             DateTime?
+  daysPerWeek         Int?
+  mealsPerDay         Int?
+  meals               Json?    // Array of meal objects
+  groceryList         Json?    // Grocery list
+  prepInstructions    String?  @db.Text
+  targetCalories      Float?
+  targetMacros        Json?    // Target macros (protein, carbs, fat)
+  dietaryRestrictions Json?    // Array of dietary restrictions
+  healthGoals         Json?    // Array of health goals
+  mealsTotal          Int?
+  mealsCompleted      Int?     @default(0)
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([chefId, userId, isActive])
+  @@index([userId, isActive])
+}
+
+model Post {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title         String?
+  content       String   @db.Text
+  imageUrl      String?
+  images        Json?    // Array of image URLs
+  tags          String[] // Array of tags
+  likes         Int      @default(0)
+  comments      Int      @default(0)
+  shares        Int      @default(0)
+  isPublic      Boolean  @default(true)
+  recipeId      String?  // Reference to recipe if post is about a recipe
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([isPublic, createdAt])
+}
+
+model DataLicenseOptIn {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  optedIn       Boolean  @default(true)
+  licenseType   String?  // Type of license
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId, optedIn])
+}
+
+model DividendPayment {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sourceType        String   // "data_licensing", "revenue_share", etc.
+  sourceId          String?  // ID of the source (e.g., license ID)
+  amount            Float
+  currency          String   // "TA", "USD", etc.
+  usdValue          Float?   // USD equivalent
+  distributionMethod String? // "token_transfer", "platform_credits", etc.
+  status            String   // "pending", "completed", "failed"
+  txHash            String?  // Blockchain transaction hash
+  distributionDate  DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId, status, distributionDate])
+  @@index([sourceType, sourceId])
+  @@index([txHash])
+}
