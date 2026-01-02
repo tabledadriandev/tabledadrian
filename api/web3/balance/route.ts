@@ -25,10 +25,11 @@ export async function GET(request: NextRequest) {
       hasBalance,
       note: 'App is accessible to all users. Wallet connection enables rewards and premium features.',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Balance check error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to check balance';
     return NextResponse.json(
-      { error: error.message || 'Failed to check balance' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

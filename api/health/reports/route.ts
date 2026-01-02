@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
     const reports: unknown[] = [];
 
     return NextResponse.json(reports);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching reports:', error);
     return NextResponse.json(
       { error: 'Failed to fetch reports' },

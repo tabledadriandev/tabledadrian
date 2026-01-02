@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const db: any = prisma as any;
+    const db: unknown = prisma as any;
     const groups = await db.group.findMany({
       include: {
         _count: {
@@ -17,10 +17,33 @@ export async function GET() {
     });
 
     return NextResponse.json(groups);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching groups:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch groups' },
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET() {
+  try {
+    const db: unknown = prisma as any;
+    const groups = await db.group.findMany({
+      include: {
+        _count: {
+          select: { members: true, posts: true },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+
+    return NextResponse.json(groups);
+  } catch (error) {
+    console.error('Error fetching groups:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 },
     );
   }
@@ -49,7 +72,7 @@ export async function POST(request: NextRequest) {
 
     const slug = `${type}-${name}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
-    const db: any = prisma as any;
+    const db: unknown = prisma as any;
     const group = await db.group.create({
       data: {
         name,
@@ -68,10 +91,10 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ success: true, data: group });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error creating group:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to create group' },
+      { error: errorMessage },
       { status: 500 },
     );
   }

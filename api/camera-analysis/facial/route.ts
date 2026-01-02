@@ -6,6 +6,39 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 
 /**
+ * Generate recommendations based on facial analysis
+ */
+function generateFacialRecommendations(result: any): string[] {
+  const recommendations: string[] = [];
+
+  if (result.skinHealth?.hydration < 40) {
+    recommendations.push('Increase water intake to improve skin hydration');
+  }
+
+  if (result.skinHealth?.uvDamage > 50) {
+    recommendations.push('Use SPF 30+ sunscreen daily to protect against UV damage');
+  }
+
+  if (result.stressLevel && result.stressLevel > 7) {
+    recommendations.push('Consider stress management techniques like meditation or breathwork');
+  }
+
+  if (result.estimatedAge && result.actualAge && result.estimatedAge > result.actualAge + 5) {
+    recommendations.push('Your biological age appears higher than chronological age. Focus on sleep, nutrition, and exercise to reduce biological age');
+  }
+
+  if (result.eyeAnalysis?.darkCircles) {
+    recommendations.push('Ensure adequate sleep (7-9 hours) to reduce dark circles');
+  }
+
+  if (result.eyeAnalysis?.fatigue > 70) {
+    recommendations.push('Get more rest and consider eye exercises to reduce eye fatigue');
+  }
+
+  return recommendations;
+}
+
+/**
  * POST /api/camera-analysis/facial
  * Analyze facial features including skin health, stress levels, age estimation, and vital signs
  */
@@ -80,45 +113,12 @@ export async function POST(request: NextRequest) {
         analyzedAt: analysis.analyzedAt,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error analyzing facial features:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Facial analysis failed';
     return NextResponse.json(
-      { error: error.message || 'Facial analysis failed' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
 }
-
-/**
- * Generate recommendations based on facial analysis
- */
-function generateFacialRecommendations(result: any): string[] {
-  const recommendations: string[] = [];
-
-  if (result.skinHealth?.hydration < 40) {
-    recommendations.push('Increase water intake to improve skin hydration');
-  }
-
-  if (result.skinHealth?.uvDamage > 50) {
-    recommendations.push('Use SPF 30+ sunscreen daily to protect against UV damage');
-  }
-
-  if (result.stressLevel && result.stressLevel > 7) {
-    recommendations.push('Consider stress management techniques like meditation or breathwork');
-  }
-
-  if (result.estimatedAge && result.actualAge && result.estimatedAge > result.actualAge + 5) {
-    recommendations.push('Your biological age appears higher than chronological age. Focus on sleep, nutrition, and exercise to reduce biological age');
-  }
-
-  if (result.eyeAnalysis?.darkCircles) {
-    recommendations.push('Ensure adequate sleep (7-9 hours) to reduce dark circles');
-  }
-
-  if (result.eyeAnalysis?.fatigue > 70) {
-    recommendations.push('Get more rest and consider eye exercises to reduce eye fatigue');
-  }
-
-  return recommendations;
-}
-

@@ -43,35 +43,35 @@ export async function POST(request: NextRequest) {
     }
 
     // Get wearable data (latest readings)
-    const latestHRV = await (prisma as any).biomarkerReading.findFirst({
+    const latestHRV = await prisma.biomarkerReading.findFirst({
       where: { userId, metric: 'hrv' },
       orderBy: { date: 'desc' },
     });
 
-    const latestSleep = await (prisma as any).biomarkerReading.findFirst({
+    const latestSleep = await prisma.biomarkerReading.findFirst({
       where: { userId, metric: 'sleep_score' },
       orderBy: { date: 'desc' },
     });
 
-    const latestRecovery = await (prisma as any).biomarkerReading.findFirst({
+    const latestRecovery = await prisma.biomarkerReading.findFirst({
       where: { userId, metric: 'recovery' },
       orderBy: { date: 'desc' },
     });
 
-    const latestActivity = await (prisma as any).biomarkerReading.findFirst({
+    const latestActivity = await prisma.biomarkerReading.findFirst({
       where: { userId, metric: 'active_minutes' },
       orderBy: { date: 'desc' },
     });
 
     // Get medical results
-    const medicalResults = await (prisma as any).medicalResult.findMany({
+    const medicalResults = await prisma.medicalResult.findMany({
       where: { userId },
       orderBy: { testDate: 'desc' },
       take: 1,
     });
 
     // Get food logs (last 7 days)
-    const foodLogs = await (prisma as any).mealLog.findMany({
+    const foodLogs = await prisma.mealLog.findMany({
       where: {
         userId,
         date: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
@@ -80,13 +80,27 @@ export async function POST(request: NextRequest) {
     });
 
     // Prepare data for AI
-    const userAny = user as any;
+    type UserWithPreferences = {
+      biologicalAge?: number | null;
+      preferences?: { 
+        goals?: string[];
+        dietary?: string[];
+        exercise?: string[];
+        timeCommitment?: number;
+      } | null;
+      createdAt: Date;
+    };
+    const userAny = user as unknown as UserWithPreferences;
     const userData = {
       age: userAny.biologicalAge ? Math.round((Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24 * 365.25)) : 40,
       gender: 'unknown', // Would come from user profile
       biologicalAge: userAny.biologicalAge || undefined,
-      goals: (userAny.preferences as any)?.goals || ['longevity', 'performance'],
-      preferences: userAny.preferences || {},
+      goals: userAny.preferences?.goals || ['longevity', 'performance'],
+      preferences: {
+        dietary: userAny.preferences?.dietary || [],
+        exercise: userAny.preferences?.exercise || [],
+        timeCommitment: userAny.preferences?.timeCommitment || 30,
+      },
     };
 
     const wearableData = {
@@ -96,21 +110,43 @@ export async function POST(request: NextRequest) {
       activity: latestActivity?.value || 30,
     };
 
-    const medicalData = medicalResults.map((result: any) => ({
-      biomarkers: (result.biomarkers as any[]).map((b: any) => ({
-        name: b.name,
-        value: b.value,
-        status: b.flag === 'normal' ? 'optimal' : b.flag === 'high' || b.flag === 'low' ? 'suboptimal' : 'concerning',
-      })),
-    }));
+    type MedicalResult = {
+      biomarkers?: Array<{
+        name?: string;
+        value?: number;
+        flag?: string;
+      }>;
+    };
+    const medicalData = medicalResults.map((result: unknown) => {
+      const medicalResult = result as MedicalResult;
+      return {
+        biomarkers: (medicalResult.biomarkers || [])
+          .filter((b) => b.name && b.value !== undefined)
+          .map((b) => ({
+            name: b.name!,
+            value: b.value!,
+            status: (b.flag === 'normal' ? 'optimal' : b.flag === 'high' || b.flag === 'low' ? 'suboptimal' : 'concerning') as 'optimal' | 'good' | 'suboptimal' | 'concerning',
+          })),
+      };
+    });
 
-    const foodData = foodLogs.map((log: any) => ({
-      calories: log.calories,
-      protein: log.protein,
-      carbs: log.carbs,
-      fat: log.fat,
-      micronutrients: log.micronutrients,
-    }));
+    type FoodLog = {
+      calories?: number;
+      protein?: number;
+      carbs?: number;
+      fat?: number;
+      micronutrients?: unknown;
+    };
+    const foodData = foodLogs.map((log: unknown) => {
+      const foodLog = log as FoodLog;
+      return {
+        calories: foodLog.calories || 0,
+        protein: foodLog.protein || 0,
+        carbs: foodLog.carbs || 0,
+        fat: foodLog.fat || 0,
+        micronutrients: foodLog.micronutrients,
+      };
+    });
 
     // Generate plan
     const generator = createLongevityPlanGenerator(anthropicKey);
@@ -122,7 +158,7 @@ export async function POST(request: NextRequest) {
     );
 
     // Store in database
-    const longevityPlan = await (prisma as any).longevityPlan.create({
+    const longevityPlan = await prisma.longevityPlan.create({
       data: {
         userId,
         planType: 'combined',
@@ -143,10 +179,11 @@ export async function POST(request: NextRequest) {
         plan,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Plan generation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Plan generation failed';
     return NextResponse.json(
-      { error: error.message || 'Failed to generate longevity plan' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

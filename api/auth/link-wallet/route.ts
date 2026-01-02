@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Wallet linked successfully. You can now use both email and wallet authentication.',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Wallet linking error:', error);
     return NextResponse.json(
       { error: 'Failed to link wallet' },
@@ -140,7 +140,7 @@ export async function DELETE(request: NextRequest) {
       success: true,
       message: 'Wallet unlinked successfully',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Wallet unlinking error:', error);
     return NextResponse.json(
       { error: 'Failed to unlink wallet' },

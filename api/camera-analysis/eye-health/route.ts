@@ -6,6 +6,34 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 
 /**
+ * Generate recommendations based on eye health analysis
+ */
+function generateEyeHealthRecommendations(result: any, needsReferral: boolean): string[] {
+  const recommendations: string[] = [];
+
+  if (needsReferral) {
+    recommendations.push('Risk factors detected. Please consult an ophthalmologist for a comprehensive eye exam.');
+  }
+
+  if (result.eyeHealthRisks?.diabeticRetinopathy > 30) {
+    recommendations.push('Elevated risk for diabetic retinopathy. Ensure blood sugar is well-controlled and schedule regular eye exams.');
+  }
+
+  if (result.eyeHealthRisks?.amd > 30) {
+    recommendations.push('Elevated risk for age-related macular degeneration. Consider AREDS2 supplements (lutein, zeaxanthin).');
+  }
+
+  if (result.eyeHealthRisks?.glaucoma > 30) {
+    recommendations.push('Elevated risk for glaucoma. Schedule regular eye pressure checks with an ophthalmologist.');
+  }
+
+  recommendations.push('Protect your eyes from UV damage with sunglasses that block 100% of UVA and UVB rays.');
+  recommendations.push('Follow the 20-20-20 rule: Every 20 minutes, look at something 20 feet away for 20 seconds.');
+
+  return recommendations;
+}
+
+/**
  * POST /api/camera-analysis/eye-health
  * Screen eye health including retinal scan analysis for diabetic retinopathy and AMD
  */
@@ -81,40 +109,12 @@ export async function POST(request: NextRequest) {
         analyzedAt: analysis.analyzedAt,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error analyzing eye health:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Eye health analysis failed';
     return NextResponse.json(
-      { error: error.message || 'Eye health analysis failed' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
 }
-
-/**
- * Generate recommendations based on eye health analysis
- */
-function generateEyeHealthRecommendations(result: any, needsReferral: boolean): string[] {
-  const recommendations: string[] = [];
-
-  if (needsReferral) {
-    recommendations.push('Risk factors detected. Please consult an ophthalmologist for a comprehensive eye exam.');
-  }
-
-  if (result.eyeHealthRisks?.diabeticRetinopathy > 30) {
-    recommendations.push('Elevated risk for diabetic retinopathy. Ensure blood sugar is well-controlled and schedule regular eye exams.');
-  }
-
-  if (result.eyeHealthRisks?.amd > 30) {
-    recommendations.push('Elevated risk for age-related macular degeneration. Consider AREDS2 supplements (lutein, zeaxanthin).');
-  }
-
-  if (result.eyeHealthRisks?.glaucoma > 30) {
-    recommendations.push('Elevated risk for glaucoma. Schedule regular eye pressure checks with an ophthalmologist.');
-  }
-
-  recommendations.push('Protect your eyes from UV damage with sunglasses that block 100% of UVA and UVB rays.');
-  recommendations.push('Follow the 20-20-20 rule: Every 20 minutes, look at something 20 feet away for 20 seconds.');
-
-  return recommendations;
-}
-

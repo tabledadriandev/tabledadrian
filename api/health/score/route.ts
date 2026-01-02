@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
 
     // Get latest health score
     let current = null;
-    let history: any[] = [];
+    let history: unknown[] = [];
     try {
       current = await prisma.healthScore.findFirst({
         where: { userId: user.id },
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({ current, history });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching health score:', error);
     return NextResponse.json(
       { error: 'Failed to fetch health score' },

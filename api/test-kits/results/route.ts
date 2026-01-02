@@ -124,7 +124,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const where: any = {};
+    const where: unknown = {};
     const user = await prisma.user.findFirst({
       where: {
         OR: [{ walletAddress: userId }, { email: userId }],
@@ -172,7 +172,7 @@ export async function GET(request: NextRequest) {
  * Process test results and extract biomarker data
  */
 async function processTestResults(testType: string, resultsData: any): Promise<any[] | null> {
-  const biomarkerEntries: any[] = [];
+  const biomarkerEntries: unknown[] = [];
 
   if (testType === 'blood') {
     // Process blood test results
@@ -221,7 +221,7 @@ async function processTestResults(testType: string, resultsData: any): Promise<a
 async function generateRecommendations(
   testType: string,
   resultsData: any,
-  biomarkerEntries: any[] | null
+  biomarkerEntries: unknown[] | null
 ): Promise<string[]> {
   const recommendations: string[] = [];
 

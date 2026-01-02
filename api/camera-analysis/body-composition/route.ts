@@ -6,6 +6,51 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 
 /**
+ * Calculate progress compared to previous analysis
+ */
+function calculateProgress(previous: any, current: any): any {
+  return {
+    bodyFatChange: previous.bodyFatEstimate && current.bodyFatEstimate
+      ? current.bodyFatEstimate - previous.bodyFatEstimate
+      : null,
+    muscleMassChange: previous.leanMuscleMass && current.leanMuscleMass
+      ? current.leanMuscleMass - previous.leanMuscleMass
+      : null,
+    postureImprovement: previous.postureAnalysis?.spinalAlignment !== current.postureAnalysis?.spinalAlignment
+      ? 'improved'
+      : 'maintained',
+  };
+}
+
+/**
+ * Generate recommendations based on body composition analysis
+ */
+function generateBodyCompositionRecommendations(result: any): string[] {
+  const recommendations: string[] = [];
+
+  if (result.bodyFatEstimate > 25) {
+    recommendations.push('Consider a body fat reduction program focusing on cardio and strength training');
+  }
+
+  if (result.muscleSymmetry?.difference > 10) {
+    recommendations.push('Muscle asymmetry detected. Focus on unilateral exercises to balance muscle development');
+  }
+
+  if (result.postureAnalysis?.spinalAlignment !== 'aligned') {
+    recommendations.push('Posture correction exercises recommended. Consider physical therapy or chiropractic consultation');
+  }
+
+  if (result.measurements?.waist && result.measurements?.hip) {
+    const waistToHipRatio = result.measurements.waist / result.measurements.hip;
+    if (waistToHipRatio > 0.9) {
+      recommendations.push('High waist-to-hip ratio detected. Focus on core strengthening and cardiovascular health');
+    }
+  }
+
+  return recommendations;
+}
+
+/**
  * POST /api/camera-analysis/body-composition
  * Analyze body composition from front, side, and back images
  */
@@ -93,57 +138,12 @@ export async function POST(request: NextRequest) {
         analyzedAt: analysis.analyzedAt,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error analyzing body composition:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Body composition analysis failed';
     return NextResponse.json(
-      { error: error.message || 'Body composition analysis failed' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
 }
-
-/**
- * Calculate progress compared to previous analysis
- */
-function calculateProgress(previous: any, current: any): any {
-  return {
-    bodyFatChange: previous.bodyFatEstimate && current.bodyFatEstimate
-      ? current.bodyFatEstimate - previous.bodyFatEstimate
-      : null,
-    muscleMassChange: previous.leanMuscleMass && current.leanMuscleMass
-      ? current.leanMuscleMass - previous.leanMuscleMass
-      : null,
-    postureImprovement: previous.postureAnalysis?.spinalAlignment !== current.postureAnalysis?.spinalAlignment
-      ? 'improved'
-      : 'maintained',
-  };
-}
-
-/**
- * Generate recommendations based on body composition analysis
- */
-function generateBodyCompositionRecommendations(result: any): string[] {
-  const recommendations: string[] = [];
-
-  if (result.bodyFatEstimate > 25) {
-    recommendations.push('Consider a body fat reduction program focusing on cardio and strength training');
-  }
-
-  if (result.muscleSymmetry?.difference > 10) {
-    recommendations.push('Muscle asymmetry detected. Focus on unilateral exercises to balance muscle development');
-  }
-
-  if (result.postureAnalysis?.spinalAlignment !== 'aligned') {
-    recommendations.push('Posture correction exercises recommended. Consider physical therapy or chiropractic consultation');
-  }
-
-  if (result.measurements?.waist && result.measurements?.hip) {
-    const waistToHipRatio = result.measurements.waist / result.measurements.hip;
-    if (waistToHipRatio > 0.9) {
-      recommendations.push('High waist-to-hip ratio detected. Focus on core strengthening and cardiovascular health');
-    }
-  }
-
-  return recommendations;
-}
-

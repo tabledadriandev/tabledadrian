@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     // In production, would fetch from database
     // For now, return null (no clan)
     return NextResponse.json(null);
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
       { error: 'Failed to fetch clan' },
       { status: 500 }

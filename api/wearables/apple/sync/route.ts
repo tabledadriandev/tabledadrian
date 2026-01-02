@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
 
       // Store attestation record (signature will be added by device wallet)
       try {
-        await (prisma as any).deviceAttestation.create({
+        await prisma.deviceAttestation.create({
           data: {
             userId,
             deviceId,

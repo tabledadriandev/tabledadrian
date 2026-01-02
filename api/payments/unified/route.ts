@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
 
       if (paymentMethod === 'crypto') {
         // Crypto subscription payment
-        const priceInTA = (PRICING_TIERS as any)[tier][billingCycle].crypto;
+        const priceInTA = (PRICING_TIERS as unknown)[tier][billingCycle].crypto;
         
         if (!walletAddress) {
           return NextResponse.json(

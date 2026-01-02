@@ -112,10 +112,11 @@ export async function POST(request: NextRequest) {
             { status: 400 }
           );
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error('Email auth error:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Authentication failed';
         return NextResponse.json(
-          { error: 'Authentication failed', message: error.message },
+          { error: 'Authentication failed', message: errorMessage },
           { status: 500 }
         );
       }

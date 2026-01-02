@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'If an account with that email exists, a password reset link has been sent.',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Password reset request error:', error);
     return NextResponse.json(
       { error: 'Failed to process password reset request' },
@@ -79,7 +79,7 @@ export async function PUT(request: NextRequest) {
       success: true,
       message: 'Password reset successful. You can now log in with your new password.',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Password reset error:', error);
     return NextResponse.json(
       { error: 'Password reset failed' },

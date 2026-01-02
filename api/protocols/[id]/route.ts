@@ -25,10 +25,11 @@ export async function GET(
       success: true,
       protocol,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Protocol fetch error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch protocol';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch protocol' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

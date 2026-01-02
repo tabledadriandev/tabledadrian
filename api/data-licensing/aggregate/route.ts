@@ -3,6 +3,54 @@ import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
+// Type definitions for selected fields
+type MealLogSelect = {
+  calories: number;
+  protein: number;
+  carbs: number;
+  fats: number | null;
+  mealType: string;
+  date: Date;
+};
+
+type BiomarkerReadingSelect = {
+  metric: string | null;
+  value: number | null;
+  unit: string | null;
+  date: Date | null;
+};
+
+type BiomarkerStat = {
+  name: string;
+  count: number;
+  avg: number;
+  min: number;
+  max: number;
+};
+
+type MealLogAggregates = {
+  totalRecords: number;
+  avgCalories: number;
+  avgProtein: number;
+  avgCarbs: number;
+  avgFat: number;
+  mealTypeDistribution: Record<string, number>;
+};
+
+type BiomarkerAggregates = {
+  totalRecords: number;
+  uniqueBiomarkers: number;
+  statistics: BiomarkerStat[];
+};
+
+type AggregatesResponse = {
+  totalUsers: number;
+  dataType: string | null;
+  timestamp: string;
+  biomarkers?: BiomarkerAggregates;
+  mealLogs?: MealLogAggregates;
+};
+
 /**
  * GET /api/data-licensing/aggregate
  * Returns anonymized, aggregated health data insights for research licensing.
@@ -28,13 +76,8 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    interface OptInUser {
-      userId: string;
-      optedIn: boolean;
-      user?: unknown;
-    }
-    const userIds = optedInUsers.map((opt: OptInUser) => opt.userId);
-    const aggregates: any = {
+    const userIds = optedInUsers.map((opt) => opt.userId);
+    const aggregates: AggregatesResponse = {
       totalUsers: userIds.length,
       dataType,
       timestamp: new Date().toISOString(),
@@ -50,13 +93,13 @@ export async function GET(request: NextRequest) {
           unit: true,
           date: true,
         },
-      });
+      }) as BiomarkerReadingSelect[];
 
       // Group biomarkers by metric and calculate aggregate statistics
-      const biomarkerStats: any[] = [];
+      const biomarkerStats: BiomarkerStat[] = [];
       const metricGroups: Record<string, number[]> = {};
       
-      biomarkers.forEach((bm: any) => {
+      biomarkers.forEach((bm) => {
         if (bm.metric && bm.value !== null && bm.value !== undefined && !isNaN(Number(bm.value))) {
           if (!metricGroups[bm.metric]) {
             metricGroups[bm.metric] = [];
@@ -71,7 +114,7 @@ export async function GET(request: NextRequest) {
           biomarkerStats.push({
             name: metric,
             count: values.length,
-            avg: values.reduce((a, b) => a + b, 0) / values.length,
+            avg: values.reduce((a: number, b: number) => a + b, 0) / values.length,
             min: Math.min(...values),
             max: Math.max(...values),
           });
@@ -98,30 +141,30 @@ export async function GET(request: NextRequest) {
           date: true,
         },
         take: 10000, // Limit for performance
-      });
+      }) as MealLogSelect[];
 
       aggregates.mealLogs = {
         totalRecords: mealLogs.length,
         avgCalories: mealLogs.length > 0
-          ? mealLogs.reduce((sum: number, m) => sum + (m.calories || 0), 0) / mealLogs.length
+          ? mealLogs.reduce((sum: number, m: MealLogSelect) => sum + (m.calories || 0), 0) / mealLogs.length
           : 0,
         avgProtein: mealLogs.length > 0
-          ? mealLogs.reduce((sum: number, m) => sum + (m.protein || 0), 0) / mealLogs.length
+          ? mealLogs.reduce((sum: number, m: MealLogSelect) => sum + (m.protein || 0), 0) / mealLogs.length
           : 0,
         avgCarbs: mealLogs.length > 0
-          ? mealLogs.reduce((sum: number, m) => sum + (m.carbs || 0), 0) / mealLogs.length
+          ? mealLogs.reduce((sum: number, m: MealLogSelect) => sum + (m.carbs || 0), 0) / mealLogs.length
           : 0,
         avgFat: mealLogs.length > 0
-          ? mealLogs.reduce((sum: number, m) => sum + (m.fats || 0), 0) / mealLogs.length
+          ? mealLogs.reduce((sum: number, m: MealLogSelect) => sum + (m.fats || 0), 0) / mealLogs.length
           : 0,
         mealTypeDistribution: {} as Record<string, number>,
       };
 
       // Count meal types
-      mealLogs.forEach((m) => {
+      mealLogs.forEach((m: MealLogSelect) => {
         const type = m.mealType || 'unknown';
-        aggregates.mealLogs.mealTypeDistribution[type] =
-          (aggregates.mealLogs.mealTypeDistribution[type] || 0) + 1;
+        aggregates.mealLogs!.mealTypeDistribution[type] =
+          (aggregates.mealLogs!.mealTypeDistribution[type] || 0) + 1;
       });
     }
 
@@ -179,10 +222,11 @@ export async function GET(request: NextRequest) {
     // }
 
     return NextResponse.json(aggregates);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error aggregating data:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to aggregate data';
     return NextResponse.json(
-      { error: error.message || 'Failed to aggregate data' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

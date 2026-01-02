@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
           success: true,
           proof,
         });
-      } catch (error: any) {
+      } catch (error) {
         console.error('zkTLS proof generation error:', error);
         return NextResponse.json(
           {

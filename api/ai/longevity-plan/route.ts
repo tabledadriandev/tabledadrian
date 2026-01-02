@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get latest active plan
-    const plan = await (prisma as any).longevityPlan.findFirst({
+    const plan = await prisma.longevityPlan.findFirst({
       where: {
         userId,
         status: 'active',
@@ -35,20 +35,23 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    const recommendations = plan.recommendations as any;
+
     return NextResponse.json({
       plan: {
         nutrition: plan.mealPlan,
         exercise: plan.exercisePlan,
         supplements: plan.supplementStack,
-        sleep: (plan.recommendations as any)?.sleep,
-        stress: (plan.recommendations as any)?.stress,
+        sleep: recommendations?.sleep,
+        stress: recommendations?.stress,
         expectedResults: plan.expectedResults,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get longevity plan error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to get';
     return NextResponse.json(
-      { error: error.message || 'Failed to get longevity plan' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

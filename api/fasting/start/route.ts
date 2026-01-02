@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error starting fast:', error);
     return NextResponse.json(
       { error: 'Failed to start fast' },

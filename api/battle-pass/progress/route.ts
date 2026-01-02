@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     const progress = xp % 100;
 
     return NextResponse.json({ progress, tier });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching battle pass progress:', error);
     return NextResponse.json(
       { error: 'Failed to fetch progress' },

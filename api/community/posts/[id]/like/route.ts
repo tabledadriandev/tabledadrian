@@ -26,10 +26,11 @@ export async function POST(
     });
 
     return NextResponse.json({ success: true, data: post });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error liking post:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to like post';
     return NextResponse.json(
-      { error: error.message || 'Failed to like post' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

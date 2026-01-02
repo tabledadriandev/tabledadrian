@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     const period = searchParams.get('period'); // 'quarterly', 'monthly', 'all'
 
     let totalRevenue = 0;
-    let licensePurchases: any[] = [];
+    let licensePurchases: unknown[] = [];
 
     if (licenseId) {
       // Calculate for specific license (DataLicensePurchase model not in schema)
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
       //   startDate = new Date(now.getFullYear(), now.getMonth(), 1);
       // }
       //
-      // const where: any = { paymentStatus: 'paid' };
+      // const where: unknown = { paymentStatus: 'paid' };
       // if (startDate) {
       //   where.paidAt = { gte: startDate };
       // }
@@ -140,10 +140,11 @@ export async function GET(request: NextRequest) {
       dividends: nonZeroDividends.sort((a, b) => b.dividendAmount - a.dividendAmount),
       calculatedAt: new Date().toISOString(),
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error calculating dividends:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to calculate dividends';
     return NextResponse.json(
-      { error: error.message || 'Failed to calculate dividends' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

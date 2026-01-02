@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     }
 
     return response;
-  } catch (error: any) {
+  } catch (error) {
     console.error('Social login error:', error);
     return NextResponse.json(
       { error: 'Social authentication failed' },

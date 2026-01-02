@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function calculateTrends(results: any[]): {
+function calculateTrends(results: unknown[]): {
   shannonIndexTrend: string;
   diversityTrend: string;
   inflammationTrend: string;
@@ -92,9 +92,9 @@ function generateInsights(result: any, trends: any): string[] {
 
   // Pathogen insights
   if (result.pathogens && Array.isArray(result.pathogens)) {
-    const highRiskPathogens = result.pathogens.filter((p: any) => p.presence && p.level === 'high');
+    const highRiskPathogens = result.pathogens.filter((p: unknown) => p.presence && p.level === 'high');
     if (highRiskPathogens.length > 0) {
-      insights.push(`High-risk pathogens detected: ${highRiskPathogens.map((p: any) => p.name).join(', ')}. Consider consulting a healthcare provider.`);
+      insights.push(`High-risk pathogens detected: ${highRiskPathogens.map((p: unknown) => p.name).join(', ')}. Consider consulting a healthcare provider.`);
     }
   }
 

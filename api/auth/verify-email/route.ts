@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     redirectUrl.searchParams.set('verified', 'true');
 
     return NextResponse.redirect(redirectUrl.toString());
-  } catch (error: any) {
+  } catch (error) {
     console.error('Email verification error:', error);
     return NextResponse.json(
       { error: 'Email verification failed' },
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Email verified successfully',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Email verification error:', error);
     return NextResponse.json(
       { error: 'Email verification failed' },

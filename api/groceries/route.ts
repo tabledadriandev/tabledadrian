@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
     const list = groceryLists.get(address) || [];
     return NextResponse.json(list);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching grocery list:', error);
     return NextResponse.json(
       { error: 'Failed to fetch grocery list' },
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     groceryLists.set(address, list);
 
     return NextResponse.json({ success: true, item: list[list.length - 1] });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error adding grocery item:', error);
     return NextResponse.json(
       { error: 'Failed to add item' },

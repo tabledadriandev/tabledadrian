@@ -19,10 +19,35 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json(posts);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching posts:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch posts' },
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: NextRequest) {
+  try {
+    const posts = await prisma.post.findMany({
+      include: {
+        user: {
+          select: {
+            walletAddress: true,
+            username: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+
+    return NextResponse.json(posts);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -69,10 +94,10 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ success: true, data: post });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error creating post:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to create post' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

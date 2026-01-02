@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 
     const userEntries = entries.get(address) || [];
     return NextResponse.json(userEntries);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching entries:', error);
     return NextResponse.json(
       { error: 'Failed to fetch entries' },

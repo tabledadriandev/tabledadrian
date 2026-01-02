@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const currency = searchParams.get('currency') || 'TA'; // 'TA' or 'USD'
     
     // Build filter
-    const where: any = {
+    const where: unknown = {
       isAvailable: true,
     };
 

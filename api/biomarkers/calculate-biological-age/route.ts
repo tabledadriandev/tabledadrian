@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     startDate.setDate(startDate.getDate() - 90);
 
     // Get HRV data
-    const hrvReadings = await (prisma as any).biomarkerReading.findMany({
+    const hrvReadings = await prisma.biomarkerReading.findMany({
       where: {
         userId,
         metric: 'hrv',
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Get sleep data
-    const sleepReadings = await (prisma as any).biomarkerReading.findMany({
+    const sleepReadings = await prisma.biomarkerReading.findMany({
       where: {
         userId,
         metric: { in: ['sleep_score', 'sleep_duration', 'sleep_efficiency'] },
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Get activity data
-    const activityReadings = await (prisma as any).biomarkerReading.findMany({
+    const activityReadings = await prisma.biomarkerReading.findMany({
       where: {
         userId,
         metric: { in: ['steps', 'active_minutes'] },
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Get recovery data
-    const recoveryReadings = await (prisma as any).biomarkerReading.findMany({
+    const recoveryReadings = await prisma.biomarkerReading.findMany({
       where: {
         userId,
         metric: { in: ['recovery', 'readiness'] },
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
     );
 
     // Store in database
-    await (prisma as any).biologicalAge.create({
+    await prisma.biologicalAge.create({
       data: {
         userId,
         chronologicalAge,
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Update user's biological age
-    await (prisma as any).user.update({
+    await prisma.user.update({
       where: { id: userId },
       data: {
         biologicalAge: result.biologicalAge,
@@ -180,10 +180,11 @@ export async function POST(request: NextRequest) {
         improvement: chronologicalAge - result.biologicalAge,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Biological age calculation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Biological age calculation failed';
     return NextResponse.json(
-      { error: error.message || 'Failed to calculate biological age' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

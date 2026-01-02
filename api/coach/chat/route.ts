@@ -48,7 +48,7 @@ User Health Context:`;
     
     // User preferences may contain profile-like data
     if (user?.preferences) {
-      const prefs = user.preferences as any;
+      const prefs = user.preferences as unknown;
       systemContext += `\n- Health Goals: ${prefs.healthGoals?.join(', ') || 'General wellness'}`;
       systemContext += `\n- Dietary Restrictions: ${prefs.dietaryRestrictions?.join(', ') || 'None'}`;
       systemContext += `\n- Activity Level: ${prefs.activityLevel || 'Not specified'}`;
@@ -63,7 +63,7 @@ User Health Context:`;
       }
       if (healthContext.recentBiomarkers && healthContext.recentBiomarkers.length > 0) {
         systemContext += `\n- Recent Biomarkers:`;
-        healthContext.recentBiomarkers.slice(0, 3).forEach((b: any) => {
+        healthContext.recentBiomarkers.slice(0, 3).forEach((b: unknown) => {
           if (b.bloodGlucose) systemContext += `\n  Blood Glucose: ${b.bloodGlucose} mg/dL`;
           if (b.cholesterolTotal) systemContext += `\n  Total Cholesterol: ${b.cholesterolTotal} mg/dL`;
           if (b.bloodPressureSystolic) systemContext += `\n  Blood Pressure: ${b.bloodPressureSystolic}/${b.bloodPressureDiastolic} mmHg`;
@@ -73,7 +73,7 @@ User Health Context:`;
 
     if (user?.biomarkerReadings && user.biomarkerReadings.length > 0) {
       systemContext += `\n- Recent Biomarker Readings:`;
-      user.biomarkerReadings.slice(0, 5).forEach((data: any) => {
+      user.biomarkerReadings.slice(0, 5).forEach((data: unknown) => {
         systemContext += `\n  ${data.metric}: ${data.value} ${data.unit || ''}`;
       });
     }
@@ -90,7 +90,7 @@ User Health Context:`;
 Provide personalized, evidence-based advice. Be encouraging, actionable, and specific. Reference the user's health data when relevant. When appropriate, suggest using specialized modules for deeper analysis.`;
 
     // Build conversation history
-    const messages: any[] = [
+    const messages: unknown[] = [
       { role: 'system', content: systemContext },
       ...(history || []).slice(-10), // Last 10 messages for context
       { role: 'user', content: message },
@@ -108,7 +108,7 @@ Provide personalized, evidence-based advice. Be encouraging, actionable, and spe
     const response = completion.choices[0]?.message?.content || 'I apologize, but I could not generate a response.';
 
     return NextResponse.json({ response });
-  } catch (error: any) {
+  } catch (error) {
     console.error('AI Coach error:', error);
     
     // Fallback response if OpenAI fails

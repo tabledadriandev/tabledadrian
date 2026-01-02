@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
     const correlations = identifyPatterns(symptoms);
 
     return NextResponse.json({ correlations });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error analyzing patterns:', error);
     return NextResponse.json(
       { error: 'Failed to analyze patterns' },
@@ -51,8 +51,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function identifyPatterns(symptoms: any[]): any[] {
-  const correlations: any[] = [];
+function identifyPatterns(symptoms: unknown[]): unknown[] {
+  const correlations: unknown[] = [];
 
   // Analyze sleep vs energy correlation
   const lowEnergyDays = symptoms.filter(s => s.energyLevel < 5);

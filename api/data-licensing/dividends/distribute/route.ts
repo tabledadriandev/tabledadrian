@@ -27,20 +27,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    type Dividend = {
+      userId: string;
+      walletAddress: string | null;
+      tokenBalance: number;
+      stakedAmount: number;
+      share: number;
+      dividendAmount: number;
+      currency: string;
+    };
+
     if (dryRun === true) {
+      const dividends = calcData.dividends as Dividend[];
       return NextResponse.json({
         success: true,
         dryRun: true,
-        totalDividends: calcData.dividends.reduce((sum: number, d: any) => sum + d.dividendAmount, 0),
-        userCount: calcData.dividends.length,
-        dividends: calcData.dividends,
+        totalDividends: dividends.reduce((sum: number, d: Dividend) => sum + d.dividendAmount, 0),
+        userCount: dividends.length,
+        dividends: dividends,
         message: 'Dry run - no payments processed',
       });
     }
 
     // Create dividend payment records
+    const dividends = calcData.dividends as Dividend[];
     const payments = await Promise.all(
-      calcData.dividends.map((div: any) =>
+      dividends.map((div: Dividend) =>
         prisma.dividendPayment.create({
           data: {
             userId: div.userId,
@@ -82,10 +94,11 @@ export async function POST(request: NextRequest) {
       })),
       message: 'Dividend payments created. On-chain distribution pending.',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error distributing dividends:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to distribute dividends';
     return NextResponse.json(
-      { error: error.message || 'Failed to distribute dividends' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

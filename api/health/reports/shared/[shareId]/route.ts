@@ -41,10 +41,11 @@ export async function GET(
       shareId,
       note: 'This endpoint will provide secure access to shared lab results. Implementation pending share record system.',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get shared report error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to retrieve shared report';
     return NextResponse.json(
-      { error: error.message || 'Failed to retrieve shared report' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

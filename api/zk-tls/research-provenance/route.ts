@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
           success: true,
           proof,
         });
-      } catch (error: any) {
+      } catch (error) {
         console.error('zkTLS research provenance error:', error);
         return NextResponse.json(
           {

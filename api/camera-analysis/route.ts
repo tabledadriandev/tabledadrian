@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const type = searchParams.get('type');
     const limit = parseInt(searchParams.get('limit') || '10');
 
-    const where: any = { userId: user.id };
+    const where: unknown = { userId: user.id };
     if (type) {
       where.type = type;
     }
@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
       success: true,
       analyses,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching camera analyses:', error);
     return NextResponse.json(
       { error: 'Failed to fetch camera analyses' },

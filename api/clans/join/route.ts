@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     // 3. Create clan membership record
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
       { error: 'Failed to join clan' },
       { status: 500 }

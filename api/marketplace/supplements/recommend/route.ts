@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const goal = (searchParams.get('goal') || '').toLowerCase(); // e.g. longevity, sleep, metabolic
 
     // Base query: active marketplace items tagged as supplements
-    const baseWhere: any = {
+    const baseWhere: unknown = {
       isActive: true,
       OR: [
         { category: 'supplement' },

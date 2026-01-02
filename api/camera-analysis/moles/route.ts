@@ -83,10 +83,10 @@ export async function POST(request: NextRequest) {
         where: { moleId: finalMoleId },
         data: {
           primaryImageUrl: imageUrl,
-          comparisonImages: updatedComparisonImages as any,
-          asymmetry: analysisResult.asymmetry as any,
-          border: analysisResult.border as any,
-          color: analysisResult.color as any,
+          comparisonImages: updatedComparisonImages as unknown,
+          asymmetry: analysisResult.asymmetry as unknown,
+          border: analysisResult.border as unknown,
+          color: analysisResult.color as unknown,
           diameter: analysisResult.diameter,
           evolution: {
             hasChanged: analysisResult.evolution.hasChanged,
@@ -94,9 +94,9 @@ export async function POST(request: NextRequest) {
             timeSinceLastCheck: analysisResult.evolution.timeSinceLastCheck,
           },
           melanomaRisk: analysisResult.melanomaRisk,
-          riskLevel: analysisResult.riskLevel as any,
+          riskLevel: analysisResult.riskLevel as unknown,
           // Store full AI analysis as JSON
-          aiAnalysis: analysisResult as any,
+          aiAnalysis: analysisResult as unknown,
           lastChecked: new Date(),
           checkFrequency: String(calculateCheckFrequency(analysisResult.melanomaRisk || 0)),
           referredToDermatologist: analysisResult.melanomaRisk > 70 ? true : existingMole.referredToDermatologist,
@@ -113,18 +113,18 @@ export async function POST(request: NextRequest) {
           locationCoordinates: locationCoordinates || null,
           primaryImageUrl: imageUrl,
           comparisonImages: [],
-          asymmetry: analysisResult.asymmetry as any,
-          border: analysisResult.border as any,
-          color: Array.isArray(analysisResult.color) ? analysisResult.color.join(', ') : (analysisResult.color as any),
+          asymmetry: analysisResult.asymmetry as unknown,
+          border: analysisResult.border as unknown,
+          color: Array.isArray(analysisResult.color) ? analysisResult.color.join(', ') : (analysisResult.color as unknown),
           diameter: analysisResult.diameter,
           evolution: {
             hasChanged: false,
             changes: [],
           },
           melanomaRisk: analysisResult.melanomaRisk,
-          riskLevel: analysisResult.riskLevel as any,
+          riskLevel: analysisResult.riskLevel as unknown,
           // Store full AI analysis as JSON
-          aiAnalysis: analysisResult as any,
+          aiAnalysis: analysisResult as unknown,
           checkFrequency: String(calculateCheckFrequency(analysisResult.melanomaRisk || 0)),
           referredToDermatologist: analysisResult.melanomaRisk > 70,
           referralDate: analysisResult.melanomaRisk > 70 ? new Date() : null,
@@ -152,10 +152,168 @@ export async function POST(request: NextRequest) {
         recommendations: generateMoleRecommendations(analysisResult),
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error analyzing mole:', error);
     return NextResponse.json(
-      { error: error.message || 'Mole analysis failed' },
+import { NextRequest, NextResponse } from 'next/server';
+import { authService } from '@/lib/auth';
+import { cameraAnalysisService } from '@/lib/camera-analysis';
+import { prisma } from '@/lib/prisma';
+import crypto from 'crypto';
+
+export const dynamic = 'force-dynamic';
+
+/**
+ * POST /api/camera-analysis/moles
+ * Track and analyze skin lesions/moles using ABCDE criteria
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const sessionToken = request.cookies.get('sessionToken')?.value;
+
+    if (!sessionToken) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    const user = await authService.verifySession(sessionToken);
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Invalid session' },
+        { status: 401 }
+      );
+    }
+
+    const { 
+      moleImageBase64, 
+      bodyLocation, 
+      locationCoordinates, 
+      moleId, 
+      name 
+    } = await request.json();
+
+    if (!moleImageBase64 || !bodyLocation) {
+      return NextResponse.json(
+        { error: 'Mole image and body location are required' },
+        { status: 400 }
+      );
+    }
+
+    // Get previous image if moleId is provided (for evolution tracking)
+    let previousImageBase64: string | undefined;
+    if (moleId) {
+      const existingMole = await prisma.moleTracking.findUnique({
+        where: { moleId },
+      });
+      if (existingMole) {
+        // Get previous primary image URL and fetch base64 if needed
+        previousImageBase64 = existingMole.primaryImageUrl || undefined; // Would fetch actual image in production
+      }
+    }
+
+    // Analyze mole using ABCDE criteria
+    const analysisResult = await cameraAnalysisService.analyzeMole(
+      moleImageBase64,
+      previousImageBase64
+    );
+
+    // Generate unique mole ID if not provided
+    const finalMoleId = moleId || `mole-${crypto.randomBytes(16).toString('hex')}`;
+
+    // Save mole image
+    const imageUrl = `/api/images/moles/${Date.now()}-${user.id}-${finalMoleId}.jpg`;
+
+    // Check if mole already exists
+    const existingMole = await prisma.moleTracking.findUnique({
+      where: { moleId: finalMoleId },
+    });
+
+    let mole;
+    if (existingMole) {
+      // Update existing mole with new image and analysis
+      const existingImages = Array.isArray(existingMole.comparisonImages) ? existingMole.comparisonImages : [];
+      const updatedComparisonImages = [...existingImages, imageUrl];
+
+      mole = await prisma.moleTracking.update({
+        where: { moleId: finalMoleId },
+        data: {
+          primaryImageUrl: imageUrl,
+          comparisonImages: updatedComparisonImages as unknown,
+          asymmetry: analysisResult.asymmetry as unknown,
+          border: analysisResult.border as unknown,
+          color: analysisResult.color as unknown,
+          diameter: analysisResult.diameter,
+          evolution: {
+            hasChanged: analysisResult.evolution.hasChanged,
+            changes: analysisResult.evolution.changes,
+            timeSinceLastCheck: analysisResult.evolution.timeSinceLastCheck,
+          },
+          melanomaRisk: analysisResult.melanomaRisk,
+          riskLevel: analysisResult.riskLevel as unknown,
+          // Store full AI analysis as JSON
+          aiAnalysis: analysisResult as unknown,
+          lastChecked: new Date(),
+          checkFrequency: String(calculateCheckFrequency(analysisResult.melanomaRisk || 0)),
+          referredToDermatologist: analysisResult.melanomaRisk > 70 ? true : existingMole.referredToDermatologist,
+        },
+      });
+    } else {
+      // Create new mole tracking record
+      mole = await prisma.moleTracking.create({
+        data: {
+          userId: user.id,
+          moleId: finalMoleId,
+          name: name || `Mole ${bodyLocation}`,
+          bodyLocation,
+          locationCoordinates: locationCoordinates || null,
+          primaryImageUrl: imageUrl,
+          comparisonImages: [],
+          asymmetry: analysisResult.asymmetry as unknown,
+          border: analysisResult.border as unknown,
+          color: Array.isArray(analysisResult.color) ? analysisResult.color.join(', ') : (analysisResult.color as unknown),
+          diameter: analysisResult.diameter,
+          evolution: {
+            hasChanged: false,
+            changes: [],
+          },
+          melanomaRisk: analysisResult.melanomaRisk,
+          riskLevel: analysisResult.riskLevel as unknown,
+          // Store full AI analysis as JSON
+          aiAnalysis: analysisResult as unknown,
+          checkFrequency: String(calculateCheckFrequency(analysisResult.melanomaRisk || 0)),
+          referredToDermatologist: analysisResult.melanomaRisk > 70,
+          referralDate: analysisResult.melanomaRisk > 70 ? new Date() : null,
+        },
+      });
+    }
+
+    return NextResponse.json({
+      success: true,
+      mole: {
+        id: mole.id,
+        moleId: mole.moleId,
+        name: mole.name,
+        bodyLocation: mole.bodyLocation,
+        asymmetry: mole.asymmetry,
+        border: mole.border,
+        color: mole.color,
+        diameter: mole.diameter,
+        evolution: mole.evolution,
+        melanomaRisk: mole.melanomaRisk,
+        riskLevel: mole.riskLevel,
+        referredToDermatologist: mole.referredToDermatologist,
+        checkFrequency: mole.checkFrequency,
+        lastChecked: mole.lastChecked,
+        recommendations: generateMoleRecommendations(analysisResult),
+      },
+    });
+  } catch (error) {
+    console.error('Error analyzing mole:', error);
+    const errorMessage = error instanceof Error ? error.message : 'analyzing mole:';
+    return NextResponse.json(
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -191,7 +349,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      moles: moles.map((mole: any) => ({
+      moles: moles.map((mole: unknown) => ({
         id: mole.id,
         moleId: mole.moleId,
         name: mole.name,
@@ -204,7 +362,7 @@ export async function GET(request: NextRequest) {
         referredToDermatologist: mole.referredToDermatologist,
       })),
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching moles:', error);
     return NextResponse.json(
       { error: 'Failed to fetch moles' },
@@ -225,7 +383,7 @@ function calculateCheckFrequency(riskScore: number): number {
 /**
  * Generate recommendations based on mole analysis
  */
-function generateMoleRecommendations(result: any): string[] {
+function generateMoleRecommendations(result: unknown): string[] {
   const recommendations: string[] = [];
 
   if (result.melanomaRisk > 70) {

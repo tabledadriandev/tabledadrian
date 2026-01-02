@@ -25,10 +25,11 @@ export async function POST(
       success: true,
       correlations,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Correlation calculation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to calculate correlations';
     return NextResponse.json(
-      { error: error.message || 'Failed to calculate correlations' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

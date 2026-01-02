@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import { motion, HTMLMotionProps } from 'framer-motion';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -10,17 +9,12 @@ import {
   Plus, 
   Download,
   Share2,
-  Brain,
-  FileText,
   TestTube,
   Activity,
-  AlertCircle,
-  CheckCircle,
-  BarChart3,
   LineChart as LineChartIcon,
-  Target,
 } from 'lucide-react';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from 'recharts';
+import LineChart from '@/components/charts/LineChart';
+import MainLayout from '@/components/layout/MainLayout';
 
 interface BiomarkerData {
   // Vital Signs
@@ -276,29 +270,7 @@ export default function BiomarkersPage() {
   ];
 
   return (
-    <div className="min-h-screen  flex flex-col">
-      {/* Shared top nav (desktop + mobile) */}
-      <header className="w-full border-b border-border-light bg-white/90 backdrop-blur sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 min-w-0">
-            <button
-              type="button"
-              onClick={() => window.location.assign('/')}
-              className="px-3 py-1 text-xs sm:text-sm border border-border-light rounded-full hover:bg-cream whitespace-nowrap"
-            >
-              Dashboard
-            </button>
-            <div className="flex items-center gap-2 min-w-0">
-              <img src="/logo.ico" alt="Logo" className="w-6 h-6 flex-shrink-0" />
-              <span className="font-semibold text-sm sm:text-base">
-                Table d'Adrian Wellness
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="flex-1 px-4 sm:px-6 md:px-8 py-6">
+    <MainLayout title="Lab Results & Biomarkers">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
           <h1 className="text-3xl md:text-4xl font-sans font-bold text-accent-primary whitespace-nowrap">
@@ -342,8 +314,7 @@ export default function BiomarkersPage() {
               <span className="hidden sm:inline">Log Biomarker</span>
             </button>
           </div>
-      </div>
-      </div>
+        </div>
 
         {/* Tabs */}
         <div className="flex gap-2 mb-6 overflow-x-auto">
@@ -371,8 +342,9 @@ export default function BiomarkersPage() {
                 <>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Systolic BP</label>
+                      <label htmlFor="blood-pressure-systolic" className="block text-sm font-medium mb-2">Systolic BP</label>
                       <input
+                        id="blood-pressure-systolic"
                         type="number"
                         value={formData.bloodPressureSystolic || ''}
                         onChange={(e) => setFormData({ ...formData, bloodPressureSystolic: e.target.value ? parseInt(e.target.value) : undefined })}
@@ -380,8 +352,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Diastolic BP</label>
+                      <label htmlFor="blood-pressure-diastolic" className="block text-sm font-medium mb-2">Diastolic BP</label>
                       <input
+                        id="blood-pressure-diastolic"
                         type="number"
                         value={formData.bloodPressureDiastolic || ''}
                         onChange={(e) => setFormData({ ...formData, bloodPressureDiastolic: e.target.value ? parseInt(e.target.value) : undefined })}
@@ -390,8 +363,9 @@ export default function BiomarkersPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Heart Rate (bpm)</label>
+                    <label htmlFor="heart-rate" className="block text-sm font-medium mb-2">Heart Rate (bpm)</label>
                     <input
+                      id="heart-rate"
                       type="number"
                       value={formData.heartRate || ''}
                       onChange={(e) => setFormData({ ...formData, heartRate: e.target.value ? parseInt(e.target.value) : undefined })}
@@ -399,8 +373,9 @@ export default function BiomarkersPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Temperature (°C)</label>
+                    <label htmlFor="temperature" className="block text-sm font-medium mb-2">Temperature (°C)</label>
                     <input
+                      id="temperature"
                       type="number"
                       step="0.1"
                       value={formData.temperature || ''}
@@ -414,8 +389,9 @@ export default function BiomarkersPage() {
               {activeTab === 'body' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Weight (kg)</label>
+                    <label htmlFor="weight" className="block text-sm font-medium mb-2">Weight (kg)</label>
                     <input
+                      id="weight"
                       type="number"
                       step="0.1"
                       value={formData.weight || ''}
@@ -424,8 +400,9 @@ export default function BiomarkersPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">BMI</label>
+                    <label htmlFor="bmi" className="block text-sm font-medium mb-2">BMI</label>
                     <input
+                      id="bmi"
                       type="number"
                       step="0.1"
                       value={formData.bmi || ''}
@@ -434,8 +411,9 @@ export default function BiomarkersPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Body Fat %</label>
+                    <label htmlFor="body-fat-percentage" className="block text-sm font-medium mb-2">Body Fat %</label>
                     <input
+                      id="body-fat-percentage"
                       type="number"
                       step="0.1"
                       value={formData.bodyFatPercentage || ''}
@@ -449,8 +427,9 @@ export default function BiomarkersPage() {
               {activeTab === 'blood' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Blood Glucose (mg/dL)</label>
+                    <label htmlFor="blood-glucose" className="block text-sm font-medium mb-2">Blood Glucose (mg/dL)</label>
                     <input
+                      id="blood-glucose"
                       type="number"
                       value={formData.bloodGlucose || ''}
                       onChange={(e) => setFormData({ ...formData, bloodGlucose: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -459,8 +438,9 @@ export default function BiomarkersPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Total Cholesterol</label>
+                      <label htmlFor="cholesterol-total" className="block text-sm font-medium mb-2">Total Cholesterol</label>
                       <input
+                        id="cholesterol-total"
                         type="number"
                         value={formData.cholesterolTotal || ''}
                         onChange={(e) => setFormData({ ...formData, cholesterolTotal: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -468,8 +448,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">LDL</label>
+                      <label htmlFor="cholesterol-ldl" className="block text-sm font-medium mb-2">LDL</label>
                       <input
+                        id="cholesterol-ldl"
                         type="number"
                         value={formData.cholesterolLDL || ''}
                         onChange={(e) => setFormData({ ...formData, cholesterolLDL: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -477,8 +458,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">HDL</label>
+                      <label htmlFor="cholesterol-hdl" className="block text-sm font-medium mb-2">HDL</label>
                       <input
+                        id="cholesterol-hdl"
                         type="number"
                         value={formData.cholesterolHDL || ''}
                         onChange={(e) => setFormData({ ...formData, cholesterolHDL: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -486,8 +468,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Triglycerides</label>
+                      <label htmlFor="triglycerides" className="block text-sm font-medium mb-2">Triglycerides</label>
                       <input
+                        id="triglycerides"
                         type="number"
                         value={formData.triglycerides || ''}
                         onChange={(e) => setFormData({ ...formData, triglycerides: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -502,8 +485,9 @@ export default function BiomarkersPage() {
                 <>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Vitamin D (ng/mL)</label>
+                      <label htmlFor="vitamin-d" className="block text-sm font-medium mb-2">Vitamin D (ng/mL)</label>
                       <input
+                        id="vitamin-d"
                         type="number"
                         value={formData.vitaminD || ''}
                         onChange={(e) => setFormData({ ...formData, vitaminD: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -511,8 +495,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Vitamin B12 (pg/mL)</label>
+                      <label htmlFor="vitamin-b12" className="block text-sm font-medium mb-2">Vitamin B12 (pg/mL)</label>
                       <input
+                        id="vitamin-b12"
                         type="number"
                         value={formData.vitaminB12 || ''}
                         onChange={(e) => setFormData({ ...formData, vitaminB12: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -520,8 +505,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Iron (μg/dL)</label>
+                      <label htmlFor="iron" className="block text-sm font-medium mb-2">Iron (μg/dL)</label>
                       <input
+                        id="iron"
                         type="number"
                         value={formData.iron || ''}
                         onChange={(e) => setFormData({ ...formData, iron: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -529,8 +515,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Ferritin (ng/mL)</label>
+                      <label htmlFor="ferritin" className="block text-sm font-medium mb-2">Ferritin (ng/mL)</label>
                       <input
+                        id="ferritin"
                         type="number"
                         value={formData.ferritin || ''}
                         onChange={(e) => setFormData({ ...formData, ferritin: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -545,8 +532,9 @@ export default function BiomarkersPage() {
                 <>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Testosterone (ng/dL)</label>
+                      <label htmlFor="testosterone" className="block text-sm font-medium mb-2">Testosterone (ng/dL)</label>
                       <input
+                        id="testosterone"
                         type="number"
                         value={formData.testosterone || ''}
                         onChange={(e) => setFormData({ ...formData, testosterone: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -554,8 +542,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Cortisol (μg/dL)</label>
+                      <label htmlFor="cortisol" className="block text-sm font-medium mb-2">Cortisol (μg/dL)</label>
                       <input
+                        id="cortisol"
                         type="number"
                         value={formData.cortisol || ''}
                         onChange={(e) => setFormData({ ...formData, cortisol: e.target.value ? parseFloat(e.target.value) : undefined })}
@@ -563,8 +552,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">TSH (mIU/L)</label>
+                      <label htmlFor="tsh" className="block text-sm font-medium mb-2">TSH (mIU/L)</label>
                       <input
+                        id="tsh"
                         type="number"
                         step="0.1"
                         value={formData.tsh || ''}
@@ -573,8 +563,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">T3</label>
+                      <label htmlFor="t3" className="block text-sm font-medium mb-2">T3</label>
                       <input
+                        id="t3"
                         type="number"
                         step="0.1"
                         value={formData.t3 || ''}
@@ -583,8 +574,9 @@ export default function BiomarkersPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">T4</label>
+                      <label htmlFor="t4" className="block text-sm font-medium mb-2">T4</label>
                       <input
+                        id="t4"
                         type="number"
                         step="0.1"
                         value={formData.t4 || ''}
@@ -597,8 +589,9 @@ export default function BiomarkersPage() {
               )}
 
               <div>
-                <label className="block text-sm font-medium mb-2">Lab Date</label>
+                <label htmlFor="lab-date" className="block text-sm font-medium mb-2">Lab Date</label>
                 <input
+                  id="lab-date"
                   type="date"
                   value={formData.labDate || ''}
                   onChange={(e) => setFormData({ ...formData, labDate: e.target.value })}
@@ -607,8 +600,9 @@ export default function BiomarkersPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Notes</label>
+                <label htmlFor="notes" className="block text-sm font-medium mb-2">Notes</label>
                 <textarea
+                  id="notes"
                   value={formData.notes || ''}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
@@ -746,69 +740,49 @@ export default function BiomarkersPage() {
                         {selectedBiomarker === biomarkerName && trendData.dataPoints && trendData.dataPoints.length > 1 && (
                           <div className="mt-4 pt-4 border-t border-gray-200">
                           <div className="h-64">
-        <ResponsiveContainer width="100%" height="100%">
-                              <AreaChart
-                                data={trendData.dataPoints.map((dp: any) => ({
-                                  date: new Date(dp.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-                                  value: dp.value,
-                                  min: REFERENCE_RANGES[biomarkerName]?.min || 0,
-                                  max: REFERENCE_RANGES[biomarkerName]?.max || 100,
-                                  optimalMin: REFERENCE_RANGES[biomarkerName] 
-                                    ? REFERENCE_RANGES[biomarkerName].min + (REFERENCE_RANGES[biomarkerName].max - REFERENCE_RANGES[biomarkerName].min) * 0.1
-                                    : 0,
-                                  optimalMax: REFERENCE_RANGES[biomarkerName]
-                                    ? REFERENCE_RANGES[biomarkerName].max - (REFERENCE_RANGES[biomarkerName].max - REFERENCE_RANGES[biomarkerName].min) * 0.1
-                                    : 100,
-                                }))}
-                              >
-            <defs>
-                                  <linearGradient id={`gradient-${biomarkerName}`} x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#0F4C81" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#0F4C81" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#E8E3DC" />
-                                <XAxis
-                                  dataKey="date"
-                                  stroke="#6B6560"
-                                  fontSize={12}
-                                  tickLine={false}
-                                />
-                                <YAxis
-                                  stroke="#6B6560"
-                                  fontSize={12}
-                                  tickLine={false}
-                                />
-            <Tooltip
-              contentStyle={{
-                                    backgroundColor: '#FFFFFF',
-                                    border: '1px solid #E8E3DC',
-                borderRadius: '8px',
-                                    padding: '8px 12px',
-                                  }}
-                                />
-                                <ReferenceLine
-                                  y={trendData.dataPoints[0]?.optimalMin}
-                                  stroke="#10B981"
-                                  strokeDasharray="5 5"
-                                  label={{ value: 'Optimal Min', position: 'right' }}
-                                />
-                                <ReferenceLine
-                                  y={trendData.dataPoints[0]?.optimalMax}
-                                  stroke="#10B981"
-                                  strokeDasharray="5 5"
-                                  label={{ value: 'Optimal Max', position: 'right' }}
-                                />
-                                <Area
-                                  type="monotone"
-                                  dataKey="value"
-                                  stroke="#0F4C81"
-                                  strokeWidth={2}
-                                  fill="url(#gradient-${biomarkerName})"
-                                />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+                            <LineChart
+                              data={{
+                                labels: trendData.dataPoints.map((dp: any) => 
+                                  new Date(dp.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                                ),
+                                datasets: [
+                                  {
+                                    label: biomarkerName,
+                                    data: trendData.dataPoints.map((dp: any) => dp.value),
+                                    borderColor: '#0F4C81',
+                                    backgroundColor: 'rgba(15, 76, 129, 0.3)',
+                                    tension: 0.4,
+                                    fill: true,
+                                  },
+                                  {
+                                    label: 'Optimal Min',
+                                    data: trendData.dataPoints.map(() => 
+                                      REFERENCE_RANGES[biomarkerName] 
+                                        ? REFERENCE_RANGES[biomarkerName].min + (REFERENCE_RANGES[biomarkerName].max - REFERENCE_RANGES[biomarkerName].min) * 0.1
+                                        : 0
+                                    ),
+                                    borderColor: '#10B981',
+                                    borderDash: [5, 5],
+                                    pointRadius: 0,
+                                    fill: false,
+                                  },
+                                  {
+                                    label: 'Optimal Max',
+                                    data: trendData.dataPoints.map(() => 
+                                      REFERENCE_RANGES[biomarkerName]
+                                        ? REFERENCE_RANGES[biomarkerName].max - (REFERENCE_RANGES[biomarkerName].max - REFERENCE_RANGES[biomarkerName].min) * 0.1
+                                        : 100
+                                    ),
+                                    borderColor: '#10B981',
+                                    borderDash: [5, 5],
+                                    pointRadius: 0,
+                                    fill: false,
+                                  },
+                                ],
+                              }}
+                              height={256}
+                            />
+                          </div>
                         </div>
                       )}
                     </div>
@@ -946,55 +920,42 @@ export default function BiomarkersPage() {
                         </button>
                         {selectedBiomarker === key && (
                           <div className="mt-4 h-48">
-                            <ResponsiveContainer width="100%" height="100%">
-                              <LineChart
-                                data={values.map((v) => ({
-                                  date: new Date(v.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-                                  value: v.value,
-                                }))}
-                              >
-                                <CartesianGrid strokeDasharray="3 3" stroke="#E8E3DC" />
-                                <XAxis
-                                  dataKey="date"
-                                  stroke="#6B6560"
-                                  fontSize={10}
-                                  tickLine={false}
-                                />
-                                <YAxis
-                                  stroke="#6B6560"
-                                  fontSize={10}
-                                  tickLine={false}
-                                />
-                                <Tooltip
-                                  contentStyle={{
-                                    backgroundColor: '#FFFFFF',
-                                    border: '1px solid #E8E3DC',
-                                    borderRadius: '8px',
-                                    padding: '6px 10px',
-                                  }}
-                                />
-                                <ReferenceLine
-                                  y={REFERENCE_RANGES[key]?.min}
-                                  stroke="#F59E0B"
-                                  strokeDasharray="3 3"
-                                  label={{ value: 'Min', position: 'right', fontSize: 10 }}
-                                />
-                                <ReferenceLine
-                                  y={REFERENCE_RANGES[key]?.max}
-                                  stroke="#F59E0B"
-                                  strokeDasharray="3 3"
-                                  label={{ value: 'Max', position: 'right', fontSize: 10 }}
-                                />
-                                <Line
-                                  type="monotone"
-                                  dataKey="value"
-                                  stroke="#0F4C81"
-                                  strokeWidth={2}
-                                  dot={{ r: 4, fill: '#0F4C81' }}
-                                  activeDot={{ r: 6 }}
-                                />
-                              </LineChart>
-                            </ResponsiveContainer>
+                            <LineChart
+                              data={{
+                                labels: values.map((v) => 
+                                  new Date(v.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                                ),
+                                datasets: [
+                                  {
+                                    label: key,
+                                    data: values.map((v) => v.value),
+                                    borderColor: '#0F4C81',
+                                    backgroundColor: 'rgba(15, 76, 129, 0.1)',
+                                    tension: 0.4,
+                                    fill: true,
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                  },
+                                  {
+                                    label: 'Min',
+                                    data: values.map(() => REFERENCE_RANGES[key]?.min || 0),
+                                    borderColor: '#F59E0B',
+                                    borderDash: [3, 3],
+                                    pointRadius: 0,
+                                    fill: false,
+                                  },
+                                  {
+                                    label: 'Max',
+                                    data: values.map(() => REFERENCE_RANGES[key]?.max || 100),
+                                    borderColor: '#F59E0B',
+                                    borderDash: [3, 3],
+                                    pointRadius: 0,
+                                    fill: false,
+                                  },
+                                ],
+                              }}
+                              height={192}
+                            />
                           </div>
                         )}
                       </>
@@ -1069,18 +1030,8 @@ export default function BiomarkersPage() {
           </div>
         )}
 
-        {/* Shared footer */}
-        <footer className="w-full border-t border-border-light bg-white/90 mt-4">
-          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3 text-xs sm:text-sm text-text-secondary">
-            <div className="flex items-center gap-2">
-              <img src="/logo.ico" alt="Logo" className="w-5 h-5" />
-              <span className="font-semibold">Table d'Adrian Wellness</span>
-            </div>
-            <span>Lab Results & Biomarkers</span>
-          </div>
-        </footer>
       </div>
-      </div>
+    </MainLayout>
   );
 }
 

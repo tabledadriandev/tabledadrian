@@ -162,7 +162,7 @@ function generateReportData(user: unknown, assessment: unknown, healthScore: { s
   };
 }
 
-async function generatePDF(reportData: any): Promise<string> {
+async function generatePDF(reportData: unknown): Promise<string> {
   const doc = new jsPDF();
   let yPos = 20;
 

@@ -58,10 +58,11 @@ export async function GET(request: NextRequest) {
       totalEarned,
       pendingCount: dividends.filter((d) => d.status === 'pending').length,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error listing dividends:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to list dividends';
     return NextResponse.json(
-      { error: error.message || 'Failed to list dividends' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

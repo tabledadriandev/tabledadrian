@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     // const food = await prisma.food.findUnique({
     //   where: { barcode },
     // });
-    const food: any = null;
+    const food: unknown = null;
 
     if (!food) {
       return NextResponse.json(
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(food);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching food by barcode:', error);
     return NextResponse.json(
       { error: 'Failed to fetch food' },

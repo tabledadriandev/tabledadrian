@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get latest biological age calculation
-    const latest = await (prisma as any).biologicalAge.findFirst({
+    const latest = await prisma.biologicalAge.findFirst({
       where: { userId },
       orderBy: { calculatedAt: 'desc' },
     });
@@ -34,6 +34,8 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    const factors = latest.factors as any;
+
     return NextResponse.json({
       biologicalAge: latest.biologicalAge,
       chronologicalAge: latest.chronologicalAge,
@@ -42,13 +44,14 @@ export async function GET(request: NextRequest) {
         sleepAge: latest.sleepAge,
         activityAge: latest.activityAge,
         recoveryAge: latest.recoveryAge,
-        drivers: (latest.factors as any)?.drivers || {},
+        drivers: factors?.drivers || {},
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get biological age error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to get';
     return NextResponse.json(
-      { error: error.message || 'Failed to get biological age' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

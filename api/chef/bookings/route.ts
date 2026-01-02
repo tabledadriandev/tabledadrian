@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
     const userBookings = bookings.get(address) || [];
     return NextResponse.json(userBookings);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching bookings:', error);
     return NextResponse.json(
       { error: 'Failed to fetch bookings' },

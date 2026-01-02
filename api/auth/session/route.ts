@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
       },
       authenticated: true 
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error checking session:', error);
     return NextResponse.json({ user: null, authenticated: false });
   }

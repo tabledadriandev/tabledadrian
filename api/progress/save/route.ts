@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     await autoSaveService.saveNow(user.id, progress);
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error saving progress:', error);
     return NextResponse.json(
       { error: 'Failed to save progress' },

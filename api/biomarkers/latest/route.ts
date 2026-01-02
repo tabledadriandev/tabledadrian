@@ -21,11 +21,19 @@ export async function GET(request: NextRequest) {
     }
 
     // Get latest readings for each metric
-    const metrics = ['hrv', 'sleep_score', 'readiness', 'recovery', 'steps', 'active_minutes'];
-    const latestReadings: Record<string, any> = {};
+    const metrics = ['hrv', 'sleep_score', 'readiness', 'recovery', 'steps', 'active_minutes'] as const;
+    type Metric = typeof metrics[number];
+    const latestReadings: Record<Metric, number | null> = {
+      hrv: null,
+      sleep_score: null,
+      readiness: null,
+      recovery: null,
+      steps: null,
+      active_minutes: null,
+    };
 
     for (const metric of metrics) {
-      const reading = await (prisma as any).biomarkerReading.findFirst({
+      const reading = await prisma.biomarkerReading.findFirst({
         where: {
           userId,
           metric,
@@ -33,30 +41,15 @@ export async function GET(request: NextRequest) {
         orderBy: {
           date: 'desc',
         },
+        select: {
+          value: true,
+        },
       });
 
-      if (reading) {
-        latestReadings[metric] = reading.value;
+      if (reading && reading.value !== null) {
+        latestReadings[metric] = Number(reading.value);
       }
     }
-
-    // Get latest sleep score
-      const sleepReading = await (prisma as any).biomarkerReading.findFirst({
-      where: {
-        userId,
-        metric: 'sleep_score',
-      },
-      orderBy: { date: 'desc' },
-    });
-
-    // Get latest recovery
-      const recoveryReading = await (prisma as any).biomarkerReading.findFirst({
-      where: {
-        userId,
-        metric: 'recovery',
-      },
-      orderBy: { date: 'desc' },
-    });
 
     return NextResponse.json({
       hrv: latestReadings.hrv || null,
@@ -66,10 +59,11 @@ export async function GET(request: NextRequest) {
       steps: latestReadings.steps || null,
       activeMinutes: latestReadings.active_minutes || null,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Latest biomarkers error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch latest biomarkers';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch latest biomarkers' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

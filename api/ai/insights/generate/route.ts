@@ -29,10 +29,11 @@ export async function POST(request: NextRequest) {
       success: true,
       insights,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Insight generation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Insight generation failed';
     return NextResponse.json(
-      { error: error.message || 'Failed to generate insights' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -76,10 +77,11 @@ export async function GET(request: NextRequest) {
         insights,
       });
     }
-  } catch (error: any) {
+  } catch (error) {
     console.error('Insight generation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Insight generation failed';
     return NextResponse.json(
-      { error: error.message || 'Failed to generate insights' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
