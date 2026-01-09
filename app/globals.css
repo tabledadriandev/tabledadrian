@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Clean Pearl & Black Foundation */
+    --background: 0 0% 100%;
+    --background-secondary: 0 0% 98%;
+    --background-elevated: 0 0% 99%;
+
+    /* Soft Accent Colors - Coral/Salmon Pink */
+    --primary: 8 75% 65%; /* Coral/Salmon pink for CTAs */
+    --primary-muted: 8 50% 75%;
+    --accent-champagne: 280 20% 85%; /* Subtle purple/pink */
+    --accent-burgundy: 280 30% 80%;
+    --accent-copper: 8 60% 70%;
+
+    /* Text Hierarchy - Dark on Light */
+    --foreground: 0 0% 8%;
+    --foreground-muted: 0 0% 40%;
+    --foreground-subtle: 0 0% 60%;
+
+    /* UI Elements */
+    --border: 0 0% 90%;
+    --border-hover: 0 0% 80%;
+    --card: 0 0% 100%;
+    --card-hover: 0 0% 98%;
+
+    --radius: 9999px; /* Pill-shaped */
+
+    /* Additional semantic colors */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 8 50% 75%;
+    --accent-foreground: 0 0% 8%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 8 75% 65%;
+    --input: 0 0% 95%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-white text-foreground font-body;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass {
+    @apply bg-background/80 backdrop-blur-md border border-border/50;
+  }
+  
+  .magnetic-hover {
+    @apply transition-transform duration-300 ease-out;
+  }
+  
+  .magnetic-hover:hover {
+    @apply scale-105;
+  }
+  
+  .coral-gradient {
+    @apply bg-gradient-to-r from-[#FF7F7F] via-[#FF9F9F] to-[#FF7F7F];
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#FF7F7F] via-[#FF9F9F] to-[#FF7F7F];
+  }
+  
+  .subtle-gradient {
+    @apply bg-gradient-to-br from-purple-50 via-pink-50 to-transparent;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-foreground/20 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-foreground/30;
+}
+
+/* Selection */
+::selection {
+  @apply bg-primary/30 text-foreground;
+}
+
+/* Focus visible */
+:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+}
