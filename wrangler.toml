@@ -1,0 +1,12 @@
+name = "tabledadrian-website"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "tabledadrian-website"
+
+[build]
+command = "npm run build"
+cwd = "."
+
+[site]
+bucket = ".next"
