@@ -3,10 +3,23 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, ChevronDown } from 'lucide-react'
-import { textReveal, fadeInUp, letterAnimation } from '@/lib/animations'
+import { textReveal, fadeInUp } from '@/lib/animations'
+
+const wordAnimation = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+}
 
 export function Hero() {
-  const title = "LUXURY PRIVATE CHEF SERVICES"
+  const titleWords = ["LUXURY", "PRIVATE", "CHEF", "SERVICES"]
   const subtitle = "Personalized Culinary Excellence"
 
   return (
@@ -29,7 +42,7 @@ export function Hero() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 sm:py-24 md:py-32">
-        <div className="max-w-4xl mx-auto text-center space-y-8 md:space-y-12">
+        <div className="max-w-5xl mx-auto text-center space-y-8 md:space-y-12">
           {/* Badge Chip */}
           <motion.div
             variants={fadeInUp}
@@ -42,23 +55,45 @@ export function Hero() {
             </span>
           </motion.div>
 
-          {/* Main Title */}
+          {/* Main Title - Word by Word Animation */}
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-bold text-foreground leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-bold text-foreground leading-[1.1] tracking-tight"
             initial="hidden"
             animate="visible"
           >
-            {title.split('').map((char, i) => (
+            <span className="block sm:inline">
               <motion.span
-                key={i}
-                variants={letterAnimation}
-                custom={i}
-                className="inline-block"
-                style={{ display: 'inline-block' }}
+                variants={wordAnimation}
+                custom={0}
+                className="inline-block mr-[0.25em]"
               >
-                {char === ' ' ? '\u00A0' : char}
+                LUXURY
               </motion.span>
-            ))}
+              <motion.span
+                variants={wordAnimation}
+                custom={1}
+                className="inline-block"
+              >
+                PRIVATE
+              </motion.span>
+            </span>
+            <br className="hidden sm:block" />
+            <span className="block sm:inline">
+              <motion.span
+                variants={wordAnimation}
+                custom={2}
+                className="inline-block mr-[0.25em]"
+              >
+                CHEF
+              </motion.span>
+              <motion.span
+                variants={wordAnimation}
+                custom={3}
+                className="inline-block"
+              >
+                SERVICES
+              </motion.span>
+            </span>
           </motion.h1>
 
           {/* Subtitle */}

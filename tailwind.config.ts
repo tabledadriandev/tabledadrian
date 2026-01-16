@@ -58,10 +58,10 @@ const config = {
         pill: "9999px",
       },
       fontFamily: {
-        display: ["Playfair Display", "serif"],
-        accent: ["Cormorant Garamond", "serif"],
-        body: ["Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        display: ["var(--font-display)", "Libre Baskerville", "Georgia", "serif"],
+        accent: ["var(--font-display)", "Libre Baskerville", "serif"],
+        body: ["var(--font-body)", "Inter", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "Menlo", "monospace"],
       },
       keyframes: {
         "accordion-down": {

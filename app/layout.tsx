@@ -1,8 +1,22 @@
 import type { Metadata } from "next"
+import { Libre_Baskerville, Inter } from "next/font/google"
 import "./globals.css"
 import { SmoothScroll } from "@/components/layout/SmoothScroll"
 import { Navbar } from "@/components/layout/Navbar"
 import { Footer } from "@/components/layout/Footer"
+
+const libreBaskerville = Libre_Baskerville({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-display',
+  display: 'swap',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Table d'Adrian - Luxury Private Chef Services | Personal Chef London",
@@ -45,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`scroll-smooth ${libreBaskerville.variable} ${inter.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -71,7 +85,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased font-body">
         <SmoothScroll>
           <Navbar />
           <main className="min-h-screen">
