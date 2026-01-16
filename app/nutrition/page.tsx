@@ -60,7 +60,6 @@ export default function NutritionCoachPage() {
     snack: mealBreakdown.snack.reduce((sum, log) => sum + log.calories, 0),
   }
 
-  const avgCaloriesPerMeal = todayLogs.length > 0 ? dailyCalories / todayLogs.length : 0
 
   if (showOnboarding) {
     return (

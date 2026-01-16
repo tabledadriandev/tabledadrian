@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown, Utensils, Heart, Zap } from 'lucide-react'
 import { useNutritionStore } from '@/lib/stores/nutrition-store'
@@ -10,6 +10,7 @@ interface Recommendation {
   type: 'eat-more' | 'avoid' | 'meal-suggestion' | 'activity'
   title: string
   description: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any
   foods?: string[]
   reason: string
@@ -22,13 +23,7 @@ export function Recommendations() {
   const dailyCalories = useNutritionStore((state) => state.dailyCalories)
   const [recommendations, setRecommendations] = useState<Recommendation[]>([])
 
-  useEffect(() => {
-    if (profile) {
-      generateRecommendations()
-    }
-  }, [profile, foodLogs, dailyMacros, dailyCalories])
-
-  const generateRecommendations = () => {
+  const generateRecommendations = useCallback(() => {
     const recs: Recommendation[] = []
 
     // Foods to eat more of based on goals
@@ -88,7 +83,7 @@ export function Recommendations() {
       })
     }
 
-    if (profile?.allergies.length > 0 && !profile.allergies.includes('none')) {
+    if (profile?.allergies && profile.allergies.length > 0 && !profile.allergies.includes('none')) {
       recs.push({
         type: 'avoid',
         title: 'Allergens to Avoid',
@@ -154,7 +149,13 @@ export function Recommendations() {
     }
 
     setRecommendations(recs)
-  }
+  }, [profile, foodLogs, dailyCalories])
+
+  useEffect(() => {
+    if (profile) {
+      generateRecommendations()
+    }
+  }, [profile, foodLogs, dailyMacros, dailyCalories, generateRecommendations])
 
   if (!profile) {
     return (

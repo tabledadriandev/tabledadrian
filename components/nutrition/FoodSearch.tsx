@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Search, Loader2 } from 'lucide-react'
 import { FoodLog } from '@/lib/stores/nutrition-store'
-import { createClient } from '@/lib/supabase/client'
 
 // Mock food database - In production, use a real food database API
 const MOCK_FOODS = [
@@ -18,9 +17,30 @@ const MOCK_FOODS = [
   { id: '8', name: 'Sweet Potato (baked)', calories: 90, protein: 2, carbs: 21, fat: 0.2, fiber: 3.3, sugar: 7, sodium: 36 },
 ]
 
+interface FoodItem {
+  id: string
+  name: string
+  calories: number
+  protein: number
+  carbs: number
+  fat: number
+  fiber: number
+  sugar: number
+  sodium: number
+}
+
 interface FoodSearchProps {
   onFoodSelected: (
-    food: any,
+    food: {
+      name: string
+      calories: number
+      protein: number
+      carbs: number
+      fat: number
+      fiber?: number
+      sugar?: number
+      sodium?: number
+    },
     quantity: number,
     unit: string,
     mealType: FoodLog['mealType'],
@@ -31,9 +51,9 @@ interface FoodSearchProps {
 
 export function FoodSearch({ onFoodSelected }: FoodSearchProps) {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<any[]>([])
+  const [results, setResults] = useState<FoodItem[]>([])
   const [loading, setLoading] = useState(false)
-  const [selectedFood, setSelectedFood] = useState<any>(null)
+  const [selectedFood, setSelectedFood] = useState<FoodItem | null>(null)
   const [quantity, setQuantity] = useState(100)
   const [unit, setUnit] = useState('g')
   const [mealType, setMealType] = useState<FoodLog['mealType']>('lunch')
@@ -54,7 +74,7 @@ export function FoodSearch({ onFoodSelected }: FoodSearchProps) {
     }
   }, [query])
 
-  const handleSelect = (food: any) => {
+  const handleSelect = (food: FoodItem) => {
     setSelectedFood(food)
     setQuery(food.name)
     setResults([])

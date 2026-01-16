@@ -1,9 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { fadeInUp, slideInLeft, slideInRight, staggerContainer } from '@/lib/animations'
+import { fadeInUp, slideInLeft, staggerContainer } from '@/lib/animations'
 
 export function About() {
   return (
@@ -18,12 +19,14 @@ export function About() {
             viewport={{ once: true, margin: "-100px" }}
             className="relative order-2 lg:order-1"
           >
-            <div className="aspect-[4/5] bg-foreground/5 rounded-xl overflow-hidden shadow-lg">
+            <div className="aspect-[4/5] bg-foreground/5 rounded-xl overflow-hidden shadow-lg relative">
               {/* Placeholder for chef image - using Unsplash */}
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80"
                 alt="Chef Adrian"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </motion.div>

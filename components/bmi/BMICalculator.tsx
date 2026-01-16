@@ -3,8 +3,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle, AlertTriangle, XCircle } from 'lucide-react'
-import { BMIGauge } from './BMIGauge'
-import { BMIResults } from './BMIResults'
 import { fadeInUp } from '@/lib/animations'
 
 interface BMICategory {
@@ -47,7 +45,7 @@ const categories: BMICategory[] = [
 ]
 
 interface BMICalculatorProps {
-  onResult?: (data: any) => void
+  onResult?: (data: { bmi: number; category: string }) => void
 }
 
 export function BMICalculator({ onResult }: BMICalculatorProps) {
@@ -55,8 +53,8 @@ export function BMICalculator({ onResult }: BMICalculatorProps) {
   const [weight, setWeight] = useState('')
   const [height, setHeight] = useState('')
   const [heightInches, setHeightInches] = useState('')
-  const [bmi, setBmi] = useState<number | null>(null)
-  const [category, setCategory] = useState<BMICategory | null>(null)
+  const [, setBmi] = useState<number | null>(null)
+  const [, setCategory] = useState<BMICategory | null>(null)
 
   const calculateBMI = () => {
     let weightKg: number

@@ -7,7 +7,7 @@ interface BMICategory {
   range: [number, number]
   label: string
   color: string
-  icon?: any
+  icon?: React.ComponentType<{ size?: number; className?: string }>
   description?: string
 }
 
@@ -45,9 +45,6 @@ export function BMIGauge({ bmi, category }: BMIGaugeProps) {
     ? categories.find(cat => cat.label === category) || categories[1] // Default to Normal if not found
     : category
 
-  if (!categoryObj) {
-    return null
-  }
   const [animatedBMI, setAnimatedBMI] = useState(0)
 
   useEffect(() => {
@@ -71,12 +68,15 @@ export function BMIGauge({ bmi, category }: BMIGaugeProps) {
     return () => clearInterval(timer)
   }, [bmi])
 
+  if (!categoryObj) {
+    return null
+  }
+
   // Calculate angle for gauge (0-180 degrees, BMI range 15-40)
   const minBMI = 15
   const maxBMI = 40
   const normalizedBMI = Math.max(minBMI, Math.min(maxBMI, animatedBMI))
   const percentage = (normalizedBMI - minBMI) / (maxBMI - minBMI)
-  const angle = percentage * 180
 
   const radius = 120
   const circumference = Math.PI * radius

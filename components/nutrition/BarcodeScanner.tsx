@@ -6,9 +6,35 @@ import { Scan, Loader2, AlertCircle } from 'lucide-react'
 import { Html5Qrcode } from 'html5-qrcode'
 import { FoodLog } from '@/lib/stores/nutrition-store'
 
+interface FoodData {
+  name: string
+  brand?: string
+  barcode?: string
+  nutrition: {
+    calories: number
+    protein: number
+    carbs: number
+    fat: number
+    fiber?: number
+    sugar?: number
+    sodium?: number
+  }
+  servingSize?: number
+  servingUnit?: string
+}
+
 interface BarcodeScannerProps {
   onFoodSelected: (
-    food: any,
+    food: {
+      name: string
+      calories: number
+      protein: number
+      carbs: number
+      fat: number
+      fiber?: number
+      sugar?: number
+      sodium?: number
+    },
     quantity: number,
     unit: string,
     mealType: FoodLog['mealType'],
@@ -21,7 +47,7 @@ export function BarcodeScanner({ onFoodSelected }: BarcodeScannerProps) {
   const [scanning, setScanning] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [scannedCode, setScannedCode] = useState<string | null>(null)
-  const [foodData, setFoodData] = useState<any>(null)
+  const [foodData, setFoodData] = useState<FoodData | null>(null)
   const [quantity, setQuantity] = useState(1)
   const [unit, setUnit] = useState('piece')
   const [mealType, setMealType] = useState<FoodLog['mealType']>('snack')
@@ -55,12 +81,12 @@ export function BarcodeScanner({ onFoodSelected }: BarcodeScannerProps) {
           html5QrCode.stop()
           setScanning(false)
         },
-        (errorMessage) => {
+        () => {
           // Ignore scanning errors
         }
       )
-    } catch (err: any) {
-      setError(err.message || 'Failed to start camera')
+    } catch {
+      setError('Failed to start camera')
       setScanning(false)
     }
   }
@@ -107,7 +133,7 @@ export function BarcodeScanner({ onFoodSelected }: BarcodeScannerProps) {
       }
 
       setFoodData(mockFood)
-    } catch (err) {
+    } catch {
       setError('Food not found in database')
     }
   }

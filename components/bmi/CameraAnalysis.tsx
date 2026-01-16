@@ -3,35 +3,32 @@
 import { useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Camera, ArrowLeft, Loader2, AlertCircle } from 'lucide-react'
-import { fadeInUp } from '@/lib/animations'
+
+interface AnalysisResult {
+  bmi: number
+  category: string
+  bodyFatEstimate?: { low: number; high: number }
+  bodyType?: string
+  muscleAssessment?: string
+  nutritionFocus?: string[]
+  recommendations?: string[]
+  disclaimer?: string
+}
 
 interface CameraAnalysisProps {
-  onAnalysisComplete: (data: any) => void
+  onAnalysisComplete: (data: AnalysisResult) => void
   userHeight?: number
   userAge?: number
   userGender?: string
 }
 
-export function CameraAnalysis({ onAnalysisComplete, userHeight, userAge, userGender }: CameraAnalysisProps) {
+export function CameraAnalysis({ onAnalysisComplete }: CameraAnalysisProps) {
   const [step, setStep] = useState<'instructions' | 'capture' | 'analyzing' | 'error'>('instructions')
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
-  const [analyzing, setAnalyzing] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const webcamRef = useRef<any>(null)
+  const webcamRef = useRef<{ getScreenshot: () => string | null } | null>(null)
 
-  const captureImage = useCallback(() => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot()
-      if (imageSrc) {
-        setCapturedImage(imageSrc)
-        setStep('analyzing')
-        analyzeWithAI(imageSrc)
-      }
-    }
-  }, [])
-
-  const analyzeWithAI = async (imageBase64: string) => {
-    setAnalyzing(true)
+  const analyzeWithAI = useCallback(async (_imageBase64: string) => {
     setError(null)
 
     try {
@@ -39,7 +36,7 @@ export function CameraAnalysis({ onAnalysisComplete, userHeight, userAge, userGe
       await new Promise((resolve) => setTimeout(resolve, 3000))
 
       // Mock analysis result
-      const mockResult = {
+      const mockResult: AnalysisResult = {
         bmi: 24.5,
         category: 'Normal',
         bodyFatEstimate: { low: 18, high: 22 },
@@ -55,13 +52,22 @@ export function CameraAnalysis({ onAnalysisComplete, userHeight, userAge, userGe
       }
 
       onAnalysisComplete(mockResult)
-    } catch (err) {
+    } catch {
       setError('Analysis failed. Please try manual entry.')
       setStep('error')
-    } finally {
-      setAnalyzing(false)
     }
-  }
+  }, [onAnalysisComplete])
+
+  const captureImage = useCallback(() => {
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot()
+      if (imageSrc) {
+        setCapturedImage(imageSrc)
+        setStep('analyzing')
+        analyzeWithAI(imageSrc)
+      }
+    }
+  }, [analyzeWithAI])
 
   return (
     <div className="space-y-6">

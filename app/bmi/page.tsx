@@ -9,9 +9,15 @@ import { CameraAnalysis } from '@/components/bmi/CameraAnalysis'
 import { BMIGauge } from '@/components/bmi/BMIGauge'
 import { BMIResults } from '@/components/bmi/BMIResults'
 
+interface BMIResult {
+  bmi: number
+  category: string
+  disclaimer?: string
+}
+
 export default function BMIPage() {
   const [mode, setMode] = useState<'manual' | 'camera'>('manual')
-  const [result, setResult] = useState<any>(null)
+  const [result, setResult] = useState<BMIResult | null>(null)
 
   return (
     <div className="min-h-screen pt-24 pb-16">

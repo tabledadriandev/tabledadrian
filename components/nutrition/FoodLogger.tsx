@@ -8,7 +8,6 @@ import { FoodPhotoAI } from './FoodPhotoAI'
 import { BarcodeScanner } from './BarcodeScanner'
 import { QuickAdd } from './QuickAdd'
 import { useNutritionStore, FoodLog } from '@/lib/stores/nutrition-store'
-import { fadeInUp } from '@/lib/animations'
 
 type LogMethod = 'search' | 'photo' | 'barcode' | 'quick'
 

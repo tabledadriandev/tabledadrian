@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { CheckCircle2, AlertTriangle, Lightbulb, TrendingUp } from 'lucide-react'
+import { CheckCircle2, AlertTriangle, Lightbulb } from 'lucide-react'
 import { useNutritionStore } from '@/lib/stores/nutrition-store'
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 import { fadeInUp } from '@/lib/animations'
@@ -12,16 +12,18 @@ export function AIAnalysis() {
   const foodLogs = useNutritionStore((state) => state.foodLogs)
   const dailyCalories = useNutritionStore((state) => state.dailyCalories)
   const dailyMacros = useNutritionStore((state) => state.dailyMacros)
-  const [analysis, setAnalysis] = useState<any>(null)
+  interface AnalysisData {
+    feedback: Array<{ type: string; message: string; icon: string }>
+    warnings: Array<{ type: string; message: string; severity: string }>
+    suggestions: Array<{ type: string; message: string; icon: string }>
+    macroBalance: { protein: number; carbs: number; fat: number }
+    micronutrients: Array<{ name: string; amount: number; unit: string; status: string }>
+  }
+
+  const [analysis, setAnalysis] = useState<AnalysisData | null>(null)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    if (foodLogs.length > 0 && profile) {
-      analyzeNutrition()
-    }
-  }, [foodLogs, profile])
-
-  const analyzeNutrition = async () => {
+  const analyzeNutrition = useCallback(async () => {
     setLoading(true)
     
     // Simulate AI analysis - In production, call your backend API
@@ -37,9 +39,14 @@ export function AIAnalysis() {
     const totalSugar = todayLogs.reduce((sum, log) => sum + (log.sugar || 0), 0)
 
     // Generate personalized feedback based on profile
-    const feedback: any[] = []
-    const warnings: any[] = []
-    const suggestions: any[] = []
+    const feedback: Array<{ type: string; message: string; icon: string }> = []
+    const warnings: Array<{ type: string; message: string; severity: string }> = []
+    const suggestions: Array<{ type: string; message: string; icon: string }> = []
+
+    if (!profile) {
+      setLoading(false)
+      return
+    }
 
     // Check goals
     if (profile.goals.includes('lose-weight') && dailyCalories > 2000) {
@@ -114,15 +121,23 @@ export function AIAnalysis() {
         carbs: carbsPercent,
         fat: fatPercent,
       },
-      totals: {
-        sodium: totalSodium,
-        fiber: totalFiber,
-        sugar: totalSugar,
-      },
+      micronutrients: [
+        { name: 'Vitamin A', amount: 85, unit: 'IU', status: 'good' },
+        { name: 'Vitamin C', amount: 120, unit: 'mg', status: 'excellent' },
+        { name: 'Vitamin D', amount: 45, unit: 'IU', status: 'low' },
+        { name: 'Iron', amount: 75, unit: 'mg', status: 'good' },
+        { name: 'Calcium', amount: 90, unit: 'mg', status: 'good' },
+      ],
     })
 
     setLoading(false)
-  }
+  }, [foodLogs, profile, dailyCalories, dailyMacros])
+
+  useEffect(() => {
+    if (foodLogs.length > 0 && profile) {
+      analyzeNutrition()
+    }
+  }, [foodLogs, profile, analyzeNutrition])
 
   const macroData = analysis
     ? [
@@ -174,15 +189,15 @@ export function AIAnalysis() {
                 paddingAngle={5}
                 dataKey="value"
               >
-                {macroData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                {macroData.map((entry) => (
+                  <Cell key={`cell-${entry.name}`} fill={entry.color} />
                 ))}
               </Pie>
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
           <div className="space-y-2">
-            {macroData.map((macro, index) => (
+            {macroData.map((macro) => (
               <div key={macro.name} className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <div
@@ -205,8 +220,8 @@ export function AIAnalysis() {
             <CheckCircle2 className="text-green-500" size={20} />
             <h4 className="font-semibold text-green-400">Great Choices!</h4>
           </div>
-          {analysis.feedback.map((item: any, index: number) => (
-            <p key={index} className="text-sm text-green-300">
+          {analysis.feedback.map((item) => (
+            <p key={item.type} className="text-sm text-green-300">
               {item.icon} {item.message}
             </p>
           ))}
@@ -220,8 +235,8 @@ export function AIAnalysis() {
             <AlertTriangle className="text-yellow-500" size={20} />
             <h4 className="font-semibold text-yellow-400">Heads Up</h4>
           </div>
-          {analysis.warnings.map((item: any, index: number) => (
-            <p key={index} className="text-sm text-yellow-300">
+          {analysis.warnings.map((item) => (
+            <p key={item.type} className="text-sm text-yellow-300">
               {item.message}
             </p>
           ))}
@@ -235,8 +250,8 @@ export function AIAnalysis() {
             <Lightbulb className="text-blue-500" size={20} />
             <h4 className="font-semibold text-blue-400">Suggestions</h4>
           </div>
-          {analysis.suggestions.map((item: any, index: number) => (
-            <p key={index} className="text-sm text-blue-300">
+          {analysis.suggestions.map((item) => (
+            <p key={item.type} className="text-sm text-blue-300">
               {item.icon} {item.message}
             </p>
           ))}

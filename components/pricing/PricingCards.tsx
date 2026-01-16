@@ -17,7 +17,6 @@ const iconMap: Record<string, typeof Shield> = {
 
 export function PricingCards() {
   const [isMonthly, setIsMonthly] = useState(false)
-  const [showFAQ, setShowFAQ] = useState(false)
 
   return (
     <div className="space-y-16">

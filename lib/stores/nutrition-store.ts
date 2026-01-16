@@ -69,7 +69,7 @@ export interface NutritionState {
 
 export const useNutritionStore = create<NutritionState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       profile: null,
       foodLogs: [],
       achievements: [],

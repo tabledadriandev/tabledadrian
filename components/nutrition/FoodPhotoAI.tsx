@@ -5,11 +5,19 @@ import { motion } from 'framer-motion'
 import { Camera, Upload, Loader2, AlertCircle } from 'lucide-react'
 import Webcam from 'react-webcam'
 import { FoodLog } from '@/lib/stores/nutrition-store'
-import { createClient } from '@/lib/supabase/client'
 
 interface FoodPhotoAIProps {
   onFoodSelected: (
-    food: any,
+    food: {
+      name: string
+      calories: number
+      protein: number
+      carbs: number
+      fat: number
+      fiber?: number
+      sugar?: number
+      sodium?: number
+    },
     quantity: number,
     unit: string,
     mealType: FoodLog['mealType'],
@@ -19,44 +27,33 @@ interface FoodPhotoAIProps {
 }
 
 export function FoodPhotoAI({ onFoodSelected }: FoodPhotoAIProps) {
-  const [step, setStep] = useState<'upload' | 'capture' | 'analyzing' | 'result'>('upload')
-  const [image, setImage] = useState<string | null>(null)
-  const [analyzing, setAnalyzing] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [analysisResult, setAnalysisResult] = useState<any>(null)
-  const [quantity, setQuantity] = useState(100)
-  const [unit, setUnit] = useState('g')
-  const [mealType, setMealType] = useState<FoodLog['mealType']>('lunch')
-  const webcamRef = useRef<any>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
-
-  const capturePhoto = useCallback(() => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot()
-      if (imageSrc) {
-        setImage(imageSrc)
-        setStep('analyzing')
-        analyzeImage(imageSrc)
-      }
+  interface AnalysisResult {
+    foodName: string
+    confidence: number
+    estimatedPortion?: number
+    nutrition: {
+      calories: number
+      protein: number
+      carbs: number
+      fat: number
+      fiber?: number
+      sugar?: number
+      sodium?: number
     }
-  }, [])
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        const imageSrc = reader.result as string
-        setImage(imageSrc)
-        setStep('analyzing')
-        analyzeImage(imageSrc)
-      }
-      reader.readAsDataURL(file)
-    }
+    items?: Array<{ name: string; quantity: number; unit: string }>
   }
 
-  const analyzeImage = async (imageBase64: string) => {
-    setAnalyzing(true)
+
+  const [step, setStep] = useState<'upload' | 'capture' | 'analyzing' | 'result'>('upload')
+  const [image, setImage] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
+  const [quantity, setQuantity] = useState(100)
+  const [mealType, setMealType] = useState<FoodLog['mealType']>('lunch')
+  const webcamRef = useRef<Webcam>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const analyzeImage = useCallback(async (_imageBase64: string) => {
     setError(null)
 
     try {
@@ -70,7 +67,7 @@ export function FoodPhotoAI({ onFoodSelected }: FoodPhotoAIProps) {
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
       // Mock result - replace with actual API response
-      const mockResult = {
+      const mockResult: AnalysisResult = {
         foodName: 'Grilled Chicken Breast with Vegetables',
         confidence: 0.92,
         estimatedPortion: 150,
@@ -92,11 +89,34 @@ export function FoodPhotoAI({ onFoodSelected }: FoodPhotoAIProps) {
 
       setAnalysisResult(mockResult)
       setStep('result')
-    } catch (err) {
+    } catch {
       setError('Failed to analyze image. Please try again.')
       setStep('upload')
-    } finally {
-      setAnalyzing(false)
+    }
+  }, [])
+
+  const capturePhoto = useCallback(() => {
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot()
+      if (imageSrc) {
+        setImage(imageSrc)
+        setStep('analyzing')
+        analyzeImage(imageSrc)
+      }
+    }
+  }, [analyzeImage])
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        const imageSrc = reader.result as string
+        setImage(imageSrc)
+        setStep('analyzing')
+        analyzeImage(imageSrc)
+      }
+      reader.readAsDataURL(file)
     }
   }
 
@@ -108,7 +128,7 @@ export function FoodPhotoAI({ onFoodSelected }: FoodPhotoAIProps) {
           ...analysisResult.nutrition,
         },
         quantity,
-        unit,
+        'g',
         mealType,
         image || undefined
       )

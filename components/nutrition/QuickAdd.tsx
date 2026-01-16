@@ -7,7 +7,16 @@ import { FoodLog, useNutritionStore } from '@/lib/stores/nutrition-store'
 
 interface QuickAddProps {
   onFoodSelected: (
-    food: any,
+    food: {
+      name: string
+      calories: number
+      protein: number
+      carbs: number
+      fat: number
+      fiber?: number
+      sugar?: number
+      sodium?: number
+    },
     quantity: number,
     unit: string,
     mealType: FoodLog['mealType'],

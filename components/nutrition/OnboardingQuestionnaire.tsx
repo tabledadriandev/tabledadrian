@@ -7,12 +7,13 @@ import {
   ArrowRight, ArrowLeft, Sparkles 
 } from 'lucide-react'
 import { useNutritionStore, NutritionProfile } from '@/lib/stores/nutrition-store'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
+import { staggerContainer } from '@/lib/animations'
 
 interface Question {
   id: string
   title: string
   subtitle: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any
   type: 'multi-select' | 'single-select' | 'text'
   options?: { label: string; value: string; icon?: string }[]
