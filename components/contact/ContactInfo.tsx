@@ -5,86 +5,56 @@ import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 import { CONTACT_INFO } from '@/lib/constants'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 
+const details = [
+  { icon: Phone, label: 'Phone', href: `tel:${CONTACT_INFO.phone}`, value: CONTACT_INFO.phone },
+  { icon: Mail, label: 'Email', href: `mailto:${CONTACT_INFO.email}`, value: CONTACT_INFO.email },
+  { icon: MapPin, label: 'Service areas', value: 'London & Europe' },
+  { icon: Clock, label: 'Response', value: CONTACT_INFO.responseTime },
+]
+
 export function ContactInfo() {
   return (
     <motion.div
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
-      className="space-y-8"
+      className="space-y-6"
     >
-      <motion.div variants={fadeInUp} className="bg-white border border-foreground/10 rounded-xl p-8 shadow-sm">
-        <h2 className="text-2xl font-display font-semibold mb-6">Get in Touch</h2>
-        <div className="space-y-6">
-          <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <Phone size={20} className="text-primary" />
-            </div>
-            <div>
-              <h3 className="font-medium mb-1">Phone</h3>
-              <a
-                href={`tel:${CONTACT_INFO.phone}`}
-                className="text-foreground-muted hover:text-primary transition-colors"
-              >
-                {CONTACT_INFO.phone}
-              </a>
-            </div>
-          </div>
-
-          <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <Mail size={20} className="text-primary" />
-            </div>
-            <div>
-              <h3 className="font-medium mb-1">Email</h3>
-              <a
-                href={`mailto:${CONTACT_INFO.email}`}
-                className="text-foreground-muted hover:text-primary transition-colors"
-              >
-                {CONTACT_INFO.email}
-              </a>
-            </div>
-          </div>
-
-          <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <MapPin size={20} className="text-primary" />
-            </div>
-            <div>
-              <h3 className="font-medium mb-1">Service Areas</h3>
-              <p className="text-foreground-muted">London & Europe</p>
-            </div>
-          </div>
-
-          <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <Clock size={20} className="text-primary" />
-            </div>
-            <div>
-              <h3 className="font-medium mb-1">Response Time</h3>
-              <p className="text-foreground-muted">{CONTACT_INFO.responseTime}</p>
-            </div>
-          </div>
-        </div>
+      <motion.div variants={fadeInUp} className="surface p-6 sm:p-8">
+        <h2 className="font-display text-2xl">Reach Adrian</h2>
+        <ul className="mt-6 space-y-5">
+          {details.map((item) => (
+            <li key={item.label} className="flex items-start gap-4">
+              <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-primary">
+                <item.icon size={18} />
+              </span>
+              <div>
+                <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{item.label}</p>
+                {item.href ? (
+                  <a href={item.href} className="mt-1 block text-foreground hover:text-primary">
+                    {item.value}
+                  </a>
+                ) : (
+                  <p className="mt-1 text-foreground-muted">{item.value}</p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </motion.div>
 
-      <motion.div variants={fadeInUp} className="bg-white border border-foreground/10 rounded-xl p-8 shadow-sm">
-        <h3 className="text-xl font-display font-semibold mb-4">Booking Process</h3>
-        <div className="space-y-4">
-          {[
-            'Initial consultation',
-            'Menu design & confirmation',
-            'Preparation & service',
-            'Follow-up & feedback',
-          ].map((step, index) => (
-            <div key={index} className="flex items-start space-x-3">
-              <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-primary text-xs font-medium">{index + 1}</span>
-              </div>
-              <p className="text-foreground-muted">{step}</p>
-            </div>
-          ))}
-        </div>
+      <motion.div variants={fadeInUp} className="surface p-6 sm:p-8">
+        <h3 className="font-display text-2xl">How a booking unfolds</h3>
+        <ol className="mt-6 space-y-4">
+          {['Conversation about the table', 'Menu written and confirmed', 'Cook, serve, leave the kitchen as we found it', 'A note afterwards, if you wish'].map(
+            (step, index) => (
+              <li key={step} className="flex items-start gap-3">
+                <span className="font-display text-xl text-primary/70">{String(index + 1).padStart(2, '0')}</span>
+                <p className="pt-1 text-sm text-foreground-muted">{step}</p>
+              </li>
+            )
+          )}
+        </ol>
       </motion.div>
     </motion.div>
   )

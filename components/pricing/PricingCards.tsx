@@ -24,7 +24,7 @@ export function PricingCards() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white border border-foreground/10 rounded-xl p-6 shadow-sm"
+        className="surface p-6"
       >
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
@@ -90,10 +90,8 @@ export function PricingCards() {
                 variants={scaleIn}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className={`relative bg-white border rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow ${
-                  tier.popular
-                    ? 'border-primary shadow-md shadow-primary/10 lg:scale-105'
-                    : 'border-foreground/10'
+                className={`relative surface p-8 transition-shadow hover:shadow-lift ${
+                  tier.popular ? 'border-primary shadow-lift lg:scale-105' : ''
                 }`}
               >
                 {tier.popular && (

@@ -104,20 +104,20 @@ export function BMICalculator({ onResult }: BMICalculatorProps) {
       >
         <button
           onClick={() => setUnit('metric')}
-          className={`px-6 py-2 rounded-lg font-medium transition-all ${
+          className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
             unit === 'metric'
-              ? 'bg-primary text-white'
-              : 'bg-white border border-foreground/10 text-foreground-muted hover:border-foreground/20'
+              ? 'bg-ink text-ink-foreground'
+              : 'border border-border bg-card text-foreground-muted hover:text-foreground'
           }`}
         >
           Metric (kg/cm)
         </button>
         <button
           onClick={() => setUnit('imperial')}
-          className={`px-6 py-2 rounded-lg font-medium transition-all ${
+          className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
             unit === 'imperial'
-              ? 'bg-primary text-white'
-              : 'bg-white border border-foreground/10 text-foreground-muted hover:border-foreground/20'
+              ? 'bg-ink text-ink-foreground'
+              : 'border border-border bg-card text-foreground-muted hover:text-foreground'
           }`}
         >
           Imperial (lb/ft)
@@ -128,7 +128,7 @@ export function BMICalculator({ onResult }: BMICalculatorProps) {
       <motion.form
         variants={fadeInUp}
         onSubmit={handleSubmit}
-        className="bg-white border border-foreground/10 rounded-xl p-8 space-y-6 shadow-sm"
+        className="surface space-y-6 p-6 sm:p-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -140,7 +140,7 @@ export function BMICalculator({ onResult }: BMICalculatorProps) {
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder={unit === 'metric' ? '70' : '154'}
-              className="w-full px-4 py-3 bg-white border border-foreground/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="field"
               required
             />
           </div>
@@ -154,7 +154,7 @@ export function BMICalculator({ onResult }: BMICalculatorProps) {
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}
                 placeholder="175"
-                className="w-full px-4 py-3 bg-white border border-foreground/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="field"
                 required
               />
             ) : (
@@ -164,7 +164,7 @@ export function BMICalculator({ onResult }: BMICalculatorProps) {
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
                   placeholder="5"
-                  className="flex-1 px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="field flex-1"
                   required
                 />
                 <input
@@ -172,7 +172,7 @@ export function BMICalculator({ onResult }: BMICalculatorProps) {
                   value={heightInches}
                   onChange={(e) => setHeightInches(e.target.value)}
                   placeholder="10"
-                  className="flex-1 px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="field flex-1"
                   required
                 />
               </div>
@@ -181,7 +181,7 @@ export function BMICalculator({ onResult }: BMICalculatorProps) {
         </div>
         <button
           type="submit"
-          className="w-full px-6 py-4 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 shadow-sm hover:shadow-md"
+          className="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
           Calculate BMI
         </button>

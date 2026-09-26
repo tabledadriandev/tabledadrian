@@ -50,7 +50,7 @@ export function ArticleDetail({ article }: ArticleDetailProps) {
               src={article.image}
               alt={article.title}
               fill
-              className="object-cover"
+              className="photo object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
               priority
             />

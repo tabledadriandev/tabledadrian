@@ -1,78 +1,70 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { Utensils, Calendar, Briefcase, Sparkles, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { SERVICES } from '@/lib/constants'
-import { fadeInUp, staggerContainer, scaleIn } from '@/lib/animations'
-
-const iconMap: Record<string, typeof Utensils> = {
-  Utensils,
-  Calendar,
-  Briefcase,
-  Sparkles,
-}
+import { Button } from '@/components/ui/Button'
+import { fadeInUp, staggerContainer } from '@/lib/animations'
 
 export function Services() {
   return (
-    <section id="services" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="text-center mb-12 sm:mb-16 md:mb-20 max-w-3xl mx-auto"
-        >
-          <motion.h2
-            variants={fadeInUp}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 sm:mb-6 text-foreground"
+    <section id="services" className="bg-background py-20 sm:py-24 lg:py-32">
+      <div className="container">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start"
           >
-            Our Services
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="text-base sm:text-lg text-foreground-muted leading-relaxed"
-          >
-            Tailored culinary experiences designed to elevate every occasion
-          </motion.p>
-        </motion.div>
+            <motion.span variants={fadeInUp} className="eyebrow mb-5">
+              Services
+            </motion.span>
+            <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl">
+              Culinary experiences, written for the occasion.
+            </motion.h2>
+            <motion.p variants={fadeInUp} className="mt-6 text-base leading-relaxed text-foreground-muted">
+              From an intimate dinner to a week of quiet meals at home, every menu is composed
+              around your guests, your kitchen and the season.
+            </motion.p>
+            <motion.div variants={fadeInUp} className="mt-8">
+              <Button href="/pricing" variant="outline">
+                See pricing
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </Button>
+            </motion.div>
+          </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
-          {SERVICES.map((service, index) => {
-            const Icon = iconMap[service.icon] || Utensils
-            return (
-              <motion.div
+          <ol className="lg:col-span-8 divide-y divide-border border-y border-border">
+            {SERVICES.map((service, index) => (
+              <motion.li
                 key={service.title}
-                variants={scaleIn}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="group relative bg-white border border-foreground/10 rounded-xl p-6 sm:p-8 hover:border-foreground/20 transition-all duration-300 shadow-sm hover:shadow-md"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.06, duration: 0.55 }}
+                className="group grid gap-4 py-8 sm:grid-cols-12 sm:items-start sm:gap-6"
               >
-                <div className="flex items-start space-x-4 mb-4 sm:mb-6">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors flex-shrink-0">
-                    <Icon size={20} className="sm:w-6 sm:h-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-display font-semibold flex-1 text-foreground">
-                    {service.title}
-                  </h3>
+                <span className="font-display text-3xl text-primary/70 sm:col-span-2">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div className="sm:col-span-10">
+                  <h3 className="font-display text-2xl sm:text-3xl">{service.title}</h3>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-foreground-muted sm:text-base">
+                    {service.description}
+                  </p>
+                  <a
+                    href="/contact"
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+                  >
+                    Enquire
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  </a>
                 </div>
-                <p className="text-sm sm:text-base text-foreground-muted mb-6 sm:mb-8 leading-relaxed">
-                  {service.description}
-                </p>
-                <Link
-                  href="/#contact"
-                  className="inline-flex items-center space-x-2 text-primary font-medium group-hover:space-x-3 transition-all text-sm sm:text-base"
-                >
-                  <span>Learn More</span>
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </motion.div>
-            )
-          })}
+              </motion.li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

@@ -2,69 +2,93 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { fadeInUp, slideInLeft, staggerContainer } from '@/lib/animations'
+import { Button } from '@/components/ui/Button'
+import { fadeInUp, staggerContainer, imageReveal } from '@/lib/animations'
+import { ABOUT_IMAGE } from '@/data/gallery'
 
 export function About() {
   return (
-    <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-32 relative bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center max-w-6xl mx-auto">
-          {/* Image */}
+    <section id="about" className="grain bg-background py-20 sm:py-24 lg:py-32">
+      <div className="container">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Portrait */}
           <motion.div
-            variants={slideInLeft}
+            variants={imageReveal}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="relative order-2 lg:order-1"
+            viewport={{ once: true, margin: '-100px' }}
+            className="relative lg:col-span-5"
           >
-            <div className="aspect-[4/5] bg-foreground/5 rounded-xl overflow-hidden shadow-lg relative">
-              {/* Placeholder for chef image - using Unsplash */}
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-lift">
               <Image
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80"
-                alt="Chef Adrian"
+                src={ABOUT_IMAGE.src}
+                alt="Beef Wellington with pea puree and roasted vegetables, plated by Table d'Adrian"
                 fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="photo object-cover"
+                sizes="(max-width: 1024px) 100vw, 40vw"
               />
             </div>
+            <motion.figure
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="surface absolute -bottom-6 -right-4 max-w-[15rem] p-5 sm:-right-8"
+            >
+              <blockquote className="font-display text-xl italic leading-snug text-foreground">
+                &ldquo;Good food should make you feel better tomorrow, not just tonight.&rdquo;
+              </blockquote>
+              <figcaption className="mt-3 text-[11px] uppercase tracking-caps text-foreground-subtle">
+                Chef Adrian
+              </figcaption>
+            </motion.figure>
           </motion.div>
 
-          {/* Content */}
+          {/* Copy */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-4 sm:space-y-6 order-1 lg:order-2"
+            viewport={{ once: true, margin: '-100px' }}
+            className="lg:col-span-6 lg:col-start-7"
           >
-            <motion.h2
-              variants={fadeInUp}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground"
-            >
-              About Chef Adrian
+            <motion.span variants={fadeInUp} className="eyebrow mb-5">
+              About the chef
+            </motion.span>
+            <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl md:text-6xl">
+              Two disciplines, <em className="italic text-primary">one</em> table.
             </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              className="text-base sm:text-lg text-foreground-muted leading-relaxed"
-            >
-              Chef Adrian brings 15+ years of culinary mastery to your table. Trained at the prestigious EHL Swiss Hotel Management School and certified in health and nutrition from Stanford, Chef Adrian combines Michelin-star techniques with personalized wellness.
+            <motion.p variants={fadeInUp} className="mt-7 text-base leading-relaxed text-foreground-muted sm:text-lg">
+              Adrian trained at EHL, the Swiss hospitality school, and spent fifteen years in demanding
+              kitchens across Europe before adding a Stanford certification in health and nutrition.
+              That pairing is the whole idea: food with the precision of a fine-dining pass and the
+              intent of a nutritionist.
             </motion.p>
-            <motion.p
-              variants={fadeInUp}
-              className="text-base sm:text-lg text-foreground-muted leading-relaxed"
-            >
-              From intimate dinner parties to grand celebrations, every dish is crafted with precision, passion, and an unwavering commitment to excellence. Experience the art of fine dining reimagined for your home.
+            <motion.p variants={fadeInUp} className="mt-5 text-base leading-relaxed text-foreground-muted sm:text-lg">
+              Whether it is a celebration for twenty or a week of quiet dinners for two, each menu is
+              written from scratch around your preferences, allergies and the season&apos;s market.
             </motion.p>
-            <motion.div
-              variants={fadeInUp}
-              className="flex items-center space-x-2 text-primary group cursor-pointer pt-2"
-            >
-              <Link href="/about" className="font-medium flex items-center space-x-2 group-hover:space-x-3 transition-all text-sm sm:text-base">
-                <span>Learn More</span>
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
+
+            <motion.dl variants={fadeInUp} className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-8 sm:grid-cols-4">
+              {[
+                ['EHL', 'Swiss diploma'],
+                ['Stanford', 'Nutrition'],
+                ['15+', 'Years'],
+                ['100+', 'Households'],
+              ].map(([v, l]) => (
+                <div key={l}>
+                  <dt className="font-display text-3xl text-foreground">{v}</dt>
+                  <dd className="mt-1 text-[11px] uppercase tracking-caps text-foreground-subtle">{l}</dd>
+                </div>
+              ))}
+            </motion.dl>
+
+            <motion.div variants={fadeInUp} className="mt-10">
+              <Button href="/contact" variant="outline">
+                Start a conversation
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </Button>
             </motion.div>
           </motion.div>
         </div>

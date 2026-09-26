@@ -12,23 +12,42 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1rem",
+        sm: "1.5rem",
+        lg: "2rem",
+      },
       screens: {
-        "2xl": "1400px",
+        "2xl": "1320px",
       },
     },
     extend: {
       colors: {
         border: "hsl(var(--border))",
+        "border-strong": "hsl(var(--border-strong))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         "background-secondary": "hsl(var(--background-secondary))",
         "background-elevated": "hsl(var(--background-elevated))",
-        foreground: "hsl(var(--foreground))",
+        foreground: {
+          DEFAULT: "hsl(var(--foreground))",
+          muted: "hsl(var(--foreground-muted))",
+          subtle: "hsl(var(--foreground-subtle))",
+        },
+        ink: {
+          DEFAULT: "hsl(var(--ink))",
+          soft: "hsl(var(--ink-soft))",
+          foreground: "hsl(var(--ink-foreground))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          soft: "hsl(var(--primary-soft))",
+        },
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          soft: "hsl(var(--gold-soft))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -38,6 +57,7 @@ const config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: "hsl(var(--success))",
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -57,11 +77,18 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
         pill: "9999px",
       },
+      boxShadow: {
+        soft: "0 1px 2px rgba(30, 20, 10, 0.04), 0 8px 24px -12px rgba(30, 20, 10, 0.12)",
+        lift: "0 2px 4px rgba(30, 20, 10, 0.05), 0 20px 40px -20px rgba(30, 20, 10, 0.22)",
+      },
       fontFamily: {
-        display: ["var(--font-display)", "Libre Baskerville", "Georgia", "serif"],
-        accent: ["var(--font-display)", "Libre Baskerville", "serif"],
-        body: ["var(--font-body)", "Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "EB Garamond", "Georgia", "serif"],
+        accent: ["var(--font-display)", "EB Garamond", "Georgia", "serif"],
+        body: ["var(--font-body)", "Source Serif 4", "Georgia", "serif"],
         mono: ["JetBrains Mono", "Menlo", "monospace"],
+      },
+      letterSpacing: {
+        caps: "0.22em",
       },
       keyframes: {
         "accordion-down": {
@@ -92,6 +119,10 @@ const config = {
           "0%": { backgroundPosition: "-1000px 0" },
           "100%": { backgroundPosition: "1000px 0" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -101,6 +132,7 @@ const config = {
         "slide-in-left": "slide-in-left 0.5s ease-out",
         "slide-in-right": "slide-in-right 0.5s ease-out",
         shimmer: "shimmer 2s infinite linear",
+        marquee: "marquee 40s linear infinite",
       },
     },
   },

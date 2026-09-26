@@ -1,86 +1,76 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Star, Quote } from 'lucide-react'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 
 const testimonials = [
   {
     name: 'Sarah Mitchell',
-    role: 'Private Event Host',
-    content: 'Chef Adrian transformed our anniversary dinner into an unforgettable experience. Every course was perfection.',
-    rating: 5,
+    role: 'Private dinner, London',
+    content:
+      'Chef Adrian transformed our anniversary dinner into an unforgettable evening. Every course felt personal, and guests are still talking about it.',
   },
   {
     name: 'James Thompson',
-    role: 'Corporate Client',
-    content: 'The corporate event catering exceeded all expectations. Professional, elegant, and absolutely delicious.',
-    rating: 5,
+    role: 'Corporate host',
+    content:
+      'The catering for our board dinner exceeded every expectation. Professional, elegant, and the kind of food people remember.',
   },
   {
     name: 'Emma Wilson',
-    role: 'Weekly Meal Prep Client',
-    content: 'Having Chef Adrian prepare our weekly meals has been life-changing. Restaurant quality every day.',
-    rating: 5,
+    role: 'Weekly meal preparation',
+    content:
+      'Having Adrian prepare our weekly meals has been quietly life-changing. Restaurant quality, every day, without leaving home.',
   },
   {
     name: 'Michael Chen',
-    role: 'Special Occasion Client',
-    content: 'Our wedding celebration was elevated to new heights. Guests are still talking about the food months later.',
-    rating: 5,
+    role: 'Wedding celebration',
+    content:
+      'Our wedding table was elevated beyond anything we imagined. Months later, guests still mention the food first.',
   },
 ]
 
 export function Testimonials() {
   return (
-    <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-ink py-20 text-ink-foreground sm:py-24 lg:py-32">
+      <div className="container">
         <motion.div
+          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto"
+          viewport={{ once: true, margin: '-80px' }}
+          className="on-ink max-w-3xl"
         >
-          <motion.h2
-            variants={fadeInUp}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 sm:mb-6 text-foreground"
-          >
-            Client Testimonials
+          <motion.span variants={fadeInUp} className="eyebrow mb-5">
+            Kind words
+          </motion.span>
+          <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl md:text-6xl">
+            Tables we have cooked for.
           </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="text-base sm:text-lg text-foreground-muted leading-relaxed"
-          >
-            Hear from those who have experienced our culinary excellence
-          </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              variants={fadeInUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white border border-foreground/10 rounded-xl p-6 sm:p-8 relative shadow-sm hover:shadow-md transition-shadow"
+        <div className="mt-14 grid gap-px bg-white/10 sm:grid-cols-2">
+          {testimonials.map((t, i) => (
+            <motion.blockquote
+              key={t.name}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.6 }}
+              className="bg-ink p-8 sm:p-10"
             >
-              <Quote className="absolute top-4 right-4 text-primary/10" size={40} />
-              <div className="flex space-x-1 mb-4 sm:mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} size={14} className="sm:w-4 sm:h-4 fill-primary text-primary" />
-                ))}
-              </div>
-              <p className="text-sm sm:text-base text-foreground-muted mb-6 sm:mb-8 relative z-10 leading-relaxed">
-                "{testimonial.content}"
+              <p className="font-display text-2xl italic leading-snug text-ink-foreground sm:text-[1.7rem]">
+                &ldquo;{t.content}&rdquo;
               </p>
-              <div>
-                <p className="font-semibold text-foreground text-sm sm:text-base">{testimonial.name}</p>
-                <p className="text-xs sm:text-sm text-foreground-subtle mt-1">{testimonial.role}</p>
-              </div>
-            </motion.div>
+              <footer className="mt-8">
+                <cite className="not-italic">
+                  <span className="block text-sm font-medium">{t.name}</span>
+                  <span className="mt-1 block text-[11px] uppercase tracking-caps text-ink-foreground/45">
+                    {t.role}
+                  </span>
+                </cite>
+              </footer>
+            </motion.blockquote>
           ))}
         </div>
       </div>

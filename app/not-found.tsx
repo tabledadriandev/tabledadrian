@@ -1,36 +1,27 @@
-'use client'
-
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Home, ChefHat } from 'lucide-react'
-import { fadeInUp } from '@/lib/animations'
+import { ChefHat } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <motion.div
-        variants={fadeInUp}
-        initial="hidden"
-        animate="visible"
-        className="text-center space-y-8"
-      >
-        <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 mb-4">
-          <ChefHat size={48} className="text-primary" />
-        </div>
-        <h1 className="text-6xl font-display font-bold">404</h1>
-        <h2 className="text-2xl font-display font-semibold">Page Not Found</h2>
-        <p className="text-foreground-muted max-w-md mx-auto">
-          The page you're looking for seems to have wandered off the menu. 
-          Let's get you back to the main course.
+    <div className="flex min-h-screen items-center justify-center px-6 pt-20">
+      <div className="max-w-md text-center">
+        <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary-soft text-primary">
+          <ChefHat size={28} />
+        </span>
+        <p className="mt-8 font-display text-7xl">404</p>
+        <h1 className="mt-4 font-display text-3xl">This course is not on the menu</h1>
+        <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
+          The page you asked for has wandered off. Return home, or write to Adrian about a table.
         </p>
-        <Link
-          href="/"
-          className="inline-flex items-center space-x-2 px-6 py-3 bg-primary text-background rounded-full font-medium hover:bg-primary/90 transition-all"
-        >
-          <Home size={20} />
-          <span>Return Home</span>
-        </Link>
-      </motion.div>
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Button href="/contact" variant="ink">
+            Book your experience
+          </Button>
+          <Button href="/" variant="outline">
+            Return home
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

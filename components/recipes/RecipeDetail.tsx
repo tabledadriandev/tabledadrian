@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Clock, Users, ChefHat, CheckCircle } from 'lucide-react'
 import { Recipe } from '@/data/recipes'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
@@ -26,16 +27,21 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
           {/* Hero Image */}
           <motion.div
             variants={fadeInUp}
-            className="aspect-video bg-foreground/5 rounded-xl overflow-hidden mb-8"
+            className="relative mb-8 aspect-[4/5] overflow-hidden rounded-[1.5rem] sm:aspect-video"
           >
-            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent-burgundy/20 flex items-center justify-center">
-              <span className="text-foreground-muted">{recipe.title}</span>
-            </div>
+            <Image
+              src={recipe.image}
+              alt={recipe.title}
+              fill
+              priority
+              className="photo object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
+            />
           </motion.div>
 
           {/* Title & Meta */}
           <motion.div variants={fadeInUp} className="space-y-4">
-            <h1 className="text-4xl md:text-5xl font-display font-bold">{recipe.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-display font-medium">{recipe.title}</h1>
             <p className="text-lg text-foreground-muted">{recipe.description}</p>
             <div className="flex flex-wrap items-center gap-4 text-sm">
               <div className="flex items-center space-x-2">

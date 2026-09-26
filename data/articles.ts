@@ -81,7 +81,7 @@ Every dish I create considers these longevity principles without sacrificing fla
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80',
+    image: '/gallery/leek-salad.jpeg',
     category: 'Longevity Science',
     author: {
       name: 'Chef Adrian',
@@ -188,7 +188,7 @@ This allows me to create and taste dishes while maintaining the benefits of time
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80',
+    image: '/gallery/avocado-rolls.jpeg',
     category: 'Longevity Science',
     author: {
       name: 'Chef Adrian',
@@ -313,7 +313,7 @@ Dark chocolate (85%+) with walnuts and berries
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=1200&q=80',
+    image: '/gallery/salmon-tartare.jpeg',
     category: 'Nutrition & Health',
     author: {
       name: 'Chef Adrian',
@@ -437,7 +437,7 @@ Okinawans practice eating until 80% full. This natural caloric restriction:
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&q=80',
+    image: '/gallery/burrata-peach.jpeg',
     category: 'Longevity Science',
     author: {
       name: 'Chef Adrian',
@@ -598,7 +598,7 @@ Simple preparation that lets the quality of the fish shine through.
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=1200&q=80',
+    image: '/gallery/seabass.jpeg',
     category: 'Cooking Techniques',
     author: {
       name: 'Chef Adrian',
@@ -727,7 +727,7 @@ Broccoli sprouts are easy to grow:
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=1200&q=80',
+    image: '/gallery/zucchini-carpaccio.jpeg',
     category: 'Longevity Science',
     author: {
       name: 'Chef Adrian',
@@ -900,7 +900,7 @@ Another fermented food serving
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?w=1200&q=80',
+    image: '/gallery/roasted-roots.jpeg',
     category: 'Nutrition & Health',
     author: {
       name: 'Chef Adrian',
@@ -1062,7 +1062,7 @@ I structure my days around circadian principles:
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=1200&q=80',
+    image: '/gallery/pea-risotto.jpeg',
     category: 'Longevity Science',
     author: {
       name: 'Chef Adrian',
@@ -1105,7 +1105,7 @@ Remember, the goal is to create anticipation before the first bite. When guests 
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80',
+    image: '/gallery/wellington.jpeg',
     category: 'Cooking Techniques',
     author: {
       name: 'Chef Adrian',
@@ -1146,7 +1146,7 @@ When done right, guests leave feeling satisfied, energized, and nourished - not 
 
 *Chef Adrian*
     `,
-    image: 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=1200&q=80',
+    image: '/gallery/lobster-claw.jpeg',
     category: 'Nutrition & Health',
     author: {
       name: 'Chef Adrian',

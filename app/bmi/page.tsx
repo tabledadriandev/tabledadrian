@@ -1,104 +1,106 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Calculator, Camera } from 'lucide-react'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
 import { BMICalculator } from '@/components/bmi/BMICalculator'
-import { CameraAnalysis } from '@/components/bmi/CameraAnalysis'
 import { BMIGauge } from '@/components/bmi/BMIGauge'
 import { BMIResults } from '@/components/bmi/BMIResults'
+import { DemoBanner } from '@/components/app/DemoBanner'
+import { DemoLock } from '@/components/app/DemoLock'
+import { AppDownloadSection } from '@/components/app/AppDownloadSection'
+import { AppDownloadModal } from '@/components/app/AppDownloadModal'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { cn } from '@/lib/utils'
 
 interface BMIResult {
   bmi: number
   category: string
-  disclaimer?: string
 }
 
 export default function BMIPage() {
   const [mode, setMode] = useState<'manual' | 'camera'>('manual')
   const [result, setResult] = useState<BMIResult | null>(null)
+  const [appOpen, setAppOpen] = useState(false)
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="max-w-4xl mx-auto"
-        >
-          <motion.div
-            variants={fadeInUp}
-            className="text-center mb-12"
-          >
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
-              <Calculator size={32} className="text-primary" />
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
-              Health & Wellness Calculator
-            </h1>
-            <p className="text-lg text-foreground-muted max-w-2xl mx-auto">
-              Calculate your BMI and receive personalized dietary recommendations 
-              from Chef Adrian's nutrition expertise.
-            </p>
-          </motion.div>
+    <>
+      <div className="bg-background pb-8 pt-28 sm:pt-32">
+        <div className="container max-w-3xl">
+          <DemoBanner label="This BMI calculator is a demo" />
 
-          {/* Mode Toggle */}
-          <motion.div
-            variants={fadeInUp}
-            className="flex items-center justify-center space-x-4 mb-8"
-          >
+          <SectionHeading
+            as="h1"
+            eyebrow="Wellness · Demo"
+            title="A quick health snapshot"
+            description="Enter your height and weight for a BMI reading and a few notes from Adrian’s kitchen. Daily tracking, body composition and camera analysis live in the app."
+            className="mt-10"
+            animate={false}
+          />
+
+          <div className="mt-10 flex items-center justify-center gap-2">
             <button
               onClick={() => setMode('manual')}
-              className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center space-x-2 ${
+              className={cn(
+                'inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors',
                 mode === 'manual'
-                  ? 'bg-primary text-white'
-                  : 'bg-white border border-foreground/10 text-foreground-muted hover:border-foreground/20'
-              }`}
+                  ? 'bg-ink text-ink-foreground'
+                  : 'border border-border bg-card text-foreground-muted hover:text-foreground'
+              )}
             >
-              <Calculator size={18} />
-              <span>Manual Entry</span>
+              <Calculator size={16} />
+              Manual
             </button>
             <button
-              onClick={() => setMode('camera')}
-              className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center space-x-2 ${
+              onClick={() => {
+                setMode('camera')
+                setAppOpen(true)
+              }}
+              className={cn(
+                'inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors',
                 mode === 'camera'
-                  ? 'bg-primary text-white'
-                  : 'bg-white border border-foreground/10 text-foreground-muted hover:border-foreground/20'
-              }`}
+                  ? 'bg-ink text-ink-foreground'
+                  : 'border border-border bg-card text-foreground-muted hover:text-foreground'
+              )}
             >
-              <Camera size={18} />
-              <span>AI Body Scan</span>
+              <Camera size={16} />
+              AI body scan
+              <span className="rounded-full bg-gold-soft px-2 py-0.5 text-[9px] uppercase tracking-caps text-ink">
+                App
+              </span>
             </button>
-          </motion.div>
+          </div>
 
-          {/* Calculator or Camera */}
-          {mode === 'manual' ? (
-            <BMICalculator onResult={(data) => setResult(data)} />
-          ) : (
-            <CameraAnalysis onAnalysisComplete={(data) => setResult(data)} />
-          )}
+          <div className="mt-8">
+            {mode === 'manual' ? (
+              <BMICalculator onResult={(data) => setResult(data)} />
+            ) : (
+              <DemoLock feature="AI body scan" blur="md">
+                <div className="surface min-h-[280px] p-10 text-center">
+                  <Camera size={40} className="mx-auto text-foreground-subtle" />
+                  <p className="mt-4 font-display text-2xl">Point the camera</p>
+                  <p className="mt-2 text-sm text-foreground-muted">
+                    The app estimates composition from a short scan.
+                  </p>
+                </div>
+              </DemoLock>
+            )}
+          </div>
 
-          {/* Results Display */}
           {result && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-12 space-y-8"
-            >
+            <div className="mt-10 space-y-6">
               <BMIGauge bmi={result.bmi} category={result.category} />
               <BMIResults bmi={result.bmi} category={result.category} />
-              
-              {result.disclaimer && (
-                <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-4 text-sm text-yellow-400">
-                  <p>{result.disclaimer}</p>
-                </div>
-              )}
-            </motion.div>
+              <p className="text-center text-xs text-foreground-subtle">
+                BMI is a screening number, not a diagnosis. For a fuller picture of trends, waist
+                measurements and chef-led menus, use the Table d&apos;Adrian app.
+              </p>
+            </div>
           )}
-        </motion.div>
+        </div>
       </div>
-    </div>
+
+      <AppDownloadSection />
+      <AppDownloadModal open={appOpen} onOpenChange={setAppOpen} feature="AI body scan" />
+    </>
   )
 }
