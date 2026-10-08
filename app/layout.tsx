@@ -72,6 +72,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${display.variable} ${body.variable}`}>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
