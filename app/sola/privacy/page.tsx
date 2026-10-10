@@ -19,9 +19,9 @@ export default function SolaPrivacyPage() {
       <h2>What Sola stores on your device</h2>
       <p>
         Sola keeps your profile (including age, body measurements, activity, goals, health conditions,
-        allergies, diet preferences and food likes or avoids), your food log, weight entries and water
-        log on your iPhone or iPad. This data stays on the device unless you choose to export or back
-        it up through Apple&apos;s own device backup services.
+        allergies, diet preferences and food likes or avoids), your meals and food log, weight entries
+        and water log on your iPhone, iPad or Mac. This data stays on the device unless you choose to
+        export or back it up through Apple&apos;s own device backup services.
       </p>
 
       <h2>No account required</h2>
