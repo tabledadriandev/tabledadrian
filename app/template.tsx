@@ -1,9 +1,19 @@
 'use client'
 
+import { useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+
+let hasPainted = false
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const reduced = useReducedMotion()
+  const animate = useRef<boolean | null>(null)
+  if (animate.current === null) {
+    animate.current = hasPainted
+    if (typeof window !== 'undefined') hasPainted = true
+  }
+
+  if (!animate.current) return <>{children}</>
 
   return (
     <>

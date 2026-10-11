@@ -168,7 +168,7 @@ export function Hero() {
                 width={1128}
                 height={1600}
                 fetchPriority="high"
-                decoding="async"
+                decoding="sync"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </picture>
