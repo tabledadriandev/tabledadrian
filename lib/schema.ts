@@ -1,4 +1,5 @@
 import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
+import { STANFORD_CREDENTIAL } from '@/lib/credentials'
 import { OG_IMAGE, SITE_NAME, SITE_URL } from '@/lib/site'
 
 const image = `${SITE_URL}${OG_IMAGE.url}`
@@ -17,7 +18,7 @@ export function siteJsonLd() {
         name: 'Adrian Stefan',
         jobTitle: 'Private chef',
         description:
-          "Private chef and longevity cook. EHL Swiss trained, Stanford nutrition certified, 10+ years in fine kitchens.",
+          `Private chef and longevity cook. EHL Swiss trained, ${STANFORD_CREDENTIAL}, 10+ years in fine kitchens.`,
         url: SITE_URL,
         image,
         email: CONTACT_INFO.email,

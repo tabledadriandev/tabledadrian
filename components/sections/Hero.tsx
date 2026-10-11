@@ -8,6 +8,7 @@ import { Magnetic } from '@/components/motion/Magnetic'
 import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
 import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
 import { HERO_IMAGE } from '@/data/gallery'
+import { credentials } from '@/lib/credentials'
 
 const HeroPlate = dynamic(() => import('@/components/motion/HeroPlate'), { ssr: false })
 
@@ -155,9 +156,9 @@ export function Hero() {
           </div>
           <p className="hero-facts hero-rise">
             <span>Côte d&apos;Azur &amp; Monaco</span>
-            <span>10+ years in fine kitchens</span>
-            <span>EHL Swiss hospitality diploma</span>
-            <span>Stanford nutrition certified</span>
+            <span>{credentials.en.years}</span>
+            <span>{credentials.en.ehl}</span>
+            <span>{credentials.en.stanford}</span>
           </p>
         </div>
 

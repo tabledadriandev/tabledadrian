@@ -9,12 +9,13 @@ import { AppDownloadSection } from '@/components/app/AppDownloadSection'
 import { Contact } from '@/components/sections/Contact'
 import { Marquee } from '@/components/motion/Marquee'
 import { GALLERY } from '@/data/gallery'
+import { credentials } from '@/lib/credentials'
 
 const CREDENTIALS = [
   'Michelin-trained technique',
-  'EHL Swiss hospitality diploma',
-  'Stanford nutrition certified',
-  '10+ years in fine kitchens',
+  credentials.en.ehl,
+  credentials.en.stanford,
+  credentials.en.years,
   "Côte d'Azur & Monaco",
   'Tables of two to twenty-five',
 ]

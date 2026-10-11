@@ -10,7 +10,7 @@ related_targets: []
 Mode: Persuade
 Audience: people booking a private chef for a table in London or Europe. The Riviera and Monaco feeling is atmosphere only. Published claims stay the ones already on the site.
 Job: decide to book. Action: Book your experience.
-Proof: real plates from the gallery, the published prices, the four existing testimonials, EHL, Stanford, fifteen years.
+Proof: real plates from the gallery, the published prices, the four existing testimonials, EHL, Nutrition certificate, Stanford, 10+ years.
 Constraints: Sola copy stays word for word on its own cream and deep-green sub-brand. No invented clients, dishes, or testimonials. Reduced motion is fades. WebGL stays lazy.
 
 ## Direction contract

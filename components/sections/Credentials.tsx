@@ -3,21 +3,22 @@
 import { motion } from 'framer-motion'
 import { Award, GraduationCap, Users, Calendar } from 'lucide-react'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
+import { credentials as chefCredentials } from '@/lib/credentials'
 
 const credentials = [
   {
     icon: GraduationCap,
-    title: 'EHL Swiss Diploma',
+    title: chefCredentials.en.ehl,
     description: 'Prestigious hospitality education',
   },
   {
     icon: Award,
-    title: 'Stanford Certified',
+    title: chefCredentials.en.stanford,
     description: 'Health & nutrition expertise',
   },
   {
     icon: Calendar,
-    title: '10+ Years',
+    title: `${chefCredentials.en.yearsShort} ${chefCredentials.en.yearsLabel}`,
     description: 'Culinary experience',
   },
   {
