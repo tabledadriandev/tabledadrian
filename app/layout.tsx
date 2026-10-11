@@ -14,6 +14,7 @@ import { ConsentProvider } from "@/components/consent/ConsentProvider"
 import { CookieBanner } from "@/components/consent/CookieBanner"
 import { AnalyticsGate } from "@/components/consent/AnalyticsGate"
 import { OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site"
+import { localeAlternates } from "@/lib/routes"
 import { siteJsonLd } from "@/lib/schema"
 
 const display = Bodoni_Moda({
@@ -56,9 +57,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL(SITE_URL),
-  alternates: {
-    canonical: '/',
-  },
+  alternates: localeAlternates('/', '/', '/fr'),
   openGraph: {
     type: 'website',
     locale: 'en_GB',
@@ -101,7 +100,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var p=location.pathname;if(p==="/sola"||p.indexOf("/sola/")===0){document.documentElement.dataset.brand="sola"}else{document.documentElement.dataset.brand="maison"}}catch(e){}`,
+            __html: `try{var p=location.pathname;if(p==="/sola"||p.indexOf("/sola/")===0){document.documentElement.dataset.brand="sola"}else{document.documentElement.dataset.brand="maison"}document.documentElement.lang=(p==="/fr"||p.indexOf("/fr/")===0)?"fr":"en"}catch(e){}`,
           }}
         />
         <script

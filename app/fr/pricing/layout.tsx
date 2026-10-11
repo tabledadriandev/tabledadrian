@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
+import { localeAlternates } from '@/lib/routes'
 
 export const metadata: Metadata = {
   title: 'Menus sur demande',
   description:
     "Menus de chef privé sur la Côte d'Azur et à Monaco. Honoraires sur demande, en €.",
-  alternates: { canonical: '/fr/pricing' },
+  alternates: localeAlternates('/fr/pricing', '/pricing', '/fr/pricing'),
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

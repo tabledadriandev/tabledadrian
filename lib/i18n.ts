@@ -1,5 +1,6 @@
 import { usePathname } from 'next/navigation'
 import type { Locale } from '@/lib/copy'
+import { toLocalePath } from '@/lib/routes'
 
 export function localeFromPath(pathname: string | null): Locale {
   if (!pathname) return 'en'
@@ -11,9 +12,6 @@ export function useLocale(): Locale {
 }
 
 export function withLocale(href: string, locale: Locale): string {
-  if (locale === 'en') return href
   if (href.startsWith('/sola')) return href
-  if (href === '/') return '/fr'
-  if (href.startsWith('/#')) return `/fr${href.slice(1)}`
-  return `/fr${href}`
+  return toLocalePath(href, locale)
 }

@@ -6,7 +6,9 @@ import { usePathname } from 'next/navigation'
 import { Instagram, Linkedin } from 'lucide-react'
 import { SOCIAL_LINKS, CONTACT_INFO, FOOTER_LINKS, WELLNESS_LINKS, INSTAGRAM_URL } from '@/lib/constants'
 import { copy } from '@/lib/copy'
-import { useLocale } from '@/lib/i18n'
+import { useLocale, withLocale } from '@/lib/i18n'
+import { locationNav } from '@/lib/locations'
+import { toLocalePath } from '@/lib/routes'
 import { AppBadges } from '@/components/app/AppBadges'
 import { getLenis } from '@/lib/lenis'
 import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
@@ -23,6 +25,7 @@ export function Footer() {
   const pathname = usePathname()
   const locale = useLocale()
   const t = copy[locale]
+  const locations = locationNav(locale)
 
   useGSAP(
     () => {
@@ -155,7 +158,7 @@ export function Footer() {
           Table d&apos;Adrian
         </p>
         <div className="mt-8 grid gap-12 border-t border-white/15 pt-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <p className="max-w-sm text-sm leading-relaxed text-ink-foreground/80">
               {t.footerBlurb}
             </p>
@@ -179,7 +182,19 @@ export function Footer() {
             <ul className="mt-4 space-y-2">
               {FOOTER_LINKS.map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} className="text-sm text-ink-foreground/80 transition-colors hover:text-ink-foreground">
+                  <Link href={withLocale(item.href, locale)} className="text-sm text-ink-foreground/80 transition-colors hover:text-ink-foreground">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="lg:col-span-2">
+            <p className="text-[11px] uppercase tracking-caps text-gold">Riviera</p>
+            <ul className="mt-4 space-y-2">
+              {locations.map((item) => (
+                <li key={item.path}>
+                  <Link href={item.path} className="text-sm text-ink-foreground/80 transition-colors hover:text-ink-foreground">
                     {item.name}
                   </Link>
                 </li>
@@ -209,7 +224,7 @@ export function Footer() {
               </li>
             </ul>
           </div>
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <p className="text-[11px] uppercase tracking-caps text-gold">Contact</p>
             <ul className="mt-4 space-y-2 text-sm text-ink-foreground/80">
               <li>
@@ -238,10 +253,10 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex gap-3 text-xs text-ink-foreground/65">
-                <Link href={pathname.replace(/^\/fr(?=\/|$)/, '') || '/'} className={locale === 'en' ? 'text-ink-foreground' : ''}>
+                <Link href={toLocalePath(pathname, 'en')} className={locale === 'en' ? 'text-ink-foreground' : ''}>
                   EN
                 </Link>
-                <Link href={pathname === '/' ? '/fr' : pathname.startsWith('/fr') ? pathname : `/fr${pathname}`} className={locale === 'fr' ? 'text-ink-foreground' : ''}>
+                <Link href={toLocalePath(pathname, 'fr')} className={locale === 'fr' ? 'text-ink-foreground' : ''}>
                   FR
                 </Link>
               </li>
