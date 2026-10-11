@@ -37,6 +37,13 @@ describe('locale pairs', () => {
       '/private-chef-saint-tropez',
     ]))
   })
+
+  it('maps hyphenated location URLs onto the known slugs', () => {
+    expect(locationIdFromSlug('cote-d-azur')).toBe('hub')
+    expect(locationIdFromSlug('monaco')).toBe('monaco')
+    expect('private-chef-monaco'.slice('private-chef-'.length)).toBe('monaco')
+    expect('chef-prive-cote-d-azur'.slice('chef-prive-'.length)).toBe('cote-d-azur')
+  })
 })
 
 describe('location copy', () => {
