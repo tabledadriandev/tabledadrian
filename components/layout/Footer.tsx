@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Instagram, Linkedin } from 'lucide-react'
+import { Instagram } from 'lucide-react'
 import { SOCIAL_LINKS, CONTACT_INFO, FOOTER_LINKS, WELLNESS_LINKS, INSTAGRAM_URL } from '@/lib/constants'
 import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
@@ -17,7 +17,6 @@ import { DustField } from '@/components/motion/DustField'
 
 const socials = [
   { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: Instagram },
-  { href: SOCIAL_LINKS.linkedin, label: 'LinkedIn', Icon: Linkedin },
 ]
 
 export function Footer() {

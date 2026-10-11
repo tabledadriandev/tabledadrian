@@ -188,15 +188,6 @@ export const subscriptionPlans: SubscriptionPlan[] = [
   },
 ]
 
-export const socialProof = {
-  clientsServed: '500+',
-  eventsHosted: '2,000+',
-  satisfactionRate: '99.7%',
-  repeatClientRate: '85%',
-  averageRating: 4.97,
-  reviewCount: 347,
-}
-
 export const urgencyElements = {
   limitedDates: true,
   bookingWindow: '2-4 weeks',

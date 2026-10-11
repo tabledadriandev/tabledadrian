@@ -8,7 +8,6 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/tabledadrian/'
 
 export const SOCIAL_LINKS = {
   instagram: INSTAGRAM_URL,
-  linkedin: 'https://linkedin.com/company/tabledadrian',
 }
 
 export interface NavItem {

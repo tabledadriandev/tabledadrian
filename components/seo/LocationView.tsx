@@ -14,6 +14,7 @@ import {
   type LocationId,
 } from '@/lib/locations'
 import { localeAlternates } from '@/lib/routes'
+import { ogImageForLocale } from '@/lib/site'
 
 const UI = {
   en: {
@@ -44,6 +45,13 @@ export function locationMetadata(id: LocationId, locale: Locale): Metadata {
       locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
       url: page.path,
       alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      images: [ogImageForLocale(locale)],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: page.title,
+      description: page.description,
+      images: [ogImageForLocale(locale).url],
     },
   }
 }

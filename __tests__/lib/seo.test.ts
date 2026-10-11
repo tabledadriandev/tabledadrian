@@ -2,6 +2,8 @@ import { FAQ } from '@/lib/faq'
 import { LOCATIONS, getLocation, locationIdFromSlug } from '@/lib/locations'
 import { LOCALE_PAIRS, localeAlternates, toLocalePath } from '@/lib/routes'
 import { siteJsonLd } from '@/lib/schema'
+import { SOCIAL_LINKS } from '@/lib/constants'
+import { OG_EN, OG_FR, OG_IMAGE_EN, OG_IMAGE_FR, ogImageForLocale } from '@/lib/site'
 
 const FORBIDDEN = [/london/i, /£/, /gbp/i, /aggregateRating/i, /reviewCount/i, /500\+/, /99\.7/, /4\.97/]
 const HEALTH = [/anti-aging/i, /boosts immunity/i, /heals/i, /detox/i, /adds years/i, /clinically/i]
@@ -109,5 +111,25 @@ describe('JSON-LD', () => {
     expect(JSON.stringify(graph)).not.toMatch(/linkedin/i)
     expect(JSON.stringify(graph)).not.toMatch(/london/i)
     expect(JSON.stringify(graph)).not.toMatch(/£/)
+  })
+})
+
+describe('social and share cards', () => {
+  it('keeps Instagram only', () => {
+    expect(SOCIAL_LINKS).toEqual({ instagram: 'https://www.instagram.com/tabledadrian/' })
+    expect(JSON.stringify(SOCIAL_LINKS)).not.toMatch(/linkedin/i)
+  })
+
+  it('uses the designer lockup cards for EN and FR', () => {
+    expect(OG_IMAGE_EN.url).toBe('/og_tabledadrian_en.jpg')
+    expect(OG_IMAGE_FR.url).toBe('/og_tabledadrian_fr.jpg')
+    expect(ogImageForLocale('en')).toBe(OG_IMAGE_EN)
+    expect(ogImageForLocale('fr')).toBe(OG_IMAGE_FR)
+    expect(OG_EN.locale).toBe('en_GB')
+    expect(OG_FR.locale).toBe('fr_FR')
+    expect(OG_EN.title).not.toMatch(/london/i)
+    expect(OG_FR.title).not.toMatch(/london/i)
+    expect(OG_EN.title).not.toMatch(/europe/i)
+    expect(OG_FR.title).not.toMatch(/europe/i)
   })
 })

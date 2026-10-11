@@ -13,7 +13,7 @@ import { HoverDistort } from "@/components/motion/HoverDistort"
 import { ConsentProvider } from "@/components/consent/ConsentProvider"
 import { CookieBanner } from "@/components/consent/CookieBanner"
 import { AnalyticsGate } from "@/components/consent/AnalyticsGate"
-import { OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site"
+import { OG_EN, OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL, THEME_COLOR } from "@/lib/site"
 import { localeAlternates } from "@/lib/routes"
 import { siteJsonLd } from "@/lib/schema"
 
@@ -60,27 +60,31 @@ export const metadata: Metadata = {
   alternates: localeAlternates('/', '/', '/fr'),
   openGraph: {
     type: 'website',
-    locale: 'en_GB',
+    locale: OG_EN.locale,
     url: SITE_URL,
-    title: `${SITE_NAME} | Private Chef and Longevity Cuisine`,
-    description: SITE_DESCRIPTION,
+    title: OG_EN.title,
+    description: OG_EN.description,
     siteName: SITE_NAME,
     images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} | Private Chef and Longevity Cuisine`,
-    description: SITE_DESCRIPTION,
+    title: OG_EN.title,
+    description: OG_EN.description,
     images: [OG_IMAGE.url],
   },
   robots: {
     index: true,
     follow: true,
   },
+  themeColor: THEME_COLOR,
+  manifest: '/site.webmanifest',
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16.png', type: 'image/png', sizes: '16x16' },
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
@@ -96,7 +100,11 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content={THEME_COLOR} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
           dangerouslySetInnerHTML={{
