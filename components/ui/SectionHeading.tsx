@@ -13,6 +13,8 @@ interface SectionHeadingProps {
   className?: string
   as?: 'h1' | 'h2'
   animate?: boolean
+  /** Hands the heading to the page-wide MotionDirector for a per-character or per-line rise. */
+  split?: 'chars' | 'lines'
 }
 
 export function SectionHeading({
@@ -24,6 +26,7 @@ export function SectionHeading({
   className,
   as = 'h2',
   animate = true,
+  split,
 }: SectionHeadingProps) {
   const Heading = as
   const root = useRef<HTMLDivElement>(null)
@@ -36,12 +39,12 @@ export function SectionHeading({
       if (reduce) return
       const heading = root.current?.querySelector('h1, h2')
       if (!heading) return
-      let split: SplitText | null = null
+      let lines: SplitText | null = null
       let cancelled = false
       const run = () => {
         if (cancelled) return
-        split = SplitText.create(heading, { type: 'lines', mask: 'lines', linesClass: 'split-line' })
-        gsap.from(split.lines, {
+        lines = SplitText.create(heading, { type: 'lines', mask: 'lines', linesClass: 'split-line' })
+        gsap.from(lines.lines, {
           yPercent: 110,
           duration: 1,
           stagger: 0.06,
@@ -52,7 +55,7 @@ export function SectionHeading({
       document.fonts?.ready.then(run)
       return () => {
         cancelled = true
-        split?.revert()
+        lines?.revert()
       }
     },
     { scope: root }
@@ -64,6 +67,7 @@ export function SectionHeading({
       className={cn('max-w-3xl', isCenter ? 'mx-auto text-center' : 'text-left', onInk && 'on-ink', className)}
     >
       <Heading
+        data-split={split}
         className={cn(
           'display',
           as === 'h1' ? 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl' : 'text-3xl sm:text-4xl md:text-5xl',
@@ -74,6 +78,7 @@ export function SectionHeading({
       </Heading>
       {description && (
         <p
+          data-rise={split ? '20' : undefined}
           className={cn(
             'mt-5 text-pretty text-base leading-relaxed sm:text-lg',
             isCenter && 'mx-auto max-w-2xl',

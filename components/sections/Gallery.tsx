@@ -6,6 +6,9 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { GALLERY } from '@/data/gallery'
 import { gsap, useGSAP } from '@/lib/gsap'
+import { getMotionCaps } from '@/lib/motion-caps'
+import { onScrollVelocity } from '@/lib/scroll-velocity'
+import { DustField } from '@/components/motion/DustField'
 
 export function Gallery() {
   const root = useRef<HTMLElement>(null)
@@ -31,8 +34,25 @@ export function Gallery() {
             invalidateOnRefresh: true,
           },
         })
-        gsap.utils.toArray<HTMLElement>('.plate').forEach((plate) => {
+        const plates = gsap.utils.toArray<HTMLElement>('.plate')
+        plates.forEach((plate) => {
           const image = plate.querySelector('img')
+          const caption = plate.querySelector('figcaption')
+          if (caption) {
+            gsap.from(caption.children, {
+              yPercent: 60,
+              autoAlpha: 0,
+              stagger: 0.08,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: plate,
+                containerAnimation: tween,
+                start: 'left 85%',
+                end: 'left 45%',
+                scrub: true,
+              },
+            })
+          }
           if (!image) return
           gsap.fromTo(
             image,
@@ -50,6 +70,19 @@ export function Gallery() {
             }
           )
         })
+        if (getMotionCaps().tier !== 'full') return
+        const tilts = plates.map((plate) => ({
+          skew: gsap.quickTo(plate, 'skewX', { duration: 0.7, ease: 'power3.out' }),
+          turn: gsap.quickTo(plate, 'rotationY', { duration: 0.9, ease: 'power3.out' }),
+        }))
+        const stop = onScrollVelocity((v) => {
+          const k = gsap.utils.clamp(-1, 1, v / 2400)
+          tilts.forEach((t) => {
+            t.skew(k * -7)
+            t.turn(k * 10)
+          })
+        })
+        return () => stop()
       })
       return () => mm.revert()
     },
@@ -57,10 +90,11 @@ export function Gallery() {
   )
 
   return (
-    <section id="gallery" ref={root} className="gallery-pin bg-ink text-ink-foreground">
-      <div className="flex min-h-[100svh] flex-col justify-center overflow-hidden py-24">
+    <section id="gallery" ref={root} className="gallery-pin relative bg-ink text-ink-foreground">
+      <DustField density={60} />
+      <div className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden py-24">
         <div className="container mb-8 flex flex-col items-start justify-between gap-6 md:mb-10 md:flex-row md:items-end">
-          <h2 className="display max-w-xl text-4xl sm:text-6xl">
+          <h2 className="display max-w-xl text-4xl sm:text-6xl" data-split="chars">
             Plates from Adrian&apos;s table.
           </h2>
           <div className="flex flex-wrap gap-3">
@@ -74,8 +108,8 @@ export function Gallery() {
         </div>
         <div ref={track} className="plate-track">
           {GALLERY.map((image) => (
-            <figure key={image.id} className="plate">
-              <div className="plate-frame">
+            <Link key={image.id} href="/gallery" tabIndex={-1} className="plate" data-cursor="View">
+              <figure className="plate-frame" data-distort>
                 <Image
                   src={image.src}
                   alt={image.caption}
@@ -87,8 +121,8 @@ export function Gallery() {
                   <span>{image.title}</span>
                   <small>{image.caption}</small>
                 </figcaption>
-              </div>
-            </figure>
+              </figure>
+            </Link>
           ))}
         </div>
       </div>

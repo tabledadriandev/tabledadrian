@@ -1,10 +1,15 @@
 'use client'
 
+import { useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Instagram, Linkedin } from 'lucide-react'
 import { SOCIAL_LINKS, CONTACT_INFO, FOOTER_LINKS, WELLNESS_LINKS } from '@/lib/constants'
 import { AppBadges } from '@/components/app/AppBadges'
 import { getLenis } from '@/lib/lenis'
+import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
+import { getMotionCaps } from '@/lib/motion-caps'
+import { DustField } from '@/components/motion/DustField'
 
 const socials = [
   { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: Instagram },
@@ -12,6 +17,126 @@ const socials = [
 ]
 
 export function Footer() {
+  const root = useRef<HTMLElement>(null)
+  const pathname = usePathname()
+
+  useGSAP(
+    () => {
+      const footer = root.current
+      const main = document.getElementById('main')
+      const wordmark = footer?.querySelector<HTMLElement>('.footer-wordmark')
+      if (!footer || !main || !wordmark) return
+      const caps = getMotionCaps()
+      const html = document.documentElement
+      const sola = pathname.startsWith('/sola')
+
+      const fits = () =>
+        !sola && window.innerWidth >= 1024 && footer.offsetHeight <= window.innerHeight - 24
+      const sync = () => html.classList.toggle('footer-reveal', fits())
+      sync()
+      const ro = new ResizeObserver(() => {
+        const before = html.classList.contains('footer-reveal')
+        sync()
+        if (before !== html.classList.contains('footer-reveal')) ScrollTrigger.refresh()
+      })
+      ro.observe(footer)
+      window.addEventListener('resize', sync)
+
+      const cleanups: Array<() => void> = [
+        () => {
+          ro.disconnect()
+          window.removeEventListener('resize', sync)
+          html.classList.remove('footer-reveal')
+        },
+      ]
+      if (caps.reduce || sola) return () => cleanups.forEach((fn) => fn())
+
+      const split = SplitText.create(wordmark, { type: 'chars', charsClass: 'footer-char' })
+      const intro = gsap.from(split.chars, {
+        yPercent: 110,
+        rotate: 9,
+        autoAlpha: 0,
+        transformOrigin: '0% 100%',
+        duration: 1.3,
+        ease: 'expo.out',
+        stagger: 0.035,
+        paused: true,
+      })
+
+      if (html.classList.contains('footer-reveal')) {
+        gsap.fromTo(
+          '.footer-inner',
+          { yPercent: -22 },
+          {
+            yPercent: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: main,
+              start: 'bottom bottom',
+              end: () => `bottom ${window.innerHeight - footer.offsetHeight}px`,
+              scrub: true,
+              invalidateOnRefresh: true,
+              refreshPriority: -5,
+            },
+          }
+        )
+        gsap.fromTo(
+          '.footer-shade',
+          { opacity: 0.85 },
+          {
+            opacity: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: main,
+              start: 'bottom bottom',
+              end: () => `bottom ${window.innerHeight - footer.offsetHeight * 0.4}px`,
+              scrub: true,
+              invalidateOnRefresh: true,
+              refreshPriority: -5,
+            },
+          }
+        )
+      }
+      ScrollTrigger.create(
+        html.classList.contains('footer-reveal')
+          ? {
+              trigger: main,
+              start: () => `bottom ${window.innerHeight - footer.offsetHeight * 0.55}px`,
+              once: true,
+              refreshPriority: -5,
+              onEnter: () => intro.play(),
+            }
+          : { trigger: wordmark, start: 'top 88%', once: true, refreshPriority: -5, onEnter: () => intro.play() }
+      )
+
+      if (caps.tier === 'full') {
+        const lifts = split.chars.map((char) => ({
+          char: char as HTMLElement,
+          y: gsap.quickTo(char, 'y', { duration: 0.6, ease: 'power3.out' }),
+        }))
+        const onMove = (event: PointerEvent) => {
+          lifts.forEach(({ char, y }) => {
+            const rect = char.getBoundingClientRect()
+            const dx = event.clientX - (rect.left + rect.width / 2)
+            const dy = event.clientY - (rect.top + rect.height / 2)
+            const pull = Math.max(0, 1 - Math.hypot(dx, dy * 0.6) / 220)
+            y(-pull * pull * 26)
+          })
+        }
+        const onLeave = () => lifts.forEach(({ y }) => y(0))
+        wordmark.addEventListener('pointermove', onMove)
+        wordmark.addEventListener('pointerleave', onLeave)
+        cleanups.push(() => {
+          wordmark.removeEventListener('pointermove', onMove)
+          wordmark.removeEventListener('pointerleave', onLeave)
+        })
+      }
+      cleanups.push(() => split.revert())
+      return () => cleanups.forEach((fn) => fn())
+    },
+    { scope: root, dependencies: [pathname], revertOnUpdate: true }
+  )
+
   const scrollToTop = () => {
     const lenis = getLenis()
     if (lenis) lenis.scrollTo(0)
@@ -19,8 +144,9 @@ export function Footer() {
   }
 
   return (
-    <footer className="relative bg-ink text-ink-foreground">
-      <div className="container pb-10 pt-16 sm:pt-20">
+    <footer ref={root} className="site-footer relative overflow-hidden bg-ink text-ink-foreground">
+      <DustField density={46} className="opacity-70" />
+      <div className="footer-inner container relative pb-10 pt-16 sm:pt-20">
         <p className="footer-wordmark" aria-hidden="true">
           Table d&apos;Adrian
         </p>
@@ -115,6 +241,7 @@ export function Footer() {
           </div>
         </div>
       </div>
+      <span className="footer-shade" aria-hidden="true" />
     </footer>
   )
 }

@@ -1,9 +1,13 @@
 'use client'
 
+import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Camera, Sparkles, HeartPulse, ChefHat, Flame } from 'lucide-react'
 import { AppBadges } from './AppBadges'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
+import { gsap, useGSAP } from '@/lib/gsap'
+import { getMotionCaps } from '@/lib/motion-caps'
+import { DustField } from '@/components/motion/DustField'
 
 const features = [
   {
@@ -64,9 +68,12 @@ function PhoneMockup() {
                     strokeLinecap="round"
                     strokeDasharray="97.4"
                     strokeDashoffset="18"
+                    className="phone-ring"
                   />
                 </svg>
-                <span className="absolute inset-0 flex items-center justify-center font-display text-lg">82</span>
+                <span className="absolute inset-0 flex items-center justify-center font-display text-lg">
+                  <span data-count>82</span>
+                </span>
               </div>
               <div>
                 <p className="text-xs font-medium">Longevity score</p>
@@ -122,8 +129,48 @@ function PhoneMockup() {
 }
 
 export function AppDownloadSection() {
+  const root = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const caps = getMotionCaps()
+      if (caps.reduce) return
+      const phone = root.current?.querySelector<HTMLElement>('.phone-float')
+      const tilt = root.current?.querySelector<HTMLElement>('.phone-tilt')
+      gsap.from('.phone-ring', {
+        attr: { 'stroke-dashoffset': 97.4 },
+        duration: 2,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.phone-ring', start: 'top 90%', once: true },
+      })
+      if (phone) {
+        gsap.to(phone, {
+          y: -14,
+          rotation: 1.2,
+          duration: 3.6,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+          scrollTrigger: { trigger: phone, start: 'top bottom', end: 'bottom top', toggleActions: 'play pause resume pause' },
+        })
+      }
+      if (!tilt || caps.tier !== 'full') return
+      const rx = gsap.quickTo(tilt, 'rotationX', { duration: 1, ease: 'power3.out' })
+      const ry = gsap.quickTo(tilt, 'rotationY', { duration: 1, ease: 'power3.out' })
+      const onMove = (event: PointerEvent) => {
+        ry((event.clientX / window.innerWidth - 0.5) * 16)
+        rx((event.clientY / window.innerHeight - 0.5) * -12)
+      }
+      const section = root.current
+      section?.addEventListener('pointermove', onMove)
+      return () => section?.removeEventListener('pointermove', onMove)
+    },
+    { scope: root }
+  )
+
   return (
-    <section id="app" className="relative overflow-hidden bg-ink py-20 text-ink-foreground sm:py-24 lg:py-32">
+    <section id="app" ref={root} className="relative overflow-hidden bg-ink py-20 text-ink-foreground sm:py-24 lg:py-32">
+      <DustField density={56} />
       <div
         className="pointer-events-none absolute inset-0 opacity-60"
         style={{
@@ -141,9 +188,9 @@ export function AppDownloadSection() {
             viewport={{ once: true, margin: '-80px' }}
             className="on-ink order-2 lg:order-1"
           >
-            <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl md:text-6xl">
+            <h2 className="display text-4xl sm:text-5xl md:text-6xl" data-split="chars">
               A private chef&apos;s eye on <em className="italic text-gold">every</em> meal.
-            </motion.h2>
+            </h2>
             <motion.p variants={fadeInUp} className="mt-6 max-w-xl text-base leading-relaxed text-ink-foreground/70 sm:text-lg">
               The Longevity Coach and BMI tools on this site are a preview. The app brings the full
               experience: meal logging, a personal longevity score, and recipes from Adrian&apos;s kitchen
@@ -177,7 +224,13 @@ export function AppDownloadSection() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="order-1 lg:order-2"
           >
-            <PhoneMockup />
+            <div data-speed="0.25">
+              <div className="phone-float">
+                <div className="phone-tilt">
+                  <PhoneMockup />
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

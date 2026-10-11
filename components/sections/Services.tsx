@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { SERVICES } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
+import { Magnetic } from '@/components/motion/Magnetic'
+import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
 
 const PLATES = [
@@ -26,6 +28,15 @@ const PLATES = [
   },
 ]
 
+const garnish: GarnishItem[] = [
+  { kind: 'petal-a', x: '49%', y: '64%', size: 92, depth: 0.95, rotate: -24 },
+  { kind: 'thyme', x: '93%', y: '18%', size: 62, depth: 0.8, rotate: 22 },
+  { kind: 'line-leaf', x: '52%', y: '14%', size: 74, depth: 0.3, rotate: -32 },
+  { kind: 'flake', x: '90%', y: '80%', size: 28, depth: 0.65, rotate: 14 },
+  { kind: 'salt', x: '57%', y: '86%', size: 22, depth: 0.45, rotate: -10 },
+  { kind: 'flake', x: '3%', y: '24%', size: 18, depth: 0.35, rotate: 36, lite: true },
+]
+
 export function Services() {
   const root = useRef<HTMLElement>(null)
 
@@ -36,7 +47,25 @@ export function Services() {
         const rows = gsap.utils.toArray<HTMLElement>('.service-row')
         const plates = gsap.utils.toArray<HTMLElement>('.service-visual-plate')
         const tabs = gsap.utils.toArray<HTMLElement>('.service-tab')
+        let current = 0
+        let layer = 2
         const setActive = (index: number) => {
+          if (index !== current) {
+            const plate = plates[index]
+            const img = plate?.querySelector('img')
+            const down = index > current
+            current = index
+            layer += 1
+            if (plate) {
+              gsap.set(plate, { zIndex: layer })
+              gsap.fromTo(
+                plate,
+                { clipPath: down ? 'inset(100% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)' },
+                { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.05, ease: 'expo.inOut', overwrite: true }
+              )
+            }
+            if (img) gsap.fromTo(img, { scale: 1.28 }, { scale: 1.06, duration: 1.6, ease: 'expo.out', overwrite: true })
+          }
           rows.forEach((row, i) => {
             const on = i === index
             row.classList.toggle('is-active', on)
@@ -47,6 +76,17 @@ export function Services() {
           tabs.forEach((tab, i) => tab.classList.toggle('is-on', i === index))
         }
         setActive(0)
+        gsap.set(plates[0], { zIndex: layer })
+        gsap.fromTo(
+          '.service-frame',
+          { y: 50, x: 18 },
+          {
+            y: -50,
+            x: -6,
+            ease: 'none',
+            scrollTrigger: { trigger: root.current, start: 'top top', end: '+=1800', scrub: true },
+          }
+        )
         ScrollTrigger.create({
           trigger: root.current,
           start: 'top top',
@@ -71,11 +111,12 @@ export function Services() {
   )
 
   return (
-    <section id="services" ref={root} className="services-pin bg-background text-foreground">
-      <div className="service-shell container flex min-h-[100svh] flex-col justify-center py-24 lg:py-0">
+    <section id="services" ref={root} className="services-pin relative bg-background text-foreground">
+      <Garnish items={garnish} className="service-garnish" />
+      <div className="service-shell container relative flex min-h-[100svh] flex-col justify-center py-24 lg:py-0">
         <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
           <div className="max-w-xl">
-            <h2 className="display text-4xl sm:text-5xl">
+            <h2 className="display text-4xl sm:text-5xl" data-split="chars">
               Culinary experiences, written for the occasion.
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-foreground-muted">
@@ -83,10 +124,12 @@ export function Services() {
               around your guests, your kitchen and the season.
             </p>
           </div>
-          <Button href="/pricing" variant="outline">
-            See pricing
-            <ArrowRight size={16} />
-          </Button>
+          <Magnetic>
+            <Button href="/pricing" variant="outline">
+              See pricing
+              <ArrowRight size={16} />
+            </Button>
+          </Magnetic>
         </div>
         <div className="service-board">
           <div>
@@ -94,7 +137,7 @@ export function Services() {
               {SERVICES.map((service, index) => (
                 <div key={service.title} className={index === 0 ? 'service-row is-active' : 'service-row'}>
                   <a href="/contact" className="service-hit">
-                    <span className="service-mobile-plate">
+                    <span className="service-mobile-plate" data-reveal="up">
                       <Image
                         src={PLATES[index].src}
                         alt={PLATES[index].alt}
@@ -127,7 +170,8 @@ export function Services() {
               ))}
             </div>
           </div>
-          <div className="service-visual" aria-hidden="true">
+          <div className="service-visual" aria-hidden="true" data-distort>
+            <span className="service-frame" />
             {PLATES.map((plate, index) => (
               <div
                 key={plate.src}

@@ -2,10 +2,12 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { Check, Shield, Lock, Calendar, Heart } from 'lucide-react'
 import * as Accordion from '@radix-ui/react-accordion'
 import { pricingTiers, subscriptionPlans, socialProof, guarantees, pricingFAQ, urgencyElements } from '@/data/pricing'
 import { cn, formatCurrency } from '@/lib/utils'
+import { DustField } from '@/components/motion/DustField'
 
 const iconMap: Record<string, typeof Shield> = {
   Shield,
@@ -29,7 +31,7 @@ export function PricingCards() {
       <p className="about-facts mt-0 border-t-0 pt-0">
         {proof.map(([value, label]) => (
           <span key={label}>
-            <strong>{value}</strong> {label}
+            <strong data-count>{value}</strong> {label}
           </span>
         ))}
       </p>
@@ -62,9 +64,17 @@ export function PricingCards() {
       </div>
 
       {!isMonthly ? (
-        <div className="mt-4" role="tabpanel">
+        <motion.div
+          key="event"
+          className="mt-4"
+          role="tabpanel"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           {pricingTiers.map((tier) => (
-            <article key={tier.id} className="grid gap-6 border-b border-border py-10 lg:grid-cols-12 lg:gap-10">
+            <article key={tier.id} className="relative grid gap-6 py-10 lg:grid-cols-12 lg:gap-10" data-rise="36">
+              <span className="absolute inset-x-0 bottom-0 h-px bg-border" data-rule aria-hidden="true" />
               <div className="lg:col-span-4">
                 {tier.badge && (
                   <p className="text-[11px] uppercase tracking-caps text-gold">{tier.badge}</p>
@@ -72,11 +82,11 @@ export function PricingCards() {
                 <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{tier.name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{tier.tagline}</p>
                 <p className="lh-display mt-6 font-display text-5xl tracking-tight">
-                  {tier.basePrice ? formatCurrency(tier.basePrice) : tier.priceDisplay}
+                  {tier.basePrice ? <span data-count>{formatCurrency(tier.basePrice)}</span> : tier.priceDisplay}
                 </p>
                 {tier.pricePerGuest && (
                   <p className="mt-2 text-sm text-foreground-muted">
-                    + {formatCurrency(tier.pricePerGuest)} / guest
+                    + <span data-count>{formatCurrency(tier.pricePerGuest)}</span> / guest
                   </p>
                 )}
                 <p className="mt-3 text-[11px] uppercase tracking-caps text-foreground-subtle">{tier.guests}</p>
@@ -105,11 +115,18 @@ export function PricingCards() {
               </ul>
             </article>
           ))}
-        </div>
+        </motion.div>
       ) : (
-        <div className="mt-4" role="tabpanel">
+        <motion.div
+          key="monthly"
+          className="mt-4"
+          role="tabpanel"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           {subscriptionPlans.map((plan) => (
-            <article key={plan.id} className="grid gap-6 border-b border-border py-10 lg:grid-cols-12 lg:gap-10">
+            <article key={plan.id} className="relative grid gap-6 border-b border-border py-10 lg:grid-cols-12 lg:gap-10">
               <div className="lg:col-span-4">
                 {plan.popular && <p className="text-[11px] uppercase tracking-caps text-gold">MOST POPULAR</p>}
                 <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{plan.name}</h3>
@@ -133,7 +150,7 @@ export function PricingCards() {
               </ul>
             </article>
           ))}
-        </div>
+        </motion.div>
       )}
 
       <div className="mt-16 grid gap-8 border-t border-border pt-10 sm:grid-cols-2">
@@ -170,12 +187,13 @@ export function PricingCards() {
         </Accordion.Root>
       </div>
 
-      <div className="mt-16 bg-ink px-6 py-12 text-ink-foreground sm:px-10">
-        <h3 className="font-display text-4xl tracking-tight sm:text-5xl">Limited Availability</h3>
-        <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-foreground/80">
+      <div className="relative mt-16 overflow-hidden bg-ink px-6 py-12 text-ink-foreground sm:px-10" data-reveal="iris">
+        <DustField density={36} />
+        <h3 className="relative font-display text-4xl tracking-tight sm:text-5xl">Limited Availability</h3>
+        <p className="relative mt-4 max-w-xl text-base leading-relaxed text-ink-foreground/80">
           {urgencyElements.consultationSlots}. Book your consultation to secure your preferred date.
         </p>
-        <Link href="/contact" className="maison-link mt-6 text-ink-foreground">
+        <Link href="/contact" className="maison-link relative mt-6 text-ink-foreground">
           Book Consultation Now
         </Link>
       </div>

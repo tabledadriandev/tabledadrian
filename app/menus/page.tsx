@@ -3,6 +3,14 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { MENUS } from '@/data/menus'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
+
+const garnish: GarnishItem[] = [
+  { kind: 'basil', x: '82%', y: '7rem', size: 110, depth: 0.9, rotate: -22, lite: true },
+  { kind: 'line-citrus', x: '66%', y: '2rem', size: 120, depth: 0.25, rotate: 14 },
+  { kind: 'petal-a', x: '93%', y: '17rem', size: 70, depth: 0.6, rotate: 40 },
+  { kind: 'flake', x: '74%', y: '15rem', size: 24, depth: 0.75, rotate: -12 },
+]
 
 export const metadata = {
   title: 'Menus',
@@ -13,9 +21,11 @@ export const metadata = {
 
 export default function MenusPage() {
   return (
-    <div className="bg-background pb-20 pt-28 sm:pt-32">
-      <div className="container">
+    <div className="relative bg-background pb-20 pt-28 sm:pt-32">
+      <Garnish items={garnish} className="page-garnish" />
+      <div className="container relative">
         <SectionHeading
+          split="chars"
           as="h1"
           align="left"
           title="Open a book. We will write yours."
@@ -29,18 +39,19 @@ export default function MenusPage() {
               key={collection.id}
               href={`/menus/${collection.id}`}
               className="group relative block overflow-hidden bg-ink"
+              data-cursor="Open"
             >
-              <div className="relative aspect-[3/4] overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden" data-reveal="up" data-parallax="6" data-distort>
                 <Image
                   src={collection.cover}
                   alt={collection.title}
                   fill
                   priority={MENUS.indexOf(collection) < 3}
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/10" />
-                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
+                <div className="absolute inset-0 z-[2] bg-gradient-to-t from-ink via-ink/25 to-ink/10" />
+                <div className="absolute inset-x-0 bottom-0 z-[3] p-6 sm:p-7">
                   <h2 className="lh-display font-display text-4xl text-ink-foreground">{collection.title}</h2>
                   <p className="mt-3 text-[11px] uppercase tracking-caps text-gold">
                     {collection.region}

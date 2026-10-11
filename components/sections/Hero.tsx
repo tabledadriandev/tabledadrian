@@ -5,10 +5,18 @@ import dynamic from 'next/dynamic'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Magnetic } from '@/components/motion/Magnetic'
+import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
 import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
 import { HERO_IMAGE } from '@/data/gallery'
 
 const HeroPlate = dynamic(() => import('@/components/motion/HeroPlate'), { ssr: false })
+
+const garnish: GarnishItem[] = [
+  { kind: 'basil', x: '53%', y: '64%', size: 112, depth: 0.95, rotate: 28 },
+  { kind: 'flake', x: '44%', y: '18%', size: 26, depth: 0.7, rotate: -18 },
+  { kind: 'flake', x: '9%', y: '88%', size: 16, depth: 0.4, rotate: 40, lite: true },
+  { kind: 'petal-c', x: '48%', y: '40%', size: 38, depth: 0.55, rotate: -30 },
+]
 
 function useWebGLPlate() {
   const [state, setState] = useState({ enabled: false, mobile: false })
@@ -177,6 +185,7 @@ export function Hero() {
           </div>
         </div>
       </div>
+      <Garnish items={garnish} className="hero-garnish" />
       <a href="#about" className="hero-scroll" aria-label="Scroll to About">
         <span>Scroll</span>
         <i />

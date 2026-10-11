@@ -7,6 +7,17 @@ import { Gallery } from '@/components/sections/Gallery'
 import { Menus } from '@/components/sections/Menus'
 import { AppDownloadSection } from '@/components/app/AppDownloadSection'
 import { Contact } from '@/components/sections/Contact'
+import { Marquee } from '@/components/motion/Marquee'
+import { GALLERY } from '@/data/gallery'
+
+const CREDENTIALS = [
+  'Michelin-trained technique',
+  'EHL Swiss hospitality diploma',
+  'Stanford nutrition certified',
+  '15+ years in fine kitchens',
+  'London & Europe',
+  'Tables of two to twenty-five',
+]
 
 export default function Home() {
   return (
@@ -29,10 +40,12 @@ export default function Home() {
       />
       <Hero />
       <About />
+      <Marquee items={CREDENTIALS} />
       <Services />
       <Wellness />
       <Testimonials />
       <Gallery />
+      <Marquee items={GALLERY.map((plate) => plate.title)} tone="ink" />
       <Menus />
       <AppDownloadSection />
       <Contact />

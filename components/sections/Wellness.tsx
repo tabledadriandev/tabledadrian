@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRef } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { gsap, useGSAP } from '@/lib/gsap'
+import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
 
 const tools = [
   {
@@ -24,6 +25,13 @@ const tools = [
     title: 'The full app',
     description: 'Meal logging, a longevity score and recipes matched to you.',
   },
+]
+
+const garnish: GarnishItem[] = [
+  { kind: 'line-sprig', x: '86%', y: '6%', size: 96, depth: 0.45, rotate: 18, lite: true },
+  { kind: 'flake', x: '72%', y: '22%', size: 30, depth: 0.85, rotate: -16 },
+  { kind: 'salt', x: '93%', y: '44%', size: 24, depth: 0.6, rotate: 12 },
+  { kind: 'line-leaf', x: '64%', y: '2%', size: 52, depth: 0.2, rotate: -40 },
 ]
 
 export function Wellness() {
@@ -47,10 +55,11 @@ export function Wellness() {
   )
 
   return (
-    <section id="wellness" ref={root} className="section-pad bg-background-secondary">
-      <div className="container">
+    <section id="wellness" ref={root} className="section-pad relative bg-background-secondary" data-tone="out">
+      <Garnish items={garnish} />
+      <div className="container relative">
         <div className="max-w-3xl">
-          <h2 className="display text-4xl sm:text-6xl">
+          <h2 className="display text-4xl sm:text-6xl" data-split="chars">
             Try a taste of the <em className="italic text-gold">app</em>.
           </h2>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground-muted sm:text-lg">
@@ -58,12 +67,14 @@ export function Wellness() {
             app when it launches for the complete experience.
           </p>
         </div>
-        <div className="mt-12 border-t border-border">
+        <div className="relative mt-12">
+          <span className="absolute inset-x-0 top-0 h-px bg-border" data-rule aria-hidden="true" />
           {tools.map((tool) => (
             <Link key={tool.title} href={tool.href} className="wellness-row group">
+              <span className="wellness-rule" data-rule aria-hidden="true" />
               <span className="wellness-badge">{tool.badge}</span>
               <span>
-                <span className="lh-display block font-display text-3xl sm:text-5xl">{tool.title}</span>
+                <span className="wellness-title lh-display block font-display text-3xl sm:text-5xl">{tool.title}</span>
                 <span className="mt-2 block max-w-md text-sm leading-relaxed text-foreground-muted">
                   {tool.description}
                 </span>
