@@ -21,12 +21,21 @@ export function Navbar() {
   const t = copy[locale]
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isWide, setIsWide] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 24)
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 1024px)')
+    const sync = () => setIsWide(media.matches)
+    sync()
+    media.addEventListener('change', sync)
+    return () => media.removeEventListener('change', sync)
   }, [])
 
   useEffect(() => {
@@ -51,6 +60,7 @@ export function Navbar() {
 
   const isHome = pathname === '/' || pathname === '/fr'
   const onDark = isMobileMenuOpen || (isHome && !isScrolled)
+  const lockupOnInk = isMobileMenuOpen || (isHome && !isScrolled && isWide)
   const textBase = onDark ? 'text-ink-foreground' : 'text-foreground'
   const textMuted = onDark
     ? 'text-ink-foreground/75 hover:text-ink-foreground'
@@ -70,7 +80,7 @@ export function Navbar() {
             className={cn('group flex flex-col leading-none', textBase)}
             aria-label="Table d'Adrian"
           >
-            <BrandMark onDark={onDark} />
+            <BrandMark onDark={lockupOnInk} />
             <span className={cn('mt-1 text-[10px] uppercase tracking-caps', onDark ? 'text-gold' : 'text-foreground-subtle')}>
               Private chef
             </span>

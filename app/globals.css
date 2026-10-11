@@ -372,8 +372,14 @@ html.has-fine-cursor .cursor-dot.is-hidden { opacity: 0; }
 }
 .brand-lockup {
   display: block;
+  height: 3.25rem;
   width: auto;
-  max-width: min(42vw, 13.5rem);
+  max-width: min(48vw, 15rem);
+}
+@media (min-width: 640px) {
+  .brand-lockup {
+    height: 3.75rem;
+  }
 }
 
 .hero-stage { position: relative; }

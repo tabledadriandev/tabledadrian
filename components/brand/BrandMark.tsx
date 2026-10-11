@@ -15,9 +15,9 @@ export function BrandMark({
     <img
       src={onDark ? IVORY : GOLD}
       alt="Table d'Adrian"
-      width={1975}
-      height={959}
-      className={cn('brand-lockup h-11 w-auto sm:h-14', className)}
+      width={140}
+      height={68}
+      className={cn('brand-lockup', className)}
       decoding="async"
     />
   )
