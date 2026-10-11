@@ -1,7 +1,7 @@
 export const SITE_URL = 'https://www.tabledadrian.com'
 export const SITE_NAME = "Table d'Adrian"
 export const SITE_DESCRIPTION =
-  "Private chef on the Côte d'Azur and in Monaco. Michelin-trained cooking and nutrition science for dinners, weekly meals and longevity menus."
+  "Private chef and longevity cuisine on the Côte d'Azur and in Monaco. Table d'Adrian brings Michelin-trained cooking and Stanford nutrition to your table."
 
 export const OG_IMAGE = {
   url: '/og.jpg',

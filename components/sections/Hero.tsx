@@ -141,9 +141,9 @@ export function Hero() {
             <em>your</em> table.
           </h1>
           <p className="hero-lede hero-rise">
-            Michelin-trained technique and nutrition science, brought into your home. From an
-            intimate dinner for two to a table of twenty-five, every menu is written for the people
-            eating it.
+            Private chef and longevity cuisine on the Côte d&apos;Azur and in Monaco. Michelin-trained
+            technique and nutrition science, brought into your home. From an intimate dinner for two
+            to a table of twenty-five, every menu is written for the people eating it.
           </p>
           <div className="hero-rise mt-8">
             <Magnetic>
