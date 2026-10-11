@@ -2,7 +2,12 @@ import type { MetadataRoute } from 'next'
 import { recipes } from '@/data/recipes'
 import { articles } from '@/data/articles'
 import { MENUS } from '@/data/menus'
+import { LOCALE_PAIRS } from '@/lib/routes'
 import { SITE_URL } from '@/lib/site'
+
+const LOCATION_PATHS = LOCALE_PAIRS.flatMap(([en, fr]) =>
+  en.startsWith('/private-chef-') || fr.startsWith('/fr/chef-prive-') ? [en, fr] : []
+)
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
@@ -18,11 +23,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/bmi',
     '/privacy',
     '/terms',
+    '/fr',
+    '/fr/pricing',
+    '/fr/contact',
+    ...LOCATION_PATHS,
   ].map((path) => ({
     url: `${SITE_URL}${path || '/'}`,
     lastModified: now,
     changeFrequency: path === '' ? 'weekly' : 'monthly',
-    priority: path === '' ? 1 : 0.7,
+    priority:
+      path === ''
+        ? 1
+        : path === '/private-chef-cote-d-azur' || path === '/fr/chef-prive-cote-d-azur'
+          ? 0.8
+          : path.startsWith('/private-chef-') || path.startsWith('/fr/chef-prive-')
+            ? 0.75
+            : 0.7,
   })) satisfies MetadataRoute.Sitemap
 
   const recipeRoutes = recipes.map((recipe) => ({

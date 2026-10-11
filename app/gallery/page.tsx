@@ -1,47 +1,56 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import { GALLERY } from '@/data/gallery'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
+
+const garnish: GarnishItem[] = [
+  { kind: 'thyme', x: '84%', y: '6rem', size: 70, depth: 0.85, rotate: 18, lite: true },
+  { kind: 'line-leaf', x: '70%', y: '3rem', size: 80, depth: 0.25, rotate: -28 },
+  { kind: 'flake', x: '92%', y: '15rem', size: 26, depth: 0.7, rotate: 22 },
+]
 
 export default function GalleryPage() {
   const [active, setActive] = useState<(typeof GALLERY)[number] | null>(null)
 
   return (
-    <div className="bg-background pb-20 pt-28 sm:pt-32">
-      <div className="container">
+    <div className="relative bg-background pb-20 pt-28 sm:pt-32">
+      <Garnish items={garnish} className="page-garnish" />
+      <div className="container relative">
         <SectionHeading
           as="h1"
           eyebrow="Gallery"
           title="From the pass"
           description="Plates Adrian has sent to the table. Click any picture to open it."
           animate={false}
+          split="chars"
         />
 
         <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3">
           {GALLERY.map((image, i) => (
-            <motion.button
+            <button
               key={image.id}
               type="button"
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: (i % 6) * 0.04, duration: 0.45 }}
               onClick={() => setActive(image)}
-              className="mb-4 block w-full break-inside-avoid overflow-hidden rounded-[1.5rem] text-left"
+              className="gallery-tile mb-4 block w-full break-inside-avoid text-left"
+              data-skew={1 + (i % 3) * 0.35}
+              data-cursor="View"
             >
-              <Image
-                src={image.src}
-                alt={image.caption}
-                width={800}
-                height={1100}
-                className="photo h-auto w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
-              />
+              <span className="relative block overflow-hidden" data-reveal={i % 3 === 1 ? 'iris' : 'up'} data-distort>
+                <DishPhoto
+                  src={image.src}
+                  alt={image.caption}
+                  width={800}
+                  height={1100}
+                  className="h-auto w-full"
+                />
+              </span>
               <span className="sr-only">{image.title}</span>
-            </motion.button>
+            </button>
           ))}
         </div>
       </div>
@@ -70,12 +79,12 @@ export default function GalleryPage() {
               className="relative max-h-[90vh] max-w-3xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
+              <DishPhoto
                 src={active.src}
                 alt={active.caption}
                 width={1200}
                 height={1600}
-                className="photo max-h-[80vh] w-auto rounded-2xl object-contain"
+                className="max-h-[80vh] w-auto rounded-2xl object-contain"
               />
               <figcaption className="mt-4 text-center text-sm text-ink-foreground">
                 <span className="font-display text-2xl">{active.title}</span>

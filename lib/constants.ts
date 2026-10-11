@@ -4,9 +4,10 @@ export const CONTACT_INFO = {
   responseTime: "Typically responds within 24 hours",
 }
 
+export const INSTAGRAM_URL = 'https://www.instagram.com/tabledadrian/'
+
 export const SOCIAL_LINKS = {
-  instagram: "https://instagram.com/tabledadrian",
-  linkedin: "https://linkedin.com/company/tabledadrian",
+  instagram: INSTAGRAM_URL,
 }
 
 export interface NavItem {
@@ -46,7 +47,7 @@ export const NAVIGATION: NavGroup[] = [
       },
     ],
   },
-  { name: "Pricing", href: "/pricing" },
+  { name: "Enquire", href: "/pricing" },
 ]
 
 /** Flat list of primary links, used by the footer and mobile menu. */
@@ -57,7 +58,7 @@ export const FOOTER_LINKS: NavItem[] = [
   { name: "Gallery", href: "/gallery" },
   { name: "Recipes", href: "/recipes" },
   { name: "Journal", href: "/articles" },
-  { name: "Pricing", href: "/pricing" },
+  { name: "Enquire", href: "/pricing" },
 ]
 
 export const WELLNESS_LINKS: NavItem[] = NAVIGATION.find((g) => g.name === "Wellness")?.items ?? []

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
@@ -53,11 +53,11 @@ export default function MenuCollectionPage({ params }: { params: { collection: s
               className="group surface overflow-hidden"
             >
               <div className="relative aspect-[4/5] overflow-hidden bg-background-secondary">
-                <Image
+                <DishPhoto
                   src={menu.cover}
                   alt={menu.title}
                   fill
-                  className="photo object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent p-5">

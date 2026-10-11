@@ -1,0 +1,689 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T13:05:20Z",
+  "title": "Design System: Table d'Adrian",
+  "extensions": {
+    "colorMeta": {
+      "ivory": {
+        "role": "neutral",
+        "displayName": "Warm Ivory",
+        "canonical": "oklch(95.4% 0.012 84.6)",
+        "tonalRamp": [
+          "oklch(15% 0.012 84.6)",
+          "oklch(26% 0.012 84.6)",
+          "oklch(38% 0.012 84.6)",
+          "oklch(49% 0.012 84.6)",
+          "oklch(61% 0.012 84.6)",
+          "oklch(72% 0.012 84.6)",
+          "oklch(84% 0.012 84.6)",
+          "oklch(95% 0.012 84.6)"
+        ]
+      },
+      "ivory-deep": {
+        "role": "neutral",
+        "displayName": "Ivory Deep",
+        "canonical": "oklch(92.0% 0.009 78.3)",
+        "tonalRamp": [
+          "oklch(15% 0.009 78.3)",
+          "oklch(26% 0.009 78.3)",
+          "oklch(38% 0.009 78.3)",
+          "oklch(49% 0.009 78.3)",
+          "oklch(61% 0.009 78.3)",
+          "oklch(72% 0.009 78.3)",
+          "oklch(84% 0.009 78.3)",
+          "oklch(95% 0.009 78.3)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card",
+        "canonical": "oklch(97.4% 0.007 84.6)",
+        "tonalRamp": [
+          "oklch(15% 0.007 84.6)",
+          "oklch(26% 0.007 84.6)",
+          "oklch(38% 0.007 84.6)",
+          "oklch(49% 0.007 84.6)",
+          "oklch(61% 0.007 84.6)",
+          "oklch(72% 0.007 84.6)",
+          "oklch(84% 0.007 84.6)",
+          "oklch(95% 0.007 84.6)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Near-black Ink",
+        "canonical": "oklch(17.1% 0.006 63.7)",
+        "tonalRamp": [
+          "oklch(15% 0.006 63.7)",
+          "oklch(26% 0.006 63.7)",
+          "oklch(38% 0.006 63.7)",
+          "oklch(49% 0.006 63.7)",
+          "oklch(61% 0.006 63.7)",
+          "oklch(72% 0.006 63.7)",
+          "oklch(84% 0.006 63.7)",
+          "oklch(95% 0.006 63.7)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "canonical": "oklch(23.9% 0.007 63.7)",
+        "tonalRamp": [
+          "oklch(15% 0.007 63.7)",
+          "oklch(26% 0.007 63.7)",
+          "oklch(38% 0.007 63.7)",
+          "oklch(49% 0.007 63.7)",
+          "oklch(61% 0.007 63.7)",
+          "oklch(72% 0.007 63.7)",
+          "oklch(84% 0.007 63.7)",
+          "oklch(95% 0.007 63.7)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Body Ink",
+        "canonical": "oklch(21.7% 0.008 63.6)",
+        "tonalRamp": [
+          "oklch(15% 0.008 63.6)",
+          "oklch(26% 0.008 63.6)",
+          "oklch(38% 0.008 63.6)",
+          "oklch(49% 0.008 63.6)",
+          "oklch(61% 0.008 63.6)",
+          "oklch(72% 0.008 63.6)",
+          "oklch(84% 0.008 63.6)",
+          "oklch(95% 0.008 63.6)"
+        ]
+      },
+      "foreground-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "oklch(39.3% 0.012 63.7)",
+        "tonalRamp": [
+          "oklch(15% 0.012 63.7)",
+          "oklch(26% 0.012 63.7)",
+          "oklch(38% 0.012 63.7)",
+          "oklch(49% 0.012 63.7)",
+          "oklch(61% 0.012 63.7)",
+          "oklch(72% 0.012 63.7)",
+          "oklch(84% 0.012 63.7)",
+          "oklch(95% 0.012 63.7)"
+        ]
+      },
+      "foreground-subtle": {
+        "role": "neutral",
+        "displayName": "Subtle Ink",
+        "canonical": "oklch(45.8% 0.011 63.8)",
+        "tonalRamp": [
+          "oklch(15% 0.011 63.8)",
+          "oklch(26% 0.011 63.8)",
+          "oklch(38% 0.011 63.8)",
+          "oklch(49% 0.011 63.8)",
+          "oklch(61% 0.011 63.8)",
+          "oklch(72% 0.011 63.8)",
+          "oklch(84% 0.011 63.8)",
+          "oklch(95% 0.011 63.8)"
+        ]
+      },
+      "primary": {
+        "role": "neutral",
+        "displayName": "Button Ink",
+        "canonical": "oklch(19.5% 0.007 63.6)",
+        "tonalRamp": [
+          "oklch(15% 0.007 63.6)",
+          "oklch(26% 0.007 63.6)",
+          "oklch(38% 0.007 63.6)",
+          "oklch(49% 0.007 63.6)",
+          "oklch(61% 0.007 63.6)",
+          "oklch(72% 0.007 63.6)",
+          "oklch(84% 0.007 63.6)",
+          "oklch(95% 0.007 63.6)"
+        ]
+      },
+      "primary-foreground": {
+        "role": "neutral",
+        "displayName": "Ivory Light",
+        "canonical": "oklch(96.1% 0.011 84.6)",
+        "tonalRamp": [
+          "oklch(15% 0.011 84.6)",
+          "oklch(26% 0.011 84.6)",
+          "oklch(38% 0.011 84.6)",
+          "oklch(49% 0.011 84.6)",
+          "oklch(61% 0.011 84.6)",
+          "oklch(72% 0.011 84.6)",
+          "oklch(84% 0.011 84.6)",
+          "oklch(95% 0.011 84.6)"
+        ]
+      },
+      "primary-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ivory",
+        "canonical": "oklch(93.1% 0.013 81.5)",
+        "tonalRamp": [
+          "oklch(15% 0.013 81.5)",
+          "oklch(26% 0.013 81.5)",
+          "oklch(38% 0.013 81.5)",
+          "oklch(49% 0.013 81.5)",
+          "oklch(61% 0.013 81.5)",
+          "oklch(72% 0.013 81.5)",
+          "oklch(84% 0.013 81.5)",
+          "oklch(95% 0.013 81.5)"
+        ]
+      },
+      "gold": {
+        "role": "primary",
+        "displayName": "Champagne",
+        "canonical": "oklch(70.8% 0.094 76.4)",
+        "tonalRamp": [
+          "oklch(15% 0.094 76.4)",
+          "oklch(26% 0.094 76.4)",
+          "oklch(38% 0.094 76.4)",
+          "oklch(49% 0.094 76.4)",
+          "oklch(61% 0.094 76.4)",
+          "oklch(72% 0.094 76.4)",
+          "oklch(84% 0.094 76.4)",
+          "oklch(95% 0.094 76.4)"
+        ]
+      },
+      "gold-soft": {
+        "role": "primary",
+        "displayName": "Champagne Wash",
+        "canonical": "oklch(91.9% 0.021 81.5)",
+        "tonalRamp": [
+          "oklch(15% 0.021 81.5)",
+          "oklch(26% 0.021 81.5)",
+          "oklch(38% 0.021 81.5)",
+          "oklch(49% 0.021 81.5)",
+          "oklch(61% 0.021 81.5)",
+          "oklch(72% 0.021 81.5)",
+          "oklch(84% 0.021 81.5)",
+          "oklch(95% 0.021 81.5)"
+        ]
+      },
+      "ring": {
+        "role": "primary",
+        "displayName": "Champagne Deep",
+        "canonical": "oklch(58.9% 0.091 75.4)",
+        "tonalRamp": [
+          "oklch(15% 0.091 75.4)",
+          "oklch(26% 0.091 75.4)",
+          "oklch(38% 0.091 75.4)",
+          "oklch(49% 0.091 75.4)",
+          "oklch(61% 0.091 75.4)",
+          "oklch(72% 0.091 75.4)",
+          "oklch(84% 0.091 75.4)",
+          "oklch(95% 0.091 75.4)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(83.6% 0.014 74.8)",
+        "tonalRamp": [
+          "oklch(15% 0.014 74.8)",
+          "oklch(26% 0.014 74.8)",
+          "oklch(38% 0.014 74.8)",
+          "oklch(49% 0.014 74.8)",
+          "oklch(61% 0.014 74.8)",
+          "oklch(72% 0.014 74.8)",
+          "oklch(84% 0.014 74.8)",
+          "oklch(95% 0.014 74.8)"
+        ]
+      },
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "oklch(67.6% 0.024 71.1)",
+        "tonalRamp": [
+          "oklch(15% 0.024 71.1)",
+          "oklch(26% 0.024 71.1)",
+          "oklch(38% 0.024 71.1)",
+          "oklch(49% 0.024 71.1)",
+          "oklch(61% 0.024 71.1)",
+          "oklch(72% 0.024 71.1)",
+          "oklch(84% 0.024 71.1)",
+          "oklch(95% 0.024 71.1)"
+        ]
+      },
+      "input": {
+        "role": "neutral",
+        "displayName": "Input",
+        "canonical": "oklch(98.7% 0.004 84.6)",
+        "tonalRamp": [
+          "oklch(15% 0.004 84.6)",
+          "oklch(26% 0.004 84.6)",
+          "oklch(38% 0.004 84.6)",
+          "oklch(49% 0.004 84.6)",
+          "oklch(61% 0.004 84.6)",
+          "oklch(72% 0.004 84.6)",
+          "oklch(84% 0.004 84.6)",
+          "oklch(95% 0.004 84.6)"
+        ]
+      },
+      "destructive": {
+        "role": "neutral",
+        "displayName": "Form Error",
+        "canonical": "oklch(47.1% 0.112 30.6)",
+        "tonalRamp": [
+          "oklch(15% 0.112 30.6)",
+          "oklch(26% 0.112 30.6)",
+          "oklch(38% 0.112 30.6)",
+          "oklch(49% 0.112 30.6)",
+          "oklch(61% 0.112 30.6)",
+          "oklch(72% 0.112 30.6)",
+          "oklch(84% 0.112 30.6)",
+          "oklch(95% 0.112 30.6)"
+        ]
+      },
+      "success": {
+        "role": "neutral",
+        "displayName": "Quiet Green",
+        "canonical": "oklch(42.8% 0.046 161.9)",
+        "tonalRamp": [
+          "oklch(15% 0.046 161.9)",
+          "oklch(26% 0.046 161.9)",
+          "oklch(38% 0.046 161.9)",
+          "oklch(49% 0.046 161.9)",
+          "oklch(61% 0.046 161.9)",
+          "oklch(72% 0.046 161.9)",
+          "oklch(84% 0.046 161.9)",
+          "oklch(95% 0.046 161.9)"
+        ]
+      },
+      "sola-cream": {
+        "role": "neutral",
+        "displayName": "Sola Cream",
+        "canonical": "oklch(96.9% 0.012 87.5)",
+        "tonalRamp": [
+          "oklch(15% 0.012 87.5)",
+          "oklch(26% 0.012 87.5)",
+          "oklch(38% 0.012 87.5)",
+          "oklch(49% 0.012 87.5)",
+          "oklch(61% 0.012 87.5)",
+          "oklch(72% 0.012 87.5)",
+          "oklch(84% 0.012 87.5)",
+          "oklch(95% 0.012 87.5)"
+        ]
+      },
+      "sola-cream-deep": {
+        "role": "neutral",
+        "displayName": "Sola Cream Deep",
+        "canonical": "oklch(93.3% 0.014 87.5)",
+        "tonalRamp": [
+          "oklch(15% 0.014 87.5)",
+          "oklch(26% 0.014 87.5)",
+          "oklch(38% 0.014 87.5)",
+          "oklch(49% 0.014 87.5)",
+          "oklch(61% 0.014 87.5)",
+          "oklch(72% 0.014 87.5)",
+          "oklch(84% 0.014 87.5)",
+          "oklch(95% 0.014 87.5)"
+        ]
+      },
+      "sola-ink": {
+        "role": "secondary",
+        "displayName": "Sola Deep Green",
+        "canonical": "oklch(26.4% 0.034 168.0)",
+        "tonalRamp": [
+          "oklch(15% 0.034 168.0)",
+          "oklch(26% 0.034 168.0)",
+          "oklch(38% 0.034 168.0)",
+          "oklch(49% 0.034 168.0)",
+          "oklch(61% 0.034 168.0)",
+          "oklch(72% 0.034 168.0)",
+          "oklch(84% 0.034 168.0)",
+          "oklch(95% 0.034 168.0)"
+        ]
+      },
+      "sola-foreground": {
+        "role": "secondary",
+        "displayName": "Sola Text",
+        "canonical": "oklch(28.4% 0.033 168.5)",
+        "tonalRamp": [
+          "oklch(15% 0.033 168.5)",
+          "oklch(26% 0.033 168.5)",
+          "oklch(38% 0.033 168.5)",
+          "oklch(49% 0.033 168.5)",
+          "oklch(61% 0.033 168.5)",
+          "oklch(72% 0.033 168.5)",
+          "oklch(84% 0.033 168.5)",
+          "oklch(95% 0.033 168.5)"
+        ]
+      },
+      "sola-muted": {
+        "role": "secondary",
+        "displayName": "Sola Muted",
+        "canonical": "oklch(39.7% 0.026 170.5)",
+        "tonalRamp": [
+          "oklch(15% 0.026 170.5)",
+          "oklch(26% 0.026 170.5)",
+          "oklch(38% 0.026 170.5)",
+          "oklch(49% 0.026 170.5)",
+          "oklch(61% 0.026 170.5)",
+          "oklch(72% 0.026 170.5)",
+          "oklch(84% 0.026 170.5)",
+          "oklch(95% 0.026 170.5)"
+        ]
+      },
+      "sola-primary": {
+        "role": "secondary",
+        "displayName": "Sola Green",
+        "canonical": "oklch(35.7% 0.047 167.8)",
+        "tonalRamp": [
+          "oklch(15% 0.047 167.8)",
+          "oklch(26% 0.047 167.8)",
+          "oklch(38% 0.047 167.8)",
+          "oklch(49% 0.047 167.8)",
+          "oklch(61% 0.047 167.8)",
+          "oklch(72% 0.047 167.8)",
+          "oklch(84% 0.047 167.8)",
+          "oklch(95% 0.047 167.8)"
+        ]
+      },
+      "sola-primary-soft": {
+        "role": "secondary",
+        "displayName": "Sola Green Wash",
+        "canonical": "oklch(91.7% 0.018 164.6)",
+        "tonalRamp": [
+          "oklch(15% 0.018 164.6)",
+          "oklch(26% 0.018 164.6)",
+          "oklch(38% 0.018 164.6)",
+          "oklch(49% 0.018 164.6)",
+          "oklch(61% 0.018 164.6)",
+          "oklch(72% 0.018 164.6)",
+          "oklch(84% 0.018 164.6)",
+          "oklch(95% 0.018 164.6)"
+        ]
+      },
+      "sola-olive": {
+        "role": "secondary",
+        "displayName": "Sola Olive",
+        "canonical": "oklch(51.2% 0.054 84.1)",
+        "tonalRamp": [
+          "oklch(15% 0.054 84.1)",
+          "oklch(26% 0.054 84.1)",
+          "oklch(38% 0.054 84.1)",
+          "oklch(49% 0.054 84.1)",
+          "oklch(61% 0.054 84.1)",
+          "oklch(72% 0.054 84.1)",
+          "oklch(84% 0.054 84.1)",
+          "oklch(95% 0.054 84.1)"
+        ]
+      },
+      "sola-border": {
+        "role": "neutral",
+        "displayName": "Sola Hairline",
+        "canonical": "oklch(85.6% 0.016 87.5)",
+        "tonalRamp": [
+          "oklch(15% 0.016 87.5)",
+          "oklch(26% 0.016 87.5)",
+          "oklch(38% 0.016 87.5)",
+          "oklch(49% 0.016 87.5)",
+          "oklch(61% 0.016 87.5)",
+          "oklch(72% 0.016 87.5)",
+          "oklch(84% 0.016 87.5)",
+          "oklch(95% 0.016 87.5)"
+        ]
+      },
+      "sola-border-strong": {
+        "role": "neutral",
+        "displayName": "Sola Strong Hairline",
+        "canonical": "oklch(71.6% 0.031 164.0)",
+        "tonalRamp": [
+          "oklch(15% 0.031 164.0)",
+          "oklch(26% 0.031 164.0)",
+          "oklch(38% 0.031 164.0)",
+          "oklch(49% 0.031 164.0)",
+          "oklch(61% 0.031 164.0)",
+          "oklch(72% 0.031 164.0)",
+          "oklch(84% 0.031 164.0)",
+          "oklch(95% 0.031 164.0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only. One word may be italic champagne."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles in the .display class, from 2.25rem to 3.75rem."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Service names, menu names, and italic quotations."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Sentences in Hanken Grotesk, held near 58–62ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase navigation, footer columns, and text links at 0.22em."
+      },
+      "sola": {
+        "displayName": "Sola",
+        "purpose": "Source Serif 4 for the Sola sentence."
+      },
+      "sola-display": {
+        "displayName": "Sola Display",
+        "purpose": "Source Serif 4 at weight 500 for Sola headings."
+      }
+    },
+    "shadows": [
+      {
+        "name": "soft",
+        "value": "0 1px 2px rgba(30, 20, 10, 0.04), 0 8px 24px -12px rgba(30, 20, 10, 0.12)",
+        "purpose": "The enquiry panel."
+      },
+      {
+        "name": "lift",
+        "value": "0 2px 4px rgba(30, 20, 10, 0.05), 0 20px 40px -20px rgba(30, 20, 10, 0.22)",
+        "purpose": "The navigation menu and the cookie bar."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Entrances, the hero plate fade, and the service crossfade."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.76, 0, 0.24, 1)",
+        "purpose": "The preloader exit and the mobile menu clip."
+      },
+      {
+        "name": "button",
+        "value": "background-color 0.3s, color 0.3s, border-color 0.3s",
+        "purpose": "Control color changes."
+      },
+      {
+        "name": "plate-fade",
+        "value": "opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "The hero shader fading in over the photograph."
+      },
+      {
+        "name": "sheen",
+        "value": "7.5s ease-in-out infinite",
+        "purpose": "Champagne fallback sheen when WebGL is off."
+      },
+      {
+        "name": "reduced",
+        "value": "0.01ms",
+        "purpose": "Duration and iteration collapse under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "container",
+        "value": "1320px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Booking Button",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "Ivory square control on an ink field. The hero and closing booking action.",
+      "html": "<button class=\"ds-btn-light\" type=\"button\">Book your experience <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-light { display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n  border-radius: 0;\n  font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  cursor: pointer;\n  transition: background-color 0.3s, color 0.3s, border-color 0.3s; height: 52px; padding: 0 32px; border: none; background: hsl(var(--ink-foreground)); color: hsl(var(--ink)); font-size: 0.875rem; } .ds-btn-light:hover { background: #ffffff; } .ds-btn-light:focus-visible { outline: 2px solid hsl(var(--gold));\n  outline-offset: 3px; } .ds-btn-light:disabled { opacity: 0.5; }"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Ink square control for actions on ivory, such as All menus.",
+      "html": "<button class=\"ds-btn-ink\" type=\"button\">All menus <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-ink { display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n  border-radius: 0;\n  font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  cursor: pointer;\n  transition: background-color 0.3s, color 0.3s, border-color 0.3s; height: 44px; padding: 0 24px; border: none; background: hsl(var(--ink)); color: hsl(var(--ink-foreground)); font-size: 0.82rem; } .ds-btn-ink:hover { background: hsl(var(--ink-soft)); } .ds-btn-ink:focus-visible { outline: 2px solid hsl(var(--gold));\n  outline-offset: 3px; } .ds-btn-ink:disabled { opacity: 0.5; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Transparent square control with a strong hairline, for secondary actions on ivory.",
+      "html": "<button class=\"ds-btn-outline\" type=\"button\">See pricing <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-outline { display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n  border-radius: 0;\n  font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  cursor: pointer;\n  transition: background-color 0.3s, color 0.3s, border-color 0.3s; height: 44px; padding: 0 24px; border: 1px solid hsl(var(--border-strong)); background: transparent; color: hsl(var(--foreground)); font-size: 0.82rem; } .ds-btn-outline:hover { border-color: hsl(var(--foreground)); background: hsl(var(--foreground) / 0.03); } .ds-btn-outline:focus-visible { outline: 2px solid hsl(var(--gold));\n  outline-offset: 3px; }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Square enquiry field. Champagne caret, ink border and a champagne ring on focus.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-name\">Name</label><input class=\"ds-field\" id=\"ds-name\" type=\"text\" placeholder=\"Your name\" />",
+      "css": ".ds-field-label { display: block; margin-bottom: 8px; font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-size: 0.875rem; font-weight: 500; color: hsl(var(--foreground)); } .ds-field { width: 100%; border: 1px solid hsl(var(--border)); background: hsl(var(--input)); color: hsl(var(--foreground)); padding: 12px 16px; border-radius: 0; font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-size: 1rem; caret-color: hsl(var(--gold)); } .ds-field::placeholder { color: hsl(var(--foreground-subtle)); } .ds-field:hover { border-color: hsl(var(--border-strong)); } .ds-field:focus { outline: none; border-color: hsl(var(--foreground)); box-shadow: 0 0 0 2px hsl(var(--gold) / 0.3); }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-book",
+      "description": "Italic wordmark, tracked uppercase links, and a square book control.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-wordmark\" href=\"/\">Table d'Adrian<span>Private chef</span></a><nav class=\"ds-nav-links\" aria-label=\"Primary\"><a href=\"/#about\">About</a><a href=\"/menus\">Menus</a><a href=\"/gallery\">Gallery</a><a class=\"ds-nav-book\" href=\"/contact\">Book your experience</a></nav></header>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 32px; background: hsl(var(--background) / 0.9); border-bottom: 1px solid hsl(var(--border)); backdrop-filter: blur(16px); } .ds-wordmark { display: flex; flex-direction: column; color: hsl(var(--foreground)); text-decoration: none; font-family: var(--font-display), \"Bodoni Moda\", Didot, Georgia, serif; font-style: italic; font-weight: 500; font-size: 1.65rem; letter-spacing: -0.02em; line-height: 1; } .ds-wordmark span { margin-top: 4px; font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-style: normal; font-weight: 400; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: hsl(var(--foreground-subtle)); } .ds-nav-links { display: flex; align-items: center; gap: 4px; } .ds-nav-links a { padding: 8px 12px; color: hsl(var(--foreground-muted)); text-decoration: none; font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; } .ds-nav-links a:hover { color: hsl(var(--foreground)); } .ds-nav-links a:focus-visible { outline: 2px solid hsl(var(--gold));\n  outline-offset: 3px; } .ds-nav-book { display: inline-flex; align-items: center; height: 40px; padding: 0 16px; background: hsl(var(--ink)); color: hsl(var(--ink-foreground)); text-decoration: none; } .ds-nav-book:hover { background: hsl(var(--ink-soft)); color: hsl(var(--ink-foreground)); }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "maison-link",
+      "description": "Uppercase tracked link with a champagne underline, for ink grounds.",
+      "html": "<a class=\"ds-maison-link\" href=\"/gallery\">Full gallery <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a>",
+      "css": ".ds-maison-link { display: inline-flex; align-items: center; gap: 8px; padding-bottom: 4px; border-bottom: 1px solid hsl(var(--gold) / 0.7); color: hsl(var(--ink-foreground)); text-decoration: none; font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; transition: color 0.3s, border-color 0.3s; } .ds-maison-link:hover { border-bottom-color: hsl(var(--gold)); color: hsl(var(--gold)); } .ds-maison-link:focus-visible { outline: 2px solid hsl(var(--gold));\n  outline-offset: 3px; }"
+    },
+    {
+      "name": "Plate",
+      "kind": "custom",
+      "description": "Full-bleed plate with a champagne inset rim and an ink caption.",
+      "html": "<figure class=\"ds-plate\"><div class=\"ds-plate-frame\"><span class=\"ds-plate-fill\"></span><span class=\"ds-plate-rim\"></span><figcaption><span>Burrata</span><small>Sliced tomato and peach in a walnut bowl.</small></figcaption></div></figure>",
+      "css": ".ds-plate { width: min(100%, 38rem); margin: 0; } .ds-plate-frame { position: relative; height: 22rem; overflow: hidden; background: hsl(var(--ink-soft)); } .ds-plate-fill { position: absolute; inset: 0; background: linear-gradient(160deg, hsl(var(--ink-soft)), hsl(28 12% 18%) 40%, hsl(36 30% 28%) 100%); } .ds-plate-rim { position: absolute; inset: 0.8rem; border: 1px solid hsl(var(--gold) / 0.55); pointer-events: none; z-index: 2; } .ds-plate figcaption { position: absolute; right: 0; bottom: 0; left: 0; z-index: 2; display: flex; flex-direction: column; gap: 0.3rem; padding: 4.5rem 1.25rem 1.15rem; background: linear-gradient(to top, hsl(var(--ink) / 0.78), transparent); } .ds-plate figcaption span { font-family: var(--font-display), \"Bodoni Moda\", Didot, Georgia, serif; font-size: 2.1rem; line-height: 1; color: hsl(var(--ink-foreground)); } .ds-plate figcaption small { max-width: 28rem; color: hsl(var(--ink-foreground) / 0.78); font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-size: 0.82rem; line-height: 1.45; }"
+    },
+    {
+      "name": "Service Title",
+      "kind": "custom",
+      "description": "Pinned service name in Bodoni, with an uppercase enquire cue.",
+      "html": "<a class=\"ds-service\" href=\"/contact\"><span class=\"ds-service-title\">Private Dinner Parties</span><span class=\"ds-service-copy\">Custom multi-course experiences tailored to your preferences</span><span class=\"ds-service-enquire\">Enquire <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span></a>",
+      "css": ".ds-service { display: flex; flex-direction: column; align-items: flex-start; gap: 1.15rem; max-width: 36rem; color: hsl(var(--foreground)); text-decoration: none; } .ds-service-title { font-family: var(--font-display), \"Bodoni Moda\", Didot, Georgia, serif; font-weight: 500; font-size: clamp(3.4rem, 5.6vw, 5.8rem); line-height: 0.95; letter-spacing: -0.03em; max-width: 12ch; } .ds-service-copy { max-width: 36rem; color: hsl(var(--foreground-muted)); font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-size: 0.95rem; line-height: 1.6; } .ds-service-enquire { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: hsl(var(--foreground-subtle)); } .ds-service:hover .ds-service-enquire { color: hsl(var(--gold)); } .ds-service:focus-visible { outline: 2px solid hsl(var(--gold));\n  outline-offset: 3px; }"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Square hairline badge for a row, such as Demo or Coming soon.",
+      "html": "<span class=\"ds-badge\">Demo</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; border: 1px solid hsl(var(--border-strong)); padding: 0.3rem 0.45rem; color: hsl(var(--foreground-subtle)); font-family: var(--font-body), \"Hanken Grotesk\", \"Helvetica Neue\", sans-serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; } .ds-badge:hover { border-color: hsl(var(--gold)); color: hsl(var(--foreground)); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "A private table, composed.",
+    "overview": "Table d'Adrian is a private table set on warm ivory and near-black ink, with one champagne gold for the italic word, the hairline, and the photograph rim. Bodoni Moda carries the display line at a tight, engraved scale. Hanken Grotesk carries navigation, labels, and the sentence. A screen is a headline, a lede, a square booking control, and a plate.\n\nThe maison alternates two grounds. Ivory holds the about, services, menus, and wellness bands. Ink holds the first viewport, the plate gallery, the quotes, the closing invitation, and the footer. Structure is a 1px rule. Photographs are full-bleed crops. The hero plate, the about portrait, and the menu cover take a gold inset rim. The horizontal gallery does not.\n\nSola is the other room on the same domain. On `/sola`, the custom properties swap to cream and deep green, and both the sentence and the display line set in Source Serif 4. The houses do not share a metal or a typeface.",
+    "keyCharacteristics": [
+      "Warm ivory grounds and near-black ink fields",
+      "One champagne gold, used as italic, rim, and hairline",
+      "Bodoni Moda for display, Hanken Grotesk for UI",
+      "Square controls and 1px rules",
+      "A pinned split hero, a pinned service title, and a horizontal plate gallery",
+      "Sola as a cream and deep-green room in Source Serif 4"
+    ],
+    "rules": [
+      {
+        "name": "The One Metal Rule",
+        "body": "Champagne is the only maison accent. It marks a word, a rim, a focus ring, or a hairline. If a surface is mostly gold, it is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Houses Rule",
+        "body": "Sola rewrites the token set to cream and deep green and sets type in Source Serif 4. Maison champagne and Bodoni stay off that room. Sola green stays off the maison.",
+        "section": "colors"
+      },
+      {
+        "name": "The Italic Word Rule",
+        "body": "A display line may set a single word in italic champagne. The rest stays roman, weight 500.",
+        "section": "typography"
+      },
+      {
+        "name": "The Grotesque Label Rule",
+        "body": "Labels, navigation, and buttons are Hanken Grotesk. Labels are uppercase and tracked. Display italics do not set a label.",
+        "section": "typography"
+      },
+      {
+        "name": "The Split Table Rule",
+        "body": "From 1024px the first viewport is a pinned two-column stage: the sentence on ink, the plate beside it. Below that breakpoint the plate stacks above the copy and the pin releases.",
+        "section": "layout"
+      },
+      {
+        "name": "The Still Page Rule",
+        "body": "When `prefers-reduced-motion` is set, durations collapse, the preloader does not render, the custom cursor does not, pins release, and the service list and the quotations stack in normal flow. The photograph and the booking control stay.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Field Rule",
+        "body": "A section is flat. Reach for ink, ivory, or a 1px rule before a shadow. Soft and lift are for the enquiry panel, the navigation menu, and the cookie bar.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Plate Rule",
+        "body": "The Button, the field, the nav book control, and the photograph frame are square. Do not round them to match a card library.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Inset Rim Rule",
+        "body": "A gold rim is an inset hairline on the hero plate, the about portrait, and the menu cover. It is not a frame around every image, and the horizontal gallery does not wear it.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do set maison display in Bodoni Moda, weight 500, tracking -0.03em (-0.035em on the hero), with at most one italic champagne word.",
+      "Do set navigation, labels, buttons, and the sentence in Hanken Grotesk.",
+      "Do keep maison grounds to warm ivory and near-black ink, and the accent to champagne.",
+      "Do separate rows with a 1px hairline, and inset a 1px champagne rim by 0.8rem on the hero plate, the about portrait, and the menu cover.",
+      "Do keep the booking control square: ivory on ink, or ink on ivory.",
+      "Do rewrite the token set and the typeface together on Sola: cream, deep green, Source Serif 4.",
+      "Do leave the photograph and the booking control in place when motion is reduced."
+    ],
+    "donts": [
+      "Don't fill a maison button or a section with champagne.",
+      "Don't add a second metal or a saturated accent on the maison.",
+      "Don't set Sola in Bodoni, or the maison display in Source Serif 4.",
+      "Don't put Sola green on a maison surface.",
+      "Don't round the Button, the field, the nav book control, or the plate.",
+      "Don't use a hard offset shadow. Depth is the ink field, the hairline, and the soft or lift shadow on the enquiry panel, the navigation menu, and the cookie bar.",
+      "Don't replace a plate photograph with an illustration or a stock scene."
+    ]
+  }
+}

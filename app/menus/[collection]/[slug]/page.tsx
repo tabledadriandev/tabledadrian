@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getMenu, MENUS } from '@/data/menus'
@@ -85,12 +85,11 @@ export default function MenuPage({ params }: { params: { collection: string; slu
 
         <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="relative aspect-[5/4] max-h-[42vh] overflow-hidden rounded-[1.5rem] bg-background-secondary sm:aspect-[4/5] sm:max-h-none lg:col-span-5 lg:max-h-none">
-            <Image
+            <DishPhoto
               src={menu.cover}
               alt={menu.title}
               fill
               priority
-              className="photo object-cover"
               sizes="(max-width: 1024px) 100vw, 40vw"
             />
           </div>
@@ -107,7 +106,7 @@ export default function MenuPage({ params }: { params: { collection: string; slu
                 return (
                   <section key={course.heading}>
                     {!repeatTitle && (
-                      <h2 className="text-[11px] font-medium uppercase tracking-[0.16em] text-gold">
+                      <h2 className="text-[11px] font-medium uppercase tracking-[0.16em] text-olive">
                         {isCourseLabel(course.heading) ? course.heading : titleCase(course.heading)}
                       </h2>
                     )}

@@ -1,30 +1,51 @@
 'use client'
 
-import { useEffect, ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import Lenis from 'lenis'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 
-interface SmoothScrollProps {
-  children: ReactNode
-}
-
-export function SmoothScroll({ children }: SmoothScrollProps) {
+export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) return
+
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.05,
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
+      syncTouch: false,
+      anchors: true,
+      autoRaf: false,
+      stopInertiaOnNavigate: true,
     })
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+    window.__lenis = lenis
+    lenis.on('scroll', ScrollTrigger.update)
+
+    const ticker = (time: number) => {
+      lenis.raf(time * 1000)
     }
-    requestAnimationFrame(raf)
+    gsap.ticker.add(ticker)
+    gsap.ticker.lagSmoothing(0)
+
+    const onRefresh = () => lenis.resize()
+    ScrollTrigger.addEventListener('refresh', onRefresh)
+
+    const fonts = document.fonts?.ready.then(() => ScrollTrigger.refresh())
+
+    const observer = new MutationObserver(() => {
+      const locked = document.body.style.overflow === 'hidden'
+      if (locked) lenis.stop()
+      else lenis.start()
+    })
+    observer.observe(document.body, { attributes: true, attributeFilter: ['style'] })
 
     return () => {
+      observer.disconnect()
+      void fonts
+      ScrollTrigger.removeEventListener('refresh', onRefresh)
+      gsap.ticker.remove(ticker)
       lenis.destroy()
+      if (window.__lenis === lenis) delete window.__lenis
     }
   }, [])
 

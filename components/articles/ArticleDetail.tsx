@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Clock, User } from 'lucide-react'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import ReactMarkdown from 'react-markdown'
 import { Article } from '@/data/articles'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
@@ -42,19 +42,14 @@ export function ArticleDetail({ article }: ArticleDetailProps) {
           className="space-y-8"
         >
           {/* Hero Image */}
-          <motion.div
-            variants={fadeInUp}
-            className="aspect-video relative rounded-xl overflow-hidden mb-8 shadow-lg"
-          >
-            <Image
+          <motion.div variants={fadeInUp} className="dish-well relative mb-8 overflow-hidden">
+            <DishPhoto
               src={article.image}
               alt={article.title}
-              fill
-              className="photo object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
+              className="mx-auto max-h-[70vh] w-auto"
+              sizes="(max-width: 768px) 100vw, 896px"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </motion.div>
 
           {/* Meta */}

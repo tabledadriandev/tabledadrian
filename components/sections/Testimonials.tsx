@@ -1,12 +1,13 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
+import { useRef } from 'react'
+import { gsap, useGSAP } from '@/lib/gsap'
+import { DustField } from '@/components/motion/DustField'
 
 const testimonials = [
   {
     name: 'Sarah Mitchell',
-    role: 'Private dinner, London',
+    role: 'Private dinner',
     content:
       'Chef Adrian transformed our anniversary dinner into an unforgettable evening. Every course felt personal, and guests are still talking about it.',
   },
@@ -30,47 +31,88 @@ const testimonials = [
   },
 ]
 
-export function Testimonials() {
-  return (
-    <section className="bg-ink py-20 text-ink-foreground sm:py-24 lg:py-32">
-      <div className="container">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="on-ink max-w-3xl"
-        >
-          <motion.span variants={fadeInUp} className="eyebrow mb-5">
-            Kind words
-          </motion.span>
-          <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl md:text-6xl">
-            Tables we have cooked for.
-          </motion.h2>
-        </motion.div>
+const FAN = [
+  { y: 0, scale: 1, rotate: 0 },
+  { y: -26, scale: 0.95, rotate: -3.2 },
+  { y: -50, scale: 0.9, rotate: 2.6 },
+  { y: -72, scale: 0.85, rotate: -1.6 },
+]
 
-        <div className="mt-14 grid gap-px bg-white/10 sm:grid-cols-2">
-          {testimonials.map((t, i) => (
-            <motion.blockquote
-              key={t.name}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.6 }}
-              className="bg-ink p-8 sm:p-10"
-            >
-              <p className="font-display text-2xl italic leading-snug text-ink-foreground sm:text-[1.7rem]">
-                &ldquo;{t.content}&rdquo;
-              </p>
-              <footer className="mt-8">
-                <cite className="not-italic">
-                  <span className="block text-sm font-medium">{t.name}</span>
-                  <span className="mt-1 block text-[11px] uppercase tracking-caps text-ink-foreground/45">
-                    {t.role}
-                  </span>
-                </cite>
+export function Testimonials() {
+  const root = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+        const cards = gsap.utils.toArray<HTMLElement>('.quote-card')
+        const bar = root.current?.querySelector<HTMLElement>('.quote-bar i')
+        const place = (slot: number) => {
+          const fan = FAN[Math.min(slot, FAN.length - 1)]
+          return { y: fan.y, scale: fan.scale, rotation: fan.rotate, opacity: slot > 3 ? 0 : 1 - slot * 0.14 }
+        }
+        cards.forEach((card, i) => gsap.set(card, { ...place(i), zIndex: cards.length - i }))
+
+        const tl = gsap.timeline({
+          defaults: { ease: 'power2.inOut' },
+          scrollTrigger: {
+            trigger: root.current,
+            start: 'top top',
+            end: '+=2400',
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+            onUpdate: (self) => {
+              if (bar) bar.style.transform = `scaleX(${Math.max(0.06, self.progress)})`
+            },
+          },
+        })
+        cards.slice(0, -1).forEach((card, step) => {
+          const at = step * 1.25 + 0.35
+          tl.to(card, { yPercent: -135, xPercent: -18, rotation: -11, opacity: 0, duration: 1 }, at)
+          cards.slice(step + 1).forEach((next, j) => {
+            tl.to(next, { ...place(j), duration: 1 }, at + 0.08)
+          })
+        })
+        tl.to({}, { duration: 0.35 })
+      })
+      mm.add('(max-width: 1023px) and (prefers-reduced-motion: no-preference)', () => {
+        const cards = gsap.utils.toArray<HTMLElement>('.quote-card')
+        cards.slice(0, -1).forEach((card, i) => {
+          gsap.to(card, {
+            scale: 0.92,
+            opacity: 0.45,
+            ease: 'none',
+            scrollTrigger: { trigger: cards[i + 1], start: 'top 85%', end: 'top 20%', scrub: true },
+          })
+        })
+      })
+      return () => mm.revert()
+    },
+    { scope: root }
+  )
+
+  return (
+    <section id="testimonials" ref={root} className="quotes-pin relative overflow-hidden">
+      <DustField density={80} />
+      <div className="quotes-layout container relative">
+        <div className="quotes-intro">
+          <h2 className="display text-4xl sm:text-6xl" data-split="chars">
+            Tables we have cooked for.
+          </h2>
+          <div className="quote-bar" aria-hidden="true">
+            <i />
+          </div>
+        </div>
+        <div className="quote-deck">
+          {testimonials.map((quote, index) => (
+            <blockquote key={quote.name} className="quote-card" style={{ '--i': index } as React.CSSProperties}>
+              <p>&ldquo;{quote.content}&rdquo;</p>
+              <footer>
+                <cite>{quote.name}</cite>
+                <span>{quote.role}</span>
               </footer>
-            </motion.blockquote>
+            </blockquote>
           ))}
         </div>
       </div>
