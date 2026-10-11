@@ -17,7 +17,7 @@ export default function PrivacyPage() {
     >
       <p>
         Table d&apos;Adrian (&quot;we&quot;, &quot;us&quot;) is a private chef service based on the
-        Côte d&apos;Azur, serving clients in Monaco and along the French Riviera. This policy
+        Côte d&apos;Azur and in Monaco. This policy
         explains what we collect, why we collect it, and the choices you have.
       </p>
 

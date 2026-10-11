@@ -9,6 +9,8 @@ import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
 import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
 import { HERO_IMAGE } from '@/data/gallery'
 import { credentials } from '@/lib/credentials'
+import { copy, MARKET } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 
 const HeroPlate = dynamic(() => import('@/components/motion/HeroPlate'), { ssr: false })
 
@@ -53,6 +55,9 @@ function useWebGLPlate() {
 }
 
 export function Hero() {
+  const locale = useLocale()
+  const t = copy[locale]
+  const chef = credentials[locale]
   const rootRef = useRef<HTMLElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const plateRef = useRef<HTMLDivElement>(null)
@@ -142,23 +147,21 @@ export function Hero() {
             <em>your</em> table.
           </h1>
           <p className="hero-lede hero-rise">
-            Private chef and longevity cuisine on the Côte d&apos;Azur and in Monaco. Michelin-trained
-            technique and nutrition science, brought into your home. From an intimate dinner for two
-            to a table of twenty-five, every menu is written for the people eating it.
+            {t.heroLede}
           </p>
           <div className="hero-rise mt-8">
             <Magnetic>
-              <Button href="/contact" variant="light" size="lg">
-                Book your experience
+              <Button href={locale === 'fr' ? '/fr/contact' : '/contact'} variant="light" size="lg">
+                {t.bookCta}
                 <ArrowRight size={18} />
               </Button>
             </Magnetic>
           </div>
           <p className="hero-facts hero-rise">
-            <span>Côte d&apos;Azur &amp; Monaco</span>
-            <span>{credentials.en.years}</span>
-            <span>{credentials.en.ehl}</span>
-            <span>{credentials.en.stanford}</span>
+            <span>{MARKET[locale]}</span>
+            <span>{chef.years}</span>
+            <span>{chef.ehl}</span>
+            <span>{chef.stanford}</span>
           </p>
         </div>
 

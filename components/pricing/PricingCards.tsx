@@ -5,9 +5,11 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Check, Shield, Lock, Calendar, Heart } from 'lucide-react'
 import * as Accordion from '@radix-ui/react-accordion'
-import { pricingTiers, subscriptionPlans, socialProof, guarantees, pricingFAQ, urgencyElements } from '@/data/pricing'
-import { cn, formatCurrency } from '@/lib/utils'
+import { pricingTiers, subscriptionPlans, guarantees, pricingFAQ, urgencyElements } from '@/data/pricing'
+import { cn } from '@/lib/utils'
 import { DustField } from '@/components/motion/DustField'
+import { ON_REQUEST, copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 
 const iconMap: Record<string, typeof Shield> = {
   Shield,
@@ -16,25 +18,14 @@ const iconMap: Record<string, typeof Shield> = {
   Heart,
 }
 
-const proof = [
-  [socialProof.clientsServed, 'clients served'],
-  [socialProof.satisfactionRate, 'satisfaction'],
-  [`${socialProof.averageRating}`, `${socialProof.reviewCount} reviews`],
-  [socialProof.repeatClientRate, 'return'],
-] as const
-
 export function PricingCards() {
+  const locale = useLocale()
+  const t = copy[locale]
   const [isMonthly, setIsMonthly] = useState(false)
 
   return (
     <div>
-      <p className="about-facts mt-0 border-t-0 pt-0">
-        {proof.map(([value, label]) => (
-          <span key={label}>
-            <strong data-count>{value}</strong> {label}
-          </span>
-        ))}
-      </p>
+      <p className="text-sm text-foreground-muted">{t.quoteNote}</p>
 
       <div className="mt-12 flex gap-8 border-b border-border" role="tablist" aria-label="Pricing view">
         <button
@@ -47,7 +38,7 @@ export function PricingCards() {
             !isMonthly ? 'border-b border-gold text-foreground' : 'text-foreground-muted'
           )}
         >
-          Per event
+          {t.perEvent}
         </button>
         <button
           type="button"
@@ -59,7 +50,7 @@ export function PricingCards() {
             isMonthly ? 'border-b border-gold text-foreground' : 'text-foreground-muted'
           )}
         >
-          Monthly
+          {t.monthly}
         </button>
       </div>
 
@@ -82,18 +73,13 @@ export function PricingCards() {
                 <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{tier.name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{tier.tagline}</p>
                 <p className="lh-display mt-6 font-display text-5xl tracking-tight">
-                  {tier.basePrice ? <span data-count>{formatCurrency(tier.basePrice)}</span> : tier.priceDisplay}
+                  {ON_REQUEST[locale]}
                 </p>
-                {tier.pricePerGuest && (
-                  <p className="mt-2 text-sm text-foreground-muted">
-                    + <span data-count>{formatCurrency(tier.pricePerGuest)}</span> / guest
-                  </p>
-                )}
                 <p className="mt-3 text-[11px] uppercase tracking-caps text-foreground-subtle">{tier.guests}</p>
                 {tier.savings && <p className="mt-3 text-sm text-foreground">{tier.savings}</p>}
                 {tier.extras && <p className="mt-2 text-sm text-foreground-muted">{tier.extras}</p>}
                 {tier.urgency && <p className="mt-3 text-sm text-foreground">{tier.urgency}</p>}
-                <Link href="/contact" className="maison-link mt-6">
+                <Link href={locale === 'fr' ? '/fr/contact' : '/contact'} className="maison-link mt-6">
                   {tier.cta}
                 </Link>
               </div>
@@ -131,13 +117,12 @@ export function PricingCards() {
                 {plan.popular && <p className="text-[11px] uppercase tracking-caps text-gold">MOST POPULAR</p>}
                 <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{plan.name}</h3>
                 <p className="lh-display mt-6 font-display text-5xl tracking-tight">
-                  {formatCurrency(plan.price)}
-                  <span className="ml-1 font-body text-base text-foreground-muted">/ {plan.period}</span>
+                  {ON_REQUEST[locale]}
                 </p>
                 <p className="mt-3 text-[11px] uppercase tracking-caps text-foreground-subtle">{plan.commitment}</p>
                 <p className="mt-3 text-sm text-foreground-muted">{plan.ideal}</p>
-                <Link href="/contact" className="maison-link mt-6">
-                  Start Subscription
+                <Link href={locale === 'fr' ? '/fr/contact' : '/contact'} className="maison-link mt-6">
+                  {t.bookCta}
                 </Link>
               </div>
               <ul className="lg:col-span-8">
@@ -193,7 +178,7 @@ export function PricingCards() {
         <p className="relative mt-4 max-w-xl text-base leading-relaxed text-ink-foreground/80">
           {urgencyElements.consultationSlots}. Book your consultation to secure your preferred date.
         </p>
-        <Link href="/contact" className="maison-link relative mt-6 text-ink-foreground">
+        <Link href={locale === 'fr' ? '/fr/contact' : '/contact'} className="maison-link relative mt-6 text-ink-foreground">
           Book Consultation Now
         </Link>
       </div>

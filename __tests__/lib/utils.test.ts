@@ -10,7 +10,7 @@ describe('Utils', () => {
 
   describe('formatCurrency', () => {
     it('formats currency correctly', () => {
-      expect(formatCurrency(100)).toContain('£')
+      expect(formatCurrency(100)).toMatch(/€|EUR/)
       expect(formatCurrency(100)).toContain('100')
     })
   })

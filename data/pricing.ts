@@ -147,7 +147,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
       'Up to 4 guests each',
       'Seasonal menu rotation',
       'Priority scheduling',
-      '10% off additional events',
+      'Preferential rates for further events',
     ],
     ideal: 'Busy professionals & couples',
   },
@@ -164,7 +164,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
       'Custom menu input',
       'Dedicated chef relationship',
       'Meal prep add-on available',
-      '15% off additional events',
+      'Preferential rates for further events',
       'Guest chef experiences quarterly',
     ],
     ideal: 'Families & entertainers',
@@ -181,7 +181,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
       'Full culinary concierge',
       'Kitchen pantry stocking',
       'Holiday event priority',
-      '25% off all additional services',
+      'Preferential rates for further services',
       'Annual culinary retreat invitation',
     ],
     ideal: 'High-net-worth households',
@@ -213,7 +213,7 @@ export const guarantees = [
   {
     icon: 'Lock',
     title: 'Secure Booking',
-    description: 'Only 25% deposit to reserve. Full payment 48 hours before your event.',
+    description: 'A deposit reserves the date. Payment terms are confirmed with the quote, on request.',
   },
   {
     icon: 'Calendar',
@@ -242,7 +242,7 @@ export const pricingFAQ = [
   },
   {
     question: 'Do you travel to different locations?',
-    answer: 'I cook on the Côte d\'Azur and in Monaco. For tables further along the French Riviera, we can discuss travel.',
+    answer: 'I cook on the Côte d\'Azur and in Monaco.',
   },
   {
     question: 'What about kitchen requirements?',

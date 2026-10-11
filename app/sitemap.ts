@@ -18,6 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/bmi',
     '/privacy',
     '/terms',
+    '/fr',
+    '/fr/pricing',
+    '/fr/contact',
   ].map((path) => ({
     url: `${SITE_URL}${path || '/'}`,
     lastModified: now,

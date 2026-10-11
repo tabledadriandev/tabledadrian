@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Pricing',
+  title: 'Menus on request',
   description:
-    "Clear prices for Table d'Adrian private chef dinners, weekly meal preparation and events on the Côte d'Azur and in Monaco.",
+    "Private chef menus on the Côte d'Azur and in Monaco. Fees on request, quoted in €.",
   alternates: { canonical: '/pricing' },
 }
 

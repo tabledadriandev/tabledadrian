@@ -3,6 +3,8 @@
 import { PricingCards } from '@/components/pricing/PricingCards'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
+import { copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 
 const garnish: GarnishItem[] = [
   { kind: 'line-citrus', x: '78%', y: '3rem', size: 130, depth: 0.3, rotate: -10, lite: true },
@@ -12,6 +14,8 @@ const garnish: GarnishItem[] = [
 ]
 
 export default function PricingPage() {
+  const locale = useLocale()
+  const t = copy[locale]
   return (
     <div className="relative bg-background pb-20 pt-28 sm:pt-32">
       <Garnish items={garnish} className="page-garnish" />
@@ -20,8 +24,8 @@ export default function PricingPage() {
           split="chars"
           as="h1"
           align="left"
-          title="Clear numbers, no theatre"
-          description="Menus are priced for the table, not by a hidden formula. Tell Adrian the occasion and we will write a precise quote."
+          title={t.pricingTitle}
+          description={t.pricingDescription}
           animate={false}
           className="mb-14"
         />

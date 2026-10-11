@@ -9,13 +9,8 @@ import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
 import { gsap, SplitText, useGSAP } from '@/lib/gsap'
 import { ABOUT_IMAGE } from '@/data/gallery'
 import { credentials } from '@/lib/credentials'
-
-const facts = [
-  [credentials.en.ehlShort, credentials.en.ehlLabel],
-  [credentials.en.stanford, ''],
-  [credentials.en.yearsShort, credentials.en.yearsLabel],
-  ['100+', 'Households'],
-] as const
+import { copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 
 const garnish: GarnishItem[] = [
   { kind: 'basil', x: '38%', y: '6%', size: 128, depth: 0.95, rotate: -18, lite: true },
@@ -28,6 +23,14 @@ const garnish: GarnishItem[] = [
 ]
 
 export function About() {
+  const locale = useLocale()
+  const t = copy[locale]
+  const chef = credentials[locale]
+  const facts = [
+    [chef.ehlShort, chef.ehlLabel],
+    [chef.stanford, ''],
+    [chef.yearsShort, chef.yearsLabel],
+  ] as const
   const root = useRef<HTMLElement>(null)
 
   useGSAP(
@@ -95,14 +98,15 @@ export function About() {
 
           <div className="about-copy lg:col-span-6 lg:col-start-7">
             <h2 className="display text-[2.6rem] sm:text-6xl lg:text-[4.6rem]" data-split="chars">
-              Two disciplines, <em className="italic text-gold">one</em> table.
+              {t.aboutTitleBefore}
+              <em className="italic text-gold">{t.aboutTitleEm}</em>
+              {t.aboutTitleAfter}
             </h2>
             <p className="mt-8 max-w-[62ch] text-base leading-relaxed text-foreground-muted sm:text-lg">
-              {credentials.en.about}
+              {chef.about}
             </p>
             <p className="mt-5 max-w-[62ch] text-base leading-relaxed text-foreground-muted sm:text-lg">
-              Whether it is a celebration for twenty or a week of quiet dinners for two, each menu is
-              written from scratch around your preferences, allergies and the season&apos;s market.
+              {t.aboutSecond}
             </p>
             <blockquote className="about-quote relative mt-10 max-w-xl pt-6">
               <span className="absolute inset-x-0 top-0 h-px bg-border" data-rule aria-hidden="true" />
@@ -123,7 +127,7 @@ export function About() {
             </p>
             <div className="mt-10">
               <Magnetic>
-                <Button href="/contact" variant="outline">
+                <Button href={locale === 'fr' ? '/fr/contact' : '/contact'} variant="outline">
                   Start a conversation
                   <ArrowRight size={16} />
                 </Button>

@@ -8,13 +8,13 @@ web
 
 ## Users
 
-People booking a private chef for dinners, weekly meals, and private events. The brief names French Riviera and Monaco clientele (villas, yachts, private events) as the audience the site should feel made for. Published site copy still locates the practice in London and across Europe. Both stay: the feeling may address that clientele; the claims stay the published ones.
+People booking a private chef for dinners, weekly meals, and private events on the Côte d'Azur and in Monaco.
 
 Secondary audiences already on the site: people comparing menu books, reading the journal and recipes, using the nutrition and BMI demos, and adults considering the Sola app (iPhone, iPad and Mac).
 
 ## Product Purpose
 
-Table d'Adrian is Adrian Stefan's private-chef practice. The site explains the cooking, shows real plates, states prices, and takes an enquiry. Success is a serious enquiry from someone who understands what the table costs and what it is for.
+Table d'Adrian is Adrian Stefan's private-chef practice. The site explains the cooking, shows real plates, and takes an enquiry. Fees are on request, quoted in €. Success is a serious enquiry from someone who understands the table.
 
 Sola is a separate nutrition-guidance app from the same kitchen. It is not medical advice and not a medical device. The site explains that, holds the privacy policy, and offers a waitlist until an App Store link exists.
 
@@ -24,7 +24,7 @@ Michelin-trained technique paired with a Nutrition certificate, Stanford, writte
 
 ## Operating Context
 
-Enquiries go through the contact form or adrian@tabledadrian.com / +33 6 15 96 30 46. A reply is described as typically within 24 hours. Booking and payment services exist in the backend. Menu books, the gallery, recipes, articles, pricing, privacy, and terms are public routes.
+Bookings go through the enquiry form, Instagram DM @tabledadrian, or adrian@tabledadrian.com. A reply is described as typically within 24 hours. Menu books, the gallery, recipes, articles, pricing (on request), privacy, and terms are public routes.
 
 ## Capabilities and Constraints
 

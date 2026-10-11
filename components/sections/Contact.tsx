@@ -1,7 +1,9 @@
 'use client'
 
 import { ArrowRight } from 'lucide-react'
-import { CONTACT_INFO } from '@/lib/constants'
+import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
+import { copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 import { Button } from '@/components/ui/Button'
 import { Magnetic } from '@/components/motion/Magnetic'
 import { DustField } from '@/components/motion/DustField'
@@ -15,6 +17,8 @@ const garnish: GarnishItem[] = [
 ]
 
 export function Contact() {
+  const locale = useLocale()
+  const t = copy[locale]
   return (
     <section id="contact" className="contact-stage relative overflow-hidden bg-ink text-ink-foreground">
       <DustField density={70} />
@@ -30,16 +34,16 @@ export function Contact() {
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center" data-rise="24">
           <Magnetic>
-            <Button href="/contact" variant="light" size="lg">
-              Book your experience
+            <Button href={locale === 'fr' ? '/fr/contact' : '/contact'} variant="light" size="lg">
+              {t.bookCta}
               <ArrowRight size={18} />
             </Button>
           </Magnetic>
           <a className="maison-link" href={`mailto:${CONTACT_INFO.email}`}>
             {CONTACT_INFO.email}
           </a>
-          <a className="maison-link is-quiet" href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}>
-            {CONTACT_INFO.phone}
+          <a className="maison-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+            {t.instagramHandle}
           </a>
         </div>
       </div>

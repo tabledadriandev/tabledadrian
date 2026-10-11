@@ -43,12 +43,10 @@ export function siteJsonLd() {
         areaServed: [
           { '@type': 'AdministrativeArea', name: "Côte d'Azur" },
           { '@type': 'City', name: 'Monaco' },
-          { '@type': 'AdministrativeArea', name: 'French Riviera' },
         ],
         sameAs: [INSTAGRAM_URL],
         servesCuisine: ['French', 'Mediterranean', 'Longevity'],
-        priceRange: '€€€',
-        currenciesAccepted: 'EUR, GBP',
+        currenciesAccepted: 'EUR',
         address: {
           '@type': 'PostalAddress',
           addressRegion: "Provence-Alpes-Côte d'Azur",

@@ -9,16 +9,7 @@ import { AppDownloadSection } from '@/components/app/AppDownloadSection'
 import { Contact } from '@/components/sections/Contact'
 import { Marquee } from '@/components/motion/Marquee'
 import { GALLERY } from '@/data/gallery'
-import { credentials } from '@/lib/credentials'
-
-const CREDENTIALS = [
-  'Michelin-trained technique',
-  credentials.en.ehl,
-  credentials.en.stanford,
-  credentials.en.years,
-  "Côte d'Azur & Monaco",
-  'Tables of two to twenty-five',
-]
+import { CredentialMarquee } from '@/components/home/CredentialMarquee'
 
 export default function Home() {
   return (
@@ -41,7 +32,7 @@ export default function Home() {
       />
       <Hero />
       <About />
-      <Marquee items={CREDENTIALS} />
+      <CredentialMarquee />
       <Services />
       <Wellness />
       <Testimonials />

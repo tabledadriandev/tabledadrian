@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     template: "%s | Table d'Adrian",
   },
   description: SITE_DESCRIPTION,
-  keywords: "private chef, personal chef, private chef Côte d'Azur, private chef Monaco, French Riviera private chef, luxury chef services, private chef for events, hire private chef, longevity cuisine, private chef meal planning",
+  keywords: "private chef, personal chef, private chef Côte d'Azur, private chef Monaco, luxury chef services, private chef for events, hire private chef, longevity cuisine, private chef meal planning",
   authors: [{ name: "Table d'Adrian" }],
   creator: "Table d'Adrian",
   publisher: "Table d'Adrian",

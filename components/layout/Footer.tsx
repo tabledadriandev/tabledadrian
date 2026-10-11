@@ -4,7 +4,9 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Instagram, Linkedin } from 'lucide-react'
-import { SOCIAL_LINKS, CONTACT_INFO, FOOTER_LINKS, WELLNESS_LINKS } from '@/lib/constants'
+import { SOCIAL_LINKS, CONTACT_INFO, FOOTER_LINKS, WELLNESS_LINKS, INSTAGRAM_URL } from '@/lib/constants'
+import { copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 import { AppBadges } from '@/components/app/AppBadges'
 import { getLenis } from '@/lib/lenis'
 import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
@@ -19,6 +21,8 @@ const socials = [
 export function Footer() {
   const root = useRef<HTMLElement>(null)
   const pathname = usePathname()
+  const locale = useLocale()
+  const t = copy[locale]
 
   useGSAP(
     () => {
@@ -153,8 +157,7 @@ export function Footer() {
         <div className="mt-8 grid gap-12 border-t border-white/15 pt-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="max-w-sm text-sm leading-relaxed text-ink-foreground/80">
-              Michelin-trained private chef and nutrition-certified cook. Private dinners, weekly meal
-              preparation and longevity menus on the Côte d&apos;Azur and in Monaco.
+              {t.footerBlurb}
             </p>
             <div className="mt-6 flex gap-2">
               {socials.map(({ href, label, Icon }) => (
@@ -210,8 +213,23 @@ export function Footer() {
             <p className="text-[11px] uppercase tracking-caps text-gold">Contact</p>
             <ul className="mt-4 space-y-2 text-sm text-ink-foreground/80">
               <li>
+                <Link className="hover:text-ink-foreground" href={locale === 'fr' ? '/fr/contact' : '/contact'}>
+                  {t.bookCta}
+                </Link>
+              </li>
+              <li>
                 <a className="hover:text-ink-foreground" href={`mailto:${CONTACT_INFO.email}`}>
                   {CONTACT_INFO.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  className="hover:text-ink-foreground"
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t.instagramLabel} {t.instagramHandle}
                 </a>
               </li>
               <li>
@@ -219,7 +237,14 @@ export function Footer() {
                   {CONTACT_INFO.phone}
                 </a>
               </li>
-              <li className="text-xs text-ink-foreground/65">{CONTACT_INFO.responseTime}</li>
+              <li className="flex gap-3 text-xs text-ink-foreground/65">
+                <Link href={pathname.replace(/^\/fr(?=\/|$)/, '') || '/'} className={locale === 'en' ? 'text-ink-foreground' : ''}>
+                  EN
+                </Link>
+                <Link href={pathname === '/' ? '/fr' : pathname.startsWith('/fr') ? pathname : `/fr${pathname}`} className={locale === 'fr' ? 'text-ink-foreground' : ''}>
+                  FR
+                </Link>
+              </li>
             </ul>
             <div className="mt-6">
               <AppBadges tone="light" size="sm" />

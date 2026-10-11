@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import { NAVIGATION, CONTACT_INFO } from '@/lib/constants'
+import { copy } from '@/lib/copy'
+import { useLocale, withLocale } from '@/lib/i18n'
 import { AppBadges } from '@/components/app/AppBadges'
 import { Magnetic } from '@/components/motion/Magnetic'
 import { cn } from '@/lib/utils'
@@ -14,6 +16,8 @@ const ease = [0.76, 0, 0.24, 1] as const
 
 export function Navbar() {
   const pathname = usePathname()
+  const locale = useLocale()
+  const t = copy[locale]
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -121,13 +125,13 @@ export function Navbar() {
             )}
             <Magnetic className="ml-3">
               <Link
-                href="/contact"
+                href={withLocale('/contact', locale)}
                 className={cn(
                   'nav-book inline-flex h-10 items-center px-4 text-[11px] uppercase tracking-caps',
                   onDark ? 'bg-ink-foreground text-ink' : 'bg-ink text-ink-foreground'
                 )}
               >
-                Book your experience
+                {t.bookCta}
               </Link>
             </Magnetic>
           </div>
@@ -189,8 +193,8 @@ export function Navbar() {
                 transition={{ delay: 0.45 }}
                 className="mt-8 space-y-6 border-t border-white/10 pt-8"
               >
-                <Link href="/contact" className="inline-flex h-12 items-center bg-ink-foreground px-6 text-sm text-ink">
-                  Book your experience
+                <Link href={withLocale('/contact', locale)} className="inline-flex h-12 items-center bg-ink-foreground px-6 text-sm text-ink">
+                  {t.bookCta}
                 </Link>
                 <AppBadges tone="light" size="sm" />
                 <p className="text-sm text-ink-foreground/70">

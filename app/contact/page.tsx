@@ -4,6 +4,8 @@ import { ContactForm } from '@/components/contact/ContactForm'
 import { ContactInfo } from '@/components/contact/ContactInfo'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
+import { copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 
 const garnish: GarnishItem[] = [
   { kind: 'basil', x: '8%', y: '5rem', size: 96, depth: 0.85, rotate: 30, lite: true },
@@ -13,6 +15,8 @@ const garnish: GarnishItem[] = [
 ]
 
 export default function ContactPage() {
+  const locale = useLocale()
+  const t = copy[locale]
   return (
     <div className="relative bg-background pb-20 pt-28 sm:pt-32">
       <Garnish items={garnish} className="page-garnish" />
@@ -20,9 +24,9 @@ export default function ContactPage() {
         <SectionHeading
           split="chars"
           as="h1"
-          eyebrow="Enquire"
-          title="Tell us about the table"
-          description="Occasion, guests, dietary notes, a date if you have one. Adrian typically replies within a day."
+          eyebrow={t.contactEyebrow}
+          title={t.contactTitle}
+          description={t.contactDescription}
           animate={false}
         />
         <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-2" data-rise="40">
