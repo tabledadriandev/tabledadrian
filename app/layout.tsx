@@ -7,6 +7,9 @@ import { Footer } from "@/components/layout/Footer"
 import { CustomCursor } from "@/components/layout/CustomCursor"
 import { Preloader } from "@/components/motion/Preloader"
 import { BrandSync } from "@/components/motion/BrandSync"
+import { PageCurtain } from "@/components/motion/PageCurtain"
+import { ProgressThread } from "@/components/motion/ProgressThread"
+import { HoverDistort } from "@/components/motion/HoverDistort"
 import { ConsentProvider } from "@/components/consent/ConsentProvider"
 import { CookieBanner } from "@/components/consent/CookieBanner"
 import { AnalyticsGate } from "@/components/consent/AnalyticsGate"
@@ -127,10 +130,13 @@ export default function RootLayout({
           <CustomCursor />
           <SmoothScroll>
             <Navbar />
-            <main id="main" className="min-h-screen">
+            <main id="main" className="site-main min-h-screen">
               {children}
             </main>
             <Footer />
+            <ProgressThread />
+            <HoverDistort />
+            <PageCurtain />
           </SmoothScroll>
           <CookieBanner />
           <AnalyticsGate />

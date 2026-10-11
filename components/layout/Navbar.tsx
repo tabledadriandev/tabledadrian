@@ -73,7 +73,7 @@ export function Navbar() {
               group.items ? (
                 <div key={group.name} className="group relative">
                   <button
-                    className={cn('px-3 py-2 text-[11px] uppercase tracking-caps transition-colors', textMuted)}
+                    className={cn('nav-link px-3 py-2 text-[11px] uppercase tracking-caps transition-colors', textMuted)}
                     aria-haspopup="menu"
                   >
                     {group.name}
@@ -112,7 +112,8 @@ export function Navbar() {
                 <Link
                   key={group.name}
                   href={group.href!}
-                  className={cn('px-3 py-2 text-[11px] uppercase tracking-caps transition-colors', textMuted)}
+                  aria-current={pathname === group.href ? 'page' : undefined}
+                  className={cn('nav-link px-3 py-2 text-[11px] uppercase tracking-caps transition-colors', textMuted)}
                 >
                   {group.name}
                 </Link>

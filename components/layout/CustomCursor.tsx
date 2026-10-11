@@ -6,11 +6,13 @@ import { gsap } from '@/lib/gsap'
 export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null)
   const dotRef = useRef<HTMLDivElement>(null)
+  const labelRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     const ring = ringRef.current
     const dot = dotRef.current
-    if (!ring || !dot) return
+    const label = labelRef.current
+    if (!ring || !dot || !label) return
 
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -33,7 +35,11 @@ export function CustomCursor() {
       const target = event.target
       if (!(target instanceof Element)) return
       const hot = target.closest('a, button, [data-cursor], summary, label')
+      const named = target.closest<HTMLElement>('[data-cursor]')?.dataset.cursor
       ring.classList.toggle('is-hot', Boolean(hot))
+      ring.classList.toggle('has-label', Boolean(named))
+      dot.classList.toggle('is-hidden', Boolean(named))
+      if (named && label.textContent !== named) label.textContent = named
     }
 
     window.addEventListener('pointermove', onMove, { passive: true })
@@ -47,7 +53,9 @@ export function CustomCursor() {
 
   return (
     <>
-      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
+      <div ref={ringRef} className="cursor-ring" aria-hidden="true">
+        <span ref={labelRef} className="cursor-label" />
+      </div>
       <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
     </>
   )

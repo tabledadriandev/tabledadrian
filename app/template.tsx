@@ -2,47 +2,34 @@
 
 import { useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { MotionDirector } from '@/components/motion/MotionDirector'
+import { isCurtainCovering } from '@/components/motion/PageCurtain'
 
 let hasPainted = false
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const reduced = useReducedMotion()
-  const animate = useRef<boolean | null>(null)
-  if (animate.current === null) {
-    animate.current = hasPainted
+  const entry = useRef<{ first: boolean; curtain: boolean } | null>(null)
+  if (entry.current === null) {
+    entry.current = { first: !hasPainted, curtain: isCurtainCovering() }
     if (typeof window !== 'undefined') hasPainted = true
   }
-
-  if (!animate.current) return <>{children}</>
+  const { first, curtain } = entry.current
 
   return (
     <>
-      {reduced ? (
+      {first || curtain ? (
+        children
+      ) : (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.25, ease: 'easeOut' }}
+          transition={{ duration: reduced ? 0.25 : 0.45, ease: 'easeOut' }}
         >
           {children}
         </motion.div>
-      ) : (
-        <>
-          <motion.div
-            className="page-wipe"
-            initial={{ scaleY: 1 }}
-            animate={{ scaleY: 0 }}
-            transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1], delay: 0.02 }}
-            aria-hidden
-          />
-          <motion.div
-            initial={{ opacity: 0.01 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.28, ease: 'easeOut' }}
-          >
-            {children}
-          </motion.div>
-        </>
       )}
+      <MotionDirector firstPaint={first} curtain={curtain} />
     </>
   )
 }
