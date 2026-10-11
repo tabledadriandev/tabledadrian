@@ -86,7 +86,7 @@ Every dish I create considers these longevity principles without sacrificing fla
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition and longevity science.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 8,
     publishedAt: '2024-01-10',
@@ -193,7 +193,7 @@ This allows me to create and taste dishes while maintaining the benefits of time
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition and longevity science.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 7,
     publishedAt: '2024-01-15',
@@ -318,7 +318,7 @@ Dark chocolate (85%+) with walnuts and berries
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition and longevity science.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 6,
     publishedAt: '2024-01-20',
@@ -442,7 +442,7 @@ Okinawans practice eating until 80% full. This natural caloric restriction:
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition and longevity science.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 7,
     publishedAt: '2024-01-25',
@@ -603,7 +603,7 @@ Simple preparation that lets the quality of the fish shine through.
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition and longevity science.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 8,
     publishedAt: '2024-01-28',
@@ -732,7 +732,7 @@ Broccoli sprouts are easy to grow:
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition and longevity science.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 6,
     publishedAt: '2024-02-01',
@@ -905,7 +905,7 @@ Another fermented food serving
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition and longevity science.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 7,
     publishedAt: '2024-02-05',
@@ -1067,7 +1067,7 @@ I structure my days around circadian principles:
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition and longevity science.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 7,
     publishedAt: '2024-02-10',
@@ -1110,7 +1110,7 @@ Remember, the goal is to create anticipation before the first bite. When guests 
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 5,
     publishedAt: '2024-02-15',
@@ -1151,7 +1151,7 @@ When done right, guests leave feeling satisfied, energized, and nourished - not 
     author: {
       name: 'Chef Adrian',
       avatar: '/images/chef-avatar.jpg',
-      bio: '15+ years of culinary excellence, EHL Swiss trained, Stanford certified in nutrition.',
+      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
     },
     readTime: 4,
     publishedAt: '2024-02-20',

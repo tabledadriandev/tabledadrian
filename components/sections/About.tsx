@@ -1,96 +1,138 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
+import { useRef } from 'react'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-import { fadeInUp, staggerContainer, imageReveal } from '@/lib/animations'
+import { Magnetic } from '@/components/motion/Magnetic'
+import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
+import { gsap, SplitText, useGSAP } from '@/lib/gsap'
 import { ABOUT_IMAGE } from '@/data/gallery'
+import { credentials } from '@/lib/credentials'
+import { copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
+
+const garnish: GarnishItem[] = [
+  { kind: 'basil', x: '38%', y: '6%', size: 128, depth: 0.95, rotate: -18, lite: true },
+  { kind: 'line-citrus', x: '-3%', y: '58%', size: 150, depth: 0.25, rotate: 12 },
+  { kind: 'petal-b', x: '91%', y: '14%', size: 64, depth: 0.7, rotate: 30, lite: true },
+  { kind: 'flake', x: '47%', y: '72%', size: 34, depth: 0.85, rotate: -20 },
+  { kind: 'flake', x: '84%', y: '64%', size: 20, depth: 0.4, rotate: 40 },
+  { kind: 'line-sprig', x: '93%', y: '78%', size: 70, depth: 0.55, rotate: -14 },
+  { kind: 'salt', x: '6%', y: '10%', size: 26, depth: 0.5, rotate: 8 },
+]
 
 export function About() {
+  const locale = useLocale()
+  const t = copy[locale]
+  const chef = credentials[locale]
+  const facts = [
+    [chef.ehlShort, chef.ehlLabel],
+    [chef.stanford, ''],
+    [chef.yearsShort, chef.yearsLabel],
+  ] as const
+  const root = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('.about-copy > :not(h2)', {
+          y: 28,
+          duration: 0.9,
+          stagger: 0.07,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: '.about-copy', start: 'top 80%' },
+        })
+        gsap.to('.about-shift', {
+          yPercent: 8,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: root.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        })
+        const quote = root.current?.querySelector<HTMLElement>('.about-quote p')
+        if (quote) {
+          const words = SplitText.create(quote, { type: 'words', wordsClass: 'about-word' })
+          gsap.fromTo(
+            words.words,
+            { opacity: 0.16 },
+            {
+              opacity: 1,
+              ease: 'none',
+              stagger: 0.1,
+              scrollTrigger: { trigger: quote, start: 'top 82%', end: 'bottom 48%', scrub: true },
+            }
+          )
+          return () => words.revert()
+        }
+      })
+      return () => mm.revert()
+    },
+    { scope: root }
+  )
+
   return (
-    <section id="about" className="grain bg-background py-20 sm:py-24 lg:py-32">
-      <div className="container">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Portrait */}
-          <motion.div
-            variants={imageReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            className="relative lg:col-span-5"
-          >
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-lift">
-              <Image
-                src={ABOUT_IMAGE.src}
-                alt="Beef Wellington with pea puree and roasted vegetables, plated by Table d'Adrian"
-                fill
-                className="photo object-cover"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-              />
+    <section id="about" ref={root} className="grain section-pad relative bg-background" data-tone="in">
+      <Garnish items={garnish} />
+      <div className="container relative">
+        <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="about-frame relative lg:col-span-5">
+            <span className="about-offset" data-speed="0.18" aria-hidden="true" />
+            <div className="relative aspect-[4/5] overflow-hidden bg-ink" data-reveal="up" data-distort data-cursor="View">
+              <div className="about-shift absolute inset-x-0 -top-[8%] h-[116%]">
+                <DishPhoto
+                  src={ABOUT_IMAGE.src}
+                  alt="Beef Wellington with pea puree and roasted vegetables, plated by Table d'Adrian"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                />
+              </div>
+              <span className="hero-rim" />
             </div>
-            <motion.figure
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="surface absolute -bottom-6 -right-4 max-w-[15rem] p-5 sm:-right-8"
-            >
-              <blockquote className="font-display text-xl italic leading-snug text-foreground">
+          </div>
+
+          <div className="about-copy lg:col-span-6 lg:col-start-7">
+            <h2 className="display text-[2.6rem] sm:text-6xl lg:text-[4.6rem]" data-split="chars">
+              {t.aboutTitleBefore}
+              <em className="italic text-gold">{t.aboutTitleEm}</em>
+              {t.aboutTitleAfter}
+            </h2>
+            <p className="mt-8 max-w-[62ch] text-base leading-relaxed text-foreground-muted sm:text-lg">
+              {chef.about}
+            </p>
+            <p className="mt-5 max-w-[62ch] text-base leading-relaxed text-foreground-muted sm:text-lg">
+              {t.aboutSecond}
+            </p>
+            <blockquote className="about-quote relative mt-10 max-w-xl pt-6">
+              <span className="absolute inset-x-0 top-0 h-px bg-border" data-rule aria-hidden="true" />
+              <p className="font-display text-3xl italic leading-snug text-foreground sm:text-4xl">
                 &ldquo;Good food should make you feel better tomorrow, not just tonight.&rdquo;
-              </blockquote>
-              <figcaption className="mt-3 text-[11px] uppercase tracking-caps text-foreground-subtle">
+              </p>
+              <footer className="mt-4 text-[11px] uppercase tracking-caps text-foreground-subtle">
                 Chef Adrian
-              </figcaption>
-            </motion.figure>
-          </motion.div>
-
-          {/* Copy */}
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            className="lg:col-span-6 lg:col-start-7"
-          >
-            <motion.span variants={fadeInUp} className="eyebrow mb-5">
-              About the chef
-            </motion.span>
-            <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl md:text-6xl">
-              Two disciplines, <em className="italic text-primary">one</em> table.
-            </motion.h2>
-            <motion.p variants={fadeInUp} className="mt-7 text-base leading-relaxed text-foreground-muted sm:text-lg">
-              Adrian trained at EHL, the Swiss hospitality school, and spent fifteen years in demanding
-              kitchens across Europe before adding a Stanford certification in health and nutrition.
-              That pairing is the whole idea: food with the precision of a fine-dining pass and the
-              intent of a nutritionist.
-            </motion.p>
-            <motion.p variants={fadeInUp} className="mt-5 text-base leading-relaxed text-foreground-muted sm:text-lg">
-              Whether it is a celebration for twenty or a week of quiet dinners for two, each menu is
-              written from scratch around your preferences, allergies and the season&apos;s market.
-            </motion.p>
-
-            <motion.dl variants={fadeInUp} className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-8 sm:grid-cols-4">
-              {[
-                ['EHL', 'Swiss diploma'],
-                ['Stanford', 'Nutrition'],
-                ['15+', 'Years'],
-                ['100+', 'Households'],
-              ].map(([v, l]) => (
-                <div key={l}>
-                  <dt className="font-display text-3xl text-foreground">{v}</dt>
-                  <dd className="mt-1 text-[11px] uppercase tracking-caps text-foreground-subtle">{l}</dd>
-                </div>
+              </footer>
+            </blockquote>
+            <p className="about-facts">
+              {facts.map(([value, label]) => (
+                <span key={value}>
+                  <strong data-count>{value}</strong>
+                  {label ? ` ${label}` : null}
+                </span>
               ))}
-            </motion.dl>
-
-            <motion.div variants={fadeInUp} className="mt-10">
-              <Button href="/contact" variant="outline">
-                Start a conversation
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </Button>
-            </motion.div>
-          </motion.div>
+            </p>
+            <div className="mt-10">
+              <Magnetic>
+                <Button href={locale === 'fr' ? '/fr/contact' : '/contact'} variant="outline">
+                  Start a conversation
+                  <ArrowRight size={16} />
+                </Button>
+              </Magnetic>
+            </div>
+          </div>
         </div>
       </div>
     </section>

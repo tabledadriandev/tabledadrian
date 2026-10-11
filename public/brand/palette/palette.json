@@ -1,0 +1,52 @@
+[
+ {
+  "name": "Ivory",
+  "hex": "#F6F1E6",
+  "rgb": [
+   246,
+   241,
+   230
+  ],
+  "use": "Primary ground (paper, web background)"
+ },
+ {
+  "name": "Soft Gold",
+  "hex": "#B39660",
+  "rgb": [
+   179,
+   150,
+   96
+  ],
+  "use": "Primary mark on ivory (foil/ink)"
+ },
+ {
+  "name": "Champagne",
+  "hex": "#D9C79F",
+  "rgb": [
+   217,
+   199,
+   159
+  ],
+  "use": "Mark on dark grounds"
+ },
+ {
+  "name": "Stone",
+  "hex": "#8C8371",
+  "rgb": [
+   140,
+   131,
+   113
+  ],
+  "use": "Secondary text, captions"
+ },
+ {
+  "name": "Deep Olive",
+  "hex": "#2F3529",
+  "rgb": [
+   47,
+   53,
+   41
+  ],
+  "use": "Dark ground (reverse version)"
+ }
+]

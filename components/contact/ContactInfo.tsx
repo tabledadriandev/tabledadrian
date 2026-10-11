@@ -1,18 +1,22 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Clock } from 'lucide-react'
-import { CONTACT_INFO } from '@/lib/constants'
+import { Mail, Phone, MapPin, Clock, Instagram } from 'lucide-react'
+import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
-
-const details = [
-  { icon: Phone, label: 'Phone', href: `tel:${CONTACT_INFO.phone}`, value: CONTACT_INFO.phone },
-  { icon: Mail, label: 'Email', href: `mailto:${CONTACT_INFO.email}`, value: CONTACT_INFO.email },
-  { icon: MapPin, label: 'Service areas', value: 'London & Europe' },
-  { icon: Clock, label: 'Response', value: CONTACT_INFO.responseTime },
-]
+import { copy, MARKET } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 
 export function ContactInfo() {
+  const locale = useLocale()
+  const t = copy[locale]
+  const details = [
+    { icon: Mail, label: 'Email', href: `mailto:${CONTACT_INFO.email}`, value: CONTACT_INFO.email },
+    { icon: Instagram, label: t.instagramLabel, href: INSTAGRAM_URL, value: t.instagramHandle },
+    { icon: Phone, label: 'Phone', href: `tel:${CONTACT_INFO.phone}`, value: CONTACT_INFO.phone },
+    { icon: MapPin, label: locale === 'fr' ? 'Zones' : 'Service areas', value: MARKET[locale] },
+    { icon: Clock, label: locale === 'fr' ? 'Réponse' : 'Response', value: CONTACT_INFO.responseTime },
+  ]
   return (
     <motion.div
       variants={staggerContainer}
@@ -31,7 +35,11 @@ export function ContactInfo() {
               <div>
                 <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{item.label}</p>
                 {item.href ? (
-                  <a href={item.href} className="mt-1 block text-foreground hover:text-primary">
+                  <a
+                    href={item.href}
+                    className="mt-1 block text-foreground hover:text-primary"
+                    {...(item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
                     {item.value}
                   </a>
                 ) : (

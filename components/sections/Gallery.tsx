@@ -1,63 +1,127 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
+import { useRef } from 'react'
+import { DishPhoto } from '@/components/media/DishPhoto'
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { HOME_GALLERY } from '@/data/gallery'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
+import { GALLERY } from '@/data/gallery'
+import { gsap, useGSAP } from '@/lib/gsap'
+import { getMotionCaps } from '@/lib/motion-caps'
+import { onScrollVelocity } from '@/lib/scroll-velocity'
+import { DustField } from '@/components/motion/DustField'
 
 export function Gallery() {
-  return (
-    <section id="gallery" className="grain bg-background py-20 sm:py-24 lg:py-32">
-      <div className="container">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="mb-12 flex flex-col items-start justify-between gap-6 sm:mb-16 md:flex-row md:items-end"
-        >
-          <div className="max-w-xl">
-            <motion.span variants={fadeInUp} className="eyebrow mb-5">
-              From the kitchen
-            </motion.span>
-            <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl md:text-6xl">
-              Plates from Adrian&apos;s table.
-            </motion.h2>
-          </div>
-          <motion.div variants={fadeInUp} className="flex flex-wrap gap-3">
-            <Button href="/gallery" variant="outline">
-              Full gallery
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button href="/menus" variant="ghost">
-              The menus
-            </Button>
-          </motion.div>
-        </motion.div>
+  const root = useRef<HTMLElement>(null)
+  const track = useRef<HTMLDivElement>(null)
 
-        <div className="grid auto-rows-[200px] gap-3 sm:auto-rows-[240px] md:grid-cols-4 md:gap-4">
-          {HOME_GALLERY.map((image, index) => (
-            <motion.figure
-              key={image.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.06, duration: 0.6 }}
-              className={`group relative overflow-hidden rounded-[1.5rem] ${image.span || ''}`}
-            >
-              <Image
-                src={image.src}
-                alt={image.caption}
-                fill
-                className="photo object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/75 to-transparent p-5 text-sm text-ink-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                {image.title}
-              </figcaption>
-            </motion.figure>
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+        const row = track.current
+        const pin = root.current
+        if (!row || !pin) return
+        const tween = gsap.to(row, {
+          x: () => -(row.scrollWidth - window.innerWidth),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: pin,
+            start: 'top top',
+            end: () => `+=${row.scrollWidth - window.innerWidth}`,
+            pin: true,
+            scrub: 0.75,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+        const plates = gsap.utils.toArray<HTMLElement>('.plate')
+        plates.forEach((plate) => {
+          const image = plate.querySelector('img')
+          const caption = plate.querySelector('figcaption')
+          if (caption) {
+            gsap.from(caption.children, {
+              yPercent: 60,
+              autoAlpha: 0,
+              stagger: 0.08,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: plate,
+                containerAnimation: tween,
+                start: 'left 85%',
+                end: 'left 45%',
+                scrub: true,
+              },
+            })
+          }
+          if (!image) return
+          gsap.fromTo(
+            image,
+            { scale: 1.16 },
+            {
+              scale: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: plate,
+                containerAnimation: tween,
+                start: 'left right',
+                end: 'center center',
+                scrub: true,
+              },
+            }
+          )
+        })
+        if (getMotionCaps().tier !== 'full') return
+        const tilts = plates.map((plate) => ({
+          skew: gsap.quickTo(plate, 'skewX', { duration: 0.7, ease: 'power3.out' }),
+          turn: gsap.quickTo(plate, 'rotationY', { duration: 0.9, ease: 'power3.out' }),
+        }))
+        const stop = onScrollVelocity((v) => {
+          const k = gsap.utils.clamp(-1, 1, v / 2400)
+          tilts.forEach((t) => {
+            t.skew(k * -7)
+            t.turn(k * 10)
+          })
+        })
+        return () => stop()
+      })
+      return () => mm.revert()
+    },
+    { scope: root }
+  )
+
+  return (
+    <section id="gallery" ref={root} className="gallery-pin relative bg-ink text-ink-foreground">
+      <DustField density={60} />
+      <div className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden py-24">
+        <div className="container mb-8 flex flex-col items-start justify-between gap-6 md:mb-10 md:flex-row md:items-end">
+          <h2 className="display max-w-xl text-4xl sm:text-6xl" data-split="chars">
+            Plates from Adrian&apos;s table.
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/gallery" className="maison-link">
+              Full gallery <ArrowRight size={14} />
+            </Link>
+            <Link href="/menus" className="maison-link is-quiet">
+              The menus
+            </Link>
+          </div>
+        </div>
+        <div ref={track} className="plate-track">
+          {GALLERY.map((image) => (
+            <Link key={image.id} href="/gallery" tabIndex={-1} className="plate" data-cursor="View">
+              <figure className="plate-frame" data-distort>
+                <DishPhoto
+                  src={image.src}
+                  alt={image.caption}
+                  fill
+                  sizes="(max-width: 768px) 82vw, 42vw"
+                />
+                <figcaption>
+                  <span>{image.title}</span>
+                  <small>{image.caption}</small>
+                </figcaption>
+              </figure>
+            </Link>
           ))}
         </div>
       </div>
