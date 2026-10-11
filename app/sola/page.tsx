@@ -34,13 +34,19 @@ export default function SolaPage() {
             Intelligence. Your conversations and profile are not sent to Sola or any third party.
           </p>
           <p>Sign-in is optional. Barcode and product lookups use Open Food Facts.</p>
+          <p>
+            Sola Monthly is $25 a month, or Sola Yearly is $300 a year. Apple sets local prices by
+            country, so the amount in your currency may differ.
+          </p>
+        </article>
 
-          <div id="waitlist" className="!mt-10">
-            <AppBadges tone="ink" />
-            <p className="mt-3 text-sm">For iPhone, iPad and Mac.</p>
-          </div>
+        <div id="waitlist" className="mt-10">
+          <AppBadges tone="ink" />
+          <p className="mt-3 text-sm text-foreground-muted">For iPhone, iPad and Mac.</p>
+        </div>
 
-          <h2 className="!mt-10 font-display text-2xl text-foreground">Support</h2>
+        <article className="legal mx-auto mt-10 space-y-5 text-base leading-relaxed text-foreground-muted">
+          <h2 className="!mt-0 font-display text-2xl text-foreground">Support</h2>
           <p>
             Questions about the app:{' '}
             <a href="mailto:adrian@tabledadrian.com">adrian@tabledadrian.com</a> or the{' '}

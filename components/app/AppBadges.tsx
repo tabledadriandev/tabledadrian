@@ -1,6 +1,5 @@
 import { APP_LINKS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/Button'
 
 interface AppBadgesProps {
   tone?: 'ink' | 'light'
@@ -41,6 +40,23 @@ function StoreBadge({
   )
 }
 
+function WaitlistLink({ size }: { size: 'sm' | 'md' }) {
+  return (
+    <a
+      href={APP_LINKS.waitlist}
+      className={cn(
+        'inline-flex items-center justify-center rounded-full border border-ink-foreground/30 bg-ink font-medium shadow-soft transition-colors duration-200',
+        '!text-ink-foreground !no-underline',
+        'hover:border-ink-foreground/80 hover:bg-ink-soft hover:!text-ink-foreground',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+        size === 'sm' ? 'h-9 px-4 text-sm' : 'h-11 px-6 text-sm'
+      )}
+    >
+      Join the waitlist
+    </a>
+  )
+}
+
 export function AppBadges({ tone = 'ink', size = 'md', className }: AppBadgesProps) {
   return (
     <div className={cn('flex flex-wrap items-center gap-3', className)}>
@@ -54,9 +70,7 @@ export function AppBadges({ tone = 'ink', size = 'md', className }: AppBadgesPro
           height={40}
         />
       ) : (
-        <Button href={APP_LINKS.waitlist} variant={tone === 'light' ? 'light' : 'ink'} size={size === 'sm' ? 'sm' : 'md'}>
-          Join the waitlist
-        </Button>
+        <WaitlistLink size={size} />
       )}
     </div>
   )
