@@ -16,7 +16,7 @@ export function Menus() {
       <div className="container">
         <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-xl">
-            <h2 className="display text-4xl leading-[0.95] sm:text-6xl">
+            <h2 className="display text-4xl sm:text-6xl">
               A menu for the evening, not a catalogue.
             </h2>
             <p className="mt-5 max-w-[58ch] text-base leading-relaxed text-foreground-muted">
@@ -41,7 +41,7 @@ export function Menus() {
               sizes="(max-width: 1024px) 100vw, 40vw"
             />
             <span className="hero-rim" />
-            <p className="absolute bottom-6 left-6 right-6 font-display text-3xl text-ink-foreground">
+            <p className="lh-display absolute bottom-6 left-6 right-6 font-display text-3xl text-ink-foreground">
               {current.title}
             </p>
           </div>

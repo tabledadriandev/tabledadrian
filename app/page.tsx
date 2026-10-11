@@ -1,6 +1,4 @@
-﻿'use client'
-
-import { Hero } from '@/components/sections/Hero'
+﻿import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
 import { Services } from '@/components/sections/Services'
 import { Wellness } from '@/components/sections/Wellness'
@@ -13,6 +11,22 @@ import { Contact } from '@/components/sections/Contact'
 export default function Home() {
   return (
     <>
+      <link
+        rel="preload"
+        as="image"
+        href="/gallery/hero-800.avif"
+        type="image/avif"
+        media="(max-width: 767px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/gallery/hero-1128.avif"
+        type="image/avif"
+        media="(min-width: 768px)"
+        fetchPriority="high"
+      />
       <Hero />
       <About />
       <Services />

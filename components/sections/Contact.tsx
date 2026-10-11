@@ -9,7 +9,7 @@ export function Contact() {
   return (
     <section id="contact" className="bg-ink text-ink-foreground">
       <div className="container flex min-h-[80svh] flex-col justify-end py-20 sm:py-28">
-        <h2 className="display max-w-5xl text-5xl leading-[0.9] sm:text-7xl lg:text-[6.5rem]">
+        <h2 className="display max-w-5xl text-5xl sm:text-7xl lg:text-[6.5rem]">
           Shall we cook for your table?
         </h2>
         <p className="mt-8 max-w-xl text-base leading-relaxed text-ink-foreground/80 sm:text-lg">

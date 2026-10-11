@@ -60,7 +60,7 @@ export function Navbar() {
       >
         <nav className="container flex items-center justify-between py-4 sm:py-5" aria-label="Primary">
           <Link href="/" className={cn('group flex flex-col leading-none', textBase)}>
-            <span className="font-display text-[1.65rem] font-medium italic tracking-tight">
+            <span className="lh-display font-display text-[1.65rem] font-medium italic tracking-tight">
               Table d&apos;Adrian
             </span>
             <span className={cn('mt-1 text-[10px] uppercase tracking-caps', onDark ? 'text-gold' : 'text-foreground-subtle')}>
@@ -167,7 +167,7 @@ export function Navbar() {
                         <p className="text-[10px] uppercase tracking-caps text-gold">{group.name}</p>
                         {group.items.map((item) => (
                           <Link key={item.href} href={item.href} className="flex items-baseline justify-between py-2">
-                            <span className="font-display text-4xl italic">{item.name}</span>
+                            <span className="lh-display font-display text-4xl italic">{item.name}</span>
                             {item.badge && (
                               <span className="text-[10px] uppercase tracking-caps text-gold">{item.badge}</span>
                             )}
@@ -175,7 +175,7 @@ export function Navbar() {
                         ))}
                       </div>
                     ) : (
-                      <Link href={group.href!} className="block border-t border-white/10 py-3 font-display text-5xl italic">
+                      <Link href={group.href!} className="lh-display block border-t border-white/10 py-3 font-display text-5xl italic">
                         {group.name}
                       </Link>
                     )}

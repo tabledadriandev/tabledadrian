@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Magnetic } from '@/components/motion/Magnetic'
@@ -156,14 +155,23 @@ export function Hero() {
 
         <div ref={plateRef} className="hero-plate">
           <div className="hero-media">
-            <Image
-              src={HERO_IMAGE.src}
-              alt="Burrata with sliced tomato and peach in a walnut bowl, plated by Table d'Adrian"
-              fill
-              priority
-              sizes="(min-width: 1024px) 48vw, 100vw"
-              className="object-cover"
-            />
+            <picture>
+              <source media="(max-width: 767px)" srcSet="/gallery/hero-800.avif" type="image/avif" />
+              <source media="(max-width: 767px)" srcSet="/gallery/hero-800.webp" type="image/webp" />
+              <source media="(min-width: 768px)" srcSet="/gallery/hero-1128.avif" type="image/avif" />
+              <source media="(min-width: 768px)" srcSet="/gallery/hero-1128.webp" type="image/webp" />
+              {/* Static AVIF/WebP so the LCP image skips the optimizer hop. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/gallery/hero-1128.webp"
+                alt="Burrata with sliced tomato and peach in a walnut bowl, plated by Table d'Adrian"
+                width={1128}
+                height={1600}
+                fetchPriority="high"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </picture>
             {webgl.enabled ? <HeroPlate src={HERO_IMAGE.src} mobile={webgl.mobile} /> : <span className="gold-shimmer" />}
             <span className="hero-rim" />
           </div>

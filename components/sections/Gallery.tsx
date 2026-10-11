@@ -60,7 +60,7 @@ export function Gallery() {
     <section id="gallery" ref={root} className="gallery-pin bg-ink text-ink-foreground">
       <div className="flex min-h-[100svh] flex-col justify-center overflow-hidden py-24">
         <div className="container mb-8 flex flex-col items-start justify-between gap-6 md:mb-10 md:flex-row md:items-end">
-          <h2 className="display max-w-xl text-4xl leading-[0.95] sm:text-6xl">
+          <h2 className="display max-w-xl text-4xl sm:text-6xl">
             Plates from Adrian&apos;s table.
           </h2>
           <div className="flex flex-wrap gap-3">

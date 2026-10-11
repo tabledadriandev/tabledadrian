@@ -41,7 +41,7 @@ export default function MenusPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/10" />
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
-                  <h2 className="font-display text-4xl leading-none text-ink-foreground">{collection.title}</h2>
+                  <h2 className="lh-display font-display text-4xl text-ink-foreground">{collection.title}</h2>
                   <p className="mt-3 text-[11px] uppercase tracking-caps text-gold">
                     {collection.region}
                     <span className="text-ink-foreground/60"> · Five menus</span>

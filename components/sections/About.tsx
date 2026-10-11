@@ -64,7 +64,7 @@ export function About() {
           </div>
 
           <div className="about-copy lg:col-span-6 lg:col-start-7">
-            <h2 className="display text-[2.6rem] leading-[0.92] sm:text-6xl lg:text-[4.6rem]">
+            <h2 className="display text-[2.6rem] sm:text-6xl lg:text-[4.6rem]">
               Two disciplines, <em className="italic text-gold">one</em> table.
             </h2>
             <p className="mt-8 max-w-[62ch] text-base leading-relaxed text-foreground-muted sm:text-lg">

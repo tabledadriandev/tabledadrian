@@ -50,7 +50,7 @@ export function Wellness() {
     <section id="wellness" ref={root} className="section-pad bg-background-secondary">
       <div className="container">
         <div className="max-w-3xl">
-          <h2 className="display text-4xl leading-[0.95] sm:text-6xl">
+          <h2 className="display text-4xl sm:text-6xl">
             Try a taste of the <em className="italic text-gold">app</em>.
           </h2>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground-muted sm:text-lg">
@@ -63,7 +63,7 @@ export function Wellness() {
             <Link key={tool.title} href={tool.href} className="wellness-row group">
               <span className="wellness-badge">{tool.badge}</span>
               <span>
-                <span className="block font-display text-3xl sm:text-5xl">{tool.title}</span>
+                <span className="lh-display block font-display text-3xl sm:text-5xl">{tool.title}</span>
                 <span className="mt-2 block max-w-md text-sm leading-relaxed text-foreground-muted">
                   {tool.description}
                 </span>

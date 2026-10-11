@@ -69,9 +69,9 @@ export function PricingCards() {
                 {tier.badge && (
                   <p className="text-[11px] uppercase tracking-caps text-gold">{tier.badge}</p>
                 )}
-                <h3 className="mt-2 font-display text-4xl leading-none tracking-tight">{tier.name}</h3>
+                <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{tier.name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{tier.tagline}</p>
-                <p className="mt-6 font-display text-5xl leading-none tracking-tight">
+                <p className="lh-display mt-6 font-display text-5xl tracking-tight">
                   {tier.basePrice ? formatCurrency(tier.basePrice) : tier.priceDisplay}
                 </p>
                 {tier.pricePerGuest && (
@@ -112,8 +112,8 @@ export function PricingCards() {
             <article key={plan.id} className="grid gap-6 border-b border-border py-10 lg:grid-cols-12 lg:gap-10">
               <div className="lg:col-span-4">
                 {plan.popular && <p className="text-[11px] uppercase tracking-caps text-gold">MOST POPULAR</p>}
-                <h3 className="mt-2 font-display text-4xl leading-none tracking-tight">{plan.name}</h3>
-                <p className="mt-6 font-display text-5xl leading-none tracking-tight">
+                <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{plan.name}</h3>
+                <p className="lh-display mt-6 font-display text-5xl tracking-tight">
                   {formatCurrency(plan.price)}
                   <span className="ml-1 font-body text-base text-foreground-muted">/ {plan.period}</span>
                 </p>
