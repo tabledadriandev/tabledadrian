@@ -154,7 +154,7 @@ export function Footer() {
           <div className="lg:col-span-5">
             <p className="max-w-sm text-sm leading-relaxed text-ink-foreground/80">
               Michelin-trained private chef and nutrition-certified cook. Private dinners, weekly meal
-              preparation and longevity menus in London and across Europe.
+              preparation and longevity menus on the Côte d&apos;Azur and in Monaco.
             </p>
             <div className="mt-6 flex gap-2">
               {socials.map(({ href, label, Icon }) => (

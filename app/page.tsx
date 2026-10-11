@@ -14,8 +14,8 @@ const CREDENTIALS = [
   'Michelin-trained technique',
   'EHL Swiss hospitality diploma',
   'Stanford nutrition certified',
-  '15+ years in fine kitchens',
-  'London & Europe',
+  '10+ years in fine kitchens',
+  "Côte d'Azur & Monaco",
   'Tables of two to twenty-five',
 ]
 

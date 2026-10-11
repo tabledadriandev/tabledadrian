@@ -41,11 +41,11 @@ const sola = Source_Serif_4({
 
 export const metadata: Metadata = {
   title: {
-    default: "Table d'Adrian | Private Chef and Longevity Cuisine | London and Europe",
+    default: "Table d'Adrian | Private Chef and Longevity Cuisine | Côte d'Azur and Monaco",
     template: "%s | Table d'Adrian",
   },
   description: SITE_DESCRIPTION,
-  keywords: "private chef, personal chef, luxury chef services, private chef london, private chef for events, private chef cost, hire private chef, bespoke culinary experiences, private chef meal planning, corporate chef services",
+  keywords: "private chef, personal chef, private chef Côte d'Azur, private chef Monaco, French Riviera private chef, luxury chef services, private chef for events, hire private chef, longevity cuisine, private chef meal planning",
   authors: [{ name: "Table d'Adrian" }],
   creator: "Table d'Adrian",
   publisher: "Table d'Adrian",
@@ -108,8 +108,8 @@ export default function RootLayout({
               "email": "adrian@tabledadrian.com",
               "address": {
                 "@type": "PostalAddress",
-                "addressLocality": "London",
-                "addressCountry": "GB"
+                "addressRegion": "Provence-Alpes-Côte d'Azur",
+                "addressCountry": "FR"
               },
               "priceRange": "£££",
               "servesCuisine": "French, International"

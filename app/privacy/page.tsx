@@ -16,9 +16,9 @@ export default function PrivacyPage() {
       updated="26 September 2026"
     >
       <p>
-        Table d&apos;Adrian (&quot;we&quot;, &quot;us&quot;) is a private chef service based in
-        London, serving clients across Europe. This policy explains what we collect, why we collect
-        it, and the choices you have.
+        Table d&apos;Adrian (&quot;we&quot;, &quot;us&quot;) is a private chef service based on the
+        Côte d&apos;Azur, serving clients in Monaco and along the French Riviera. This policy
+        explains what we collect, why we collect it, and the choices you have.
       </p>
 
       <h2>Who we are</h2>

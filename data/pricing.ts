@@ -242,7 +242,7 @@ export const pricingFAQ = [
   },
   {
     question: 'Do you travel to different locations?',
-    answer: 'I serve the greater London area within 30 miles. Beyond that, travel fees apply (typically £1-2 per additional mile). For destination events, custom packages are available.',
+    answer: 'I cook on the Côte d\'Azur and in Monaco. For tables further along the French Riviera, we can discuss travel.',
   },
   {
     question: 'What about kitchen requirements?',

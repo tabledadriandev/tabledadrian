@@ -17,7 +17,7 @@ const credentials = [
   },
   {
     icon: Calendar,
-    title: '15+ Years',
+    title: '10+ Years',
     description: 'Culinary experience',
   },
   {

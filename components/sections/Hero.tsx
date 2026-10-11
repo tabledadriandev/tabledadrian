@@ -154,8 +154,8 @@ export function Hero() {
             </Magnetic>
           </div>
           <p className="hero-facts hero-rise">
-            <span>London &amp; Europe</span>
-            <span>15+ years in fine kitchens</span>
+            <span>Côte d&apos;Azur &amp; Monaco</span>
+            <span>10+ years in fine kitchens</span>
             <span>EHL Swiss hospitality diploma</span>
             <span>Stanford nutrition certified</span>
           </p>

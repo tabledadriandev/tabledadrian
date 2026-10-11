@@ -12,7 +12,7 @@ import { ABOUT_IMAGE } from '@/data/gallery'
 const facts = [
   ['EHL', 'Swiss diploma'],
   ['Stanford', 'Nutrition'],
-  ['15+', 'Years'],
+  ['10+', 'Years'],
   ['100+', 'Households'],
 ] as const
 
@@ -97,8 +97,8 @@ export function About() {
               Two disciplines, <em className="italic text-gold">one</em> table.
             </h2>
             <p className="mt-8 max-w-[62ch] text-base leading-relaxed text-foreground-muted sm:text-lg">
-              Adrian trained at EHL, the Swiss hospitality school, and spent fifteen years in demanding
-              kitchens across Europe before adding a Stanford certification in health and nutrition.
+              Adrian trained at EHL, the Swiss hospitality school, and spent ten years in demanding
+              kitchens before adding a Stanford certification in health and nutrition.
               That pairing is the whole idea: food with the precision of a fine-dining pass and the
               intent of a nutritionist.
             </p>

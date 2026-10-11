@@ -7,7 +7,7 @@ import { DustField } from '@/components/motion/DustField'
 const testimonials = [
   {
     name: 'Sarah Mitchell',
-    role: 'Private dinner, London',
+    role: 'Private dinner',
     content:
       'Chef Adrian transformed our anniversary dinner into an unforgettable evening. Every course felt personal, and guests are still talking about it.',
   },

@@ -8,7 +8,7 @@ import { fadeInUp, staggerContainer } from '@/lib/animations'
 const details = [
   { icon: Phone, label: 'Phone', href: `tel:${CONTACT_INFO.phone}`, value: CONTACT_INFO.phone },
   { icon: Mail, label: 'Email', href: `mailto:${CONTACT_INFO.email}`, value: CONTACT_INFO.email },
-  { icon: MapPin, label: 'Service areas', value: 'London & Europe' },
+  { icon: MapPin, label: 'Service areas', value: "Côte d'Azur & Monaco" },
   { icon: Clock, label: 'Response', value: CONTACT_INFO.responseTime },
 ]
 
