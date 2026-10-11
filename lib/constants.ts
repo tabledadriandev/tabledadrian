@@ -63,13 +63,14 @@ export const FOOTER_LINKS: NavItem[] = [
 export const WELLNESS_LINKS: NavItem[] = NAVIGATION.find((g) => g.name === "Wellness")?.items ?? []
 
 /**
- * Mobile app store links. Leave as `null` until the app is published.
- * The UI will render "Coming soon" badges instead of live store buttons.
+ * Sola store link. The app is Apple-only (iPhone, iPad and Mac) and is not
+ * live yet. Leave `appStore` null to keep the waitlist. When the app ships,
+ * set `appStore` to the App Store URL and the waitlist swaps for the badge.
  */
 export const APP_LINKS = {
   name: "Table d'Adrian",
   appStore: null as string | null,
-  playStore: null as string | null,
+  waitlist: "mailto:adrian@tabledadrian.com?subject=Sola%20waitlist",
 }
 
 export const SERVICES = [

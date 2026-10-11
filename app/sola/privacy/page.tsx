@@ -4,51 +4,44 @@ import { LegalDoc } from '@/components/legal/LegalDoc'
 export const metadata: Metadata = {
   title: 'Sola Privacy Policy',
   description:
-    'How the Sola iOS app handles your profile, health details, food log, weight and water. On-device storage, no account required.',
+    'How Sola handles the on-device chef, optional sign-in, and barcode and product lookups on iPhone, iPad and Mac.',
   alternates: { canonical: '/sola/privacy' },
 }
 
 export default function SolaPrivacyPage() {
   return (
-    <LegalDoc eyebrow="Sola app" title="Privacy Policy" updated="8 October 2026">
+    <LegalDoc eyebrow="Sola app" title="Privacy Policy" updated="11 October 2026">
       <p>
-        Sola is a nutrition companion published by Table d&apos;Adrian. This policy describes how the
-        Sola iOS app treats information on your device.
+        Sola is nutrition guidance for adults, published by Table d&apos;Adrian, for iPhone, iPad and
+        Mac. Sola is not medical advice, and it is not a medical device. This policy describes what
+        the app sends.
       </p>
 
-      <h2>What Sola stores on your device</h2>
+      <h2>The chef on your device</h2>
       <p>
-        Sola keeps your profile (including age, body measurements, activity, goals, health conditions,
-        allergies, diet preferences and food likes or avoids), your meals and food log, weight entries
-        and water log on your iPhone, iPad or Mac. This data stays on the device unless you choose to
-        export or back it up through Apple&apos;s own device backup services.
+        The chef uses Apple Intelligence on the device. It needs a device that supports Apple
+        Intelligence. Your conversations and profile are not sent to Sola or any third party.
       </p>
 
-      <h2>No account required</h2>
-      <p>
-        You can use Sola without creating an account with us. The app does not run its own user
-        database or sync your nutrition data to Table d&apos;Adrian servers.
-      </p>
+      <h2>Sign-in</h2>
+      <p>Sign-in is optional. You can use Sola without an account.</p>
 
-      <h2>Sign in with Apple</h2>
+      <h2>Barcode and product lookups</h2>
       <p>
-        If a future version offers Sign in with Apple, authentication is handled by Apple. We do not
-        receive your Apple ID password, and we do not operate a separate login server for Sola.
+        Barcode and product lookups use Open Food Facts. Sola sends those lookups to Open Food Facts
+        so it can show the product. This is separate from the chef.
       </p>
 
       <h2>Apple Health</h2>
       <p>
-        If you connect Apple Health, read or write access is controlled by you in the Health app and
-        on your device. Health data you share with Sola remains subject to Apple&apos;s Health privacy
-        settings.
+        If you connect Apple Health, you choose what Sola may read or write in the Health app. Sync
+        is available on iPhone and iPad.
       </p>
 
       <h2>What we do not do</h2>
       <ul>
-        <li>No advertising or ad tracking in the app.</li>
-        <li>No analytics SDKs that collect your nutrition or health entries.</li>
-        <li>No sale of personal data.</li>
-        <li>No public sharing of user-generated content.</li>
+        <li>We do not sell personal data.</li>
+        <li>The app does not carry advertising.</li>
       </ul>
 
       <h2>Website contact</h2>
