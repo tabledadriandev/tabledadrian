@@ -41,14 +41,16 @@ export function Garnish({ items, className }: { items: GarnishItem[]; className?
         return
       }
 
-      gsap.set(strokes, { strokeDasharray: 1, strokeDashoffset: 1 })
-      gsap.to(strokes, {
-        strokeDashoffset: 0,
-        duration: 2.2,
-        ease: 'power2.inOut',
-        stagger: 0.04,
-        scrollTrigger: { trigger: layer, start: 'top 80%', once: true, refreshPriority: -1 },
-      })
+      if (strokes.length) {
+        gsap.set(strokes, { strokeDasharray: 1, strokeDashoffset: 1 })
+        gsap.to(strokes, {
+          strokeDashoffset: 0,
+          duration: 2.2,
+          ease: 'power2.inOut',
+          stagger: 0.04,
+          scrollTrigger: { trigger: layer, start: 'top 80%', once: true, refreshPriority: -1 },
+        })
+      }
 
       nodes.forEach((node) => {
         const depth = Number(node.dataset.depth || 0.5)

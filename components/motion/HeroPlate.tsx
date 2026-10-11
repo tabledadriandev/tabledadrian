@@ -140,6 +140,25 @@ function Dust({ count }: { count: number }) {
     return array
   }, [count])
 
+  const sprite = useMemo(() => {
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 64
+    const ctx = canvas.getContext('2d')
+    if (ctx) {
+      const glow = ctx.createRadialGradient(32, 32, 0, 32, 32, 32)
+      glow.addColorStop(0, 'rgba(255,255,255,1)')
+      glow.addColorStop(0.35, 'rgba(255,255,255,0.55)')
+      glow.addColorStop(1, 'rgba(255,255,255,0)')
+      ctx.fillStyle = glow
+      ctx.fillRect(0, 0, 64, 64)
+    }
+    const texture = new THREE.CanvasTexture(canvas)
+    texture.colorSpace = THREE.SRGBColorSpace
+    return texture
+  }, [])
+
+  useEffect(() => () => sprite.dispose(), [sprite])
+
   useFrame(({ clock }) => {
     if (!ref.current) return
     ref.current.rotation.z = clock.elapsedTime * 0.015
@@ -153,9 +172,12 @@ function Dust({ count }: { count: number }) {
       </bufferGeometry>
       <pointsMaterial
         color="#e7d3a1"
-        size={0.018}
+        map={sprite}
+        size={0.03}
         transparent
-        opacity={0.8}
+        opacity={0.85}
+        alphaTest={0.01}
+        blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation
       />

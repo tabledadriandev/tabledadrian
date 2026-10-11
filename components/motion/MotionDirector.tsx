@@ -169,7 +169,7 @@ export function MotionDirector({ firstPaint, curtain }: { firstPaint: boolean; c
         render()
         const st = ScrollTrigger.create({
           trigger: el,
-          start: 'top 92%',
+          start: 'top bottom',
           once: true,
           onEnter: () => {
             gsap.to(counter, {
@@ -242,16 +242,16 @@ export function MotionDirector({ firstPaint, curtain }: { firstPaint: boolean; c
           if (tones.includes('in')) {
             gsap.fromTo(el, { ...INK }, {
               ...IVORY,
-              ease: 'none',
-              scrollTrigger: { trigger: el, start: 'top 96%', end: 'top 28%', scrub: true },
+              ease: 'power2.inOut',
+              scrollTrigger: { trigger: el, start: 'top 90%', end: 'top 48%', scrub: true },
             })
           }
           if (tones.includes('out')) {
             gsap.fromTo(el, { ...IVORY }, {
               ...INK,
-              ease: 'none',
+              ease: 'power2.inOut',
               immediateRender: false,
-              scrollTrigger: { trigger: el, start: 'bottom 72%', end: 'bottom 12%', scrub: true },
+              scrollTrigger: { trigger: el, start: 'bottom 66%', end: 'bottom 24%', scrub: true },
             })
           }
         })
