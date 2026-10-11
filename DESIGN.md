@@ -1,24 +1,27 @@
 ---
 name: Table d'Adrian
-description: A private table, composed in warm ivory, near-black ink, and one champagne gold.
+description: A private table, composed in ivory, near-black ink, and Soft Gold.
 colors:
-  ivory: "hsl(40 36% 93%)"
-  ivory-deep: "hsl(36 18% 89%)"
-  card: "hsl(40 36% 96%)"
+  ivory: "hsl(41 47% 93%)"
+  ivory-deep: "hsl(40 22% 88%)"
+  card: "hsl(41 40% 96%)"
   ink: "hsl(28 14% 6%)"
   ink-soft: "hsl(28 10% 12%)"
   foreground: "hsl(28 12% 10%)"
   foreground-muted: "hsl(28 8% 27%)"
   foreground-subtle: "hsl(28 6% 34%)"
   primary: "hsl(28 14% 8%)"
-  primary-foreground: "hsl(40 36% 94%)"
+  primary-foreground: "hsl(41 47% 94%)"
   primary-soft: "hsl(38 28% 90%)"
-  gold: "hsl(36 46% 56%)"
-  gold-soft: "hsl(38 36% 88%)"
-  ring: "hsl(36 46% 42%)"
-  border: "hsl(34 14% 78%)"
-  border-strong: "hsl(32 12% 58%)"
-  input: "hsl(40 40% 98%)"
+  gold: "hsl(39 35% 54%)"
+  gold-soft: "hsl(41 40% 88%)"
+  champagne: "hsl(41 43% 74%)"
+  stone: "hsl(40 11% 50%)"
+  olive: "hsl(90 13% 18%)"
+  ring: "hsl(39 32% 38%)"
+  border: "hsl(40 14% 76%)"
+  border-strong: "hsl(40 11% 52%)"
+  input: "hsl(41 40% 98%)"
   destructive: "hsl(8 48% 38%)"
   success: "hsl(150 22% 28%)"
   sola-cream: "hsl(42 46% 95%)"
@@ -159,7 +162,7 @@ components:
 
 **Creative North Star: "A private table, composed."**
 
-Table d'Adrian is a private table set on warm ivory and near-black ink, with one champagne gold for the italic word, the hairline, and the photograph rim. Bodoni Moda carries the display line at a tight, engraved scale. Hanken Grotesk carries navigation, labels, and the sentence. A screen is a headline, a lede, a square booking control, and a plate.
+Table d'Adrian is a private table set on ivory (#F6F1E6) and near-black ink, with Soft Gold (#B39660) for the italic word, the hairline, and the photograph rim. Champagne, Stone, and Deep Olive sit beside it; gold is never body text on ivory. Bodoni Moda carries the display line at a tight, engraved scale. Hanken Grotesk carries navigation, labels, and the sentence. A screen is a headline, a lede, a square booking control, and a plate.
 
 The maison alternates two grounds. Ivory holds the about, services, menus, and wellness bands. Ink holds the first viewport, the plate gallery, the quotes, the closing invitation, and the footer. Structure is a 1px rule. Photographs are full-bleed crops. The hero plate, the about portrait, and the menu cover take a gold inset rim. The horizontal gallery does not.
 
@@ -180,25 +183,28 @@ The maison is a warm neutral field and one metal. Sola replaces that field rathe
 
 ### Primary
 
-- **Champagne** (`gold`, hsl(36 46% 56%)): The only maison accent. It colors one italic word in a display line, the 1px photograph rim, text selection, the focus outline, the active menu title, footer column labels, and the hairline under a text link. It does not fill a button or a section.
-- **Champagne Deep** (`ring`, hsl(36 46% 42%)): The same hue, held darker for the focus token.
-- **Champagne Wash** (`gold-soft`, hsl(38 36% 88%)): A pale gold ground used on small demo marks, not on maison sections.
+- **Soft Gold** (`gold`, hsl(39 35% 54%), #B39660): The only maison metal. It colors one italic word in a display line, the 1px photograph rim, text selection, the focus outline, footer column labels on ink, and the hairline under a text link. It does not fill a button or a section, and it is never body, label, or UI text on ivory (about 2.5:1).
+- **Champagne** (`champagne`, hsl(41 43% 74%), #D9C79F): The lighter metal, for washes and rims that need less weight than Soft Gold.
+- **Gold Deep** (`ring`, hsl(39 32% 38%)): The same hue, held darker for the focus token.
+- **Gold Wash** (`gold-soft`, hsl(41 40% 88%)): A pale gold ground used on small demo marks, not on maison sections.
 
 ### Neutral
 
-- **Warm Ivory** (`ivory`, hsl(40 36% 93%)): The page ground (`--background`) and the text on ink (`--ink-foreground` uses the same channels). Also the resting fill of the light booking button.
-- **Ivory Deep** (`ivory-deep`, hsl(36 18% 89%)): The secondary band behind wellness.
-- **Card** (`card`, hsl(40 36% 96%)): The enquiry panel and the cookie bar.
-- **Input** (`input`, hsl(40 40% 98%)): Field fill.
+- **Ivory** (`ivory`, hsl(41 47% 93%), #F6F1E6): The page ground (`--background`) and the text on ink (`--ink-foreground` uses the same channels). Also the resting fill of the light booking button.
+- **Ivory Deep** (`ivory-deep`, hsl(40 22% 88%)): The secondary band behind wellness.
+- **Stone** (`stone`, hsl(40 11% 50%), #8C8371): A warm mid-neutral. Not for small text on ivory.
+- **Deep Olive** (`olive`, hsl(90 13% 18%), #2F3529): Body, labels, and checks on ivory when gold would fail contrast.
+- **Card** (`card`, hsl(41 40% 96%)): The enquiry panel and the cookie bar.
+- **Input** (`input`, hsl(41 40% 98%)): Field fill.
 - **Near-black Ink** (`ink`, hsl(28 14% 6%)): Hero, gallery, quotes, closing invitation, footer, and the ink button.
 - **Ink Soft** (`ink-soft`, hsl(28 10% 12%)): Hover fill for ink and primary buttons, and the plate fallback behind a photograph.
-- **Button Ink** (`primary`, hsl(28 14% 8%)): The default button fill, a step off ink. Its label is **Ivory Light** (`primary-foreground`, hsl(40 36% 94%)).
+- **Button Ink** (`primary`, hsl(28 14% 8%)): The default button fill, a step off ink. Its label is **Ivory Light** (`primary-foreground`, hsl(41 47% 94%)).
 - **Soft Ivory** (`primary-soft`, hsl(38 28% 90%)): A quiet chip ground inside the app mock and contact icons.
 - **Body Ink** (`foreground`, hsl(28 12% 10%)): Text on ivory.
 - **Muted Ink** (`foreground-muted`, hsl(28 8% 27%)): Ledes and secondary sentences. Measure stays near 58 to 62 characters.
 - **Subtle Ink** (`foreground-subtle`, hsl(28 6% 34%)): Fact lines, guest ranges, and badge text on ivory.
-- **Hairline** (`border`, hsl(34 14% 78%)): Row rules, field strokes, and the scrolled navigation edge.
-- **Strong Hairline** (`border-strong`, hsl(32 12% 58%)): Outline buttons and the wellness badge.
+- **Hairline** (`border`, hsl(40 14% 76%)): Row rules, field strokes, and the scrolled navigation edge.
+- **Strong Hairline** (`border-strong`, hsl(40 11% 52%)): Outline buttons and the wellness badge.
 - **Form Error** (`destructive`, hsl(8 48% 38%)): Validation text on the enquiry form.
 - **Quiet Green** (`success`, hsl(150 22% 28%)): Confirmation marks inside the app dialog. Not a maison accent.
 
@@ -314,7 +320,7 @@ Controls feel engraved: square, quiet, and immediate. Hover changes color. It do
 
 ### Navigation
 
-Fixed, transparent over the hero, ivory at 90% with a 16px blur and a hairline once the page has moved 24px. The wordmark is italic Bodoni at 1.65rem, weight 500, with a 10px champagne or subtle-ink line under it. Links are 11px uppercase, tracking 0.22em. The book control is 40px tall, square, ivory-on-ink over the hero and ink-on-ivory once the bar is solid. The dropdown is an ivory panel with the lift shadow and a 1px hairline. Below 1024px the menu is a full-ink overlay; items are italic Bodoni at 3rem to 3.75rem, clipped open over 0.7s with cubic-bezier(0.76, 0, 0.24, 1).
+Fixed, transparent over the hero, ivory at 90% with a 16px blur and a hairline once the page has moved 24px. The wordmark is the approved horizontal lockup: gold-transparent on ivory, ivory-transparent on ink, with a 10px gold or subtle-ink “Private chef” line under it. Links are 11px uppercase, tracking 0.22em. The book control is 40px tall, square, ivory-on-ink over the hero and ink-on-ivory once the bar is solid. The dropdown is an ivory panel with the lift shadow and a 1px hairline. Below 1024px the menu is a full-ink overlay; items are italic Bodoni at 3rem to 3.75rem, clipped open over 0.7s with cubic-bezier(0.76, 0, 0.24, 1).
 
 ### Text Link
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { MENUS } from '@/data/menus'
@@ -81,11 +81,10 @@ export function Menus() {
           >
             {MENUS.map((menu, index) => (
               <div key={menu.id} className={index === active ? 'menu-cover is-on' : 'menu-cover'}>
-                <Image
+                <DishPhoto
                   src={menu.cover}
                   alt={index === active ? menu.title : ''}
                   fill
-                  className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"
                 />
               </div>

@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { MENUS } from '@/data/menus'
@@ -42,12 +42,11 @@ export default function MenusPage() {
               data-cursor="Open"
             >
               <div className="relative aspect-[3/4] overflow-hidden" data-reveal="up" data-parallax="6" data-distort>
-                <Image
+                <DishPhoto
                   src={collection.cover}
                   alt={collection.title}
                   fill
                   priority={MENUS.indexOf(collection) < 3}
-                  className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute inset-0 z-[2] bg-gradient-to-t from-ink via-ink/25 to-ink/10" />

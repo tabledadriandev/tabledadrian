@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import { GALLERY } from '@/data/gallery'
@@ -41,12 +41,12 @@ export default function GalleryPage() {
               data-cursor="View"
             >
               <span className="relative block overflow-hidden" data-reveal={i % 3 === 1 ? 'iris' : 'up'} data-distort>
-                <Image
+                <DishPhoto
                   src={image.src}
                   alt={image.caption}
                   width={800}
                   height={1100}
-                  className="photo h-auto w-full object-cover"
+                  className="h-auto w-full"
                 />
               </span>
               <span className="sr-only">{image.title}</span>
@@ -79,12 +79,12 @@ export default function GalleryPage() {
               className="relative max-h-[90vh] max-w-3xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
+              <DishPhoto
                 src={active.src}
                 alt={active.caption}
                 width={1200}
                 height={1600}
-                className="photo max-h-[80vh] w-auto rounded-2xl object-contain"
+                className="max-h-[80vh] w-auto rounded-2xl object-contain"
               />
               <figcaption className="mt-4 text-center text-sm text-ink-foreground">
                 <span className="font-display text-2xl">{active.title}</span>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
 import { Clock, Users, ChefHat, Filter } from 'lucide-react'
 import { recipes } from '@/data/recipes'
@@ -118,11 +118,11 @@ export default function RecipesPage() {
             >
               <Link href={`/recipes/${recipe.slug}`} className="group surface block overflow-hidden">
                 <div className="relative aspect-[16/10] overflow-hidden bg-background-secondary">
-                  <Image
+                  <DishPhoto
                     src={recipe.image}
                     alt={recipe.title}
                     fill
-                    className="photo object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>

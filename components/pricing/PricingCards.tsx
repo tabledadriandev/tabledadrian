@@ -68,7 +68,7 @@ export function PricingCards() {
               <span className="absolute inset-x-0 bottom-0 h-px bg-border" data-rule aria-hidden="true" />
               <div className="lg:col-span-4">
                 {tier.badge && (
-                  <p className="text-[11px] uppercase tracking-caps text-gold">{tier.badge}</p>
+                  <p className="text-[11px] uppercase tracking-caps text-olive">{tier.badge}</p>
                 )}
                 <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{tier.name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{tier.tagline}</p>
@@ -86,7 +86,7 @@ export function PricingCards() {
               <ul className="lg:col-span-8 lg:columns-2 lg:gap-x-10">
                 {tier.features.map((feature) => (
                   <li key={feature} className="mb-2 flex items-start gap-2 text-sm leading-relaxed text-foreground">
-                    <Check size={14} className="mt-1 shrink-0 text-gold" aria-hidden="true" />
+                    <Check size={14} className="mt-1 shrink-0 text-olive" aria-hidden="true" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -114,7 +114,7 @@ export function PricingCards() {
           {subscriptionPlans.map((plan) => (
             <article key={plan.id} className="relative grid gap-6 border-b border-border py-10 lg:grid-cols-12 lg:gap-10">
               <div className="lg:col-span-4">
-                {plan.popular && <p className="text-[11px] uppercase tracking-caps text-gold">MOST POPULAR</p>}
+                {plan.popular && <p className="text-[11px] uppercase tracking-caps text-olive">MOST POPULAR</p>}
                 <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{plan.name}</h3>
                 <p className="lh-display mt-6 font-display text-5xl tracking-tight">
                   {ON_REQUEST[locale]}
@@ -128,7 +128,7 @@ export function PricingCards() {
               <ul className="lg:col-span-8">
                 {plan.includes.map((item) => (
                   <li key={item} className="mb-2 flex items-start gap-2 text-sm leading-relaxed text-foreground">
-                    <Check size={14} className="mt-1 shrink-0 text-gold" aria-hidden="true" />
+                    <Check size={14} className="mt-1 shrink-0 text-olive" aria-hidden="true" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -144,7 +144,7 @@ export function PricingCards() {
           return (
             <div key={guarantee.title}>
               <h3 className="flex items-center gap-2 font-display text-2xl">
-                <Icon size={16} className="text-gold" aria-hidden="true" />
+                <Icon size={16} className="text-olive" aria-hidden="true" />
                 {guarantee.title}
               </h3>
               <p className="mt-2 max-w-md text-sm leading-relaxed text-foreground-muted">{guarantee.description}</p>
@@ -161,7 +161,7 @@ export function PricingCards() {
               <Accordion.Header>
                 <Accordion.Trigger className="group flex w-full items-center justify-between gap-6 py-5 text-left font-display text-xl tracking-tight">
                   <span>{faq.question}</span>
-                  <span className="text-gold transition-transform duration-300 group-data-[state=open]:rotate-45" aria-hidden="true">+</span>
+                  <span className="text-olive transition-transform duration-300 group-data-[state=open]:rotate-45" aria-hidden="true">+</span>
                 </Accordion.Trigger>
               </Accordion.Header>
               <Accordion.Content className="max-w-3xl pb-5 text-sm leading-relaxed text-foreground-muted">

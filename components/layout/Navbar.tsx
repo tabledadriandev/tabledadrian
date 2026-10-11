@@ -9,6 +9,7 @@ import { NAVIGATION, CONTACT_INFO } from '@/lib/constants'
 import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
 import { AppBadges } from '@/components/app/AppBadges'
+import { BrandMark } from '@/components/brand/BrandMark'
 import { Magnetic } from '@/components/motion/Magnetic'
 import { cn } from '@/lib/utils'
 
@@ -48,7 +49,8 @@ export function Navbar() {
     return () => window.removeEventListener('keydown', onKey)
   }, [isMobileMenuOpen])
 
-  const onDark = isMobileMenuOpen || (pathname === '/' && !isScrolled)
+  const isHome = pathname === '/' || pathname === '/fr'
+  const onDark = isMobileMenuOpen || (isHome && !isScrolled)
   const textBase = onDark ? 'text-ink-foreground' : 'text-foreground'
   const textMuted = onDark
     ? 'text-ink-foreground/75 hover:text-ink-foreground'
@@ -63,10 +65,12 @@ export function Navbar() {
         )}
       >
         <nav className="container flex items-center justify-between py-4 sm:py-5" aria-label="Primary">
-          <Link href="/" className={cn('group flex flex-col leading-none', textBase)}>
-            <span className="lh-display font-display text-[1.65rem] font-medium italic tracking-tight">
-              Table d&apos;Adrian
-            </span>
+          <Link
+            href={withLocale('/', locale)}
+            className={cn('group flex flex-col leading-none', textBase)}
+            aria-label="Table d'Adrian"
+          >
+            <BrandMark onDark={onDark} />
             <span className={cn('mt-1 text-[10px] uppercase tracking-caps', onDark ? 'text-gold' : 'text-foreground-subtle')}>
               Private chef
             </span>

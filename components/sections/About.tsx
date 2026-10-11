@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Magnetic } from '@/components/motion/Magnetic'
@@ -84,11 +84,10 @@ export function About() {
             <span className="about-offset" data-speed="0.18" aria-hidden="true" />
             <div className="relative aspect-[4/5] overflow-hidden bg-ink" data-reveal="up" data-distort data-cursor="View">
               <div className="about-shift absolute inset-x-0 -top-[8%] h-[116%]">
-                <Image
+                <DishPhoto
                   src={ABOUT_IMAGE.src}
                   alt="Beef Wellington with pea puree and roasted vegetables, plated by Table d'Adrian"
                   fill
-                  className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 42vw"
                 />
               </div>

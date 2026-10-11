@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import { ArrowRight } from 'lucide-react'
 import { SERVICES } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
@@ -138,12 +138,11 @@ export function Services() {
                 <div key={service.title} className={index === 0 ? 'service-row is-active' : 'service-row'}>
                   <a href="/contact" className="service-hit">
                     <span className="service-mobile-plate" data-reveal="up">
-                      <Image
+                      <DishPhoto
                         src={PLATES[index].src}
                         alt={PLATES[index].alt}
                         fill
                         sizes="100vw"
-                        className="object-cover"
                       />
                       <span className="hero-rim" />
                     </span>
@@ -177,13 +176,12 @@ export function Services() {
                 key={plate.src}
                 className={index === 0 ? 'service-visual-plate is-on' : 'service-visual-plate'}
               >
-                <Image
+                <DishPhoto
                   src={plate.src}
                   alt=""
                   fill
                   sizes="(min-width: 1024px) 42vw, 100vw"
                   loading="eager"
-                  className="object-cover"
                 />
                 <span className="hero-rim" />
               </div>

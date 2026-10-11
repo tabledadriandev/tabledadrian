@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { GALLERY } from '@/data/gallery'
@@ -110,12 +110,11 @@ export function Gallery() {
           {GALLERY.map((image) => (
             <Link key={image.id} href="/gallery" tabIndex={-1} className="plate" data-cursor="View">
               <figure className="plate-frame" data-distort>
-                <Image
+                <DishPhoto
                   src={image.src}
                   alt={image.caption}
                   fill
                   sizes="(max-width: 768px) 82vw, 42vw"
-                  className="object-cover"
                 />
                 <figcaption>
                   <span>{image.title}</span>

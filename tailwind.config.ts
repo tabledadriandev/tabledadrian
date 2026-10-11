@@ -49,6 +49,9 @@ const config = {
           DEFAULT: "hsl(var(--gold))",
           soft: "hsl(var(--gold-soft))",
         },
+        champagne: "hsl(var(--champagne))",
+        olive: "hsl(var(--olive))",
+        "brand-stone": "hsl(var(--stone))",
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
