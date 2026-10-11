@@ -563,9 +563,12 @@ h3.display,
     align-items: flex-start;
     gap: 1.15rem;
     opacity: 0;
-    transition: opacity 0.45s var(--ease-out);
+    transition: opacity 0.22s linear;
   }
-  .service-row.is-active .service-copy { opacity: 1; }
+  .service-row.is-active .service-copy {
+    opacity: 1;
+    transition-delay: 0.2s;
+  }
   .service-hit h3 {
     max-width: 11ch;
     font-size: clamp(3.2rem, 5.2vw, 5.4rem);

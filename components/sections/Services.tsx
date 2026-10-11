@@ -133,7 +133,14 @@ export function Services() {
                 key={plate.src}
                 className={index === 0 ? 'service-visual-plate is-on' : 'service-visual-plate'}
               >
-                <Image src={plate.src} alt="" fill sizes="(min-width: 1024px) 42vw, 100vw" className="object-cover" />
+                <Image
+                  src={plate.src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  loading="eager"
+                  className="object-cover"
+                />
                 <span className="hero-rim" />
               </div>
             ))}
