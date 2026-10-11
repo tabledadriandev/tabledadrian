@@ -14,6 +14,7 @@ import { ConsentProvider } from "@/components/consent/ConsentProvider"
 import { CookieBanner } from "@/components/consent/CookieBanner"
 import { AnalyticsGate } from "@/components/consent/AnalyticsGate"
 import { OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site"
+import { siteJsonLd } from "@/lib/schema"
 
 const display = Bodoni_Moda({
   subsets: ['latin'],
@@ -98,22 +99,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "name": "Table d'Adrian",
-              "description": "Luxury private chef services",
-              "image": `${SITE_URL}/og.jpg`,
-              "telephone": "+33615963046",
-              "email": "adrian@tabledadrian.com",
-              "address": {
-                "@type": "PostalAddress",
-                "addressRegion": "Provence-Alpes-Côte d'Azur",
-                "addressCountry": "FR"
-              },
-              "priceRange": "£££",
-              "servesCuisine": "French, International"
-            })
+            __html: JSON.stringify(siteJsonLd()),
           }}
         />
       </head>
