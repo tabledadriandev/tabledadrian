@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Bodoni_Moda, Hanken_Grotesk, Source_Serif_4 } from "next/font/google"
 import "./globals.css"
 import { SmoothScroll } from "@/components/layout/SmoothScroll"
@@ -77,7 +77,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  themeColor: THEME_COLOR,
   manifest: '/site.webmanifest',
   icons: {
     icon: [
@@ -88,6 +87,10 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: THEME_COLOR,
 }
 
 export default function RootLayout({
