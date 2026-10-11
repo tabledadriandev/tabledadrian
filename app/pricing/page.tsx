@@ -9,7 +9,7 @@ export default function PricingPage() {
       <div className="container">
         <SectionHeading
           as="h1"
-          eyebrow="Investment"
+          align="left"
           title="Clear numbers, no theatre"
           description="Menus are priced for the table, not by a hidden formula. Tell Adrian the occasion and we will write a precise quote."
           animate={false}

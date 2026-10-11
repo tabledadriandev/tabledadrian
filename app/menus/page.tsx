@@ -17,36 +17,40 @@ export default function MenusPage() {
       <div className="container">
         <SectionHeading
           as="h1"
-          eyebrow="Private chef menus"
+          align="left"
           title="Open a book. We will write yours."
           description="Each collection holds five menus. Choose a direction, then we tailor every course to your guests, the season and the kitchen."
           animate={false}
         />
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {MENUS.map((collection) => (
             <Link
               key={collection.id}
               href={`/menus/${collection.id}`}
-              className="group surface overflow-hidden"
+              className="group relative block overflow-hidden bg-ink"
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-background-secondary">
+              <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
                   src={collection.cover}
                   alt={collection.title}
                   fill
-                  className="photo object-cover transition-transform duration-700 group-hover:scale-105"
+                  priority={MENUS.indexOf(collection) < 3}
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent p-6">
-                  <p className="text-[11px] uppercase tracking-caps text-ink-foreground/70">{collection.region}</p>
-                  <h2 className="mt-1 font-display text-3xl text-ink-foreground">{collection.title}</h2>
-                  <p className="mt-2 text-xs text-ink-foreground/70">Five menus</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/10" />
+                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
+                  <h2 className="font-display text-4xl leading-none text-ink-foreground">{collection.title}</h2>
+                  <p className="mt-3 text-[11px] uppercase tracking-caps text-gold">
+                    {collection.region}
+                    <span className="text-ink-foreground/60"> · Five menus</span>
+                  </p>
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink-foreground/80">{collection.description}</p>
+                  <span className="mt-4 inline-flex items-center gap-2 text-[11px] uppercase tracking-caps text-ink-foreground">
+                    Open <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
                 </div>
-              </div>
-              <div className="flex items-start justify-between gap-4 p-6">
-                <p className="text-sm leading-relaxed text-foreground-muted">{collection.description}</p>
-                <ArrowRight size={18} className="mt-0.5 shrink-0 text-foreground-subtle transition-transform group-hover:translate-x-0.5" />
               </div>
             </Link>
           ))}

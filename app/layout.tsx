@@ -1,26 +1,38 @@
 import type { Metadata } from "next"
-import { EB_Garamond, Source_Serif_4 } from "next/font/google"
+import { Bodoni_Moda, Hanken_Grotesk, Source_Serif_4 } from "next/font/google"
 import "./globals.css"
 import { SmoothScroll } from "@/components/layout/SmoothScroll"
 import { Navbar } from "@/components/layout/Navbar"
 import { Footer } from "@/components/layout/Footer"
+import { CustomCursor } from "@/components/layout/CustomCursor"
+import { Preloader } from "@/components/motion/Preloader"
+import { BrandSync } from "@/components/motion/BrandSync"
 import { ConsentProvider } from "@/components/consent/ConsentProvider"
 import { CookieBanner } from "@/components/consent/CookieBanner"
 import { AnalyticsGate } from "@/components/consent/AnalyticsGate"
 import { OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site"
 
-const display = EB_Garamond({
+const display = Bodoni_Moda({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
   variable: '--font-display',
   display: 'swap',
+  adjustFontFallback: false,
 })
 
-const body = Source_Serif_4({
+const body = Hanken_Grotesk({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-body',
+  display: 'swap',
+})
+
+const sola = Source_Serif_4({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-sola',
   display: 'swap',
 })
 
@@ -70,11 +82,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${display.variable} ${body.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${sola.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var p=location.pathname;if(p==="/sola"||p.indexOf("/sola/")===0){document.documentElement.dataset.brand="sola"}else{document.documentElement.dataset.brand="maison"}}catch(e){}`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -105,6 +122,9 @@ export default function RootLayout({
           Skip to content
         </a>
         <ConsentProvider>
+          <BrandSync />
+          <Preloader />
+          <CustomCursor />
           <SmoothScroll>
             <Navbar />
             <main id="main" className="min-h-screen">

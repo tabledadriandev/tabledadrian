@@ -1,126 +1,178 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { ArrowRight, ArrowDown } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { Magnetic } from '@/components/motion/Magnetic'
+import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
 import { HERO_IMAGE } from '@/data/gallery'
 
-const ease = [0.22, 1, 0.36, 1] as const
+const HeroPlate = dynamic(() => import('@/components/motion/HeroPlate'), { ssr: false })
 
-const lineReveal = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.25 + i * 0.12, duration: 0.9, ease },
-  }),
+function useWebGLPlate() {
+  const [state, setState] = useState({ enabled: false, mobile: false })
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const mobile = window.matchMedia('(max-width: 767px)').matches
+    const nav = navigator as Navigator & {
+      deviceMemory?: number
+      connection?: { saveData?: boolean }
+    }
+    const lowMemory = typeof nav.deviceMemory === 'number' && nav.deviceMemory < 4
+    const lowCores = (navigator.hardwareConcurrency || 8) < 4
+    let gl = false
+    try {
+      const canvas = document.createElement('canvas')
+      gl = Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'))
+    } catch {
+      gl = false
+    }
+    if (reduce || nav.connection?.saveData || lowMemory || lowCores || !gl) return
+
+    const start = () => setState({ enabled: true, mobile })
+    const idle = window.requestIdleCallback?.(start, { timeout: 900 })
+    const timer = idle === undefined ? window.setTimeout(start, 500) : undefined
+    return () => {
+      if (idle !== undefined) window.cancelIdleCallback?.(idle)
+      if (timer !== undefined) window.clearTimeout(timer)
+    }
+  }, [])
+
+  return state
 }
 
-const facts = [
-  { value: '15+', label: 'Years in fine kitchens' },
-  { value: 'EHL', label: 'Swiss hospitality diploma' },
-  { value: 'Stanford', label: 'Nutrition certified' },
-]
-
 export function Hero() {
+  const rootRef = useRef<HTMLElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const plateRef = useRef<HTMLDivElement>(null)
+  const webgl = useWebGLPlate()
+
+  useGSAP(
+    () => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      let split: SplitText | null = null
+      let cancelled = false
+
+      const intro = () => {
+        if (cancelled || reduce || !titleRef.current) return
+        split = SplitText.create(titleRef.current, {
+          type: 'lines',
+          mask: 'lines',
+          linesClass: 'split-line',
+          autoSplit: true,
+        })
+        gsap.from(split.lines, {
+          yPercent: 112,
+          duration: 1.2,
+          stagger: 0.08,
+          ease: 'power4.out',
+          delay: 0.45,
+        })
+        gsap.from('.hero-rise', {
+          y: 24,
+          autoAlpha: 0,
+          duration: 0.9,
+          stagger: 0.08,
+          delay: 1.05,
+          ease: 'power3.out',
+        })
+      }
+
+      const fontsReady = document.fonts?.ready.then(intro) ?? Promise.resolve(intro())
+
+      const mm = gsap.matchMedia()
+      mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+        if (!plateRef.current || !rootRef.current) return
+        gsap.fromTo(
+          plateRef.current.querySelector('.hero-media'),
+          { scale: 1.14 },
+          {
+            scale: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: rootRef.current,
+              start: 'top top',
+              end: '+=55%',
+              pin: true,
+              scrub: 0.7,
+              anticipatePin: 1,
+            },
+          }
+        )
+      })
+
+      return () => {
+        cancelled = true
+        void fontsReady
+        split?.revert()
+        mm.revert()
+      }
+    },
+    { scope: rootRef }
+  )
+
+  useEffect(() => {
+    const onLoad = () => ScrollTrigger.refresh()
+    window.addEventListener('load', onLoad)
+    return () => window.removeEventListener('load', onLoad)
+  }, [])
+
   return (
-    <section className="relative flex min-h-[100svh] items-end overflow-hidden bg-ink text-ink-foreground">
-      {/* Backdrop */}
-      <motion.div
-        className="absolute inset-0"
-        initial={{ scale: 1.08, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.6, ease }}
-      >
-        <Image
-          src={HERO_IMAGE.src}
-          alt="Burrata with sliced tomato and peach in a walnut bowl, plated by Table d'Adrian"
-          fill
-          priority
-          sizes="100vw"
-          className="photo object-cover object-left"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/45 via-ink/15 to-transparent" />
-      </motion.div>
-
-      <div className="hero-cta-pad container relative z-10 pb-14 pt-40 sm:pb-20 lg:pb-24">
-        <div className="max-w-4xl">
-          <motion.div
-            className="on-ink mb-7"
-            initial={{ opacity: 0, x: -12 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1, duration: 0.8, ease }}
-          >
-            <span className="eyebrow">Private chef · London &amp; Europe</span>
-          </motion.div>
-
-          <h1 className="display text-[2.75rem] leading-[0.98] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
-            <motion.span custom={0} variants={lineReveal} initial="hidden" animate="visible" className="block">
-              Dinner, composed
-            </motion.span>
-            <motion.span custom={1} variants={lineReveal} initial="hidden" animate="visible" className="block">
-              around <em className="italic text-gold">your</em> table.
-            </motion.span>
+    <section ref={rootRef} className="hero-stage bg-ink text-ink-foreground">
+      <div className="hero-layout">
+        <div className="hero-copy hero-cta-pad">
+          <h1 ref={titleRef} className="hero-display">
+            Dinner,
+            <br />
+            composed
+            <br />
+            around
+            <br />
+            <em>your</em> table.
           </h1>
-
-          <motion.p
-            custom={2}
-            variants={lineReveal}
-            initial="hidden"
-            animate="visible"
-            className="mt-7 max-w-xl text-base leading-relaxed text-ink-foreground/75 sm:text-lg"
-          >
+          <p className="hero-lede hero-rise">
             Michelin-trained technique and nutrition science, brought into your home. From an
             intimate dinner for two to a table of twenty-five, every menu is written for the people
             eating it.
-          </motion.p>
-
-          <motion.div
-            custom={3}
-            variants={lineReveal}
-            initial="hidden"
-            animate="visible"
-            className="mt-10"
-          >
-            <Button href="/contact" variant="light" size="lg">
-              Book your experience
-              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-            </Button>
-          </motion.div>
+          </p>
+          <div className="hero-rise mt-8">
+            <Magnetic>
+              <Button href="/contact" variant="light" size="lg">
+                Book your experience
+                <ArrowRight size={18} />
+              </Button>
+            </Magnetic>
+          </div>
+          <p className="hero-facts hero-rise">
+            <span>London &amp; Europe</span>
+            <span>15+ years in fine kitchens</span>
+            <span>EHL Swiss hospitality diploma</span>
+            <span>Stanford nutrition certified</span>
+          </p>
         </div>
 
-        {/* Facts strip */}
-        <motion.dl
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8, ease }}
-          className="mt-16 grid max-w-3xl grid-cols-3 gap-6 border-t border-white/15 pt-6 sm:mt-20"
-        >
-          {facts.map((f) => (
-            <div key={f.label}>
-              <dt className="font-display text-2xl text-ink-foreground sm:text-3xl">{f.value}</dt>
-              <dd className="mt-1 text-[11px] uppercase tracking-caps text-ink-foreground/50 sm:text-xs">
-                {f.label}
-              </dd>
-            </div>
-          ))}
-        </motion.dl>
+        <div ref={plateRef} className="hero-plate">
+          <div className="hero-media">
+            <Image
+              src={HERO_IMAGE.src}
+              alt="Burrata with sliced tomato and peach in a walnut bowl, plated by Table d'Adrian"
+              fill
+              priority
+              sizes="(min-width: 1024px) 48vw, 100vw"
+              className="object-cover"
+            />
+            {webgl.enabled ? <HeroPlate src={HERO_IMAGE.src} mobile={webgl.mobile} /> : <span className="gold-shimmer" />}
+            <span className="hero-rim" />
+          </div>
+        </div>
       </div>
-
-      <motion.a
-        href="#about"
-        aria-label="Scroll to About"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-8 right-6 z-10 hidden h-12 w-12 items-center justify-center rounded-full border border-white/20 text-ink-foreground/70 transition-colors hover:border-white/60 hover:text-ink-foreground sm:right-10 lg:flex"
-      >
-        <motion.span animate={{ y: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}>
-          <ArrowDown size={18} />
-        </motion.span>
-      </motion.a>
+      <a href="#about" className="hero-scroll" aria-label="Scroll to About">
+        <span>Scroll</span>
+        <i />
+      </a>
     </section>
   )
 }

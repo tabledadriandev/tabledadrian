@@ -1,73 +1,66 @@
 'use client'
 
-import Link from 'next/link'
+import { useState } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { MENUS } from '@/data/menus'
 import { Button } from '@/components/ui/Button'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
-
-const preview = MENUS.slice(0, 4)
 
 export function Menus() {
+  const [active, setActive] = useState(0)
+  const current = MENUS[active] ?? MENUS[0]
+
   return (
-    <section id="menus" className="bg-background-secondary py-20 sm:py-24 lg:py-32">
+    <section id="menus" className="section-pad bg-background">
       <div className="container">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end"
-        >
+        <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-xl">
-            <motion.span variants={fadeInUp} className="eyebrow mb-5">
-              Private chef menus
-            </motion.span>
-            <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl md:text-6xl">
+            <h2 className="display text-4xl leading-[0.95] sm:text-6xl">
               A menu for the evening, not a catalogue.
-            </motion.h2>
-            <motion.p variants={fadeInUp} className="mt-5 text-base leading-relaxed text-foreground-muted">
+            </h2>
+            <p className="mt-5 max-w-[58ch] text-base leading-relaxed text-foreground-muted">
               France, Italy, the coast, Asia. Each book is a starting point. Adrian rewrites it for
               your guests.
-            </motion.p>
+            </p>
           </div>
-          <motion.div variants={fadeInUp}>
-            <Button href="/menus" variant="ink">
-              All menus
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </Button>
-          </motion.div>
-        </motion.div>
+          <Button href="/menus" variant="ink">
+            All menus
+            <ArrowRight size={16} />
+          </Button>
+        </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {preview.map((menu, i) => (
-            <motion.div
-              key={menu.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06, duration: 0.55 }}
-            >
-              <Link href={`/menus/${menu.id}`} className="group surface block overflow-hidden">
-                <div className="relative aspect-[3/4] overflow-hidden bg-background-secondary">
-                  <Image
-                    src={menu.cover}
-                    alt={menu.title}
-                    fill
-                    className="photo object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 25vw"
-                  />
-                </div>
-                <div className="p-5">
-                  <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{menu.region}</p>
-                  <h3 className="mt-1 font-display text-2xl">{menu.title}</h3>
-                  <p className="mt-2 line-clamp-2 text-sm text-foreground-muted">{menu.description}</p>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+        <div className="grid items-stretch gap-8 lg:grid-cols-12">
+          <div className="relative min-h-[22rem] overflow-hidden bg-ink lg:col-span-5 lg:min-h-[36rem]">
+            <Image
+              key={current.cover}
+              src={current.cover}
+              alt={current.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+            />
+            <span className="hero-rim" />
+            <p className="absolute bottom-6 left-6 right-6 font-display text-3xl text-ink-foreground">
+              {current.title}
+            </p>
+          </div>
+          <ul className="lg:col-span-7">
+            {MENUS.map((menu, index) => (
+              <li key={menu.id}>
+                <Link
+                  href={`/menus/${menu.id}`}
+                  className={`menu-index ${index === active ? 'is-active' : ''}`}
+                  onMouseEnter={() => setActive(index)}
+                  onFocus={() => setActive(index)}
+                >
+                  <span>{menu.region}</span>
+                  <strong>{menu.title}</strong>
+                  <em>{menu.description}</em>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

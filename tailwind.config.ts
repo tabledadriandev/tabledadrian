@@ -82,9 +82,10 @@ const config = {
         lift: "0 2px 4px rgba(30, 20, 10, 0.05), 0 20px 40px -20px rgba(30, 20, 10, 0.22)",
       },
       fontFamily: {
-        display: ["var(--font-display)", "EB Garamond", "Georgia", "serif"],
-        accent: ["var(--font-display)", "EB Garamond", "Georgia", "serif"],
-        body: ["var(--font-body)", "Source Serif 4", "Georgia", "serif"],
+        display: ["var(--font-display)", "Bodoni Moda", "Didot", "Georgia", "serif"],
+        accent: ["var(--font-display)", "Bodoni Moda", "Didot", "Georgia", "serif"],
+        body: ["var(--font-body)", "Hanken Grotesk", "Helvetica Neue", "sans-serif"],
+        sola: ["var(--font-sola)", "Source Serif 4", "Georgia", "serif"],
         mono: ["JetBrains Mono", "Menlo", "monospace"],
       },
       letterSpacing: {

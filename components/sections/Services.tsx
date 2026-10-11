@@ -1,68 +1,73 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { SERVICES } from '@/lib/constants'
 import { Button } from '@/components/ui/Button'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
 
 export function Services() {
+  const root = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+        const rows = gsap.utils.toArray<HTMLElement>('.service-row')
+        const setActive = (index: number) => {
+          rows.forEach((row, i) => row.classList.toggle('is-active', i === index))
+        }
+        setActive(0)
+        ScrollTrigger.create({
+          trigger: root.current,
+          start: 'top top',
+          end: '+=1800',
+          pin: true,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            const index = Math.min(rows.length - 1, Math.floor(self.progress * rows.length))
+            setActive(index)
+          },
+        })
+      })
+      return () => mm.revert()
+    },
+    { scope: root }
+  )
+
   return (
-    <section id="services" className="bg-background py-20 sm:py-24 lg:py-32">
-      <div className="container">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start"
-          >
-            <motion.span variants={fadeInUp} className="eyebrow mb-5">
-              Services
-            </motion.span>
-            <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl">
+    <section id="services" ref={root} className="services-pin bg-background text-foreground">
+      <div className="container flex min-h-[100svh] flex-col justify-center py-28">
+        <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
+          <div className="max-w-xl">
+            <h2 className="display text-4xl leading-[0.95] sm:text-5xl">
               Culinary experiences, written for the occasion.
-            </motion.h2>
-            <motion.p variants={fadeInUp} className="mt-6 text-base leading-relaxed text-foreground-muted">
+            </h2>
+            <p className="mt-6 max-w-md text-base leading-relaxed text-foreground-muted">
               From an intimate dinner to a week of quiet meals at home, every menu is composed
               around your guests, your kitchen and the season.
-            </motion.p>
-            <motion.div variants={fadeInUp} className="mt-8">
-              <Button href="/pricing" variant="outline">
-                See pricing
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          <ol className="lg:col-span-8 divide-y divide-border border-y border-border">
+            </p>
+          </div>
+          <Button href="/pricing" variant="outline">
+            See pricing
+            <ArrowRight size={16} />
+          </Button>
+        </div>
+        <div>
+          <ol className="service-stage">
             {SERVICES.map((service, index) => (
-              <motion.li
-                key={service.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.06, duration: 0.55 }}
-                className="group grid gap-4 py-8 sm:grid-cols-12 sm:items-start sm:gap-6"
-              >
-                <span className="font-display text-3xl text-primary/70 sm:col-span-2">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <div className="sm:col-span-10">
-                  <h3 className="font-display text-2xl sm:text-3xl">{service.title}</h3>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-foreground-muted sm:text-base">
-                    {service.description}
-                  </p>
-                  <a
-                    href="/contact"
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
-                  >
-                    Enquire
-                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                  </a>
-                </div>
-              </motion.li>
+              <li key={service.title} className={index === 0 ? 'service-row is-active' : 'service-row'}>
+                <a href="/contact" className="service-hit">
+                  <span className="service-index" aria-hidden="true">{service.title}</span>
+                  <span className="service-copy">
+                    <h3>{service.title}</h3>
+                    <p>{service.description}</p>
+                    <span className="service-enquire">
+                      Enquire <ArrowRight size={14} />
+                    </span>
+                  </span>
+                </a>
+              </li>
             ))}
           </ol>
         </div>

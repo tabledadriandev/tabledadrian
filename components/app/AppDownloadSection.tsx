@@ -33,7 +33,7 @@ function PhoneMockup() {
     <div className="relative mx-auto w-[280px] sm:w-[300px]">
       {/* glow */}
       <div className="absolute -inset-10 rounded-full bg-primary/20 blur-3xl" aria-hidden />
-      <div className="relative aspect-[9/19.5] rounded-[2.6rem] border border-white/15 bg-ink-soft p-2.5 shadow-lift">
+      <div className="relative aspect-[9/19.5] rounded-[2.4rem] border border-gold/50 bg-ink-soft p-2.5 shadow-lift">
         <div className="relative h-full w-full overflow-hidden rounded-[2.1rem] bg-background text-foreground">
           {/* notch */}
           <div className="absolute left-1/2 top-2 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-ink" />
@@ -141,9 +141,6 @@ export function AppDownloadSection() {
             viewport={{ once: true, margin: '-80px' }}
             className="on-ink order-2 lg:order-1"
           >
-            <motion.span variants={fadeInUp} className="eyebrow mb-5">
-              The Table d&apos;Adrian app
-            </motion.span>
             <motion.h2 variants={fadeInUp} className="display text-4xl sm:text-5xl md:text-6xl">
               A private chef&apos;s eye on <em className="italic text-gold">every</em> meal.
             </motion.h2>

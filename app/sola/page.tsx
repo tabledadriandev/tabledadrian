@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { AppBadges } from '@/components/app/AppBadges'
+import { SolaMotion } from '@/components/sola/SolaMotion'
 
 export const metadata: Metadata = {
   title: 'Sola',
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 
 export default function SolaPage() {
   return (
-    <div className="bg-background pb-20 pt-28 sm:pt-32">
+    <div id="sola-root" className="bg-background pb-20 pt-28 sm:pt-32">
+      <SolaMotion />
       <div className="container max-w-2xl">
         <SectionHeading
           as="h1"

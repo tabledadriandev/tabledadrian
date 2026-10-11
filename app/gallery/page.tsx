@@ -31,7 +31,7 @@ export default function GalleryPage() {
               viewport={{ once: true }}
               transition={{ delay: (i % 6) * 0.04, duration: 0.45 }}
               onClick={() => setActive(image)}
-              className="mb-4 block w-full break-inside-avoid overflow-hidden rounded-[1.5rem] text-left"
+              className="group mb-4 block w-full break-inside-avoid overflow-hidden text-left"
             >
               <Image
                 src={image.src}
