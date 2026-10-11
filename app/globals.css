@@ -372,13 +372,13 @@ html.has-fine-cursor .cursor-dot.is-hidden { opacity: 0; }
 }
 .brand-lockup {
   display: block;
-  height: 3.25rem;
+  height: 4rem;
   width: auto;
-  max-width: min(48vw, 15rem);
+  max-width: min(58vw, 17.5rem);
 }
 @media (min-width: 640px) {
   .brand-lockup {
-    height: 3.75rem;
+    height: 5rem;
   }
 }
 
