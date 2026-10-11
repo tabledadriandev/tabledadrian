@@ -1,12 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Check, Sparkles, Shield, Lock, Calendar, Heart, Star } from 'lucide-react'
-import { pricingTiers, subscriptionPlans, socialProof, guarantees, pricingFAQ, urgencyElements } from '@/data/pricing'
-import { fadeInUp, staggerContainer, scaleIn } from '@/lib/animations'
-import { formatCurrency } from '@/lib/utils'
+import { Check, Shield, Lock, Calendar, Heart } from 'lucide-react'
 import * as Accordion from '@radix-ui/react-accordion'
+import { pricingTiers, subscriptionPlans, guarantees, pricingFAQ, urgencyElements } from '@/data/pricing'
+import { cn } from '@/lib/utils'
+import { DustField } from '@/components/motion/DustField'
+import { ON_REQUEST, copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 
 const iconMap: Record<string, typeof Shield> = {
   Shield,
@@ -16,291 +19,169 @@ const iconMap: Record<string, typeof Shield> = {
 }
 
 export function PricingCards() {
+  const locale = useLocale()
+  const t = copy[locale]
   const [isMonthly, setIsMonthly] = useState(false)
 
   return (
-    <div className="space-y-16">
-      {/* Social Proof Bar */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="surface p-6"
-      >
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div>
-            <div className="text-3xl font-display font-bold text-primary mb-1">{socialProof.clientsServed}</div>
-            <div className="text-sm text-foreground-muted">Clients Served</div>
-          </div>
-          <div>
-            <div className="text-3xl font-display font-bold text-primary mb-1">{socialProof.satisfactionRate}</div>
-            <div className="text-sm text-foreground-muted">Satisfaction Rate</div>
-          </div>
-          <div>
-            <div className="text-3xl font-display font-bold text-primary mb-1">{socialProof.averageRating}</div>
-            <div className="text-sm text-foreground-muted flex items-center justify-center gap-1">
-              <Star size={16} className="fill-primary text-primary" />
-              <span>({socialProof.reviewCount} reviews)</span>
-            </div>
-          </div>
-          <div>
-            <div className="text-3xl font-display font-bold text-primary mb-1">{socialProof.repeatClientRate}</div>
-            <div className="text-sm text-foreground-muted">Repeat Clients</div>
-          </div>
-        </div>
-      </motion.div>
+    <div>
+      <p className="text-sm text-foreground-muted">{t.quoteNote}</p>
 
-      {/* Toggle */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-center space-x-4"
-      >
-        <span className={`text-sm font-medium ${!isMonthly ? 'text-foreground' : 'text-foreground-muted'}`}>
-          Per Event
-        </span>
+      <div className="mt-12 flex gap-8 border-b border-border" role="tablist" aria-label="Pricing view">
         <button
-          onClick={() => setIsMonthly(!isMonthly)}
-          className="relative w-16 h-8 bg-white border border-foreground/10 rounded-full p-1 transition-colors hover:border-primary"
+          type="button"
+          role="tab"
+          aria-selected={!isMonthly}
+          onClick={() => setIsMonthly(false)}
+          className={cn(
+            'pb-3 font-display text-3xl tracking-tight',
+            !isMonthly ? 'border-b border-gold text-foreground' : 'text-foreground-muted'
+          )}
         >
-          <motion.div
-            className="w-6 h-6 bg-primary rounded-full"
-            animate={{ x: isMonthly ? 32 : 0 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-          />
+          {t.perEvent}
         </button>
-        <span className={`text-sm font-medium ${isMonthly ? 'text-foreground' : 'text-foreground-muted'}`}>
-          Monthly Subscription
-        </span>
-      </motion.div>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={isMonthly}
+          onClick={() => setIsMonthly(true)}
+          className={cn(
+            'pb-3 font-display text-3xl tracking-tight',
+            isMonthly ? 'border-b border-gold text-foreground' : 'text-foreground-muted'
+          )}
+        >
+          {t.monthly}
+        </button>
+      </div>
 
-      {/* Pricing Tiers */}
       {!isMonthly ? (
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          key="event"
+          className="mt-4"
+          role="tabpanel"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          {pricingTiers.map((tier, index) => {
-            const Icon = tier.popular ? Sparkles : undefined
-            return (
-              <motion.div
-                key={tier.id}
-                variants={scaleIn}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className={`relative surface p-8 transition-shadow hover:shadow-lift ${
-                  tier.popular ? 'border-primary shadow-lift lg:scale-105' : ''
-                }`}
-              >
-                {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                    <div className="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-medium flex items-center justify-center space-x-1.5 shadow-sm whitespace-nowrap">
-                      {Icon && <Icon size={12} className="flex-shrink-0" />}
-                      <span className="whitespace-nowrap">{tier.badge}</span>
-                    </div>
-                  </div>
+          {pricingTiers.map((tier) => (
+            <article key={tier.id} className="relative grid gap-6 py-10 lg:grid-cols-12 lg:gap-10" data-rise="36">
+              <span className="absolute inset-x-0 bottom-0 h-px bg-border" data-rule aria-hidden="true" />
+              <div className="lg:col-span-4">
+                {tier.badge && (
+                  <p className="text-[11px] uppercase tracking-caps text-olive">{tier.badge}</p>
                 )}
-
-                {tier.savings && (
-                  <div className="absolute top-2 right-2 bg-green-500/20 text-green-400 text-xs font-medium px-2 py-1 rounded-lg z-20">
-                    {tier.savings}
-                  </div>
-                )}
-
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-display font-bold mb-2">{tier.name}</h3>
-                  <p className="text-foreground-muted text-sm mb-4">{tier.tagline}</p>
-                  <div className="mb-2">
-                    {tier.basePrice ? (
-                      <div className="flex items-baseline justify-center space-x-2">
-                        <span className="text-4xl font-display font-bold">
-                          {formatCurrency(tier.basePrice)}
-                        </span>
-                        {tier.pricePerGuest && (
-                          <span className="text-foreground-muted text-sm">
-                            + {formatCurrency(tier.pricePerGuest)}/guest
-                          </span>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="text-3xl font-display font-bold">{tier.priceDisplay}</div>
-                    )}
-                  </div>
-                  <p className="text-xs text-foreground-subtle">{tier.guests}</p>
-                  {tier.urgency && (
-                    <p className="text-xs text-primary mt-2 font-medium">{tier.urgency}</p>
-                  )}
-                </div>
-
-                <ul className="space-y-3 mb-8 min-h-[300px]">
-                  {tier.features.map((feature, i) => (
-                    <li key={i} className="flex items-start space-x-3">
-                      <Check size={18} className="text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-foreground-muted text-sm">{feature}</span>
-                    </li>
-                  ))}
-                  {tier.notIncluded && tier.notIncluded.length > 0 && (
-                    <>
-                      <li className="text-xs text-foreground-subtle mt-4 pt-4 border-t border-border">
-                        Not included:
-                      </li>
-                      {tier.notIncluded.map((item, i) => (
-                        <li key={i} className="flex items-start space-x-3">
-                          <span className="text-foreground-subtle text-sm">• {item}</span>
-                        </li>
-                      ))}
-                    </>
-                  )}
-                </ul>
-
-                {tier.extras && (
-                  <div className="mb-4 p-3 bg-primary/10 border border-primary/20 rounded text-sm text-primary text-center">
-                    {tier.extras}
-                  </div>
-                )}
-
-                <button
-                  className={`w-full py-3 rounded-xl font-medium transition-all ${
-                    tier.popular
-                      ? 'bg-primary text-white hover:bg-primary/90 shadow-sm hover:shadow-md'
-                      : 'bg-white border border-foreground/10 text-foreground hover:border-primary hover:text-primary'
-                  }`}
-                >
+                <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{tier.name}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{tier.tagline}</p>
+                <p className="lh-display mt-6 font-display text-5xl tracking-tight">
+                  {ON_REQUEST[locale]}
+                </p>
+                <p className="mt-3 text-[11px] uppercase tracking-caps text-foreground-subtle">{tier.guests}</p>
+                {tier.savings && <p className="mt-3 text-sm text-foreground">{tier.savings}</p>}
+                {tier.extras && <p className="mt-2 text-sm text-foreground-muted">{tier.extras}</p>}
+                {tier.urgency && <p className="mt-3 text-sm text-foreground">{tier.urgency}</p>}
+                <Link href={locale === 'fr' ? '/fr/contact' : '/contact'} className="maison-link mt-6">
                   {tier.cta}
-                </button>
-              </motion.div>
-            )
-          })}
-        </motion.div>
-      ) : (
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          {subscriptionPlans.map((plan, index) => (
-            <motion.div
-              key={plan.id}
-              variants={scaleIn}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className={`relative bg-white border rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow ${
-                plan.popular
-                  ? 'border-primary shadow-md shadow-primary/10'
-                  : 'border-foreground/10'
-              }`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <div className="bg-primary text-white px-4 py-1 rounded-lg text-sm font-medium shadow-sm">
-                    MOST POPULAR
-                  </div>
-                </div>
-              )}
-
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-display font-bold mb-2">{plan.name}</h3>
-                <div className="mb-4">
-                  <span className="text-4xl font-display font-bold">{formatCurrency(plan.price)}</span>
-                  <span className="text-foreground-muted">/{plan.period}</span>
-                </div>
-                <p className="text-xs text-foreground-subtle mb-4">{plan.commitment}</p>
-                <p className="text-sm text-foreground-muted">{plan.ideal}</p>
+                </Link>
               </div>
-
-              <ul className="space-y-3 mb-8">
-                {plan.includes.map((item, i) => (
-                  <li key={i} className="flex items-start space-x-3">
-                    <Check size={18} className="text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground-muted text-sm">{item}</span>
+              <ul className="lg:col-span-8 lg:columns-2 lg:gap-x-10">
+                {tier.features.map((feature) => (
+                  <li key={feature} className="mb-2 flex items-start gap-2 text-sm leading-relaxed text-foreground">
+                    <Check size={14} className="mt-1 shrink-0 text-olive" aria-hidden="true" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+                {tier.notIncluded && tier.notIncluded.length > 0 && (
+                  <li className="mb-2 mt-4 text-[11px] uppercase tracking-caps text-foreground-subtle">Not included:</li>
+                )}
+                {tier.notIncluded?.map((item) => (
+                  <li key={item} className="mb-2 text-sm text-foreground-muted">
+                    {item}
                   </li>
                 ))}
               </ul>
-
-              <button
-                className={`w-full py-3 rounded-xl font-medium transition-all ${
-                  plan.popular
-                    ? 'bg-primary text-white hover:bg-primary/90 shadow-sm hover:shadow-md'
-                    : 'bg-white border border-foreground/10 text-foreground hover:border-primary'
-                }`}
-              >
-                Start Subscription
-              </button>
-            </motion.div>
+            </article>
+          ))}
+        </motion.div>
+      ) : (
+        <motion.div
+          key="monthly"
+          className="mt-4"
+          role="tabpanel"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {subscriptionPlans.map((plan) => (
+            <article key={plan.id} className="relative grid gap-6 border-b border-border py-10 lg:grid-cols-12 lg:gap-10">
+              <div className="lg:col-span-4">
+                {plan.popular && <p className="text-[11px] uppercase tracking-caps text-olive">MOST POPULAR</p>}
+                <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{plan.name}</h3>
+                <p className="lh-display mt-6 font-display text-5xl tracking-tight">
+                  {ON_REQUEST[locale]}
+                </p>
+                <p className="mt-3 text-[11px] uppercase tracking-caps text-foreground-subtle">{plan.commitment}</p>
+                <p className="mt-3 text-sm text-foreground-muted">{plan.ideal}</p>
+                <Link href={locale === 'fr' ? '/fr/contact' : '/contact'} className="maison-link mt-6">
+                  {t.bookCta}
+                </Link>
+              </div>
+              <ul className="lg:col-span-8">
+                {plan.includes.map((item) => (
+                  <li key={item} className="mb-2 flex items-start gap-2 text-sm leading-relaxed text-foreground">
+                    <Check size={14} className="mt-1 shrink-0 text-olive" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
           ))}
         </motion.div>
       )}
 
-      {/* Guarantees */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-      >
-        {guarantees.map((guarantee, index) => {
+      <div className="mt-16 grid gap-8 border-t border-border pt-10 sm:grid-cols-2">
+        {guarantees.map((guarantee) => {
           const Icon = iconMap[guarantee.icon] || Shield
           return (
-            <motion.div
-              key={index}
-              variants={fadeInUp}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white border border-foreground/10 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                <Icon size={24} className="text-primary" />
-              </div>
-              <h4 className="font-display font-semibold mb-2">{guarantee.title}</h4>
-              <p className="text-sm text-foreground-muted">{guarantee.description}</p>
-            </motion.div>
+            <div key={guarantee.title}>
+              <h3 className="flex items-center gap-2 font-display text-2xl">
+                <Icon size={16} className="text-olive" aria-hidden="true" />
+                {guarantee.title}
+              </h3>
+              <p className="mt-2 max-w-md text-sm leading-relaxed text-foreground-muted">{guarantee.description}</p>
+            </div>
           )
         })}
-      </motion.div>
+      </div>
 
-      {/* FAQ */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="bg-white border border-foreground/10 rounded-xl p-8 shadow-sm"
-      >
-        <h3 className="text-3xl font-display font-bold mb-6 text-center">Frequently Asked Questions</h3>
-        <Accordion.Root type="single" collapsible className="space-y-4">
+      <div className="mt-16 border-t border-border pt-10">
+        <h3 className="font-display text-4xl tracking-tight">Frequently Asked Questions</h3>
+        <Accordion.Root type="single" collapsible className="mt-6">
           {pricingFAQ.map((faq, index) => (
-            <Accordion.Item key={index} value={`item-${index}`} className="border-b border-border">
+            <Accordion.Item key={faq.question} value={`item-${index}`} className="border-b border-border">
               <Accordion.Header>
-                <Accordion.Trigger className="w-full text-left py-4 flex items-center justify-between group">
-                  <span className="font-medium group-hover:text-primary transition-colors">{faq.question}</span>
-                  <span className="text-primary group-hover:rotate-180 transition-transform">+</span>
+                <Accordion.Trigger className="group flex w-full items-center justify-between gap-6 py-5 text-left font-display text-xl tracking-tight">
+                  <span>{faq.question}</span>
+                  <span className="text-olive transition-transform duration-300 group-data-[state=open]:rotate-45" aria-hidden="true">+</span>
                 </Accordion.Trigger>
               </Accordion.Header>
-              <Accordion.Content className="text-foreground-muted pb-4">
+              <Accordion.Content className="max-w-3xl pb-5 text-sm leading-relaxed text-foreground-muted">
                 {faq.answer}
               </Accordion.Content>
             </Accordion.Item>
           ))}
         </Accordion.Root>
-      </motion.div>
+      </div>
 
-      {/* Urgency Banner */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        className="bg-primary/10 border border-primary/20 rounded-xl p-6 text-center"
-      >
-        <h3 className="text-xl font-display font-bold mb-2">Limited Availability</h3>
-        <p className="text-foreground-muted mb-4">
+      <div className="relative mt-16 overflow-hidden bg-ink px-6 py-12 text-ink-foreground sm:px-10" data-reveal="iris">
+        <DustField density={36} />
+        <h3 className="relative font-display text-4xl tracking-tight sm:text-5xl">Limited Availability</h3>
+        <p className="relative mt-4 max-w-xl text-base leading-relaxed text-ink-foreground/80">
           {urgencyElements.consultationSlots}. Book your consultation to secure your preferred date.
         </p>
-        <button className="px-6 py-3 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition-all shadow-sm hover:shadow-md">
+        <Link href={locale === 'fr' ? '/fr/contact' : '/contact'} className="maison-link relative mt-6 text-ink-foreground">
           Book Consultation Now
-        </button>
-      </motion.div>
+        </Link>
+      </div>
     </div>
   )
 }

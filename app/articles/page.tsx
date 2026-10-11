@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
 import { Clock } from 'lucide-react'
 import { articles } from '@/data/articles'
@@ -27,11 +27,11 @@ export default function ArticlesPage() {
           <Link href={`/articles/${featuredArticle.slug}`} className="group surface mt-12 block overflow-hidden">
             <div className="grid md:grid-cols-2">
               <div className="relative aspect-[16/10] md:aspect-auto">
-                <Image
+                <DishPhoto
                   src={featuredArticle.image}
                   alt={featuredArticle.title}
                   fill
-                  className="photo object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                 />
@@ -59,11 +59,11 @@ export default function ArticlesPage() {
             >
               <Link href={`/articles/${article.slug}`} className="group surface block overflow-hidden">
                 <div className="relative aspect-[16/10] overflow-hidden bg-background-secondary">
-                  <Image
+                  <DishPhoto
                     src={article.image}
                     alt={article.title}
                     fill
-                    className="photo object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import { DishPhoto } from '@/components/media/DishPhoto'
 import { Clock, Users, ChefHat, CheckCircle } from 'lucide-react'
 import { Recipe } from '@/data/recipes'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
@@ -25,17 +25,13 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
           className="space-y-8"
         >
           {/* Hero Image */}
-          <motion.div
-            variants={fadeInUp}
-            className="relative mb-8 aspect-[4/5] overflow-hidden rounded-[1.5rem] sm:aspect-video"
-          >
-            <Image
+          <motion.div variants={fadeInUp} className="dish-well relative mb-8 overflow-hidden">
+            <DishPhoto
               src={recipe.image}
               alt={recipe.title}
-              fill
               priority
-              className="photo object-cover"
-              sizes="(max-width: 768px) 100vw, 800px"
+              className="mx-auto max-h-[70vh] w-auto"
+              sizes="(max-width: 768px) 100vw, 896px"
             />
           </motion.div>
 

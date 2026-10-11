@@ -7,6 +7,9 @@ import { z } from 'zod'
 import { motion } from 'framer-motion'
 import { Loader2, CheckCircle } from 'lucide-react'
 import { fadeInUp } from '@/lib/animations'
+import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
+import { copy } from '@/lib/copy'
+import { useLocale } from '@/lib/i18n'
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Please enter your name'),
@@ -27,6 +30,8 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>
 
 export function ContactForm() {
+  const locale = useLocale()
+  const t = copy[locale]
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -154,16 +159,8 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="budget" className="mb-2 block text-sm font-medium">
-          Budget range
-        </label>
-        <select id="budget" {...register('budget')} className="field">
-          <option value="">Select budget range</option>
-          <option value="150-300">£150 to £300</option>
-          <option value="350-600">£350 to £600</option>
-          <option value="700+">£700+</option>
-          <option value="custom">Custom</option>
-        </select>
+        <p className="text-sm text-foreground-muted">{t.quoteNote}</p>
+        <input type="hidden" value="on-request" {...register('budget')} />
       </div>
 
       <div>
@@ -212,13 +209,22 @@ export function ContactForm() {
             <span>Message sent</span>
           </>
         ) : (
-          <span>Book your experience</span>
+          <span>{t.bookCta}</span>
         )}
       </button>
       <p className="text-center text-sm text-foreground-muted">
-        Or write to{' '}
-        <a href="mailto:adrian@tabledadrian.com" className="text-foreground underline underline-offset-4">
-          adrian@tabledadrian.com
+        {t.bookingIntro}{' '}
+        <a href={`mailto:${CONTACT_INFO.email}`} className="text-foreground underline underline-offset-4">
+          {CONTACT_INFO.email}
+        </a>
+        {' · '}
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-foreground underline underline-offset-4"
+        >
+          {t.instagramLabel} {t.instagramHandle}
         </a>
       </p>
     </motion.form>

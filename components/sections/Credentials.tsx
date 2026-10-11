@@ -1,29 +1,25 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Award, GraduationCap, Users, Calendar } from 'lucide-react'
+import { Award, GraduationCap, Calendar } from 'lucide-react'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
+import { credentials as chefCredentials } from '@/lib/credentials'
 
 const credentials = [
   {
     icon: GraduationCap,
-    title: 'EHL Swiss Diploma',
+    title: chefCredentials.en.ehl,
     description: 'Prestigious hospitality education',
   },
   {
     icon: Award,
-    title: 'Stanford Certified',
+    title: chefCredentials.en.stanford,
     description: 'Health & nutrition expertise',
   },
   {
     icon: Calendar,
-    title: '15+ Years',
+    title: `${chefCredentials.en.yearsShort} ${chefCredentials.en.yearsLabel}`,
     description: 'Culinary experience',
-  },
-  {
-    icon: Users,
-    title: '100+ Clients',
-    description: 'Satisfied customers',
   },
 ]
 
@@ -36,7 +32,7 @@ export function Credentials() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto"
+            className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto"
         >
           {credentials.map((credential, index) => {
             const Icon = credential.icon
