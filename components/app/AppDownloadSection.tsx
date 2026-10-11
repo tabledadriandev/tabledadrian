@@ -14,7 +14,7 @@ const features = [
   {
     icon: Sparkles,
     title: 'Your longevity score',
-    description: 'Inflammation, glycemic load and micronutrients, explained plainly.',
+    description: 'Inflammation, glycaemic load and micronutrients, explained plainly.',
   },
   {
     icon: ChefHat,
@@ -23,8 +23,8 @@ const features = [
   },
   {
     icon: HeartPulse,
-    title: 'Built around conditions',
-    description: 'Diabetes, hypertension, IBS and more, handled with care.',
+    title: 'Screened before you cook',
+    description: 'Recipes that do not fit your allergies or a marked condition stay off the plan. Nutrition guidance, not a treatment.',
   },
 ]
 
@@ -169,7 +169,7 @@ export function AppDownloadSection() {
 
             <motion.div variants={fadeInUp} className="mt-10">
               <AppBadges tone="light" />
-              <p className="mt-3 text-xs text-ink-foreground/50">Launching soon on iOS and Android.</p>
+              <p className="mt-3 text-xs text-ink-foreground/50">For iPhone, iPad and Mac.</p>
             </motion.div>
           </motion.div>
 

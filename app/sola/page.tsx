@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { AppBadges } from '@/components/app/AppBadges'
 
 export const metadata: Metadata = {
   title: 'Sola',
   description:
-    'Sola is a private nutrition companion from Table d’Adrian. Recipes and meal plans shaped around your body, health and tastes — on your device.',
+    'Recipes screened for you, planned to your numbers. Sola is nutrition guidance for adults on iPhone, iPad and Mac.',
   alternates: { canonical: '/sola' },
 }
 
@@ -16,22 +17,28 @@ export default function SolaPage() {
         <SectionHeading
           as="h1"
           eyebrow="Sola app"
-          title="Nutrition that starts with you"
-          description="Tell Sola about your body, health and tastes. It plans your week, adapts recipes to you and explains the science of every nutrient. Private, on device."
+          title="Recipes screened for you, planned to your numbers."
+          description="Tell Sola about your body, health and tastes, and it gives you daily targets with the reason beside them, recipes screened for you, and a week you can shop for."
           animate={false}
         />
 
         <article className="legal mx-auto mt-12 space-y-5 text-base leading-relaxed text-foreground-muted">
           <p>
-            Sola is the nutrition companion from Table d&apos;Adrian. It works out your calorie,
-            protein and nutrient needs from Dietary Reference Intakes, then matches recipes and a
-            weekly plan to your profile — allergies, conditions, way of eating and the foods you
-            prefer.
+            Sola is nutrition guidance for adults, from Table d&apos;Adrian. It is for iPhone, iPad
+            and Mac. It works out daily targets from published methods, including Dietary Reference
+            Intakes, then screens recipes for your allergies, a marked condition and the way you eat.
+            Sola is not medical advice, and it is not a medical device.
           </p>
           <p>
-            Your profile and food log stay on your iPhone, iPad or Mac. Signing in is optional. Sola
-            is educational and does not replace advice from a doctor or registered dietitian.
+            The chef uses Apple Intelligence on the device. It needs a device that supports Apple
+            Intelligence. Your conversations and profile are not sent to Sola or any third party.
           </p>
+          <p>Sign-in is optional. Barcode and product lookups use Open Food Facts.</p>
+
+          <div id="waitlist" className="!mt-10">
+            <AppBadges tone="ink" />
+            <p className="mt-3 text-sm">For iPhone, iPad and Mac.</p>
+          </div>
 
           <h2 className="!mt-10 font-display text-2xl text-foreground">Support</h2>
           <p>

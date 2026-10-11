@@ -63,11 +63,11 @@ export function AppDownloadModal({ open, onOpenChange, feature }: AppDownloadMod
 
           <div className="mt-7">
             <AppBadges tone="ink" size="sm" />
-            {!APP_LINKS.appStore && !APP_LINKS.playStore && (
-              <p className="mt-3 text-xs text-foreground-subtle">
-                The app is launching soon. In the meantime, explore this preview freely.
-              </p>
-            )}
+            <p className="mt-3 text-xs text-foreground-subtle">
+              {APP_LINKS.appStore
+                ? 'For iPhone, iPad and Mac.'
+                : 'For iPhone, iPad and Mac. Join the waitlist until Sola is on the App Store. This preview stays open.'}
+            </p>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
