@@ -20,7 +20,7 @@ Sola is a separate nutrition-guidance app from the same kitchen. It is not medic
 
 ## Positioning
 
-Michelin-trained technique paired with a Nutrition certificate, Stanford, written as menus for a specific household rather than a restaurant service. Neighbouring chef sites can claim luxury dining; they cannot truthfully copy this pairing as it is stated on the site.
+Swiss-trained (EHL) technique paired with a Nutrition certificate, Stanford, written as menus for a specific household rather than a restaurant service. Neighbouring chef sites can claim luxury dining; they cannot truthfully copy this pairing as it is stated on the site.
 
 ## Operating Context
 

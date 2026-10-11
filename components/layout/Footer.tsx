@@ -180,9 +180,9 @@ export function Footer() {
             <p className="text-[11px] uppercase tracking-caps text-gold">Explore</p>
             <ul className="mt-4 space-y-2">
               {FOOTER_LINKS.map((item) => (
-                <li key={item.name}>
+                <li key={item.href}>
                   <Link href={withLocale(item.href, locale)} className="text-sm text-ink-foreground/80 transition-colors hover:text-ink-foreground">
-                    {item.name}
+                    {item.href === '/pricing' ? t.navPricing : item.name}
                   </Link>
                 </li>
               ))}

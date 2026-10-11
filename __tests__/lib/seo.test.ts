@@ -2,10 +2,12 @@ import { FAQ } from '@/lib/faq'
 import { LOCATIONS, getLocation, locationIdFromSlug } from '@/lib/locations'
 import { LOCALE_PAIRS, localeAlternates, toLocalePath } from '@/lib/routes'
 import { siteJsonLd } from '@/lib/schema'
-import { SOCIAL_LINKS } from '@/lib/constants'
-import { OG_EN, OG_FR, OG_IMAGE_EN, OG_IMAGE_FR, ogImageForLocale } from '@/lib/site'
+import { FOOTER_LINKS, NAVIGATION, SOCIAL_LINKS } from '@/lib/constants'
+import { OG_EN, OG_FR, OG_IMAGE_EN, OG_IMAGE_FR, SITE_DESCRIPTION, ogImageForLocale } from '@/lib/site'
+import { copy } from '@/lib/copy'
 
-const FORBIDDEN = [/london/i, /£/, /gbp/i, /aggregateRating/i, /reviewCount/i, /500\+/, /99\.7/, /4\.97/]
+const FORBIDDEN = [/london/i, /Â£/, /gbp/i, /aggregateRating/i, /reviewCount/i, /500\+/, /99\.7/, /4\.97/]
+const MICHELIN = [/michelin/i, /\u00e9toil\u00e9/i, /etoil\u00e9/i, /starred/i]
 const HEALTH = [/anti-aging/i, /boosts immunity/i, /heals/i, /detox/i, /adds years/i, /clinically/i]
 
 describe('locale pairs', () => {
@@ -117,7 +119,7 @@ describe('JSON-LD', () => {
     expect(business).not.toHaveProperty('priceRange')
     expect(JSON.stringify(graph)).not.toMatch(/linkedin/i)
     expect(JSON.stringify(graph)).not.toMatch(/london/i)
-    expect(JSON.stringify(graph)).not.toMatch(/£/)
+    expect(JSON.stringify(graph)).not.toMatch(/Â£/)
   })
 })
 
@@ -138,5 +140,28 @@ describe('social and share cards', () => {
     expect(OG_FR.title).not.toMatch(/london/i)
     expect(OG_EN.title).not.toMatch(/europe/i)
     expect(OG_FR.title).not.toMatch(/europe/i)
+  })
+})
+
+describe('credential lock', () => {
+  it('does not claim Michelin training or stars', () => {
+    const blob = [
+      JSON.stringify(copy),
+      SITE_DESCRIPTION,
+      JSON.stringify(siteJsonLd()),
+      JSON.stringify(LOCATIONS),
+      JSON.stringify(FAQ),
+    ].join('\n')
+    MICHELIN.forEach((pattern) => expect(blob).not.toMatch(pattern))
+    expect(copy.en.heroLede).toMatch(/Swiss-trained technique and nutrition science, brought into your home/)
+    expect(copy.en.footerBlurb).toMatch(/Swiss-trained \(EHL\)/)
+    expect(copy.en.footerBlurb).toMatch(/Nutrition certificate, Stanford/)
+  })
+
+  it('labels the on-request menus route Enquire / Tarifs sur demande', () => {
+    expect(NAVIGATION.some((item) => item.href === '/pricing' && item.name === 'Enquire')).toBe(true)
+    expect(FOOTER_LINKS.some((item) => item.href === '/pricing' && item.name === 'Enquire')).toBe(true)
+    expect(copy.en.navPricing).toBe('Enquire')
+    expect(copy.fr.navPricing).toBe('Tarifs sur demande')
   })
 })

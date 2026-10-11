@@ -15,14 +15,14 @@ export const MARKET = {
 export const copy = {
   en: {
     heroLede:
-      "Private chef and longevity cuisine on the Côte d'Azur and in Monaco. Michelin-trained technique and nutrition science, brought into your home. From an intimate dinner for two to a table of twenty-five, every menu is written for the people eating it.",
+      "Private chef and longevity cuisine on the Côte d'Azur and in Monaco. Swiss-trained technique and nutrition science, brought into your home. From an intimate dinner for two to a table of twenty-five, every menu is written for the people eating it.",
     aboutTitleBefore: 'Two disciplines, ',
     aboutTitleEm: 'one',
     aboutTitleAfter: ' table.',
     aboutSecond:
       'Whether it is a celebration for twenty or a week of quiet dinners for two, each menu is written from scratch around your preferences, allergies and the season’s market.',
     marquee: [
-      'Michelin-trained technique',
+      'Swiss-trained technique',
       credentials.en.ehl,
       credentials.en.stanford,
       credentials.en.years,
@@ -34,6 +34,7 @@ export const copy = {
       "Private chef dinners, weekly meals and celebrations on the Côte d'Azur and in Monaco. Fees are on request, quoted in €.",
     pricingMeta:
       "Private chef menus on the Côte d'Azur and in Monaco. Fees on request, quoted in €.",
+    navPricing: 'Enquire',
     contactEyebrow: 'Enquire',
     contactTitle: 'Tell us about the table',
     contactDescription:
@@ -44,7 +45,7 @@ export const copy = {
     quoteNote: 'Fees are on request, quoted in €.',
     instagramLabel: 'Instagram DM',
     instagramHandle: '@tabledadrian',
-    footerBlurb: `Michelin-trained private chef, Swiss-trained (EHL), ${STANFORD_CREDENTIAL}. Private dinners, weekly meal preparation and longevity menus on the Côte d'Azur and in Monaco.`,
+    footerBlurb: `Swiss-trained (EHL) private chef, ${STANFORD_CREDENTIAL}. Private dinners, weekly meal preparation and longevity menus on the Côte d'Azur and in Monaco.`,
     bookingIntro: 'Book by enquiry form, Instagram DM or email.',
     perEvent: 'Per event',
     monthly: 'Monthly',
@@ -70,6 +71,7 @@ export const copy = {
       "Dîners privés, semaines en cuisine et célébrations sur la Côte d'Azur et à Monaco. Les honoraires sont sur demande, en €.",
     pricingMeta:
       "Menus de chef privé sur la Côte d'Azur et à Monaco. Honoraires sur demande, en €.",
+    navPricing: 'Tarifs sur demande',
     contactEyebrow: 'Demande',
     contactTitle: 'Parlez-nous de la table',
     contactDescription:

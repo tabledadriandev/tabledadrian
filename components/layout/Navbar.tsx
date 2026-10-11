@@ -129,11 +129,11 @@ export function Navbar() {
               ) : (
                 <Link
                   key={group.name}
-                  href={group.href!}
-                  aria-current={pathname === group.href ? 'page' : undefined}
+                  href={withLocale(group.href!, locale)}
+                  aria-current={pathname === withLocale(group.href!, locale) ? 'page' : undefined}
                   className={cn('nav-link px-3 py-2 text-[11px] uppercase tracking-caps transition-colors', textMuted)}
                 >
-                  {group.name}
+                  {group.href === '/pricing' ? t.navPricing : group.name}
                 </Link>
               )
             )}
@@ -194,8 +194,8 @@ export function Navbar() {
                         ))}
                       </div>
                     ) : (
-                      <Link href={group.href!} className="lh-display block border-t border-white/10 py-3 font-display text-5xl italic">
-                        {group.name}
+                      <Link href={withLocale(group.href!, locale)} className="lh-display block border-t border-white/10 py-3 font-display text-5xl italic">
+                        {group.href === '/pricing' ? t.navPricing : group.name}
                       </Link>
                     )}
                   </motion.li>
