@@ -4,9 +4,11 @@ export const CONTACT_INFO = {
   responseTime: "Typically responds within 24 hours",
 }
 
+export const INSTAGRAM_URL = 'https://www.instagram.com/tabledadrian/'
+
 export const SOCIAL_LINKS = {
-  instagram: "https://instagram.com/tabledadrian",
-  linkedin: "https://linkedin.com/company/tabledadrian",
+  instagram: INSTAGRAM_URL,
+  linkedin: 'https://linkedin.com/company/tabledadrian',
 }
 
 export interface NavItem {
