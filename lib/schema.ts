@@ -24,7 +24,7 @@ export function siteJsonLd() {
         telephone,
         worksFor: { '@id': businessId },
         sameAs: [INSTAGRAM_URL],
-        knowsAbout: ['Private chef', 'Longevity cuisine', 'Nutrition', 'Chef à domicile'],
+        knowsAbout: ['Private chef', 'Longevity cuisine', 'Nutrition', 'Chef Ã  domicile'],
       },
       {
         '@type': ['LocalBusiness', 'FoodService'],
@@ -32,7 +32,7 @@ export function siteJsonLd() {
         name: SITE_NAME,
         alternateName: "Table d'Adrian private chef",
         description:
-          "Table d'Adrian is Adrian Stefan's private chef and longevity cuisine service on the Côte d'Azur and in Monaco.",
+          "Table d'Adrian is Adrian Stefan's private chef and longevity cuisine service on the CÃ´te d'Azur and in Monaco.",
         url: SITE_URL,
         image,
         email: CONTACT_INFO.email,
@@ -40,17 +40,17 @@ export function siteJsonLd() {
         founder: { '@id': personId },
         employee: { '@id': personId },
         areaServed: [
-          { '@type': 'AdministrativeArea', name: "Côte d'Azur" },
+          { '@type': 'AdministrativeArea', name: "CÃ´te d'Azur" },
           { '@type': 'City', name: 'Monaco' },
           { '@type': 'AdministrativeArea', name: 'French Riviera' },
         ],
         sameAs: [INSTAGRAM_URL],
         servesCuisine: ['French', 'Mediterranean', 'Longevity'],
-        priceRange: '€€€',
+        priceRange: 'â‚¬â‚¬â‚¬',
         currenciesAccepted: 'EUR, GBP',
         address: {
           '@type': 'PostalAddress',
-          addressRegion: "Provence-Alpes-Côte d'Azur",
+          addressRegion: "Provence-Alpes-CÃ´te d'Azur",
           addressCountry: 'FR',
         },
       },
