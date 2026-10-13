@@ -14,12 +14,19 @@ import { getLenis } from '@/lib/lenis'
 import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
 import { getMotionCaps } from '@/lib/motion-caps'
 import { DustField } from '@/components/motion/DustField'
+import { MaisonFooter } from '@/components/layout/MaisonFooter'
+
+export function Footer() {
+  const pathname = usePathname()
+  if (pathname.startsWith('/sola')) return <LegacyFooter />
+  return <MaisonFooter />
+}
 
 const socials = [
   { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: Instagram },
 ]
 
-export function Footer() {
+function LegacyFooter() {
   const root = useRef<HTMLElement>(null)
   const pathname = usePathname()
   const locale = useLocale()
