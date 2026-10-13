@@ -61,7 +61,7 @@ const TOWN_FAQ: Record<TownId, Record<Locale, FaqItem[]>> = {
         a: "Table d'Adrian est un chef privé à Monaco et sur la Côte d'Azur. La semaine du Grand Prix, le calendrier du yacht show et le Nouvel An se prennent sur demande. Écrivez tôt si la table est liée à une course ou à un gala. Le délai est sur demande.",
       },
       {
-        q: 'Une réservation à Monaco peut-elle couvrir Cap-d'Ail, Èze ou Villefranche-sur-Mer ?',
+        q: "Une réservation à Monaco peut-elle couvrir Cap-d'Ail, Èze ou Villefranche-sur-Mer ?",
         a: "Table d'Adrian est un chef privé à Monaco et sur la Côte d'Azur. Une réservation à Monaco peut s'étendre à Cap-d'Ail, Roquebrune-Cap-Martin, Beaulieu-sur-Mer, Èze et Villefranche-sur-Mer. C'est un déplacement sur une côte courte, pas une affirmation que la cuisine est installée dans chaque ville.",
       },
       {

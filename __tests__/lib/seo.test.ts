@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { createElement } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { TextDecoder, TextEncoder } from 'util'
 import { FAQ } from '@/lib/faq'
 import { townFaq, type TownId } from '@/lib/location-faq'
 import { LOCATIONS, getLocation, locationFaq, locationIdFromSlug } from '@/lib/locations'
@@ -195,7 +195,9 @@ describe('town FAQs', () => {
     expect(locationFaq(getLocation('saint-tropez', 'en')).map((item) => item.a).join(' ')).toMatch(/Ramatuelle/)
   })
 
-  it('renders the questions and FAQPage JSON-LD on the server', () => {
+  it('renders the questions and FAQPage JSON-LD on the server', async () => {
+    Object.assign(global, { TextEncoder, TextDecoder })
+    const { renderToStaticMarkup } = await import('react-dom/server')
     const html = renderToStaticMarkup(createElement(LocationScreen, { id: 'monaco', locale: 'en' }))
     const items = locationFaq(getLocation('monaco', 'en'))
     items.forEach((item) => {
