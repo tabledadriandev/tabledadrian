@@ -80,6 +80,8 @@ typography:
 rounded:
   none: "0px"
   hairline: "2px"
+  panel: "28px"
+  pill: "999px"
 spacing:
   xs: "4px"
   sm: "8px"
@@ -162,20 +164,20 @@ components:
 
 **Creative North Star: "A private table, composed."**
 
-Table d'Adrian is a private table set on ivory (#F6F1E6) and near-black ink, with Soft Gold (#B39660) for the italic word, the hairline, and the photograph rim. Champagne, Stone, and Deep Olive sit beside it; gold is never body text on ivory. Bodoni Moda carries the display line at a tight, engraved scale. Hanken Grotesk carries navigation, labels, and the sentence. A screen is a headline, a lede, a square booking control, and a plate.
+The maison homepage is one field that follows the light in the room. Light is warm ivory with ink type and champagne gold. Dark is near-black ink with a champagne glow behind a gold cloche. The visitor chooses light, dark, or the system preference; the choice is stored in `localStorage` under `tda-theme`, and `prefers-color-scheme` decides the system case. Sola does not take this theme.
 
-The maison alternates two grounds. Ivory holds the about, services, menus, and wellness bands. Ink holds the first viewport, the plate gallery, the quotes, the closing invitation, and the footer. Structure is a 1px rule. Photographs are full-bleed crops. The hero plate, the about portrait, and the menu cover take a gold inset rim. The horizontal gallery does not.
+Bodoni Moda sets the display lines in italic. Hanken Grotesk sets the sentence, the nav, and the controls. The nav and the offer cards are frosted glass pills and panels. The hero is a gold cloche on an ivory plate, drawn with self-hosted three.js after idle, with a static plate when motion is reduced or WebGL is declined. Three offer panels stick and layer as the page scrolls. A strip of the kitchen's own photographs moves under "Plates, not promises."
 
-Sola is the other room on the same domain. On `/sola`, the custom properties swap to cream and deep green, and both the sentence and the display line set in Source Serif 4. The houses do not share a metal or a typeface.
+Sola is the other room on the same domain. On `/sola`, the custom properties stay cream and deep green, and both the sentence and the display line set in Source Serif 4. The houses do not share a metal or a typeface.
 
 **Key Characteristics:**
 
-- Warm ivory grounds and near-black ink fields
-- One champagne gold, used as italic, rim, and hairline
-- Bodoni Moda for display, Hanken Grotesk for UI
-- Square controls and 1px rules
-- A pinned split hero, a pinned service title, and a horizontal plate gallery
-- Sola as a cream and deep-green room in Source Serif 4
+- Ivory in light, ink in dark, one champagne gold
+- Italic Bodoni Moda for display, Hanken Grotesk for UI
+- Frosted-glass pill navigation and frosted offer cards
+- A lazy three.js cloche, with a static fallback
+- Three layered sticky offer panels and a moving plate strip
+- Sola left as a cream and deep-green room in Source Serif 4
 
 ## Colors
 
@@ -243,7 +245,7 @@ On `html[data-brand='sola']` and `.theme-sola`, the same custom properties are r
 
 ### Named Rules
 
-**The Italic Word Rule.** A display line may set a single word in italic champagne. The rest stays roman, weight 500.
+**The Italic Line Rule.** Homepage display lines are italic Bodoni Moda. Champagne is the metal on the cloche, the glow, and the offer index, not a second body colour.
 
 **The Grotesque Label Rule.** Labels, navigation, and buttons are Hanken Grotesk. Labels are uppercase and tracked. Display italics do not set a label.
 
@@ -286,7 +288,7 @@ The wellness badge is a square outline, 1px strong hairline, padded 0.3rem 0.45r
 
 ### Named Rules
 
-**The Square Plate Rule.** The Button, the field, the nav book control, and the photograph frame are square. Do not round them to match a card library.
+**The Pill Rule.** The homepage navigation, the enquire control, the credential chip, and the offer cards are rounded frosted glass. Interior form fields may stay square.
 
 **The Inset Rim Rule.** A gold rim is an inset hairline on the hero plate, the about portrait, and the menu cover. It is not a frame around every image, and the horizontal gallery does not wear it.
 
@@ -320,7 +322,7 @@ Controls feel engraved: square, quiet, and immediate. Hover changes color. It do
 
 ### Navigation
 
-Fixed, transparent over the hero, ivory at 90% with a 16px blur and a hairline once the page has moved 24px. The wordmark is the approved horizontal lockup: gold-transparent on ivory, ivory-transparent on ink, with a 10px gold or subtle-ink “Private chef” line under it. Links are 11px uppercase, tracking 0.22em. The book control is 40px tall, square, ivory-on-ink over the hero and ink-on-ivory once the bar is solid. The dropdown is an ivory panel with the lift shadow and a 1px hairline. Below 1024px the menu is a full-ink overlay; items are italic Bodoni at 3rem to 3.75rem, clipped open over 0.7s with cubic-bezier(0.76, 0, 0.24, 1).
+A frosted pill, fixed, inset from the viewport, blurred over whichever ground is active. The wordmark is “Table d'Adrian” in the body face. Links are sentence case: The chef, Experiences, Index, Enquire, plus a three-way theme control (light, dark, system). Below 860px the links move into a frosted sheet. Sola keeps the earlier navigation and does not show the theme control.
 
 ### Text Link
 
@@ -342,13 +344,13 @@ From 1024px the services band pins and one title is active: Bodoni, clamp(3.4rem
 
 ### Do:
 
-- **Do** set maison display in Bodoni Moda, weight 500, tracking -0.03em (-0.035em on the hero), with at most one italic champagne word.
+- **Do** set maison display in italic Bodoni Moda, weight 500, tracking about -0.03em.
 - **Do** set navigation, labels, buttons, and the sentence in Hanken Grotesk.
-- **Do** keep maison grounds to warm ivory and near-black ink, and the accent to champagne.
-- **Do** separate rows with a 1px hairline, and inset a 1px champagne rim by 0.8rem on the hero plate, the about portrait, and the menu cover.
-- **Do** keep the booking control square: ivory on ink, or ink on ivory.
-- **Do** rewrite the token set and the typeface together on Sola: cream, deep green, Source Serif 4.
-- **Do** leave the photograph and the booking control in place when motion is reduced.
+- **Do** keep maison grounds to warm ivory in light and near-black ink in dark, with one champagne gold.
+- **Do** give the homepage nav and offer cards a frosted glass pill or panel, and keep the booking control a pill that inverts with the theme.
+- **Do** keep the cloche plate ivory, with a darker rim in light so the edge stays visible.
+- **Do** rewrite the token set and the typeface together on Sola: cream, deep green, Source Serif 4. Do not theme Sola with the maison toggle.
+- **Do** leave a static cloche and a still plate strip when motion is reduced.
 
 ### Don't:
 
@@ -356,6 +358,6 @@ From 1024px the services band pins and one title is active: Bodoni, clamp(3.4rem
 - **Don't** add a second metal or a saturated accent on the maison.
 - **Don't** set Sola in Bodoni, or the maison display in Source Serif 4.
 - **Don't** put Sola green on a maison surface.
-- **Don't** round the Button, the field, the nav book control, or the plate.
+- **Don't** put the homepage nav or offer cards back on square corners. The hybrid field is a pill and a frosted panel. Interior fields may stay square.
 - **Don't** use a hard offset shadow. Depth is the ink field, the hairline, and the soft or lift shadow on the enquiry panel, the navigation menu, and the cookie bar.
 - **Don't** replace a plate photograph with an illustration or a stock scene.

@@ -12,10 +12,17 @@ import { AppBadges } from '@/components/app/AppBadges'
 import { BrandMark } from '@/components/brand/BrandMark'
 import { Magnetic } from '@/components/motion/Magnetic'
 import { cn } from '@/lib/utils'
+import { MaisonNav } from '@/components/layout/MaisonNav'
 
 const ease = [0.76, 0, 0.24, 1] as const
 
 export function Navbar() {
+  const pathname = usePathname()
+  if (pathname.startsWith('/sola')) return <LegacyNavbar />
+  return <MaisonNav />
+}
+
+function LegacyNavbar() {
   const pathname = usePathname()
   const locale = useLocale()
   const t = copy[locale]
