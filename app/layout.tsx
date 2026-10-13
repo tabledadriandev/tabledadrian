@@ -112,7 +112,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var p=location.pathname;var sola=p==="/sola"||p.indexOf("/sola/")===0;document.documentElement.dataset.brand=sola?"sola":"maison";document.documentElement.lang=(p==="/fr"||p.indexOf("/fr/")===0)?"fr":"en";var stored=null;try{stored=localStorage.getItem("tda-theme")}catch(err){}var choice=stored==="light"||stored==="dark"||stored==="system"?stored:"system";document.documentElement.dataset.theme=choice;var systemDark=window.matchMedia("(prefers-color-scheme: dark)").matches;var dark=choice==="dark"||(choice==="system"&&systemDark);document.documentElement.dataset.resolved=dark?"dark":"light";document.documentElement.style.colorScheme=!sola&&dark?"dark":"light"}catch(e){}`,
+            __html: `try{var p=location.pathname;var sola=p==="/sola"||p.indexOf("/sola/")===0;document.documentElement.dataset.brand=sola?"sola":"maison";document.documentElement.lang=(p==="/fr"||p.indexOf("/fr/")===0)?"fr":"en";var stored=null;try{stored=localStorage.getItem("tda-theme")}catch(err){}var choice=stored==="light"||stored==="dark"||stored==="system"?stored:"system";document.documentElement.dataset.theme=choice;var systemDark=window.matchMedia("(prefers-color-scheme: dark)").matches;var dark=choice==="dark"||(choice==="system"&&systemDark);document.documentElement.dataset.resolved=dark?"dark":"light";document.documentElement.style.colorScheme=dark?"dark":"light"}catch(e){}`,
           }}
         />
         <script

@@ -21,14 +21,13 @@ export function readThemeChoice(): ThemeChoice {
   }
 }
 
-/** Apply the maison theme. Sola keeps a light color-scheme so its room does not invert. */
+/** Apply the maison theme. Sola has its own white/forest-green tokens for both modes. */
 export function applyTheme(choice: ThemeChoice) {
   const root = document.documentElement
   const resolved = resolveTheme(choice)
   root.dataset.theme = choice
   root.dataset.resolved = resolved
-  const sola = root.dataset.brand === 'sola'
-  root.style.colorScheme = !sola && resolved === 'dark' ? 'dark' : 'light'
+  root.style.colorScheme = resolved === 'dark' ? 'dark' : 'light'
   try {
     localStorage.setItem(THEME_KEY, choice)
   } catch {

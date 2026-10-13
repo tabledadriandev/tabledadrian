@@ -100,6 +100,46 @@
     --border-strong: 150 12% 62%;
     --ring: 158 34% 22%;
   }
+
+  /* Sola light: pure white, matching the app (build 17). */
+  html[data-brand='sola'][data-resolved='light'],
+  html[data-brand='sola'][data-resolved='light'] .theme-sola {
+    --background: 0 0% 100%;
+    --background-secondary: 150 12% 96%;
+    --background-elevated: 0 0% 100%;
+    --card: 0 0% 100%;
+    --input: 0 0% 100%;
+    background-color: #fff;
+  }
+
+  /* Sola dark: forest green, follows light/dark/system. */
+  html[data-brand='sola'][data-resolved='dark'],
+  html[data-brand='sola'][data-resolved='dark'] .theme-sola {
+    --background: 158 30% 7%;
+    --background-secondary: 158 24% 10%;
+    --background-elevated: 158 22% 12%;
+    --card: 158 22% 11%;
+    --card-foreground: 42 30% 92%;
+    --ink: 158 34% 4%;
+    --ink-soft: 158 26% 9%;
+    --ink-foreground: 42 30% 92%;
+    --foreground: 42 30% 93%;
+    --foreground-muted: 150 10% 74%;
+    --foreground-subtle: 150 8% 66%;
+    --primary: 42 30% 93%;
+    --primary-foreground: 158 30% 8%;
+    --primary-soft: 158 18% 16%;
+    --gold: 40 36% 66%;
+    --gold-soft: 40 22% 24%;
+    --border: 158 14% 20%;
+    --border-strong: 158 12% 34%;
+    --input: 158 24% 10%;
+    --ring: 40 36% 66%;
+    --muted: 158 18% 13%;
+    --muted-foreground: 150 10% 74%;
+    color-scheme: dark;
+    background-color: hsl(158 30% 7%);
+  }
 }
 
 @layer base {
