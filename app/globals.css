@@ -1196,6 +1196,18 @@ html[data-resolved='dark']:not([data-brand='sola']) :where(a, button).bg-ink:hov
   background-color: hsl(40 30% 84%);
 }
 
+/* Sola dark: bg-ink controls are near-black on the forest page. Use the cream ink-foreground fill.
+   Color is important so utilities such as !text-ink-foreground cannot leave cream type on cream. */
+html[data-brand='sola'][data-resolved='dark'] :where(a, button).bg-ink {
+  background-color: hsl(var(--ink-foreground));
+  color: hsl(var(--ink)) !important;
+  border-color: hsl(var(--ink) / 0.45);
+}
+html[data-brand='sola'][data-resolved='dark'] :where(a, button).bg-ink:hover {
+  background-color: hsl(42 22% 84%);
+  color: hsl(var(--ink)) !important;
+}
+
 .hybrid-home {
   position: relative;
   background:
