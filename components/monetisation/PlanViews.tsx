@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { DISCLAIMER, OFFER_PLANS, PLAN_CREDENTIAL, planPath, plansPath, type OfferPlan } from '@/lib/offer-copy'
-import { PLAN_SLOTS } from '@/lib/monetisation'
+import { PLAN_SLOTS, PRODUCTS_LIVE } from '@/lib/monetisation'
 import { libraryRecipePath, libraryRecipes } from '@/lib/library'
 
 function BuyPlan({ locale, stripe }: { locale: 'en' | 'fr'; stripe: string | null }) {
   const label = locale === 'fr' ? 'Acheter le programme' : 'Buy the plan'
-  if (stripe) {
+  const soon = locale === 'fr' ? 'Bientôt' : 'Coming soon'
+  if (PRODUCTS_LIVE && stripe) {
     return (
       <a href={stripe} className="paywall-cta" rel="nofollow noopener noreferrer" target="_blank">
         {label}
@@ -14,25 +15,21 @@ function BuyPlan({ locale, stripe }: { locale: 'en' | 'fr'; stripe: string | nul
     )
   }
   return (
-    <a href="#buy-plan" className="paywall-cta" rel="nofollow" aria-disabled="true">
-      {label}
-    </a>
+    <span className="paywall-cta" aria-disabled="true">
+      {soon}
+    </span>
   )
 }
 
 function PlanActions({ locale, plan, anchor = false }: { locale: 'en' | 'fr'; plan: OfferPlan; anchor?: boolean }) {
   const slot = PLAN_SLOTS[plan.id]
   const stripe = slot?.stripe ?? null
-  const price = slot?.price ?? null
+  const price = slot ? (locale === 'fr' ? slot.priceFr : slot.priceEn) : null
   const sola = locale === 'fr' ? 'Utiliser Sola' : 'Use Sola'
   const solaNote =
     locale === 'fr'
       ? 'Sola est l’application bien-être de Table d’Adrian. Elle compose un programme personnel dans le même esprit que ce guide.'
       : 'Sola is the Table d’Adrian wellness app. It builds a personal plan in the same spirit as this guide.'
-  const empty =
-    locale === 'fr'
-      ? 'Placeholder. Lien Stripe vide. Aucun prix affiché. Bientôt.'
-      : 'Placeholder. Stripe Payment Link empty. No price is shown. Coming soon.'
   return (
     <div id={anchor ? 'buy-plan' : undefined} className="mt-8 border border-dashed border-border-strong p-5">
       <div className="flex flex-wrap items-center gap-4">
@@ -41,8 +38,7 @@ function PlanActions({ locale, plan, anchor = false }: { locale: 'en' | 'fr'; pl
           {sola}
         </Button>
       </div>
-      {price ? <p className="mt-3 text-sm">{price}</p> : null}
-      {stripe ? null : <p className="mt-3 text-[11px] uppercase tracking-caps text-foreground-subtle">{empty}</p>}
+      {price ? <p className="mt-4 font-display text-3xl tracking-tight">{price}</p> : null}
       <p className="mt-3 max-w-prose text-sm text-foreground-muted">{solaNote}</p>
     </div>
   )

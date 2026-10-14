@@ -1,6 +1,6 @@
 import { DISCLAIMER, OFFER_BOOKS, OFFER_PLANS, PLAN_CREDENTIAL } from '@/lib/offer-copy'
 import { LOCALE_PAIRS } from '@/lib/routes'
-import { PARTNER_STATS, PLAN_SLOTS, RECIPE_BOOK_SLOTS } from '@/lib/monetisation'
+import { GIFT_CARDS, PARTNER_STATS, PLAN_PRICE, PLAN_SLOTS, PRODUCTS_LIVE, RECIPE_BOOK_SLOTS, BOOK_PRICE } from '@/lib/monetisation'
 import { libraryRecipes } from '@/lib/library'
 
 const BANNED = /\b(treats?|cures?|improves?|lowers?|balances?|heals?|detox|anti-aging|clinically|reverses|prevents|boosts?)\b/i
@@ -20,10 +20,23 @@ describe('offer placeholders', () => {
     ]))
   })
 
-  it('leaves book and plan prices empty', () => {
-    for (const slot of [...Object.values(RECIPE_BOOK_SLOTS), ...Object.values(PLAN_SLOTS)]) {
-      expect(slot.price).toBeNull()
-      expect(slot.stripe).toBeNull()
+  it('stores book and plan prices and Stripe links, and keeps the PDF sale off', () => {
+    expect(PRODUCTS_LIVE).toBe(false)
+    expect(BOOK_PRICE).toEqual({ en: '€14.90', fr: '€14,90' })
+    expect(PLAN_PRICE).toEqual({ en: '€29.90', fr: '€29,90' })
+    expect(GIFT_CARDS.map((card) => card.eur)).toEqual([150, 300, 500])
+    for (const card of GIFT_CARDS) {
+      expect(card.stripe).toMatch(/^https:\/\/buy\.stripe\.com\//)
+    }
+    for (const slot of Object.values(RECIPE_BOOK_SLOTS)) {
+      expect(slot.priceEn).toBe('€14.90')
+      expect(slot.priceFr).toBe('€14,90')
+      expect(slot.stripe).toMatch(/^https:\/\/buy\.stripe\.com\//)
+    }
+    for (const slot of Object.values(PLAN_SLOTS)) {
+      expect(slot.priceEn).toBe('€29.90')
+      expect(slot.priceFr).toBe('€29,90')
+      expect(slot.stripe).toMatch(/^https:\/\/buy\.stripe\.com\//)
     }
   })
 

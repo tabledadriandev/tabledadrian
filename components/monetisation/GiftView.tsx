@@ -1,6 +1,5 @@
-import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import { STRIPE_GIFT_PAYMENT_LINK, STRIPE_GIFT_PLACEHOLDER_URL } from '@/lib/monetisation'
+import { GIFT_CARDS } from '@/lib/monetisation'
 
 const COPY = {
   en: {
@@ -10,7 +9,7 @@ const COPY = {
     points: [
       'The gift is the dinner. The menu is written for the people who will sit down.',
       'Dietary preferences and allergies are accommodated on request.',
-      'Fees are on request, quoted in €. This page does not show a price.',
+      'Three gift cards: €150, €300, and €500. The date and the menu are agreed afterwards.',
     ],
     enquire: 'Enquire about a gift',
     enquireHref: '/contact?intent=gift',
@@ -28,7 +27,7 @@ const COPY = {
     points: [
       'Le cadeau est le dîner. Le menu s’écrit pour ceux qui s’assoient.',
       'Les préférences alimentaires et les allergies sont prises en compte sur demande.',
-      'Les honoraires sont sur demande, en €. Cette page n’affiche pas de prix.',
+      'Trois bons : 150 €, 300 € et 500 €. La date et le menu se décident ensuite.',
     ],
     enquire: 'Demander un cadeau',
     enquireHref: '/fr/contact?intent=gift',
@@ -43,7 +42,8 @@ const COPY = {
 
 export function GiftView({ locale }: { locale: 'en' | 'fr' }) {
   const t = COPY[locale]
-  const live = STRIPE_GIFT_PAYMENT_LINK
+  const cardsTitle = locale === 'fr' ? 'Bons cadeaux' : 'Gift cards'
+  const pay = locale === 'fr' ? 'Payer' : 'Pay'
   return (
     <article className="bg-background pb-20 pt-28 text-foreground sm:pt-32">
       <div className="container max-w-5xl">
@@ -65,21 +65,21 @@ export function GiftView({ locale }: { locale: 'en' | 'fr' }) {
               </Button>
             </div>
           </div>
-          <aside className="border border-dashed border-border-strong p-6 sm:p-8" id="stripe-payment-link-placeholder">
-            <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{t.stripeKicker}</p>
-            <h2 className="mt-3 font-display text-3xl tracking-tight">{t.stripeTitle}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{t.stripeBody}</p>
-            {live ? (
-              <Link href={live} className="paywall-cta" rel="nofollow noopener noreferrer" target="_blank">
-                {t.stripeLabel}
-              </Link>
-            ) : (
-              <a href="#stripe-payment-link-placeholder" rel="nofollow" aria-disabled="true" className="paywall-cta">
-                {t.stripeLabel}
-              </a>
-            )}
-            <p className="mt-6 text-[11px] uppercase tracking-caps text-foreground-subtle">{t.stripeHint}</p>
-            <p className="mt-2 break-all font-mono text-sm text-foreground">{live ?? STRIPE_GIFT_PLACEHOLDER_URL}</p>
+          <aside className="border border-border-strong p-6 sm:p-8" aria-labelledby="gift-cards">
+            <h2 id="gift-cards" className="font-display text-3xl tracking-tight">{cardsTitle}</h2>
+            <ul className="mt-6 divide-y divide-border border-y border-border">
+              {GIFT_CARDS.map((card) => {
+                const label = locale === 'fr' ? card.labelFr : card.labelEn
+                return (
+                  <li key={card.id} className="flex items-center justify-between gap-4 py-4">
+                    <span className="font-display text-3xl tracking-tight">{label}</span>
+                    <a href={card.stripe} className="paywall-cta" rel="nofollow noopener noreferrer" target="_blank">
+                      {pay} {label}
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
           </aside>
         </div>
       </div>

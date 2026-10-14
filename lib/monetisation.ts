@@ -1,13 +1,19 @@
 /**
- * Monetisation placeholders.
- * Nothing here charges a card or joins an affiliate programme.
- * Adrian replaces the nulls when his own accounts exist.
+ * Monetisation.
+ * Gift cards use live Stripe Payment Links.
+ * Recipe books and menu plans store a price and a Payment Link, but stay
+ * off sale while PRODUCTS_LIVE is false (the PDFs are not ready).
+ * Affiliate hrefs stay null until Adrian adds programme IDs.
  */
 
-/** Stripe Payment Link for gift vouchers. Leave null until Adrian's Stripe account is connected. */
-export const STRIPE_GIFT_PAYMENT_LINK: string | null = null
+/** Flip to true when the recipe-book and plan PDFs exist. Buy buttons stay "Coming soon" until then. */
+export const PRODUCTS_LIVE = false
 
-export const STRIPE_GIFT_PLACEHOLDER_URL = 'https://buy.stripe.com/REPLACE_WITH_ADRIAN_PAYMENT_LINK'
+export const GIFT_CARDS = [
+  { id: '150', eur: 150, labelEn: '€150', labelFr: '150 €', stripe: 'https://buy.stripe.com/eVq8wP1p9bnkavWchRbV609' },
+  { id: '300', eur: 300, labelEn: '€300', labelFr: '300 €', stripe: 'https://buy.stripe.com/9B6cN50l5gHEdI8a9JbV60a' },
+  { id: '500', eur: 500, labelEn: '€500', labelFr: '500 €', stripe: 'https://buy.stripe.com/aFaaEX4Bl630fQg81BbV60b' },
+] as const
 
 export type AffiliatePiece = {
   id: string
@@ -109,12 +115,12 @@ export const GIFT_META = {
   en: {
     title: "Gift a private dinner, Côte d'Azur | Table d'Adrian",
     description:
-      "Give a private dinner on the Côte d'Azur or in Monaco. The menu is agreed after the gift. Enquire by form. The Stripe link is a placeholder.",
+      "Give a private dinner on the Côte d'Azur or in Monaco. Gift cards are €150, €300, or €500. The menu is agreed after the gift.",
   },
   fr: {
     title: "Offrir un dîner privé, Côte d'Azur | Table d'Adrian",
     description:
-      'Offrez un dîner privé sur la Côte d’Azur ou à Monaco. Le menu se décide après le cadeau. Demandez par le formulaire. Le lien Stripe est un placeholder.',
+      'Offrez un dîner privé sur la Côte d’Azur ou à Monaco. Le menu se décide après le cadeau. Bons cadeaux à 150 €, 300 € ou 500 €. Le menu se décide ensuite.',
   },
 } as const
 
@@ -144,27 +150,31 @@ export const KITCHEN_META = {
   },
 } as const
 
-/** A price Adrian types himself, and his Stripe Payment Link. Both stay null until his accounts exist. */
+/** Display price plus the stored Stripe Payment Link. The link is used only when PRODUCTS_LIVE is true. */
 export type PriceSlot = {
-  price: string | null
-  stripe: string | null
+  priceEn: string
+  priceFr: string
+  stripe: string
 }
 
-/** Digital recipe books. Leave price and stripe null to show Coming soon. Do not invent a number. */
+export const BOOK_PRICE = { en: '€14.90', fr: '€14,90' } as const
+export const PLAN_PRICE = { en: '€29.90', fr: '€29,90' } as const
+
+/** Digital recipe books. €14.90. Buy stays Coming soon until PRODUCTS_LIVE. */
 export const RECIPE_BOOK_SLOTS: Record<string, PriceSlot> = {
-  'riviera-summer': { price: null, stripe: null },
-  'christmas-dinner': { price: null, stripe: null },
-  'market-week': { price: null, stripe: null },
-  'dinner-party-playbook': { price: null, stripe: null },
+  'riviera-summer': { priceEn: BOOK_PRICE.en, priceFr: BOOK_PRICE.fr, stripe: 'https://buy.stripe.com/6oU5kD9VF8b847yepZbV600' },
+  'christmas-dinner': { priceEn: BOOK_PRICE.en, priceFr: BOOK_PRICE.fr, stripe: 'https://buy.stripe.com/9B6fZh2tdcrobA095FbV601' },
+  'market-week': { priceEn: BOOK_PRICE.en, priceFr: BOOK_PRICE.fr, stripe: 'https://buy.stripe.com/eVq9ATd7RcroavWepZbV602' },
+  'dinner-party-playbook': { priceEn: BOOK_PRICE.en, priceFr: BOOK_PRICE.fr, stripe: 'https://buy.stripe.com/14A28r8RB3US33udlVbV603' },
 }
 
-/** Menu plans. Leave price and stripe null. The Buy button stays a placeholder and shows no price. */
+/** Menu plans. €29.90. Buy stays Coming soon until PRODUCTS_LIVE. */
 export const PLAN_SLOTS: Record<string, PriceSlot> = {
-  'blood-sugar': { price: null, stripe: null },
-  hormones: { price: null, stripe: null },
-  heart: { price: null, stripe: null },
-  gut: { price: null, stripe: null },
-  training: { price: null, stripe: null },
+  'blood-sugar': { priceEn: PLAN_PRICE.en, priceFr: PLAN_PRICE.fr, stripe: 'https://buy.stripe.com/fZu00jebVcroavW81BbV604' },
+  hormones: { priceEn: PLAN_PRICE.en, priceFr: PLAN_PRICE.fr, stripe: 'https://buy.stripe.com/3cIeVd4BlfDAdI82HhbV605' },
+  heart: { priceEn: PLAN_PRICE.en, priceFr: PLAN_PRICE.fr, stripe: 'https://buy.stripe.com/28E7sLebVdvsgUk3LlbV606' },
+  gut: { priceEn: PLAN_PRICE.en, priceFr: PLAN_PRICE.fr, stripe: 'https://buy.stripe.com/9B67sLebVajg8nO4PpbV607' },
+  training: { priceEn: PLAN_PRICE.en, priceFr: PLAN_PRICE.fr, stripe: 'https://buy.stripe.com/9B64gzd7R1MKeMc5TtbV608' },
 }
 
 /**
