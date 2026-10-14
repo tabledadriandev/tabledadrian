@@ -20,6 +20,12 @@ export function middleware(request: NextRequest) {
   if (path === '/fr/nutrition') return redirectTo(request, '/nutrition')
   if (path === '/fr/bmi') return redirectTo(request, '/bmi')
   if (path === '/fr/recipes') return redirectTo(request, '/fr/recettes')
+  if (path === '/plans/blood-sugar') return redirectTo(request, '/plans/steady-energy-menu')
+  if (path === '/plans/hormones') return redirectTo(request, '/plans/hormone-aware-kitchen')
+  if (path === '/plans/heart') return redirectTo(request, '/plans/heart-smart-riviera-table')
+  if (path === '/fr/programmes/glycemie') return redirectTo(request, '/fr/programmes/menu-energie-stable')
+  if (path === '/fr/programmes/hormones') return redirectTo(request, '/fr/programmes/cuisine-attentive-aux-hormones')
+  if (path === '/fr/programmes/coeur') return redirectTo(request, '/fr/programmes/table-riviera-coeur-leger')
 
   const legacyRecipe = path.match(/^\/fr\/recipes\/([^/]+)$/)
   if (legacyRecipe) {

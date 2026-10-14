@@ -48,8 +48,8 @@ export function PlansIndex({ locale }: { locale: 'en' | 'fr' }) {
   const h1 = locale === 'fr' ? 'Programmes d’assiette' : 'Menu plans'
   const lede =
     locale === 'fr'
-      ? 'Des guides d’assiette et de mode de vie. Glycémie, hormones, cœur, intestin, jours d’entraînement.'
-      : 'Eating and lifestyle guides. Blood sugar, hormones, the heart, the gut, and training days. These pages are not prescriptions.'
+      ? 'Des guides d’assiette et de mode de vie. Menu Énergie Stable, Cuisine Attentive aux Hormones, Table Riviera Cœur Léger, intestin et jours d’entraînement.'
+      : 'Eating and lifestyle guides. Steady Energy Menu, Hormone-Aware Kitchen, Heart-Smart Riviera Table, the gut, and training days. These pages are not prescriptions.'
   return (
     <article className="bg-background pb-20 pt-28 text-foreground sm:pt-32">
       <div className="container max-w-3xl">

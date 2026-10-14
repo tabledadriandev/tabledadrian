@@ -11,9 +11,9 @@ describe('offer placeholders', () => {
     expect(LOCALE_PAIRS).toEqual(expect.arrayContaining([
       ['/shop/recipe-books', '/fr/livres-de-recettes'],
       ['/plans', '/fr/programmes'],
-      ['/plans/blood-sugar', '/fr/programmes/glycemie'],
-      ['/plans/hormones', '/fr/programmes/hormones'],
-      ['/plans/heart', '/fr/programmes/coeur'],
+      ['/plans/steady-energy-menu', '/fr/programmes/menu-energie-stable'],
+      ['/plans/hormone-aware-kitchen', '/fr/programmes/cuisine-attentive-aux-hormones'],
+      ['/plans/heart-smart-riviera-table', '/fr/programmes/table-riviera-coeur-leger'],
       ['/plans/gut', '/fr/programmes/intestin'],
       ['/plans/training', '/fr/programmes/entrainement'],
       ['/partners', '/fr/partenaires'],

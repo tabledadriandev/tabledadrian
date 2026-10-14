@@ -29,12 +29,12 @@ export const PLANS_META = {
   en: {
     title: "Menu plans and eating guides, Riviera | Table d'Adrian",
     description:
-      'Eating and lifestyle guides: blood sugar, hormones and DHEA, the heart, the gut, and training days. Not medical advice. Recipes included.',
+      'Eating guides: Steady Energy Menu, Hormone-Aware Kitchen, Heart-Smart Riviera Table, the gut, and training days. Not medical advice.',
   },
   fr: {
     title: "Programmes et guides d'assiette, Azur | Table d'Adrian",
     description:
-      "Guides d'assiette et de mode de vie : glycémie, hormones et DHEA, cœur, intestin, entraînement. Pas un avis médical. Recettes liées.",
+      "Guides d'assiette : Menu Énergie Stable, Cuisine Attentive aux Hormones, Table Riviera Cœur Léger, intestin et entraînement. Pas un avis médical.",
   },
 } as const
 
@@ -123,18 +123,18 @@ export type OfferPlan = {
 export const OFFER_PLANS: OfferPlan[] = [
   {
     id: 'blood-sugar',
-    slug: 'blood-sugar',
-    slugFr: 'glycemie',
-    title: 'Blood sugar, a day of eating',
-    titleFr: 'Glycémie, une journée d’assiette',
+    slug: 'steady-energy-menu',
+    slugFr: 'menu-energie-stable',
+    title: 'Steady Energy Menu',
+    titleFr: 'Menu Énergie Stable',
     lede: 'An eating and lifestyle guide for people who watch blood sugar, including people who live with diabetes. It is a way of putting a plate together.',
     ledeFr: 'Un guide d’assiette et de mode de vie pour les personnes qui surveillent leur glycémie, y compris celles qui vivent avec un diabète. C’est une façon de composer l’assiette.',
-    metaTitle: "Blood sugar, an eating guide, Riviera | Table d'Adrian",
-    metaTitleFr: "Glycémie, guide d'assiette, Riviera | Table d'Adrian",
+    metaTitle: "Steady Energy Menu, an eating guide | Table d'Adrian",
+    metaTitleFr: "Menu Énergie Stable, guide d'assiette | Table d'Adrian",
     metaDescription:
-      'A day of eating for people who watch blood sugar, including life with diabetes. Sample meals link to the recipe library. Ask your doctor first.',
+      'Steady Energy Menu: a day of eating for people who watch blood sugar, including life with diabetes. Sample meals from the library. Ask your doctor first.',
     metaDescriptionFr:
-      "Une journée d'assiette pour qui surveille sa glycémie, y compris avec un diabète. Les repas renvoient à la bibliothèque. Demandez à votre médecin.",
+      "Menu Énergie Stable : une journée d'assiette pour qui surveille sa glycémie, y compris avec un diabète. Recettes de la bibliothèque. Demandez au médecin.",
     more: [
       'Vegetables as the centre of the plate: a tian, a ratatouille, a pistou soup.',
       'Fish, eggs, and lentils beside the vegetables.',
@@ -178,18 +178,18 @@ export const OFFER_PLANS: OfferPlan[] = [
   },
   {
     id: 'hormones',
-    slug: 'hormones',
-    slugFr: 'hormones',
-    title: 'Hormones, including DHEA',
-    titleFr: 'Hormones, y compris la DHEA',
+    slug: 'hormone-aware-kitchen',
+    slugFr: 'cuisine-attentive-aux-hormones',
+    title: 'Hormone-Aware Kitchen',
+    titleFr: 'Cuisine Attentive aux Hormones',
     lede: 'An eating and lifestyle guide for people whose doctor has already raised hormones, including DHEA. The page is about cooking. DHEA itself stays in that medical conversation.',
     ledeFr: 'Un guide d’assiette et de mode de vie pour les personnes dont le médecin a déjà parlé d’hormones, y compris la DHEA. La page parle de cuisine. La DHEA reste dans cette conversation médicale.',
-    metaTitle: "Hormones and DHEA, an eating guide | Table d'Adrian",
-    metaTitleFr: "Hormones et DHEA, un guide d'assiette | Table d'Adrian",
+    metaTitle: "Hormone-Aware Kitchen, an eating guide | Table d'Adrian",
+    metaTitleFr: "Cuisine Attentive aux Hormones, Azur | Table d'Adrian",
     metaDescription:
-      'An eating guide for people whose doctor has raised hormones, including DHEA. Sample meals from the library. The page sets no dose and no supplement.',
+      'Hormone-Aware Kitchen: an eating guide when your doctor has raised hormones, including DHEA. No dose and no supplement on this page. Ask your doctor first.',
     metaDescriptionFr:
-      "Un guide d'assiette quand le médecin a parlé d'hormones, y compris la DHEA. Repas de la bibliothèque. Aucune dose, aucun complément sur cette page.",
+      "Cuisine Attentive aux Hormones : guide d'assiette si le médecin a parlé d'hormones, y compris la DHEA. Aucune dose. Parlez-en au médecin.",
     more: [
       'Eggs, fish, olive oil, and vegetables through the day.',
       'Lentils or another pulse at one meal.',
@@ -231,18 +231,18 @@ export const OFFER_PLANS: OfferPlan[] = [
   },
   {
     id: 'heart',
-    slug: 'heart',
-    slugFr: 'coeur',
-    title: 'The heart, a day of eating',
-    titleFr: 'Le cœur, une journée d’assiette',
+    slug: 'heart-smart-riviera-table',
+    slugFr: 'table-riviera-coeur-leger',
+    title: 'Heart-Smart Riviera Table',
+    titleFr: 'Table Riviera Cœur Léger',
     lede: 'An eating and lifestyle guide for people who keep the heart in mind when they cook. Fish, vegetables, olive oil, and the shape of the day.',
     ledeFr: 'Un guide d’assiette et de mode de vie pour les personnes qui pensent au cœur en cuisinant. Poisson, légumes, huile d’olive, et la forme de la journée.',
-    metaTitle: "The heart, an eating guide, Riviera | Table d'Adrian",
-    metaTitleFr: "Le cœur, guide d'assiette, Riviera | Table d'Adrian",
+    metaTitle: "Heart-Smart Riviera Table, a guide | Table d'Adrian",
+    metaTitleFr: "Table Riviera Cœur Léger, un guide | Table d'Adrian",
     metaDescription:
-      'An eating guide for people who keep the heart in mind at the stove. Fish, vegetables, olive oil, and a sample day of recipes. Ask your doctor first.',
+      'Heart-Smart Riviera Table: fish, vegetables, olive oil, and a sample day of recipes. An eating guide for the table. Ask your doctor before a change.',
     metaDescriptionFr:
-      "Un guide d'assiette pour qui pense au cœur en cuisinant. Poisson, légumes, huile d'olive, et une journée de recettes. Demandez d'abord à votre médecin.",
+      "Table Riviera Cœur Léger : poisson, légumes, huile d'olive, et une journée de recettes. Un guide d'assiette. Demandez à votre médecin avant un changement.",
     more: [
       'Fish more often than a fry-up.',
       'Vegetables and olive oil at the same meal.',
