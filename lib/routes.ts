@@ -27,6 +27,9 @@ export const LOCALE_PAIRS = [
   ['/villa-chef', '/fr/chef-en-villa'],
   ['/events-and-weddings', '/fr/evenements-et-mariages'],
   ['/services', '/fr/services'],
+  ['/gift', '/fr/cadeau'],
+  ['/masterclass', '/fr/cours-de-cuisine'],
+  ['/chefs-kitchen', '/fr/cuisine-du-chef'],
 ] as const
 
 export type EnPath = (typeof LOCALE_PAIRS)[number][0]

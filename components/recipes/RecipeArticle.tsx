@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { DishPhoto } from '@/components/media/DishPhoto'
+import { BookChefCta } from '@/components/monetisation/BookChefCta'
+import { NewsletterForm } from '@/components/monetisation/NewsletterForm'
 import { CREDIT, CREDIT_FR, libraryRecipePath, type LibraryRecipe } from '@/lib/library'
 
 const UI = {
@@ -13,7 +15,6 @@ const UI = {
     lockTitle: 'The method is in Sola',
     lockBody: 'The ingredients stay on the page. The method is in the Sola app.',
     cta: 'Download Sola',
-    book: 'Book a private table',
     also: 'Also',
     photo: 'Photograph',
   },
@@ -27,7 +28,6 @@ const UI = {
     lockTitle: 'La méthode est dans Sola',
     lockBody: 'Les ingrédients restent sur la page. La méthode est dans l’application Sola.',
     cta: 'Télécharger Sola',
-    book: 'Réserver une table privée',
     also: 'Aussi',
     photo: 'Photographie',
   },
@@ -38,7 +38,6 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
   const title = locale === 'fr' ? recipe.titleFr : recipe.title
   const intro = locale === 'fr' ? recipe.introFr : recipe.intro
   const alt = locale === 'fr' ? recipe.image.altFr : recipe.image.alt
-  const contact = locale === 'fr' ? '/fr/contact' : '/contact'
   const minutes = locale === 'fr' ? 'min' : 'min'
 
   return (
@@ -129,12 +128,12 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
           )}
         </section>
 
+        <BookChefCta locale={locale} />
+        <NewsletterForm locale={locale} id="journal-email-recipe" />
+
         <aside className="mt-12 border-t border-border pt-6 text-sm">
           <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{ui.also}</p>
           <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-            <Link href={contact} className="underline-offset-4 hover:underline">
-              {ui.book}
-            </Link>
             <Link href={locale === 'fr' ? '/fr/chef-de-yacht' : '/yacht-chef'} className="underline-offset-4 hover:underline">
               {locale === 'fr' ? 'Chef de yacht' : 'Yacht chef'}
             </Link>

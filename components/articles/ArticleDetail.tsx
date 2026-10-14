@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown'
 import { Article } from '@/data/articles'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 import { formatDate } from '@/lib/utils'
+import { BookChefCta } from '@/components/monetisation/BookChefCta'
 import { ReadingProgress } from './ReadingProgress'
 
 interface ArticleDetailProps {
@@ -120,6 +121,7 @@ export function ArticleDetail({ article }: ArticleDetailProps) {
               {article.content.replace(/^\s*#\s+[^\n]+\n+/, '')}
             </ReactMarkdown>
           </motion.article>
+          <BookChefCta locale="en" />
         </motion.div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { DishPhoto } from '@/components/media/DishPhoto'
+import { BookChefCta } from '@/components/monetisation/BookChefCta'
 import type { JournalPost } from '@/data/library/journal'
 import { articleJsonLd } from '@/lib/schema'
 
@@ -38,6 +39,7 @@ export function JournalArticle({ post, locale }: { post: JournalPost; locale: 'e
             {paragraph}
           </p>
         ))}
+        <BookChefCta locale={locale} />
         <p className="mt-10 text-sm">
           <Link href={locale === 'fr' ? '/fr/articles' : '/articles'} className="underline-offset-4 hover:underline">
             {locale === 'fr' ? 'Retour au journal' : 'Back to the journal'}

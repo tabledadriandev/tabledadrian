@@ -7,6 +7,7 @@ import { Menu, X } from 'lucide-react'
 import { FOOTER_LINKS, WELLNESS_LINKS } from '@/lib/constants'
 import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
+import { offerNavLabel } from '@/lib/monetisation'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
 export function MaisonNav() {
@@ -54,7 +55,7 @@ export function MaisonNav() {
             <div className="nav-index-panel">
               {FOOTER_LINKS.map((item) => (
                 <Link key={item.href} href={withLocale(item.href, locale)}>
-                  {item.href === '/pricing' ? t.navPricing : item.name}
+                  {item.href === '/pricing' ? t.navPricing : offerNavLabel(item.href, item.name, locale)}
                 </Link>
               ))}
               {WELLNESS_LINKS.map((item) => (
@@ -94,7 +95,7 @@ export function MaisonNav() {
           </a>
           {FOOTER_LINKS.map((item) => (
             <Link key={item.href} href={withLocale(item.href, locale)} onClick={() => setOpen(false)}>
-              {item.href === '/pricing' ? t.navPricing : item.name}
+              {item.href === '/pricing' ? t.navPricing : offerNavLabel(item.href, item.name, locale)}
             </Link>
           ))}
           <Link href="/sola" onClick={() => setOpen(false)}>
