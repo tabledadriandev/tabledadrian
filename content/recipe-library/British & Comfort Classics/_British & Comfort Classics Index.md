@@ -1,0 +1,157 @@
+---
+tags: [recipe-hub, hub]
+---
+
+# 🇬🇧 British & Comfort Classics — Index
+
+> [!success] 140 recipes in this collection. 🌱 vegan · 🥬 vegetarian · ⓖ gluten-free
+
+## Starters
+- [[Beetroot-Cured Salmon with Horseradish Cream]] ⓖ
+- [[Bloody Mary Prawn Cocktail]] ⓖ
+- [[Cauliflower Cheese Soup with Crispy Sage]] 🥬 ⓖ
+- [[Chicken Liver Parfait with Ale-Onion Jam]]
+- [[Cider Onion Soup with Cheddar Rarebit Crouton]] 🥬
+- [[Crispy Scotch Egg with Runny Yolk & Curried Mayonnaise]]
+- [[Crispy Whitebait with Tartare Sauce]]
+- [[Devilled Crab on Toast]]
+- [[Grilled Asparagus, Poached Egg & Brown Butter Hollandaise]] 🥬 ⓖ
+- [[Ham Hock Terrine with Piccalilli]] ⓖ
+- [[Leek & Potato Veloute with Chive Oil]] 🥬 ⓖ
+- [[Pea & Mint Soup with Creme Fraiche]] 🥬 ⓖ
+- [[Potted Brown Shrimp with Mace Butter & Toasted Crumpet]]
+- [[Roast Tomato Soup with Cheese Toastie Soldiers]] 🥬
+- [[Salt-Baked Beetroot, Goat's Curd, Honey & Thyme]] 🥬 ⓖ
+- [[Seared Scallops, Pea Puree & Black Pudding Crumb]]
+- [[Smoked Mackerel Pate with Pickled Cucumber & Rye Crisps]]
+- [[Smoked Trout, Watercress & Apple Salad]] ⓖ
+- [[Stilton & Walnut Tart with Pickled Pear Salad]] 🥬
+- [[Twice-Baked Cheddar Souffle]] 🥬
+- [[Welsh Rarebit Croquettes with Worcestershire Glaze]] 🥬
+
+## Breakfasts
+- [[Baked Beans from Scratch on Charred Sourdough]] 🌱
+- [[Black Pudding Hash with Fried Duck Egg]]
+- [[Blueberry Drop Scones with Lemon Curd Cream]] 🥬
+- [[Boiled Duck Egg with Asparagus & Marmite Soldiers]] 🥬
+- [[Bramley Apple & Hazelnut Overnight Oats]] 🥬
+- [[Breakfast Hash of Cumberland Sausage & Sage]]
+- [[Bubble & Squeak Cakes with Poached Eggs & Hollandaise]] 🥬 ⓖ
+- [[Buttermilk Crumpets with Whipped Marmite Butter]] 🥬
+- [[Devilled Kidneys on Charred Sourdough]]
+- [[Full English with Slow-Roasted Tomatoes & Black Pudding Crumb]]
+- [[Grilled Kipper with Brown Butter, Capers & Lemon]] ⓖ
+- [[Honey-Oat Granola with Yoghurt & Poached Rhubarb]] 🥬
+- [[Leek, Cheddar & Jersey Royal Breakfast Frittata]] 🥬 ⓖ
+- [[Omelette Arnold Bennett]] ⓖ
+- [[Porridge with Salted Whisky Caramel Banana]] 🥬
+- [[Smoked Haddock Kedgeree with Soft-Boiled Egg]]
+- [[Smoked Salmon Scrambled Eggs on Potato Farls]]
+- [[The Ultimate Bacon Butty with Tomato-Chilli Jam]]
+- [[Treacle-Cured Bacon Eggs Benedict]]
+- [[Welsh Rarebit Muffins with Crispy Bacon]]
+- [[Wild Mushroom & Tarragon on Toasted Brioche]] 🥬
+
+## Mains
+- [[Beef & Guinness Stew with Cheddar Dumplings]]
+- [[Beer-Battered Haddock with Triple-Cooked Chips & Crushed Peas]]
+- [[Bourbon-Treacle Glazed Beef Short Ribs]]
+- [[Braised Beef Cheeks in Stout with Horseradish Mash]]
+- [[Breaded Langoustine Scampi with Chunky Tartare & Chips]]
+- [[Butter-Basted Ribeye with Peppercorn Sauce & Beef-Fat Chips]] ⓖ
+- [[Buttermilk Fried Chicken Burger with Fennel Slaw]]
+- [[Butternut, Sage & Brown Butter Risotto]] 🥬 ⓖ
+- [[Calves' Liver & Bacon with Onion Gravy]]
+- [[Chestnut & Mushroom Nut Roast with Onion Gravy]] 🌱
+- [[Chicken Ballotine with Mushroom Duxelles & Tarragon Jus]] ⓖ
+- [[Chicken Katsu Curry with Sticky Rice]]
+- [[Chicken Kiev with Wild Garlic Butter]]
+- [[Chicken Tikka Masala with Charred Onions]] ⓖ
+- [[Chicken, Cider & Tarragon Casserole]] ⓖ
+- [[Chicken, Leek & Tarragon Pot Pie]]
+- [[Cider-Brined Pork Chop with Burnt Apple Puree]] ⓖ
+- [[Coq au Vin with Smoked Bacon & Pearl Onions]]
+- [[Cornish Fish Stew with Saffron & Cider]] ⓖ
+- [[Crispy Duck Leg with Braised Peas, Lettuce & Bacon]] ⓖ
+- [[Crispy Fish Butty with Sauce Gribiche]]
+- [[Cumberland Bangers & Mash with Onion Gravy]]
+- [[Cumberland Sausage & White Bean Cassoulet]]
+- [[Dry-Aged Beef Burger with Ogleshield & Bacon Jam]]
+- [[Five-Cheese Macaroni with Crispy Shallots]] 🥬
+- [[Grilled Mackerel with Rhubarb & Mustard]] ⓖ
+- [[Halibut with Mushy Peas, Brown Butter & Malt Vinegar Pearls]] ⓖ
+- [[Homity Pie with Caramelised Onion & West Country Cheddar]] 🥬
+- [[Individual Beef Wellingtons with Madeira Jus]]
+- [[Lamb Burger with Feta, Mint & Harissa Mayo]]
+- [[Lancashire Hotpot with Pickled Red Cabbage]]
+- [[Luxury Fish Pie with Cheddar Mash & Soft Egg]]
+- [[Pan-Fried Sea Bass with Brown Shrimp Butter & Samphire]] ⓖ
+- [[Pea, Ham Hock & Mint Risotto]] ⓖ
+- [[Piri-Piri Spatchcock Chicken with Charred Corn]] ⓖ
+- [[Pork & Sage Faggots in Onion Gravy]]
+- [[Pork Schnitzel with Caper-Lemon Butter & Fried Egg]]
+- [[Pork, Apple & Cider Pie]]
+- [[Portobello & Halloumi Burger with Chimichurri]] 🥬
+- [[Proper Roast Chicken with Lemon-Thyme Butter & Bread Sauce]]
+- [[Red Wine Braised Lamb Shanks with Root Vegetable Mash]] ⓖ
+- [[Roast Cod, Parsley Liquor & Champ]] ⓖ
+- [[Roast Leg of Lamb with Anchovy, Rosemary & Boulangere Potatoes]]
+- [[Roast Turkey Crown with Sage-Onion Stuffing & Cranberry]]
+- [[Root Vegetable Wellington with Chestnut & Sage]] 🌱
+- [[Salmon & Dill Fishcakes with Watercress Mayonnaise]]
+- [[Salmon en Croute with Watercress Sauce]]
+- [[Salt Beef Hash with Fried Egg & Pickled Walnut Ketchup]]
+- [[Shepherd's Pie with Braised Lamb Shoulder & Champ Topping]]
+- [[Slow-Ragu Lasagne with Nutmeg Bechamel]]
+- [[Slow-Roast Pork Belly with Crackling & Bramley Apple Sauce]] ⓖ
+- [[Smoked Haddock with Colcannon & Grain-Mustard Cream]] ⓖ
+- [[Steak & Ale Pie with Suet Crust]]
+- [[Steak Diane with Chunky Chips]] ⓖ
+- [[Sticky Treacle-Glazed Pork Ribs with Apple Slaw]]
+- [[Sunday Roast Sirloin with Yorkshire Puddings & Red Wine Gravy]]
+- [[Tarragon Roast Poussin with Jersey Royals]] ⓖ
+- [[Toad in the Hole with Caramelised Shallot Gravy]]
+- [[Treacle-Glazed Gammon with Fried Duck Egg & Pineapple Chutney]] ⓖ
+- [[Venison & Port Pie with Thyme Pastry]]
+- [[Venison Burger with Juniper & Beetroot Relish]]
+- [[Whole Roast Plaice with Caper-Lemon Butter]] ⓖ
+- [[Wild Mushroom & Ale Suet Pudding]] 🥬
+
+## Sides
+- [[Beer-Battered Onion Rings with Smoked Paprika Salt]] 🥬
+- [[Braised Red Cabbage with Apple & Star Anise]] 🌱 ⓖ
+- [[Buttered Leeks with Cider & Chive]] 🥬 ⓖ
+- [[Cauliflower Cheese with Mustard Crumb]] 🥬
+- [[Champ with Burnt Spring Onion Butter]] 🥬 ⓖ
+- [[Charred Brussels Sprouts with Bacon & Chestnut]] ⓖ
+- [[Creamed Savoy Cabbage with Smoked Bacon]] ⓖ
+- [[Duck-Fat Roast Potatoes]] ⓖ
+- [[Honey-Roast Carrots & Parsnips with Thyme]] 🥬 ⓖ
+- [[Minted Crushed Peas with Lemon]] 🌱 ⓖ
+- [[Proper Yorkshire Puddings]] 🥬
+- [[Roast Beetroot with Horseradish Creme Fraiche]] 🥬 ⓖ
+- [[Sage & Onion Stuffing Balls]]
+- [[Triple-Cooked Chips with Rosemary Salt]] 🌱 ⓖ
+
+## Desserts
+- [[Bakewell Tart with Almond Frangipane]] 🥬
+- [[Banoffee Pie with Dark Chocolate Shavings]] 🥬
+- [[Bramley Apple & Blackberry Crumble with Proper Custard]] 🥬
+- [[Buttermilk Scones with Jam & Clotted Cream]] 🥬
+- [[Classic Sherry Trifle with Raspberry & Vanilla Custard]] 🥬
+- [[Eton Mess with Macerated Strawberries & Black Pepper]] 🥬 ⓖ
+- [[Gooseberry & Elderflower Fool]] 🥬 ⓖ
+- [[Knickerbocker Glory with Raspberry Ripple & Honeycomb]] 🥬
+- [[Lemon Posset with Shortbread Thins]] 🥬
+- [[Marmalade Bread & Butter Pudding]] 🥬
+- [[Millionaire's Shortbread]] 🥬
+- [[Molten Chocolate Fondant with Sea Salt]] 🥬
+- [[Nutmeg Custard Tart]] 🥬
+- [[Rhubarb & Ginger Oat Crumble]] 🥬
+- [[Spotted Dick with Vanilla Custard]] 🥬
+- [[Steamed Syrup Sponge with Lemon]] 🥬
+- [[Sticky Toffee Pudding with Salted Toffee Sauce]] 🥬
+- [[Summer Pudding with Creme Fraiche]] 🥬
+- [[Treacle Tart with Clotted Cream]] 🥬
+- [[Vanilla Rice Pudding with Roasted Plums]] 🥬 ⓖ
+- [[Victoria Sponge with Raspberry & Vanilla Cream]] 🥬

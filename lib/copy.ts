@@ -20,7 +20,7 @@ export const copy = {
     aboutTitleEm: 'one',
     aboutTitleAfter: ' table.',
     aboutSecond:
-      'Whether it is a celebration for twenty or a week of quiet dinners for two, each menu is written from scratch around your preferences, allergies and the season’s market.',
+      'Whether it is a celebration for twenty or a week of quiet dinners for two, each menu is written from scratch. Dietary preferences and allergies are accommodated on request, along with the season’s market.',
     marquee: [
       'Swiss-trained technique',
       credentials.en.ehl,
@@ -110,7 +110,7 @@ export const copy = {
     aboutTitleEm: 'une',
     aboutTitleAfter: ' table.',
     aboutSecond:
-      "Qu'il s'agisse d'une fête pour vingt ou d'une semaine de dîners à deux, chaque menu s'écrit autour de vos goûts, allergies et du marché de la saison.",
+      "Qu'il s'agisse d'une fête pour vingt ou d'une semaine de dîners à deux, chaque menu s'écrit sur mesure. Les préférences alimentaires et les allergies sont prises en compte sur demande, avec le marché de la saison.",
     marquee: [
       'Technique de haute gastronomie',
       credentials.fr.ehl,

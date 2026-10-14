@@ -1,0 +1,167 @@
+---
+tags: [recipe-hub, hub]
+---
+
+# 🇫🇷 French Classics & Bistro — Index
+
+> [!success] 150 recipes in this collection. 🌱 vegan · 🥬 vegetarian · ⓖ gluten-free
+
+## Starters
+- [[Artichauts a la Barigoule]] 🌱 ⓖ
+- [[Asperges Blanches, Sauce Mousseline]] 🥬 ⓖ
+- [[Bisque de Langoustine, Cognac and Tarragon]] ⓖ
+- [[Celeri Remoulade with Smoked Trout]] ⓖ
+- [[Chicken Liver Parfait, Sauternes Gelee]] ⓖ
+- [[Consomme de Boeuf, Root Vegetable Brunoise]] ⓖ
+- [[Coquilles Saint-Jacques Gratinees, Vermouth Cream]]
+- [[Crab and Fennel Salad, Grapefruit and Pastis]] ⓖ
+- [[Endive, Roquefort and Walnut Salad]] 🥬 ⓖ
+- [[Escargots de Bourgogne, Hazelnut Garlic Butter]]
+- [[Foie Gras Terrine, Muscat and Toasted Brioche]]
+- [[Gougeres au Comte, Black Pepper]] 🥬
+- [[Jambon Persille, Burgundy Parsleyed Ham Terrine]] ⓖ
+- [[Moules Marinieres, Cider and Creme Fraiche]] ⓖ
+- [[Oeufs Mimosa, Trout Roe and Tarragon]] ⓖ
+- [[Oeufs en Meurette, Red Wine Jus and Lardons]]
+- [[Pissaladiere, Slow Onions, Anchovy and Nicoise Olives]]
+- [[Poireaux Vinaigrette, Hazelnut and Egg Mimosa]] 🥬 ⓖ
+- [[Quiche Lorraine, Silken Custard]]
+- [[Rillettes de Canard, Green Peppercorn]] ⓖ
+- [[Rillettes de Saumon aux Deux Facons]] ⓖ
+- [[Salade Lyonnaise, Crisp Bacon and Poached Egg]]
+- [[Souffle au Comte, Twice-Baked]] 🥬
+- [[Soupe a l'Oignon Gratinee, Comte Croutons]]
+- [[Soupe au Pistou, Summer Beans and Basil]] 🌱
+- [[Soupe de Poisson, Rouille and Gruyere]]
+- [[Tarte Flambee, Smoked Bacon and Onion]]
+- [[Terrine de Campagne, Pistachio and Armagnac]]
+- [[Veloute de Champignons, Sherry and Chive Oil]] 🥬 ⓖ
+- [[Vichyssoise, Smoked Almond Crumble]] 🥬 ⓖ
+
+## Mains
+- [[Aile de Raie Grenobloise]]
+- [[Axoa de Veau d'Espelette]] ⓖ
+- [[Baeckeoffe, Three-Meat Riesling Bake]]
+- [[Bavette a l'Echalote Confite]] ⓖ
+- [[Blanquette de Veau a l'Ancienne]] ⓖ
+- [[Boeuf Bourguignon a l'Ancienne]]
+- [[Boudin Noir aux Pommes, Puree Fine]] ⓖ
+- [[Bouillabaisse de Plaisance]]
+- [[Bourride Setoise, Aioli-Mounted Broth]] ⓖ
+- [[Brandade de Morue Gratinee]] ⓖ
+- [[Cabillaud Duglere, Tomato and White Wine]] ⓖ
+- [[Canard a l'Orange, Bigarade Moderne]] ⓖ
+- [[Carre d'Agneau en Croute d'Herbes]]
+- [[Cassoulet Toulousain du Bord]]
+- [[Choucroute Garnie Alsacienne]]
+- [[Confit de Canard, Pommes Sarladaises]] ⓖ
+- [[Coq au Vin de Bourgogne]]
+- [[Coquelet a la Diable, Moutarde et Chapelure]]
+- [[Cote de Veau Normande, Pommes et Calvados]] ⓖ
+- [[Croque Madame de Brasserie]]
+- [[Daube de Boeuf Provencale, Orange et Olives]] ⓖ
+- [[Daurade Royale Provencale, Tomates Confites]] ⓖ
+- [[Entrecote Bordelaise, Moelle et Echalotes]] ⓖ
+- [[Filet Mignon de Porc, Sauce Charcutiere]]
+- [[Filets de Sole Bonne Femme]]
+- [[Fletan au Vin Jaune et Morilles]] ⓖ
+- [[Foie de Veau Lyonnaise, Oignons et Persil]] ⓖ
+- [[Galette Complete de Sarrasin]] ⓖ
+- [[Garbure Bearnaise au Confit]] ⓖ
+- [[Gigot de Sept Heures, Anchois et Ail]] ⓖ
+- [[Hachis Parmentier de Boeuf, Croute Doree]] ⓖ
+- [[Homard Thermidor, Dijon Gratin]]
+- [[Joues de Boeuf Braisees au Vin de Cahors]] ⓖ
+- [[Lapin a la Moutarde, Creme et Romarin]] ⓖ
+- [[Lotte a l'Armoricaine]] ⓖ
+- [[Loup de Mer en Croute de Sel, Fenouil]] ⓖ
+- [[Magret de Canard, Cherry Gastrique]] ⓖ
+- [[Matelote de Poisson au Riesling]]
+- [[Navarin d'Agneau Printanier]]
+- [[Omelette aux Fines Herbes, Roulee Baveuse]] 🥬 ⓖ
+- [[Petit Sale aux Lentilles du Puy]] ⓖ
+- [[Pintade aux Choux, Lardons Fumes]] ⓖ
+- [[Porc aux Pruneaux de Tours]] ⓖ
+- [[Pot-au-Feu, Os a Moelle et Gros Sel]] ⓖ
+- [[Poule au Pot, Bouillon de Legumes Racines]] ⓖ
+- [[Poulet Basquaise, Riz Pilaf]] ⓖ
+- [[Poulet Chasseur, Champignons et Estragon]]
+- [[Poulet Roti a l'Estragon, Jus Corse]] ⓖ
+- [[Poulet aux Morilles et Vin Jaune]] ⓖ
+- [[Quenelles de Brochet, Sauce Nantua]]
+- [[Ratatouille Confit Byaldi, Piment Doux]] 🌱 ⓖ
+- [[Ris de Veau Poeles, Capres et Citron]]
+- [[Rognons de Veau a la Moutarde]] ⓖ
+- [[Rougets a la Tapenade, Courgettes Fines]] ⓖ
+- [[Saucisse de Toulouse, Aligot de l'Aubrac]] ⓖ
+- [[Saumon a l'Oseille, Sorrel Cream]] ⓖ
+- [[Sauté de Veau Marengo]]
+- [[Sole Meuniere, Brown Butter and Lemon]]
+- [[Steak Frites, Sauce au Poivre]] ⓖ
+- [[Steak Tartare, Coupe au Couteau]]
+- [[Tartiflette au Reblochon Fermier]] ⓖ
+- [[Thon Basquaise, Piperade and Espelette]] ⓖ
+- [[Tian Provencal, Panisse Croustillante]] 🌱 ⓖ
+- [[Tomates Farcies Grand-Mere]]
+- [[Tournedos Rossini de Fete]]
+- [[Truite aux Amandes, Beurre Noisette]]
+- [[Turbot Roti, Beurre Blanc au Champagne]] ⓖ
+- [[Vol-au-Vent Forestier, Creme de Madere]] 🥬
+
+## Sides
+- [[Carottes Vichy Glacees]] 🥬 ⓖ
+- [[Champignons Sautes en Persillade]] 🌱 ⓖ
+- [[Endives Braisees au Jus d'Orange]] 🥬 ⓖ
+- [[Fenouil Confit au Pastis]] 🌱 ⓖ
+- [[Frites de Bistrot, Double Cuisson]] 🌱 ⓖ
+- [[Gratin Dauphinois a l'Ail]] 🥬 ⓖ
+- [[Haricots Verts Amandine]] 🥬 ⓖ
+- [[Petits Pois a la Francaise]] 🥬 ⓖ
+- [[Pommes Anna au Beurre Clarifie]] 🥬 ⓖ
+- [[Pommes Dauphine Souffles]] 🥬
+- [[Pommes Puree Soyeuse]] 🥬 ⓖ
+
+## Sauces
+- [[Aioli Provencal au Mortier]] 🥬 ⓖ
+- [[Beurre Blanc Classique]] 🥬 ⓖ
+- [[Beurre Cafe de Paris Maison]] ⓖ
+- [[Demi-Glace Maison, Base Espagnole]]
+- [[Sauce Bearnaise a l'Estragon]] 🥬 ⓖ
+- [[Sauce Gribiche aux Herbes]] 🥬 ⓖ
+- [[Sauce Hollandaise au Citron]] 🥬 ⓖ
+- [[Sauce Mornay, Bechamel Mere]] 🥬
+- [[Sauce Supreme aux Champignons]]
+- [[Sauce Tomate Provencale aux Herbes]] 🌱 ⓖ
+- [[Sauce Vierge aux Tomates et Basilic]] 🌱 ⓖ
+
+## Desserts
+- [[Baba au Rhum, Chantilly Vanille]] 🥬
+- [[Caneles de Bordeaux au Rhum]] 🥬
+- [[Clafoutis aux Cerises Noires]] 🥬
+- [[Creme Brulee a la Vanille de Tahiti]] 🥬 ⓖ
+- [[Creme Caramel de Grand-Mere]] 🥬 ⓖ
+- [[Crepes Suzette, Beurre a l'Orange]] 🥬
+- [[Eclairs au Cafe, Glacage Miroir]] 🥬
+- [[Far Breton aux Pruneaux]] 🥬
+- [[Financiers aux Amandes, Beurre Noisette]] 🥬
+- [[Gateau Basque a la Creme]] 🥬
+- [[Iles Flottantes, Creme Anglaise Vanille]] 🥬 ⓖ
+- [[Kouign-Amann de Douarnenez]] 🥬
+- [[Madeleines au Miel de Lavande]] 🥬
+- [[Mille-feuille a la Vanille Bourbon]] 🥬
+- [[Moelleux au Chocolat, Coeur Coulant]] 🥬
+- [[Mont Blanc aux Marrons, Meringue Croquante]] 🥬 ⓖ
+- [[Mousse au Chocolat Noir 70 Pourcent]] 🥬 ⓖ
+- [[Nougat Glace au Miel et Fruits Confits]] 🥬 ⓖ
+- [[Paris-Brest, Praline Noisette]] 🥬
+- [[Peche Melba aux Framboises]] 🥬 ⓖ
+- [[Petits Pots de Creme au Cafe]] 🥬 ⓖ
+- [[Poires Belle Helene, Chocolat Chaud]] 🥬 ⓖ
+- [[Profiteroles, Chocolat Chaud a l'Ancienne]] 🥬
+- [[Riz au Lait, Caramel au Beurre Sale]] 🥬 ⓖ
+- [[Souffle Chaud au Grand Marnier]] 🥬
+- [[Tarte Fine aux Pommes, Calvados]] 🥬
+- [[Tarte Normande aux Pommes]] 🥬
+- [[Tarte Tatin aux Pommes Caramel]] 🥬
+- [[Tarte au Citron de Menton]] 🥬
+- [[Tarte aux Fraises, Creme Diplomate]] 🥬

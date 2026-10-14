@@ -172,7 +172,7 @@ export function ContactForm() {
           {...register('dietaryRequirements')}
           rows={2}
           className="field"
-          placeholder="Vegetarian, gluten-free, allergies"
+          placeholder="Dietary preferences and allergies, on request"
         />
       </div>
 

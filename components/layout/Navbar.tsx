@@ -77,7 +77,7 @@ function LegacyNavbar() {
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-[65] transition-colors duration-500',
+          'site-nav fixed inset-x-0 top-0 z-[65] transition-colors duration-500',
           isScrolled && !isMobileMenuOpen ? 'nav-scrolled' : 'bg-transparent'
         )}
       >

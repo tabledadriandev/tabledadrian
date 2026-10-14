@@ -6,9 +6,9 @@ import { FaqSection } from '@/components/seo/FaqSection'
 import { credentials } from '@/lib/credentials'
 import type { Locale } from '@/lib/copy'
 import { copy } from '@/lib/copy'
+import { FAQ } from '@/lib/faq'
 import {
   getLocation,
-  locationFaq,
   locationIdFromSlug,
   siblingLocations,
   type LocationId,
@@ -67,7 +67,7 @@ export function LocationScreen({ id, locale }: { id: LocationId; locale: Locale 
   const chef = credentials[locale]
   const ui = UI[locale]
   const others = siblingLocations(id, locale)
-  const faq = locationFaq(page)
+  const faq = FAQ[locale]
 
   return (
     <article>

@@ -49,8 +49,8 @@ describe('locale pairs', () => {
 })
 
 describe('location copy', () => {
-  it('has twelve distinct records', () => {
-    expect(LOCATIONS).toHaveLength(12)
+  it('has eighteen distinct records', () => {
+    expect(LOCATIONS).toHaveLength(18)
     expect(locationIdFromSlug('cote-d-azur')).toBe('hub')
     expect(getLocation('monaco', 'en').h1).toBe('Private chef Monaco')
     expect(getLocation('monaco', 'fr').h1).toMatch(/Chef priv/)

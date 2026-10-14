@@ -1,0 +1,155 @@
+---
+tags: [recipe-hub, hub]
+---
+
+# ✨ Haute Cuisine & Tasting Menus — Index
+
+> [!success] 140 recipes in this collection. 🌱 vegan · 🥬 vegetarian · ⓖ gluten-free
+
+## Amuse-bouches
+- [[Beetroot Meringue Kiss, Whipped Goat Cheese]] 🥬 ⓖ
+- [[Black Truffle Croustillant, Celeriac Cream]] 🥬
+- [[Breakfast Radishes, Seaweed Butter & Fleur de Sel]] 🥬 ⓖ
+- [[Caviar Tartelette, Creme Fraiche & Chive]]
+- [[Cep Cappuccino, Porcini Foam & Chive]] 🥬 ⓖ
+- [[Chickpea Panisse, Rosemary & Pecorino]] 🥬 ⓖ
+- [[Chilled Pea Espuma, Mint Oil & Creme Fraiche]] 🥬 ⓖ
+- [[Compressed Watermelon, Aged Feta & Basil]] 🥬 ⓖ
+- [[Crispy Chicken Skin, Sweetcorn Puree & Espelette]] ⓖ
+- [[Crystal-Clear Tomato Consomme, Basil Oil Pearls]] 🌱 ⓖ
+- [[Cucumber, Gin & Elderflower Sorbet Opener]] 🌱 ⓖ
+- [[Duck Rillette Choux Puff, Pickled Cherry]]
+- [[Foie Gras Cromesquis, Sauternes Gel]]
+- [[Gillardeau Oyster, Champagne Granite & Finger Lime]] ⓖ
+- [[Gougeres with Aged Comte & Espelette]] 🥬
+- [[Langoustine Tartare Spoon, Yuzu Kosho & Ginger]] ⓖ
+- [[Parmesan Sable, Tomato Confit & Black Olive Crumb]] 🥬
+- [[Scallop Ceviche Spoon, Leche de Tigre]] ⓖ
+- [[Smoked Eel Tartlet, Granny Smith & Wasabi]]
+- [[Tuna Tataki Sesame Cone, Avocado Cream]]
+- [[White Asparagus Panna Cotta, Trout Roe]] ⓖ
+
+## Starters
+- [[Artichoke Barigoule, Parmesan Espuma & Lemon]] 🥬 ⓖ
+- [[Blue Lobster Salad, Vanilla Vinaigrette & Baby Gem]] ⓖ
+- [[Caramelised Endive, Roquefort Cream & Candied Walnut]] 🥬 ⓖ
+- [[Carrot Tartare, Smoked Almond & Rye Crisp]] 🌱
+- [[Celeriac Agnolotti, Black Truffle Emulsion]] 🥬
+- [[Cep Tartlet, Aged Comte & Walnut]] 🥬
+- [[Charred Leek, Hazelnut Sabayon & Cured Egg Yolk]] 🥬 ⓖ
+- [[Charred Octopus, Smoked Paprika Emulsion & Confit Potato]] ⓖ
+- [[Chestnut Veloute, Foie Gras Royale & Sherry]] ⓖ
+- [[Confit Egg Yolk, Truffled Potato Espuma & Crisp Shallot]] 🥬 ⓖ
+- [[Crab Raviolo, Shellfish Bisque & Lemongrass]]
+- [[Cured Salmon, Buttermilk & Dill Granita]] ⓖ
+- [[Duck Liver Parfait, Port Gel & Brioche Feuille]]
+- [[Foie Gras Torchon, Rhubarb & Toasted Brioche]]
+- [[Frog Legs, Garlic-Parsley Veloute & Lemon Gremolata]]
+- [[Glazed Veal Sweetbread Nuggets, Caper-Raisin Emulsion]] ⓖ
+- [[Green Pea Tortellini in Iberico Ham Consomme]]
+- [[Hand-Dived Scallop Crudo, Green Apple & Dill Oil]] ⓖ
+- [[Heirloom Tomato Tartare, Burrata Cream & Basil Sorbet]] 🥬 ⓖ
+- [[King Crab, Kohlrabi & Green Apple Remoulade]] ⓖ
+- [[Langoustine Carpaccio, Citrus & Oscietra]] ⓖ
+- [[Lobster Bisque, Cognac Chantilly & Tarragon]] ⓖ
+- [[Marinated Sea Bream, Fennel Pollen & Blood Orange]] ⓖ
+- [[Nicoise 'Fine' — Confit Tuna, Quail Egg & Tapenade]] ⓖ
+- [[Poached Oysters, Champagne Veloute & Leek]] ⓖ
+- [[Pumpkin Veloute, Amaretti Crumble & Sage Brown Butter]] 🥬 ⓖ
+- [[Razor Clams, Sea Lettuce Butter & Finger Lime]] ⓖ
+- [[Roasted Quail Breast, Grape & Verjus Salad]] ⓖ
+- [[Salsify, Brown Butter Crumb & Perigord Truffle]] 🥬
+- [[Salt-Baked Beetroot Terrine, Smoked Creme Fraiche & Horseradish]] 🥬 ⓖ
+- [[Salt-Baked Golden Beet, Caviar & Chive Beurre Blanc]] 🥬 ⓖ
+- [[Smoked Eel, Beetroot Glaze & Apple Ketchup]] ⓖ
+- [[Spring Vegetable Mosaic, Goat Curd & Herb Oil]] 🥬 ⓖ
+- [[White Asparagus, Morel Fricassee & Vin Jaune Sabayon]] 🥬 ⓖ
+- [[Yellowtail, Ponzu Beurre Blanc & Pickled Kohlrabi]] ⓖ
+
+## Mains
+- [[48-Hour Short Rib, Smoked Pomme Puree & Pickled Walnut]] ⓖ
+- [[Amberjack, Miso Beurre Blanc & Charred Pak Choi]] ⓖ
+- [[Anjou Pigeon, Beetroot, Blackberry & Jus of its Bones]] ⓖ
+- [[BBQ King Oyster 'Scallops', Bearnaise & Crisp Potato]] 🥬 ⓖ
+- [[Beetroot en Croute, Sauce au Poivre Vert]] 🥬
+- [[Bresse Chicken, Sauce Albufera & Leek Royale]] ⓖ
+- [[Brill Grenobloise, Brown Shrimp & Caper]]
+- [[Butter-Poached Blue Lobster, Sweetcorn & Tarragon]] ⓖ
+- [[Carabinero Prawn, Fregola & Shellfish Bisque]]
+- [[Challans Duck a l'Orange Revisited, Chicory & Campari]] ⓖ
+- [[Charred Hispi Cabbage, Miso Brown Butter & Buckwheat]] 🥬 ⓖ
+- [[Crisp-Skin Poussin, Lemon-Thyme Jus & Pommes Anna]] ⓖ
+- [[Deconstructed Bouillabaisse, Rouille Espuma]] ⓖ
+- [[Dover Sole, Brown Butter, Grapes & Verjus]] ⓖ
+- [[Dry-Aged Challans Duck, Lavender Honey & Glazed Turnip]] ⓖ
+- [[Fillet of Beef Rossini Revisited, Perigueux Sauce]] ⓖ
+- [[Gilthead Bream, Tomato Fondue & Black Olive Caramel]] ⓖ
+- [[Glazed Veal Sweetbreads, Morels & Vin Jaune Cream]] ⓖ
+- [[Grilled Langoustines, Kombu Butter & Cauliflower Textures]] ⓖ
+- [[Guinea Fowl Ballotine, Black Truffle Farce & Suprême Sauce]] ⓖ
+- [[Halibut, Parsley Root Puree & Mussel Veloute]] ⓖ
+- [[Heirloom Tomato Tarte Tatin, Whipped Goat Cheese & Basil]] 🥬
+- [[Herb-Crusted Rack of Lamb, Tapenade Jus & Nicoise Vegetables]]
+- [[Iberico Presa, Smoked Aubergine & Palo Cortado Jus]] ⓖ
+- [[John Dory, Stuffed Courgette Flower & Bouillabaisse Jus]] ⓖ
+- [[Line-Caught Sea Bass, Fennel Confit & Pastis Emulsion]] ⓖ
+- [[Lobster Thermidor Revisited, Tarragon Gratin]]
+- [[Loup en Croute, Sauce Choron]]
+- [[Meagre, Verbena Beurre Blanc & Glazed Courgette]] ⓖ
+- [[Milk-Fed Veal Loin, Girolles & Tarragon Jus]] ⓖ
+- [[Navarin of Lamb, Spring Vegetables & Rosemary]] ⓖ
+- [[Paupiette of Sole, Lobster Mousseline & Champagne Sauce]] ⓖ
+- [[Pike Quenelle Souffle, Sauce Nantua]]
+- [[Rabbit Saddle, Prune & Armagnac, Dijon Jus]] ⓖ
+- [[Red Mullet, Crisp Scales & Saffron Rouille]]
+- [[Roasted Monkfish, Vadouvan Butter & Heritage Carrots]] ⓖ
+- [[Roasted Scallops, Jerusalem Artichoke & Roast Chicken Jus]] ⓖ
+- [[Sea Trout, Charred Cucumber & Oscietra Sauce]] ⓖ
+- [[Skate Wing, XO Butter & Charred Baby Gem]]
+- [[Skrei Cod, Smoked Butter Emulsion & Cockle Jus]] ⓖ
+- [[Slow-Cooked Salmon, Sorrel Beurre Blanc]] ⓖ
+- [[Squid 'Tagliatelle', Ink Emulsion & Lemon]] ⓖ
+- [[Suckling Pig Belly, Langoustine & Sauce Ravigote]] ⓖ
+- [[Veal Cheek Blanquette, Winter Vegetables & Lemon]] ⓖ
+- [[Venison Loin, Sauce Grand Veneur & Poached Quince]] ⓖ
+- [[Wagyu Striploin, Bone Marrow Crust & Charred Shallot]]
+- [[White Truffle Risotto, Aged Carnaroli & Parmesan]] 🥬 ⓖ
+- [[Whole-Roasted Celeriac, Truffle Jus & Aged Comte]] 🥬 ⓖ
+- [[Wild Turbot, Champagne Beurre Blanc & Sea Herbs]] ⓖ
+
+## Desserts
+- [[70% Chocolate Tart, Buckwheat & Whisky Chantilly]] 🥬
+- [[Apricot Souffle, Noyau Ice Cream]] 🥬 ⓖ
+- [[Baba au Rhum, Chantilly & Lime]] 🥬
+- [[Buttermilk Sherbet, Honeycomb & Bee Pollen]] 🥬 ⓖ
+- [[Calisson-Style Almond & Melon Petits Fours]] 🥬 ⓖ
+- [[Caneles de Bordeaux, Rum & Vanilla]] 🥬
+- [[Chocolate & Olive Oil Cremeux, Fleur de Sel]] 🥬 ⓖ
+- [[Coconut Snow, Passion Fruit & Kaffir Lime]] 🌱 ⓖ
+- [[Deconstructed Tarte au Citron, Basil Meringue]] 🥬
+- [[Earl Grey Chocolate Truffles, Cocoa Dust]] 🥬 ⓖ
+- [[Fig Leaf Panna Cotta, Roasted Figs & Honey]] 🥬 ⓖ
+- [[Financiers, Almond & Orange Blossom]] 🥬
+- [[Frozen Lemon Verbena Parfait, Meringue & Lemon Curd]] 🥬 ⓖ
+- [[Gratinated Berries, Champagne Sabayon]] 🥬 ⓖ
+- [[Green Apple Sorbet, Fennel Sugar & Chartreuse]] 🌱 ⓖ
+- [[Ile Flottante Moderne, Pistachio Praline]] 🥬 ⓖ
+- [[Mille-Feuille, Tahitian Vanilla & Salted Butter Caramel]] 🥬
+- [[Miniature Apple Tatin, Creme Normande]] 🥬
+- [[Nougat Glace, Honey & Candied Fruit]] 🥬 ⓖ
+- [[Paris-Brest Moderne, Hazelnut Praline]] 🥬
+- [[Peach Melba Revisited, Raspberry & Amaretti]] 🥬 ⓖ
+- [[Pink Grapefruit & Champagne Granite, Tarragon]] 🌱 ⓖ
+- [[Pistachio Macarons, Griotte Heart]] 🥬 ⓖ
+- [[Poached Pear, Poire Williams Sabayon & Almond Croquant]] 🥬 ⓖ
+- [[Raspberry Pate de Fruit, Sugar Crust]] 🌱 ⓖ
+- [[Rhubarb & Custard, Three Textures]] 🥬 ⓖ
+- [[Salted Caramel Bonbons, 64% Shell]] 🥬 ⓖ
+- [[Strawberry Consomme, Basil Sorbet & Olive Oil]] 🌱 ⓖ
+- [[Tonka Bean Creme Brulee, Griottine Cherries]] 🥬 ⓖ
+- [[Tropical Pavlova, Mango, Lime Leaf & Passion]] 🥬 ⓖ
+- [[Valrhona Chocolate Sphere, Salted Caramel Pour]] 🥬 ⓖ
+- [[Verbena Guimauve, Lime Sugar]] ⓖ
+- [[Warm Madeleines, Brown Butter & Honey]] 🥬
+- [[Wild Strawberry Vacherin, Creme Fraiche Chantilly]] 🥬 ⓖ
+- [[Yuzu Posset, Black Sesame Tuile]] 🥬 ⓖ

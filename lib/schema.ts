@@ -61,6 +61,17 @@ export function siteJsonLd() {
   }
 }
 
+export function localBusinessJsonLd() {
+  const graph = siteJsonLd()['@graph'] as Array<Record<string, unknown>>
+  const business = graph.find((node) => Array.isArray(node['@type']))
+  if (!business) return null
+  return {
+    '@context': 'https://schema.org',
+    ...business,
+    '@type': 'LocalBusiness',
+  }
+}
+
 export function faqJsonLd(items: FaqItem[]) {
   return {
     '@context': 'https://schema.org',
@@ -73,5 +84,87 @@ export function faqJsonLd(items: FaqItem[]) {
         text: item.a,
       },
     })),
+  }
+}
+
+export function isoDuration(minutes: number) {
+  const safe = Math.max(0, Math.round(minutes))
+  const hours = Math.floor(safe / 60)
+  const mins = safe % 60
+  if (!hours && !mins) return 'PT0M'
+  return `PT${hours ? `${hours}H` : ''}${mins ? `${mins}M` : ''}`
+}
+
+export function recipeJsonLd(input: {
+  name: string
+  description: string
+  image: string
+  path: string
+  prepMin: number
+  cookMin: number
+  yield: string
+  cuisine: string
+  category: string
+  ingredients: string[]
+  instructions: string[]
+  free: boolean
+  datePublished: string
+}) {
+  const image = input.image.startsWith('http') ? input.image : `${SITE_URL}${input.image}`
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: input.name,
+    description: input.description,
+    image: [image],
+    author: { '@type': 'Person', '@id': personId, name: 'Adrian Stefan' },
+    datePublished: input.datePublished,
+    prepTime: isoDuration(input.prepMin),
+    cookTime: isoDuration(input.cookMin),
+    totalTime: isoDuration(input.prepMin + input.cookMin),
+    recipeYield: input.yield,
+    recipeCuisine: input.cuisine,
+    recipeCategory: input.category,
+    recipeIngredient: input.ingredients,
+    recipeInstructions: input.instructions.map((text, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      text,
+    })),
+    mainEntityOfPage: `${SITE_URL}${input.path}`,
+    isAccessibleForFree: input.free,
+  }
+  if (!input.free) {
+    schema.isAccessibleForFree = false
+    schema.hasPart = {
+      '@type': 'WebPageElement',
+      isAccessibleForFree: false,
+      cssSelector: '.paywall',
+    }
+  }
+  return schema
+}
+
+export function articleJsonLd(input: {
+  headline: string
+  description: string
+  image: string
+  path: string
+  datePublished: string
+  locale: 'en' | 'fr'
+}) {
+  const image = input.image.startsWith('http') ? input.image : `${SITE_URL}${input.image}`
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: input.headline,
+    description: input.description,
+    image: [image],
+    author: { '@type': 'Person', '@id': personId, name: 'Adrian Stefan' },
+    publisher: { '@id': businessId },
+    datePublished: input.datePublished,
+    dateModified: input.datePublished,
+    inLanguage: input.locale === 'fr' ? 'fr' : 'en',
+    mainEntityOfPage: `${SITE_URL}${input.path}`,
   }
 }

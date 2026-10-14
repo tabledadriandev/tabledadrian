@@ -7,7 +7,7 @@ import { SolaMotion } from '@/components/sola/SolaMotion'
 export const metadata: Metadata = {
   title: 'Sola',
   description:
-    'Recipes screened for you, planned to your numbers. Sola is nutrition guidance for adults on iPhone, iPad and Mac.',
+    'Recipes for the way you eat. Sola is guidance for adults on iPhone, iPad and Mac. It is not medical advice.',
   alternates: { canonical: '/sola' },
 }
 
@@ -19,17 +19,16 @@ export default function SolaPage() {
         <SectionHeading
           as="h1"
           eyebrow="Sola app"
-          title="Recipes screened for you, planned to your numbers."
-          description="Tell Sola about your body, health and tastes, and it gives you daily targets with the reason beside them, recipes screened for you, and a week you can shop for."
+          title="Recipes for the way you eat."
+          description="Tell Sola what you eat and what you leave out. Dietary preferences and allergies are accommodated on request. Sola is not medical advice."
           animate={false}
         />
 
         <article className="legal mx-auto mt-12 space-y-5 text-base leading-relaxed text-foreground-muted">
           <p>
-            Sola is nutrition guidance for adults, from Table d&apos;Adrian. It is for iPhone, iPad
-            and Mac. It works out daily targets from published methods, including Dietary Reference
-            Intakes, then screens recipes for your allergies, a marked condition and the way you eat.
-            Sola is not medical advice, and it is not a medical device.
+            Sola is guidance for adults, from Table d&apos;Adrian. It is for iPhone, iPad and Mac.
+            Dietary preferences and allergies are accommodated on request. Sola is not medical advice,
+            and it is not a medical device.
           </p>
           <p>
             The chef uses Apple Intelligence on the device. It needs a device that supports Apple

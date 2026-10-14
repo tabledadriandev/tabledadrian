@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
     "How Table d'Adrian collects, uses and protects your personal information when you enquire, visit the site or use our demos.",
-  alternates: { canonical: '/privacy' },
+  alternates: { canonical: '/privacy', languages: { en: '/privacy', fr: '/fr/confidentialite', 'x-default': '/privacy' } },
 }
 
 export default function PrivacyPage() {
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
       <ul>
         <li>To reply to bookings and write a menu for your table.</li>
         <li>To keep the site secure and understand which pages are useful, if you accept analytics.</li>
-        <li>To meet legal duties (invoices, allergies we have been told about).</li>
+        <li>To meet legal duties (invoices, and dietary preferences or allergies you have told us about).</li>
       </ul>
       <p>We do not sell your data. We do not use it for advertising networks.</p>
 

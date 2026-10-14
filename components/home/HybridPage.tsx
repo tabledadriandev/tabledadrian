@@ -3,11 +3,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { GALLERY } from '@/data/gallery'
+import { FaqSection } from '@/components/seo/FaqSection'
 import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
+import { FAQ } from '@/lib/faq'
 import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
-import { Testimonials } from '@/components/sections/Testimonials'
-import { HeroCloche } from './HeroCloche'
 
 const STRIP = [
   'langoustine',
@@ -47,7 +47,16 @@ export function HybridPage() {
             <p className="credential-pill">{h.credential}</p>
           </div>
         </div>
-        <HeroCloche />
+        <figure className="hero-plate">
+          <Image
+            src="/gallery/hero-plate.jpg"
+            alt="Seared langoustine with broad beans and a butter sauce, plated by Table d'Adrian"
+            fill
+            priority
+            sizes="(max-width: 860px) 92vw, 34rem"
+            quality={70}
+          />
+        </figure>
       </section>
 
       <section id="experiences" className="container hybrid-offers" aria-labelledby="experiences-title">
@@ -99,8 +108,6 @@ export function HybridPage() {
         </div>
       </section>
 
-      <Testimonials />
-
       <section id="enquire" className="hybrid-begin container" aria-labelledby="begin-title">
         <div className="hybrid-center" id="contact">
           <p className="hybrid-kicker">{h.beginKicker}</p>
@@ -136,6 +143,7 @@ export function HybridPage() {
           </div>
         </div>
       </section>
+      <FaqSection title={locale === 'fr' ? 'Questions' : 'Questions'} items={FAQ[locale]} />
     </div>
   )
 }

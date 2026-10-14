@@ -1,0 +1,1052 @@
+[
+  {
+    "slug": "bouillabaisse",
+    "slugFr": "bouillabaisse",
+    "title": "Bouillabaisse",
+    "titleFr": "Bouillabaisse"
+  },
+  {
+    "slug": "coq-au-vin",
+    "slugFr": "coq-au-vin",
+    "title": "Coq au Vin",
+    "titleFr": "Coq au vin"
+  },
+  {
+    "slug": "creme-brulee",
+    "slugFr": "creme-brulee",
+    "title": "Creme Brulee",
+    "titleFr": "Creme brulee"
+  },
+  {
+    "slug": "ratatouille",
+    "slugFr": "ratatouille",
+    "title": "Ratatouille",
+    "titleFr": "Ratatouille"
+  },
+  {
+    "slug": "steak-frites",
+    "slugFr": "steak-frites",
+    "title": "Steak Frites",
+    "titleFr": "Steak frites"
+  },
+  {
+    "slug": "aioli",
+    "slugFr": "aioli",
+    "title": "Aioli",
+    "titleFr": "Aioli"
+  },
+  {
+    "slug": "aligot",
+    "slugFr": "saucisse-de-toulouse-et-aligot",
+    "title": "Aligot",
+    "titleFr": "Saucisse de Toulouse et aligot"
+  },
+  {
+    "slug": "apple-pie",
+    "slugFr": "tarte-aux-pommes",
+    "title": "Apple Pie",
+    "titleFr": "Tarte aux pommes"
+  },
+  {
+    "slug": "artichauts-barigoule",
+    "slugFr": "artichauts-a-la-barigoule",
+    "title": "Artichauts Barigoule",
+    "titleFr": "Artichauts a la barigoule"
+  },
+  {
+    "slug": "axoa",
+    "slugFr": "axoa-de-veau",
+    "title": "Axoa",
+    "titleFr": "Axoa de veau"
+  },
+  {
+    "slug": "baba-au-rhum",
+    "slugFr": "baba-au-rhum",
+    "title": "Baba au Rhum",
+    "titleFr": "Baba au rhum"
+  },
+  {
+    "slug": "baeckeoffe",
+    "slugFr": "baeckeoffe",
+    "title": "Baeckeoffe",
+    "titleFr": "Baeckeoffe"
+  },
+  {
+    "slug": "baklava",
+    "slugFr": "baklava",
+    "title": "Baklava",
+    "titleFr": "Baklava"
+  },
+  {
+    "slug": "bangers-and-mash",
+    "slugFr": "saucisses-et-puree",
+    "title": "Bangers and Mash",
+    "titleFr": "Saucisses et puree"
+  },
+  {
+    "slug": "banoffee-pie",
+    "slugFr": "banoffee-pie",
+    "title": "Banoffee Pie",
+    "titleFr": "Banoffee pie"
+  },
+  {
+    "slug": "bearnaise",
+    "slugFr": "sauce-bearnaise",
+    "title": "Bearnaise",
+    "titleFr": "Sauce bearnaise"
+  },
+  {
+    "slug": "beef-bourguignon",
+    "slugFr": "boeuf-bourguignon",
+    "title": "Beef Bourguignon",
+    "titleFr": "Boeuf bourguignon"
+  },
+  {
+    "slug": "beef-burger",
+    "slugFr": "burger-de-boeuf",
+    "title": "Beef Burger",
+    "titleFr": "Burger de boeuf"
+  },
+  {
+    "slug": "beef-wellington",
+    "slugFr": "boeuf-wellington",
+    "title": "Beef Wellington",
+    "titleFr": "Boeuf Wellington"
+  },
+  {
+    "slug": "beurre-blanc",
+    "slugFr": "beurre-blanc",
+    "title": "Beurre Blanc",
+    "titleFr": "Beurre blanc"
+  },
+  {
+    "slug": "bibimbap",
+    "slugFr": "bibimbap",
+    "title": "Bibimbap",
+    "titleFr": "Bibimbap"
+  },
+  {
+    "slug": "bisque",
+    "slugFr": "bisque-de-langoustine",
+    "title": "Bisque",
+    "titleFr": "Bisque de langoustine"
+  },
+  {
+    "slug": "blanquette-de-veau",
+    "slugFr": "blanquette-de-veau",
+    "title": "Blanquette de Veau",
+    "titleFr": "Blanquette de veau"
+  },
+  {
+    "slug": "boeuf-bourguignon",
+    "slugFr": "boeuf-bourguignon-2",
+    "title": "Boeuf Bourguignon",
+    "titleFr": "Boeuf bourguignon"
+  },
+  {
+    "slug": "bolognese",
+    "slugFr": "ragu-bolonaise",
+    "title": "Bolognese",
+    "titleFr": "Ragu bolonaise"
+  },
+  {
+    "slug": "bourride",
+    "slugFr": "bourride-setoise",
+    "title": "Bourride",
+    "titleFr": "Bourride setoise"
+  },
+  {
+    "slug": "brandade",
+    "slugFr": "brandade-de-morue",
+    "title": "Brandade",
+    "titleFr": "Brandade de morue"
+  },
+  {
+    "slug": "brownies",
+    "slugFr": "brownies",
+    "title": "Brownies",
+    "titleFr": "Brownies"
+  },
+  {
+    "slug": "butter-chicken",
+    "slugFr": "poulet-au-beurre",
+    "title": "Butter Chicken",
+    "titleFr": "Poulet au beurre"
+  },
+  {
+    "slug": "cacio-e-pepe",
+    "slugFr": "cacio-e-pepe",
+    "title": "Cacio e Pepe",
+    "titleFr": "Cacio e pepe"
+  },
+  {
+    "slug": "caesar-salad",
+    "slugFr": "salade-cesar",
+    "title": "Caesar Salad",
+    "titleFr": "Salade Cesar"
+  },
+  {
+    "slug": "caneles",
+    "slugFr": "caneles-de-bordeaux",
+    "title": "Caneles",
+    "titleFr": "Caneles de Bordeaux"
+  },
+  {
+    "slug": "carbonara",
+    "slugFr": "carbonara",
+    "title": "Carbonara",
+    "titleFr": "Carbonara"
+  },
+  {
+    "slug": "carottes-vichy-glacees",
+    "slugFr": "carottes-vichy-glacees",
+    "title": "Carottes Vichy Glacees",
+    "titleFr": "Carottes Vichy Glacees"
+  },
+  {
+    "slug": "cassoulet",
+    "slugFr": "cassoulet",
+    "title": "Cassoulet",
+    "titleFr": "Cassoulet"
+  },
+  {
+    "slug": "celery-remoulade",
+    "slugFr": "celeri-remoulade",
+    "title": "Celery Remoulade",
+    "titleFr": "Celeri remoulade"
+  },
+  {
+    "slug": "ceviche",
+    "slugFr": "ceviche",
+    "title": "Ceviche",
+    "titleFr": "Ceviche"
+  },
+  {
+    "slug": "cheesecake",
+    "slugFr": "cheesecake",
+    "title": "Cheesecake",
+    "titleFr": "Cheesecake"
+  },
+  {
+    "slug": "chicken-chasseur",
+    "slugFr": "poulet-chasseur",
+    "title": "Chicken Chasseur",
+    "titleFr": "Poulet chasseur"
+  },
+  {
+    "slug": "chicken-parmesan",
+    "slugFr": "poulet-parmesan",
+    "title": "Chicken Parmesan",
+    "titleFr": "Poulet parmesan"
+  },
+  {
+    "slug": "chicken-tikka-masala",
+    "slugFr": "poulet-tikka-masala",
+    "title": "Chicken Tikka Masala",
+    "titleFr": "Poulet tikka masala"
+  },
+  {
+    "slug": "chilli-con-carne",
+    "slugFr": "chili-con-carne",
+    "title": "Chilli con Carne",
+    "titleFr": "Chili con carne"
+  },
+  {
+    "slug": "chocolate-fondant",
+    "slugFr": "moelleux-au-chocolat",
+    "title": "Chocolate Fondant",
+    "titleFr": "Moelleux au chocolat"
+  },
+  {
+    "slug": "chocolate-mousse",
+    "slugFr": "mousse-au-chocolat",
+    "title": "Chocolate Mousse",
+    "titleFr": "Mousse au chocolat"
+  },
+  {
+    "slug": "choucroute",
+    "slugFr": "choucroute-garnie",
+    "title": "Choucroute",
+    "titleFr": "Choucroute garnie"
+  },
+  {
+    "slug": "churros",
+    "slugFr": "churros",
+    "title": "Churros",
+    "titleFr": "Churros"
+  },
+  {
+    "slug": "clafoutis",
+    "slugFr": "clafoutis-aux-cerises",
+    "title": "Clafoutis",
+    "titleFr": "Clafoutis aux cerises"
+  },
+  {
+    "slug": "coquilles-saint-jacques",
+    "slugFr": "coquilles-saint-jacques",
+    "title": "Coquilles Saint-Jacques",
+    "titleFr": "Coquilles Saint-Jacques"
+  },
+  {
+    "slug": "couscous",
+    "slugFr": "couscous",
+    "title": "Couscous",
+    "titleFr": "Couscous"
+  },
+  {
+    "slug": "creme-caramel",
+    "slugFr": "creme-caramel",
+    "title": "Creme Caramel",
+    "titleFr": "Creme caramel"
+  },
+  {
+    "slug": "crepes-suzette",
+    "slugFr": "crepes-suzette",
+    "title": "Crepes Suzette",
+    "titleFr": "Crepes Suzette"
+  },
+  {
+    "slug": "croque-madame",
+    "slugFr": "croque-madame",
+    "title": "Croque Madame",
+    "titleFr": "Croque madame"
+  },
+  {
+    "slug": "croque-monsieur",
+    "slugFr": "croque-monsieur",
+    "title": "Croque Monsieur",
+    "titleFr": "Croque monsieur"
+  },
+  {
+    "slug": "daube-de-boeuf",
+    "slugFr": "daube-de-boeuf",
+    "title": "Daube de Boeuf",
+    "titleFr": "Daube de boeuf"
+  },
+  {
+    "slug": "duck-a-l-orange",
+    "slugFr": "canard-a-l-orange",
+    "title": "Duck a l'Orange",
+    "titleFr": "Canard a l'orange"
+  },
+  {
+    "slug": "duck-confit",
+    "slugFr": "confit-de-canard",
+    "title": "Duck Confit",
+    "titleFr": "Confit de canard"
+  },
+  {
+    "slug": "dumplings",
+    "slugFr": "raviolis-vapeur",
+    "title": "Dumplings",
+    "titleFr": "Raviolis vapeur"
+  },
+  {
+    "slug": "eclairs",
+    "slugFr": "eclairs-au-cafe",
+    "title": "Eclairs",
+    "titleFr": "Eclairs au cafe"
+  },
+  {
+    "slug": "eggplant-parmigiana",
+    "slugFr": "aubergine-a-la-parmiggiana",
+    "title": "Eggplant Parmigiana",
+    "titleFr": "Aubergine a la parmiggiana"
+  },
+  {
+    "slug": "eggs-benedict",
+    "slugFr": "oeufs-benedict",
+    "title": "Eggs Benedict",
+    "titleFr": "Oeufs Benedict"
+  },
+  {
+    "slug": "endives-au-jambon",
+    "slugFr": "endives-braisees",
+    "title": "Endives au Jambon",
+    "titleFr": "Endives braisees"
+  },
+  {
+    "slug": "entrecote-bordelaise",
+    "slugFr": "entrecote-bordelaise",
+    "title": "Entrecote Bordelaise",
+    "titleFr": "Entrecote bordelaise"
+  },
+  {
+    "slug": "escargots",
+    "slugFr": "escargots-de-bourgogne",
+    "title": "Escargots",
+    "titleFr": "Escargots de Bourgogne"
+  },
+  {
+    "slug": "eton-mess",
+    "slugFr": "eton-mess",
+    "title": "Eton Mess",
+    "titleFr": "Eton mess"
+  },
+  {
+    "slug": "falafel",
+    "slugFr": "falafel",
+    "title": "Falafel",
+    "titleFr": "Falafel"
+  },
+  {
+    "slug": "far-breton",
+    "slugFr": "far-breton",
+    "title": "Far Breton",
+    "titleFr": "Far breton"
+  },
+  {
+    "slug": "fish-pie",
+    "slugFr": "fish-pie",
+    "title": "Fish Pie",
+    "titleFr": "Fish pie"
+  },
+  {
+    "slug": "fish-soup",
+    "slugFr": "soupe-de-poisson",
+    "title": "Fish Soup",
+    "titleFr": "Soupe de poisson"
+  },
+  {
+    "slug": "foie-gras-terrine",
+    "slugFr": "terrine-de-foie-gras",
+    "title": "Foie Gras Terrine",
+    "titleFr": "Terrine de foie gras"
+  },
+  {
+    "slug": "french-omelette",
+    "slugFr": "omelette-aux-fines-herbes",
+    "title": "French Omelette",
+    "titleFr": "Omelette aux fines herbes"
+  },
+  {
+    "slug": "french-onion-soup",
+    "slugFr": "soupe-a-l-oignon",
+    "title": "French Onion Soup",
+    "titleFr": "Soupe a l'oignon"
+  },
+  {
+    "slug": "french-toast",
+    "slugFr": "pain-perdu",
+    "title": "French Toast",
+    "titleFr": "Pain perdu"
+  },
+  {
+    "slug": "fried-chicken",
+    "slugFr": "poulet-frit",
+    "title": "Fried Chicken",
+    "titleFr": "Poulet frit"
+  },
+  {
+    "slug": "fried-rice",
+    "slugFr": "riz-saute",
+    "title": "Fried Rice",
+    "titleFr": "Riz saute"
+  },
+  {
+    "slug": "frites",
+    "slugFr": "frites-de-bistrot",
+    "title": "Frites",
+    "titleFr": "Frites de bistrot"
+  },
+  {
+    "slug": "full-english",
+    "slugFr": "full-english",
+    "title": "Full English",
+    "titleFr": "Full English"
+  },
+  {
+    "slug": "galette-complete",
+    "slugFr": "galette-complete",
+    "title": "Galette Complete",
+    "titleFr": "Galette complete"
+  },
+  {
+    "slug": "gambas-al-ajillo",
+    "slugFr": "gambas-al-ajillo",
+    "title": "Gambas al Ajillo",
+    "titleFr": "Gambas al ajillo"
+  },
+  {
+    "slug": "gazpacho",
+    "slugFr": "gazpacho",
+    "title": "Gazpacho",
+    "titleFr": "Gazpacho"
+  },
+  {
+    "slug": "gigot-de-sept-heures",
+    "slugFr": "gigot-de-sept-heures",
+    "title": "Gigot de Sept Heures",
+    "titleFr": "Gigot de sept heures"
+  },
+  {
+    "slug": "gnocchi",
+    "slugFr": "gnocchi",
+    "title": "Gnocchi",
+    "titleFr": "Gnocchi"
+  },
+  {
+    "slug": "gougeres",
+    "slugFr": "gougeres-au-comte",
+    "title": "Gougeres",
+    "titleFr": "Gougeres au Comte"
+  },
+  {
+    "slug": "goulash",
+    "slugFr": "goulash",
+    "title": "Goulash",
+    "titleFr": "Goulash"
+  },
+  {
+    "slug": "gratin-dauphinois",
+    "slugFr": "gratin-dauphinois",
+    "title": "Gratin Dauphinois",
+    "titleFr": "Gratin dauphinois"
+  },
+  {
+    "slug": "green-curry",
+    "slugFr": "curry-vert",
+    "title": "Green Curry",
+    "titleFr": "Curry vert"
+  },
+  {
+    "slug": "hachis-parmentier",
+    "slugFr": "hachis-parmentier",
+    "title": "Hachis Parmentier",
+    "titleFr": "Hachis parmentier"
+  },
+  {
+    "slug": "hollandaise",
+    "slugFr": "sauce-hollandaise",
+    "title": "Hollandaise",
+    "titleFr": "Sauce hollandaise"
+  },
+  {
+    "slug": "homard-thermidor",
+    "slugFr": "homard-thermidor",
+    "title": "Homard Thermidor",
+    "titleFr": "Homard Thermidor"
+  },
+  {
+    "slug": "hummus",
+    "slugFr": "houmous",
+    "title": "Hummus",
+    "titleFr": "Houmous"
+  },
+  {
+    "slug": "ile-flottante",
+    "slugFr": "iles-flottantes",
+    "title": "Ile Flottante",
+    "titleFr": "Iles flottantes"
+  },
+  {
+    "slug": "katsu-curry",
+    "slugFr": "curry-katsu",
+    "title": "Katsu Curry",
+    "titleFr": "Curry katsu"
+  },
+  {
+    "slug": "kimchi",
+    "slugFr": "kimchi",
+    "title": "Kimchi",
+    "titleFr": "Kimchi"
+  },
+  {
+    "slug": "kouign-amann",
+    "slugFr": "kouign-amann",
+    "title": "Kouign-Amann",
+    "titleFr": "Kouign-amann"
+  },
+  {
+    "slug": "laksa",
+    "slugFr": "laksa",
+    "title": "Laksa",
+    "titleFr": "Laksa"
+  },
+  {
+    "slug": "lamb-tagine",
+    "slugFr": "tajine-d-agneau",
+    "title": "Lamb Tagine",
+    "titleFr": "Tajine d'agneau"
+  },
+  {
+    "slug": "lancashire-hotpot",
+    "slugFr": "lancashire-hotpot",
+    "title": "Lancashire Hotpot",
+    "titleFr": "Lancashire hotpot"
+  },
+  {
+    "slug": "lapin-a-la-moutarde",
+    "slugFr": "lapin-a-la-moutarde",
+    "title": "Lapin a la Moutarde",
+    "titleFr": "Lapin a la moutarde"
+  },
+  {
+    "slug": "lemon-tart",
+    "slugFr": "tarte-au-citron",
+    "title": "Lemon Tart",
+    "titleFr": "Tarte au citron"
+  },
+  {
+    "slug": "lotte-a-l-armoricaine",
+    "slugFr": "lotte-a-l-armoricaine",
+    "title": "Lotte a l'Armoricaine",
+    "titleFr": "Lotte a l'Armoricaine"
+  },
+  {
+    "slug": "loup-de-mer",
+    "slugFr": "loup-de-mer-en-croute-de-sel",
+    "title": "Loup de Mer",
+    "titleFr": "Loup de mer en croute de sel"
+  },
+  {
+    "slug": "macaroni-cheese",
+    "slugFr": "macaroni-au-fromage",
+    "title": "Macaroni Cheese",
+    "titleFr": "Macaroni au fromage"
+  },
+  {
+    "slug": "madeleines",
+    "slugFr": "madeleines",
+    "title": "Madeleines",
+    "titleFr": "Madeleines"
+  },
+  {
+    "slug": "magret-de-canard",
+    "slugFr": "magret-de-canard",
+    "title": "Magret de Canard",
+    "titleFr": "Magret de canard"
+  },
+  {
+    "slug": "mamaliga",
+    "slugFr": "mamaliga",
+    "title": "Mamaliga",
+    "titleFr": "Mamaliga"
+  },
+  {
+    "slug": "massaman-curry",
+    "slugFr": "curry-massaman",
+    "title": "Massaman Curry",
+    "titleFr": "Curry massaman"
+  },
+  {
+    "slug": "mille-feuille",
+    "slugFr": "mille-feuille",
+    "title": "Mille-feuille",
+    "titleFr": "Mille-feuille"
+  },
+  {
+    "slug": "moules-mariniere",
+    "slugFr": "moules-marinieres",
+    "title": "Moules Mariniere",
+    "titleFr": "Moules marinieres"
+  },
+  {
+    "slug": "moussaka",
+    "slugFr": "moussaka",
+    "title": "Moussaka",
+    "titleFr": "Moussaka"
+  },
+  {
+    "slug": "nasi-goreng",
+    "slugFr": "nasi-goreng",
+    "title": "Nasi Goreng",
+    "titleFr": "Nasi goreng"
+  },
+  {
+    "slug": "navarin-d-agneau",
+    "slugFr": "navarin-d-agneau",
+    "title": "Navarin d'Agneau",
+    "titleFr": "Navarin d'agneau"
+  },
+  {
+    "slug": "oeufs-en-meurette",
+    "slugFr": "oeufs-en-meurette",
+    "title": "Oeufs en Meurette",
+    "titleFr": "Oeufs en meurette"
+  },
+  {
+    "slug": "paella",
+    "slugFr": "paella",
+    "title": "Paella",
+    "titleFr": "Paella"
+  },
+  {
+    "slug": "pancakes",
+    "slugFr": "pancakes",
+    "title": "Pancakes",
+    "titleFr": "Pancakes"
+  },
+  {
+    "slug": "panna-cotta",
+    "slugFr": "panna-cotta",
+    "title": "Panna Cotta",
+    "titleFr": "Panna cotta"
+  },
+  {
+    "slug": "paris-brest",
+    "slugFr": "paris-brest",
+    "title": "Paris-Brest",
+    "titleFr": "Paris-Brest"
+  },
+  {
+    "slug": "patatas-bravas",
+    "slugFr": "patatas-bravas",
+    "title": "Patatas Bravas",
+    "titleFr": "Patatas bravas"
+  },
+  {
+    "slug": "peach-melba",
+    "slugFr": "peche-melba",
+    "title": "Peach Melba",
+    "titleFr": "Peche Melba"
+  },
+  {
+    "slug": "pesto",
+    "slugFr": "pesto",
+    "title": "Pesto",
+    "titleFr": "Pesto"
+  },
+  {
+    "slug": "petit-sale-aux-lentilles",
+    "slugFr": "petit-sale-aux-lentilles",
+    "title": "Petit Sale aux Lentilles",
+    "titleFr": "Petit sale aux lentilles"
+  },
+  {
+    "slug": "pho",
+    "slugFr": "pho",
+    "title": "Pho",
+    "titleFr": "Pho"
+  },
+  {
+    "slug": "pierogi",
+    "slugFr": "pierogi",
+    "title": "Pierogi",
+    "titleFr": "Pierogi"
+  },
+  {
+    "slug": "pissaladiere",
+    "slugFr": "pissaladiere",
+    "title": "Pissaladiere",
+    "titleFr": "Pissaladiere"
+  },
+  {
+    "slug": "poires-belle-helene",
+    "slugFr": "poires-belle-helene",
+    "title": "Poires Belle Helene",
+    "titleFr": "Poires Belle Helene"
+  },
+  {
+    "slug": "poke-bowl",
+    "slugFr": "poke-bowl",
+    "title": "Poke Bowl",
+    "titleFr": "Poke bowl"
+  },
+  {
+    "slug": "pommes-puree",
+    "slugFr": "pommes-puree",
+    "title": "Pommes Puree",
+    "titleFr": "Pommes puree"
+  },
+  {
+    "slug": "pot-au-feu",
+    "slugFr": "pot-au-feu",
+    "title": "Pot-au-Feu",
+    "titleFr": "Pot-au-feu"
+  },
+  {
+    "slug": "poule-au-pot",
+    "slugFr": "poule-au-pot",
+    "title": "Poule au Pot",
+    "titleFr": "Poule au pot"
+  },
+  {
+    "slug": "poulet-basquaise",
+    "slugFr": "poulet-basquaise",
+    "title": "Poulet Basquaise",
+    "titleFr": "Poulet basquaise"
+  },
+  {
+    "slug": "profiteroles",
+    "slugFr": "profiteroles",
+    "title": "Profiteroles",
+    "titleFr": "Profiteroles"
+  },
+  {
+    "slug": "quenelles-de-brochet",
+    "slugFr": "quenelles-de-brochet",
+    "title": "Quenelles de Brochet",
+    "titleFr": "Quenelles de brochet"
+  },
+  {
+    "slug": "quiche-lorraine",
+    "slugFr": "quiche-lorraine",
+    "title": "Quiche Lorraine",
+    "titleFr": "Quiche lorraine"
+  },
+  {
+    "slug": "raie-grenobloise",
+    "slugFr": "aile-de-raie-grenobloise",
+    "title": "Raie Grenobloise",
+    "titleFr": "Aile de raie grenobloise"
+  },
+  {
+    "slug": "ramen",
+    "slugFr": "ramen",
+    "title": "Ramen",
+    "titleFr": "Ramen"
+  },
+  {
+    "slug": "ravioli",
+    "slugFr": "ravioli",
+    "title": "Ravioli",
+    "titleFr": "Ravioli"
+  },
+  {
+    "slug": "risotto",
+    "slugFr": "risotto",
+    "title": "Risotto",
+    "titleFr": "Risotto"
+  },
+  {
+    "slug": "riz-au-lait",
+    "slugFr": "riz-au-lait",
+    "title": "Riz au Lait",
+    "titleFr": "Riz au lait"
+  },
+  {
+    "slug": "roast-chicken",
+    "slugFr": "poulet-roti",
+    "title": "Roast Chicken",
+    "titleFr": "Poulet roti"
+  },
+  {
+    "slug": "rognons-de-veau",
+    "slugFr": "rognons-de-veau-a-la-moutarde",
+    "title": "Rognons de Veau",
+    "titleFr": "Rognons de veau a la moutarde"
+  },
+  {
+    "slug": "salade-lyonnaise",
+    "slugFr": "salade-lyonnaise",
+    "title": "Salade Lyonnaise",
+    "titleFr": "Salade lyonnaise"
+  },
+  {
+    "slug": "salade-nicoise",
+    "slugFr": "salade-nicoise",
+    "title": "Salade Nicoise",
+    "titleFr": "Salade nicoise"
+  },
+  {
+    "slug": "saltimbocca",
+    "slugFr": "saltimbocca",
+    "title": "Saltimbocca",
+    "titleFr": "Saltimbocca"
+  },
+  {
+    "slug": "sarma",
+    "slugFr": "sarmale",
+    "title": "Sarma",
+    "titleFr": "Sarmale"
+  },
+  {
+    "slug": "schnitzel",
+    "slugFr": "escalope-viennoise",
+    "title": "Schnitzel",
+    "titleFr": "Escalope viennoise"
+  },
+  {
+    "slug": "scones",
+    "slugFr": "scones",
+    "title": "Scones",
+    "titleFr": "Scones"
+  },
+  {
+    "slug": "scotch-egg",
+    "slugFr": "scotch-egg",
+    "title": "Scotch Egg",
+    "titleFr": "Scotch egg"
+  },
+  {
+    "slug": "seafood-linguine",
+    "slugFr": "linguine-aux-fruits-de-mer",
+    "title": "Seafood Linguine",
+    "titleFr": "Linguine aux fruits de mer"
+  },
+  {
+    "slug": "shakshuka",
+    "slugFr": "shakshuka",
+    "title": "Shakshuka",
+    "titleFr": "Shakshuka"
+  },
+  {
+    "slug": "shepherd-s-pie",
+    "slugFr": "hachis-parmentier-2",
+    "title": "Shepherd's Pie",
+    "titleFr": "Hachis parmentier"
+  },
+  {
+    "slug": "sole-meuniere",
+    "slugFr": "sole-meuniere",
+    "title": "Sole Meuniere",
+    "titleFr": "Sole meuniere"
+  },
+  {
+    "slug": "souffle-au-grand-marnier",
+    "slugFr": "souffle-chaud-au-grand-marnier",
+    "title": "Souffle au Grand Marnier",
+    "titleFr": "Souffle chaud au Grand Marnier"
+  },
+  {
+    "slug": "soupe-au-pistou",
+    "slugFr": "soupe-au-pistou",
+    "title": "Soupe au Pistou",
+    "titleFr": "Soupe au pistou"
+  },
+  {
+    "slug": "steak-au-poivre",
+    "slugFr": "steak-au-poivre",
+    "title": "Steak au Poivre",
+    "titleFr": "Steak au poivre"
+  },
+  {
+    "slug": "steak-tartare",
+    "slugFr": "steak-tartare",
+    "title": "Steak Tartare",
+    "titleFr": "Steak tartare"
+  },
+  {
+    "slug": "sticky-toffee-pudding",
+    "slugFr": "sticky-toffee-pudding",
+    "title": "Sticky Toffee Pudding",
+    "titleFr": "Sticky toffee pudding"
+  },
+  {
+    "slug": "sunday-roast-chicken",
+    "slugFr": "poulet-roti-du-dimanche",
+    "title": "Sunday Roast Chicken",
+    "titleFr": "Poulet roti du dimanche"
+  },
+  {
+    "slug": "sushi",
+    "slugFr": "sushi",
+    "title": "Sushi",
+    "titleFr": "Sushi"
+  },
+  {
+    "slug": "tacos",
+    "slugFr": "tacos",
+    "title": "Tacos",
+    "titleFr": "Tacos"
+  },
+  {
+    "slug": "tarte-aux-fraises",
+    "slugFr": "tarte-aux-fraises",
+    "title": "Tarte aux Fraises",
+    "titleFr": "Tarte aux fraises"
+  },
+  {
+    "slug": "tarte-normande",
+    "slugFr": "tarte-normande",
+    "title": "Tarte Normande",
+    "titleFr": "Tarte normande"
+  },
+  {
+    "slug": "tarte-tatin",
+    "slugFr": "tarte-tatin",
+    "title": "Tarte Tatin",
+    "titleFr": "Tarte tatin"
+  },
+  {
+    "slug": "tartiflette",
+    "slugFr": "tartiflette",
+    "title": "Tartiflette",
+    "titleFr": "Tartiflette"
+  },
+  {
+    "slug": "tempura",
+    "slugFr": "tempura",
+    "title": "Tempura",
+    "titleFr": "Tempura"
+  },
+  {
+    "slug": "tian-provencal",
+    "slugFr": "tian-provencal",
+    "title": "Tian Provencal",
+    "titleFr": "Tian provencal"
+  },
+  {
+    "slug": "tiramisu",
+    "slugFr": "tiramisu",
+    "title": "Tiramisu",
+    "titleFr": "Tiramisu"
+  },
+  {
+    "slug": "toad-in-the-hole",
+    "slugFr": "toad-in-the-hole",
+    "title": "Toad in the Hole",
+    "titleFr": "Toad in the hole"
+  },
+  {
+    "slug": "tom-yum",
+    "slugFr": "tom-yum",
+    "title": "Tom Yum",
+    "titleFr": "Tom yum"
+  },
+  {
+    "slug": "tomates-farcies",
+    "slugFr": "tomates-farcies",
+    "title": "Tomates Farcies",
+    "titleFr": "Tomates farcies"
+  },
+  {
+    "slug": "tonkatsu",
+    "slugFr": "tonkatsu",
+    "title": "Tonkatsu",
+    "titleFr": "Tonkatsu"
+  },
+  {
+    "slug": "tortilla-espanola",
+    "slugFr": "tortilla-espanola",
+    "title": "Tortilla Espanola",
+    "titleFr": "Tortilla espanola"
+  },
+  {
+    "slug": "tournedos-rossini",
+    "slugFr": "tournedos-rossini",
+    "title": "Tournedos Rossini",
+    "titleFr": "Tournedos Rossini"
+  },
+  {
+    "slug": "trifle",
+    "slugFr": "trifle",
+    "title": "Trifle",
+    "titleFr": "Trifle"
+  },
+  {
+    "slug": "trout-amandine",
+    "slugFr": "truite-aux-amandes",
+    "title": "Trout Amandine",
+    "titleFr": "Truite aux amandes"
+  },
+  {
+    "slug": "veal-marengo",
+    "slugFr": "saute-de-veau-marengo",
+    "title": "Veal Marengo",
+    "titleFr": "Saute de veau Marengo"
+  },
+  {
+    "slug": "vichyssoise",
+    "slugFr": "vichyssoise",
+    "title": "Vichyssoise",
+    "titleFr": "Vichyssoise"
+  },
+  {
+    "slug": "yorkshire-pudding",
+    "slugFr": "yorkshire-pudding",
+    "title": "Yorkshire Pudding",
+    "titleFr": "Yorkshire pudding"
+  }
+]

@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Terms and Conditions',
   description:
     "Terms for using the Table d'Adrian website and for booking a private chef experience.",
-  alternates: { canonical: '/terms' },
+  alternates: { canonical: '/terms', languages: { en: '/terms', fr: '/fr/conditions', 'x-default': '/terms' } },
 }
 
 export default function TermsPage() {
@@ -35,7 +35,7 @@ export default function TermsPage() {
       <ul>
         <li>An enquiry is not a confirmed booking until we write back with a date, a menu outline and a price.</li>
         <li>A deposit may be required to hold the date. The balance is due as stated on the quote.</li>
-        <li>You must tell us about allergies and dietary needs in writing before we shop.</li>
+        <li>Tell us about dietary preferences and allergies in writing before we shop. We accommodate them on request.</li>
         <li>We cook in your kitchen unless we agree another venue. The kitchen must be safe and legal to use.</li>
       </ul>
 

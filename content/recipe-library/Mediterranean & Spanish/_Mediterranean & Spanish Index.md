@@ -1,0 +1,167 @@
+---
+tags: [recipe-hub, hub]
+---
+
+# 🌊 Mediterranean & Spanish — Index
+
+> [!success] 150 recipes in this collection. 🌱 vegan · 🥬 vegetarian · ⓖ gluten-free
+
+## Starters
+- [[Ajoblanco of Marcona Almonds with Green Grapes and Dill Oil]] 🌱
+- [[Boquerones en Vinagre with Green Apple and Dill Oil]] ⓖ
+- [[Burrata with Grilled Apricots, Lavender Honey and Pistachio Dukkah]] 🥬 ⓖ
+- [[Charred Leeks with Romesco, Egg Mimosa and Hazelnut Picada]] 🥬 ⓖ
+- [[Chilled Cucumber and Yoghurt Soup with Ouzo, Dill and Prawn Tartare]] ⓖ
+- [[Chorizo and Cider Cazuela, Charred Spring Onion]] ⓖ
+- [[Clams à Bulhão Pato with Coriander and White Wine]] ⓖ
+- [[Courgette Carpaccio with Preserved Lemon, Pine Nuts and Pecorino]] 🥬 ⓖ
+- [[Courgette and Feta Fritters with Yoghurt-Mint Sauce]] 🥬
+- [[Dolmades of Chard with Herbed Rice and Avgolemono]] 🥬 ⓖ
+- [[Endive, Blood Orange and Anchovy Salad with Black Olive Caramel]] ⓖ
+- [[Fleurs de Courgette Beignets, Brousse and Lemon Zest]] 🥬
+- [[Frisee, Fig and Duck Prosciutto Salad with Banyuls Dressing]] ⓖ
+- [[Gambas al Ajillo with Fino Sherry and Lemon Confit]] ⓖ
+- [[Gazpacho Andaluz with Cherry Tomato Confit and Basil]] 🌱
+- [[Grilled Asparagus with Romesco and Crispy Jamon Shards]] ⓖ
+- [[Grilled Octopus Mezze with Ladolemono and Rigani]] ⓖ
+- [[Halloumi Seared with Ouzo-Glazed Figs and Toasted Fennel Seed]] 🥬 ⓖ
+- [[Melon, Cured Ham and Basil with Cava Vinaigrette]] ⓖ
+- [[Nicoise Artichoke Barigoule Salad with Lemon and Soft Herbs]] 🌱 ⓖ
+- [[Petits Farcis Niçois, Summer Vegetables with Herbed Stuffing]]
+- [[Piquillo Peppers Stuffed with Brandade, Piquillo Coulis]] ⓖ
+- [[Prawn Saganaki in Ouzo-Tomato with Feta and Chilli]] ⓖ
+- [[Pulpo a la Gallega on Smoked Paprika Potato Foam]] ⓖ
+- [[Saganaki Cheese Flambéed with Metaxa and Lemon]] 🥬
+- [[Salmorejo Cordobés with Ibérico Ham and Grated Egg]] 🥬
+- [[Salt Cod Croquetas with Saffron Aioli]]
+- [[Sea Bass Crudo with Gazpacho Water, Green Almonds and Basil Oil]] ⓖ
+- [[Seared Scallop Salad with Blood Orange, Fennel and Pastis Beurre Blanc Split]] ⓖ
+- [[Tomates Anciennes with Whipped Brousse, Olive Soil and Aged Balsamic]] 🥬 ⓖ
+- [[Tomato-Watermelon Gazpacho with Feta Snow and Olive Crumble]] 🥬 ⓖ
+- [[Tortilla Española with Slow-Confit Onions, Jugosa Centre]] 🥬 ⓖ
+- [[Whipped Feta with Charred Honey and Urfa Chilli]] 🥬 ⓖ
+
+## Mains
+- [[Arros Negre de Sepia amb Allioli d'Api, Cuttlefish Rice with Celery Aioli]] ⓖ
+- [[Arroz Caldoso de Bogavante, Brothy Lobster Rice]] ⓖ
+- [[Arroz Meloso of Duck, Artichoke and Fino]] ⓖ
+- [[Arroz Negro with Squid Ink, Aioli and Chargrilled Baby Squid]] ⓖ
+- [[Arroz a Banda with Saffron Fumet and Ali-Oli de Mortero]] ⓖ
+- [[Arroz al Horno con Costra, Oven Rice with Egg Crust and Morcilla]] ⓖ
+- [[Arroz de Marisco, Soupy Portuguese Seafood Rice]] ⓖ
+- [[Atun Encebollado with PX Onions and Crushed White Beans]] ⓖ
+- [[Bacalao al Pil Pil, Four-Ingredient Emulsion]] ⓖ
+- [[Bogavante a la Gallega, Grilled Lobster with Pimenton Oil and Kombu Butter Potatoes]] ⓖ
+- [[Bouillabaisse du Chef with Rouille and Saffron Potatoes]] ⓖ
+- [[Bourride of Monkfish with Aioli-Mounted Broth and Fennel Confit]] ⓖ
+- [[Braised Giant Beans Gigantes Plaki with Tomato, Honey and Dill]] 🌱 ⓖ
+- [[Bulgur-Stuffed Tomatoes Yemista-Style with Pine Nuts and Currants]] 🌱
+- [[Caldero Murciano, Grey Mullet Rice with Ñora and Garlic Fish Broth]] ⓖ
+- [[Cataplana de Marisco with Chourico, Prawns and Coriander]] ⓖ
+- [[Chicken Riganato with Lemon Potatoes and Crispy Kefalotyri]] ⓖ
+- [[Chickpea, Spinach and Chorizo Soup-Salad with Soft Egg]] ⓖ
+- [[Courgette, Pistachio and Herb Gemista Orzotto with Preserved Lemon]] 🥬
+- [[Cretan Dakos with Heirloom Tomato Pulp, Mizithra and Caper Berries]] 🥬
+- [[Daurade en Croute de Sel with Citrus Beurre Blanc]] ⓖ
+- [[Duck Breast a la Provencale with Lavender Honey, Figs and Panisse]] ⓖ
+- [[Espardenyes-Style Squid and White Bean Cassoulet of the Costa Brava]] ⓖ
+- [[Esqueixada de Bacallà, Catalan Shredded Salt Cod Salad]] ⓖ
+- [[Fattoush-Style Riviera Salad with Crisped Socca and Sumac]] 🌱 ⓖ
+- [[Fideua de Gandia with Prawns, Monkfish and Burnt Aioli]]
+- [[Gemista-Stuffed Calamari with Rice, Currants and Saffron Yoghurt]] ⓖ
+- [[Grand Aioli of Poached Cod, Summer Vegetables and Whelks]] ⓖ
+- [[Greek Grain Bowl with Freekeh, Grilled Courgette and Avgotaraho Dressing]]
+- [[Grilled Sardine Escabeche on Toast with Shaved Fennel]]
+- [[Grilled Whole Sea Bass Flambeed with Pastis and Dried Fennel]] ⓖ
+- [[Halibut Plaki Baked over Tomatoes, Leeks and Currants]] ⓖ
+- [[Herb-Loaded Tabbouleh-Style Bulgur with Grilled Halloumi and Aleppo Oil]] 🥬
+- [[Horiatiki with Barrel Feta, Smashed Cucumber and Rigani Oil]] 🥬 ⓖ
+- [[Kakavia, Greek Fisherman Soup with Whole Fish and Lemon Oil]] ⓖ
+- [[Lamb Kleftiko in Parchment with Graviera and Mountain Herbs]] ⓖ
+- [[Loup en Papillote with Fennel, Tomato Confit and Vermouth]] ⓖ
+- [[Marmite du Pecheur, Saffron Fish Stew with Rouille Croutons]]
+- [[Merluza en Salsa Verde with Clams and Peas]]
+- [[Monkfish a la Plancha with Romesco Nero and Charred Baby Gem]] ⓖ
+- [[Moussaka with Aubergine Confit and Yoghurt-Bechamel Cloud]]
+- [[Octopus Stifado with Pearl Onions, Red Wine and Sweet Spice]] ⓖ
+- [[Octopus, Potato and Green Olive Salad with Smoked Paprika Vinaigrette]] ⓖ
+- [[Paella de Marisco with Sofrito Reduction and Socarrat]] ⓖ
+- [[Pan Bagnat, the Pressed Nicoise Sandwich]]
+- [[Panzanella Provencal with Grilled Peach, Burrata and Tapenade Crumb]] 🥬
+- [[Polvo a Lagareiro, Roast Octopus with Smashed Punched Potatoes]] ⓖ
+- [[Pork Secreto with Membrillo Jus, Charred Padron and Almond Migas]]
+- [[Prawn Youvetsi with Orzo, Ouzo and Kefalotyri]]
+- [[Provencal Fish Quenelles in Saffron Shellfish Bisque]]
+- [[Rabbit a la Cazadora with Rosemary, Olives and Garnacha]] ⓖ
+- [[Rainbow Chard, Apricot and Manouri Salad with Warm Sherry-Bacon Vinaigrette]] ⓖ
+- [[Red Mullet with Sauce Vierge and Crushed Ratte Potatoes]] ⓖ
+- [[Remojon Granadino, Orange, Salt Cod and Black Olive Salad]] ⓖ
+- [[Salade Nicoise with Seared Rare Tuna and Anchovy Vinaigrette]] ⓖ
+- [[Sardinas Asadas with Escalivada and Smoked Salt]] ⓖ
+- [[Sea Bream Ceviche-Style Aguachile Verde with Cucumber and Green Olive]] ⓖ
+- [[Seared Tuna Nicoise Steak Frites with Olive-Anchovy Butter]]
+- [[Soutzoukakia Smyrneika, Cumin Meatballs in Wine-Tomato Sauce]]
+- [[Stuffed Squid Provencale with Swiss Chard, Ratatouille Jus]]
+- [[Suquet de Peix with Potatoes, Allioli and Toasted Almond Picada]] ⓖ
+- [[Swordfish Souvlaki with Ladolemono, Pita and Smoked Tzatziki]]
+- [[Tuna Empedrat, White Bean and Tomato Salad from the Catalan Coast]] ⓖ
+- [[Turbot with Saffron Beurre Blanc and Sea Fennel]] ⓖ
+- [[Txangurro-Style Stuffed Crab Gratin with Brandy and Choricero]]
+- [[Vegetable Paella de la Huerta with Saffron and Rosemary Smoke]] 🌱 ⓖ
+- [[Warm Lentil and Mackerel Salad with Xeres Dressing]] ⓖ
+- [[Watermelon, Feta and Charred Halloumi Salad with Mint and Lime]] 🥬 ⓖ
+- [[Whole Grilled Fagri with Ladolemono and Charred Lemon]] ⓖ
+- [[Xató Salad of Escarole, Salt Cod and Romesco Xatonada]]
+- [[Zarzuela de Mariscos, Catalan Shellfish Operetta]]
+
+## Sides
+- [[Classic Tzatziki with Cucumber Pressed in Ouzo Salt]] 🥬 ⓖ
+- [[Ensaladilla Rusa with Smoked Tuna Belly and Piparra]] ⓖ
+- [[Espinacas con Garbanzos, Cumin and Fried Bread Picada]] 🌱
+- [[Patatas Bravas, Two Sauces, Crisp Twice-Cooked Cubes]] 🥬
+- [[Roasted Pepper and Anchovy Salad with Sherry Caramel and Marjoram]] ⓖ
+- [[Santorini Fava with Caper Leaves and Charred Onion Petals]] 🌱 ⓖ
+- [[Smoked Aubergine Melitzanosalata with Walnut and Pomegranate]] 🌱 ⓖ
+- [[Taramasalata Blonde with Bottarga Snow]]
+- [[Trempo Mallorquin Chopped Salad with Capers and Herbs]] 🌱 ⓖ
+
+## Snacks
+- [[Anchoïade with Charred Baby Vegetables]] ⓖ
+- [[Gilda Skewers with Smoked Anchovy and Piparra]] ⓖ
+- [[Jamón Croquetas de Ibérico with Membrillo Glaze]]
+- [[Marinated Kalamata Olives with Orange, Rosemary and Warm Fennel]] 🌱 ⓖ
+- [[Mushroom and Idiazábal Pintxo on Garlic Toast, Egg Yolk Cream]] 🥬
+- [[Pan con Tomate, Aged Sherry Vinegar and Anchovy Butter]] 🥬
+- [[Peixinhos da Horta, Green Bean Tempura with Vinho Verde Escabeche Dip]] 🌱
+- [[Pimientos de Padrón with Smoked Salt and Idiazábal Shavings]] 🥬 ⓖ
+- [[Pintxo of Seared Txistorra, Cider Apple and Sheep Cheese]]
+- [[Pissaladière Squares with 3-Hour Onions and Niçois Olives]]
+- [[Salt Cod Pastéis de Bacalhau with Lemon-Caper Mayonnaise]]
+- [[Socca Chickpea Pancake with Rosemary and Black Pepper]] 🌱 ⓖ
+- [[Spanakopita Cigars with Three Greens and Brown Butter Phyllo]] 🥬
+- [[Tapenade Noire with Confit Citrus and Marcona Almonds]] 🌱 ⓖ
+
+## Desserts
+- [[Arroz con Leche Asturiano with Salted Caramel Skin]] 🥬 ⓖ
+- [[Baklava Cigars with Pistachio, Mastic and Bitter Orange]] 🥬
+- [[Chocolate-Olive Oil Mousse with Orange, Sea Salt and Picual Threads]] 🥬 ⓖ
+- [[Churros with Thick Drinking Chocolate and Orange Sugar]] 🥬
+- [[Crema Catalana with Burnt Sugar and Orange Blossom]] 🥬 ⓖ
+- [[Fig and Frangipane Galette with Anise and Pine Nuts]] 🥬
+- [[Frozen Greek Yoghurt and Sour Cherry Swirl with Olive Oil Crumble]] 🥬
+- [[Galaktoboureko with Crackling Phyllo and Lemon Syrup]] 🥬
+- [[Goat Cheese and Honey Tart with Rosemary and Walnut Crust]] 🥬
+- [[Lavender and Honey Panna Cotta with Apricot Compote]] 🥬 ⓖ
+- [[Lemon Sorbet Flooded with Cava and Basil Oil Pearls]] 🌱 ⓖ
+- [[Loukoumades with Thyme Honey, Walnut Praline and Yoghurt Sorbet]] 🥬
+- [[Melon and Muscat Soup with Frozen Grapes and Mint]] 🌱 ⓖ
+- [[Pasteis de Nata with Blistered Tops and Cinnamon]] 🥬
+- [[Portokalopita, Greek Orange Phyllo Cake with Yoghurt and Cinnamon Syrup]] 🥬
+- [[Rizogalo Rice Pudding Brulee with Mastiha and Cherry Spoon Sweet]] 🥬 ⓖ
+- [[Roasted Peach Melba en Papillote with Raspberry and Amaretto Cream]] 🥬 ⓖ
+- [[Sesame and Honey Pasteli Tart with Salted Chocolate and Orange]] 🥬
+- [[Tarta de Santiago with Olive Oil and Sherry-Macerated Oranges]] 🥬 ⓖ
+- [[Tarte Tropezienne Petites with Orange Blossom Creme Mousseline]] 🥬
+- [[Torrijas Caramelizadas with Sherry, Citrus Milk and Torched Sugar]] 🥬
+- [[Turron Semifreddo with Marcona Praline and PX Drizzle]] 🥬 ⓖ
+- [[Yiaourti me Meli Parfait with Honeycomb and Candied Walnuts]] 🥬 ⓖ

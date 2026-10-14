@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { DishPhoto } from '@/components/media/DishPhoto'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
@@ -16,6 +17,7 @@ const garnish: GarnishItem[] = [
 
 export default function GalleryPage() {
   const [active, setActive] = useState<(typeof GALLERY)[number] | null>(null)
+  const french = (usePathname() || '').startsWith('/fr')
 
   return (
     <div className="relative bg-background pb-20 pt-28 sm:pt-32">
@@ -23,9 +25,9 @@ export default function GalleryPage() {
       <div className="container relative">
         <SectionHeading
           as="h1"
-          eyebrow="Gallery"
-          title="From the pass"
-          description="Plates Adrian has sent to the table. Click any picture to open it."
+          eyebrow={french ? 'Galerie' : 'Gallery'}
+          title={french ? 'Les assiettes' : 'From the pass'}
+          description={french ? 'Des assiettes qu’Adrian a envoyées à table. Ouvrez une image.' : 'Plates Adrian has sent to the table. Click any picture to open it.'}
           animate={false}
           split="chars"
         />

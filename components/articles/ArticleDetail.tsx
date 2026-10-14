@@ -112,7 +112,13 @@ export function ArticleDetail({ article }: ArticleDetailProps) {
               prose-hr:border-foreground/10 prose-hr:my-8
             "
           >
-            <ReactMarkdown>{article.content}</ReactMarkdown>
+            <ReactMarkdown
+              components={{
+                h1: ({ children }) => <h2>{children}</h2>,
+              }}
+            >
+              {article.content.replace(/^\s*#\s+[^\n]+\n+/, '')}
+            </ReactMarkdown>
           </motion.article>
         </motion.div>
       </div>

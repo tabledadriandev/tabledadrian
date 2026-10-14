@@ -25,7 +25,7 @@ export interface NavGroup {
 
 export const NAVIGATION: NavGroup[] = [
   { name: "About", href: "/#about" },
-  { name: "Services", href: "/#services" },
+  { name: "Services", href: "/services" },
   { name: "Menus", href: "/menus" },
   { name: "Gallery", href: "/gallery" },
   { name: "Recipes", href: "/recipes" },
@@ -53,7 +53,7 @@ export const NAVIGATION: NavGroup[] = [
 /** Flat list of primary links, used by the footer and mobile menu. */
 export const FOOTER_LINKS: NavItem[] = [
   { name: "About", href: "/#about" },
-  { name: "Services", href: "/#services" },
+  { name: "Services", href: "/services" },
   { name: "Menus", href: "/menus" },
   { name: "Gallery", href: "/gallery" },
   { name: "Recipes", href: "/recipes" },

@@ -1,0 +1,161 @@
+---
+tags: [recipe-hub, hub]
+---
+
+# 🍰 Patisserie & Desserts — Index
+
+> [!success] 150 recipes in this collection. 🌱 vegan · 🥬 vegetarian · ⓖ gluten-free
+
+## Breads
+- [[Babka Chocolat-Noisette]] 🥬
+- [[Brioche Feuilletee au Sucre]] 🥬
+- [[Brioche Mousseline 55 pour Cent Beurre]] 🥬
+- [[Brioche Sans Gluten au Psyllium]] 🥬 ⓖ
+- [[Brioche a Tete de Dimanche]] 🥬
+- [[Chaussons aux Pommes Confites]] 🥬
+- [[Croissant Bicolore Framboise]] 🥬
+- [[Croissants Vegetaux]] 🌱
+- [[Croissants au Beurre AOP]] 🥬
+- [[Kouign-Amann de Douarnenez]] 🥬
+- [[Pain Suisse, Creme et Pepites]] 🥬
+- [[Pains au Chocolat, Batons 60 pour Cent]] 🥬
+- [[Pains aux Raisins, Creme Patissiere]] 🥬
+- [[Pate a Croissant, Levure et Tourage 50]] 🥬
+- [[Pate a Pain au Lait]] 🥬
+- [[Roules Cannelle-Cardamome]] 🥬
+
+## Desserts
+- [[Ananas Roti, Baba Punch Coco]] 🥬
+- [[Base Blanche Glace, Ratio Pro]] 🥬 ⓖ
+- [[Bavaroise Vanille, Base Anglaise]] 🥬 ⓖ
+- [[Biscuit Cuillere]] 🥬
+- [[Biscuit Joconde]] 🥬
+- [[Bonbons Moules, Coeur Caramel-Vanille]] 🥬 ⓖ
+- [[Canneles Bordelais]] 🥬
+- [[Caramel Beurre Sale de Guerande]] 🥬 ⓖ
+- [[Caramel Vegetal au Coco, Trois Textures]] 🌱 ⓖ
+- [[Caramels Mous Fleur de Sel]] 🥬 ⓖ
+- [[Caramels Tendres Passion-Mangue]] 🥬 ⓖ
+- [[Chantilly Mascarpone Serree]] 🥬 ⓖ
+- [[Charlotte aux Framboises et a la Violette]] 🥬
+- [[Chouquettes au Sucre Perle]] 🥬
+- [[Choux Chantilly aux Fraises des Bois]] 🥬
+- [[Choux Craquelin Mangue-Passion]] 🥬
+- [[Choux Sans Gluten, Riz et Mais]] 🥬 ⓖ
+- [[Citron Destructure, Sorbet Basilic]] 🥬
+- [[Clafoutis d'Abricot Tiede, Sorbet Lait d'Amande]] 🥬
+- [[Coques de Macaron, Meringue Italienne]] 🥬 ⓖ
+- [[Coupe Fraise-Rhubarbe, Creme Diplomate]] 🥬
+- [[Creme Brulee Vanille-Tonka]] 🥬 ⓖ
+- [[Creme Chiboust au Citron de Menton]] 🥬
+- [[Creme Diplomate a la Gousse]] 🥬
+- [[Creme Mousseline Pralinee]] 🥬
+- [[Creme Patissiere Vanille de Madagascar]] 🥬
+- [[Creme Patissiere Vegetale]] 🌱
+- [[Creme d'Amande Tant pour Tant]] 🥬
+- [[Cremeux Chocolat Guanaja 70]] 🥬 ⓖ
+- [[Cremeux Yuzu-Citron]] 🥬 ⓖ
+- [[Croquant Amandes Salees au Beurre]] 🥬 ⓖ
+- [[Croustillant Praline Feuilletine]] 🥬
+- [[Dacquoise Noisette]] 🥬 ⓖ
+- [[Delice Chocolat-Miso, Sarrasin]] 🥬
+- [[Dome Chocolat-Tonka, Coeur Cassis]] 🥬
+- [[Eclair Cafe-Noisette]] 🥬
+- [[Eclair Chocolat 70, Glacage Croquant]] 🥬
+- [[Eclair Citron-Yuzu Meringue]] 🥬
+- [[Eclair Pistache-Griotte]] 🥬
+- [[Eclair Vanille Craquelin]] 🥬
+- [[Entremets Citron-Praline]] 🥬
+- [[Entremets Coco-Passion Vegetal]] 🌱 ⓖ
+- [[Entremets Exotique Coco-Mangue-Passion]] 🥬 ⓖ
+- [[Entremets Opera Contemporain]] 🥬
+- [[Entremets Palet Or, Chocolat-Caramel]] 🥬
+- [[Entremets Poire-Caramel, Noisette]] 🥬
+- [[Entremets Rose-Framboise-Litchi]] 🥬
+- [[Feuilletage Inverse au Beurre Charentais]] 🥬
+- [[Feuilletage Vegetal Rapide]] 🌱
+- [[Financiers Noisette Brulee]] 🥬
+- [[Flan Parisien a la Vanille]] 🥬
+- [[Fondant Chocolat Coulant, Glace Huile d'Olive]] 🥬
+- [[Fraisier a la Vanille]] 🥬
+- [[Frangipane de Galette]] 🥬
+- [[Frozen Yaourt Fromage Blanc, Miel de Lavande]] 🥬 ⓖ
+- [[Galette des Rois, Frangipane Noisette]] 🥬
+- [[Ganache Montee Vanille Ivoire]] 🥬 ⓖ
+- [[Ganache d'Enrobage 70 pour Cent]] 🥬 ⓖ
+- [[Gateau Dacquoise Noisette-Chocolat, Sans Gluten]] 🥬 ⓖ
+- [[Gelato Pistache de Bronte]] 🥬 ⓖ
+- [[Genoise a Chaud]] 🥬
+- [[Gianduja Lait Maison]] 🥬 ⓖ
+- [[Glacage Miroir Cacao]] 🥬 ⓖ
+- [[Glace Chocolat 70, Sans Oeuf]] 🥬 ⓖ
+- [[Glace Creme Fraiche d'Isigny]] 🥬 ⓖ
+- [[Glace Vanille Bourbon Grand Cru]] 🥬 ⓖ
+- [[Guimauve Vanille-Framboise]]
+- [[Ile Flottante Pralinee, Anglaise a la Gousse]] 🥬 ⓖ
+- [[Lemon Curd de Menton]] 🥬 ⓖ
+- [[Macaron Caramel Beurre Sale]] 🥬 ⓖ
+- [[Macaron Chocolat-Passion]] 🥬 ⓖ
+- [[Macaron Framboise Pleine Chair]] 🥬 ⓖ
+- [[Macaron Pistache de Sicile]] 🥬 ⓖ
+- [[Macaron Vanille de Madagascar]] 🥬 ⓖ
+- [[Madeleines Sans Gluten, Miel-Citron]] 🥬 ⓖ
+- [[Madeleines au Miel de Chataignier]] 🥬
+- [[Millefeuille Vanille a la Minute]] 🥬
+- [[Mont-Blanc Contemporain]] 🥬 ⓖ
+- [[Mousse Chocolat Vegetale a l'Aquafaba]] 🌱 ⓖ
+- [[Namelaka Chocolat au Lait]] 🥬 ⓖ
+- [[Nappage Neutre Maison]] 🌱 ⓖ
+- [[Nougat de Montelimar aux Amandes et Pistaches]] 🥬 ⓖ
+- [[Orangettes au Chocolat Noir]] 🌱 ⓖ
+- [[Panna Cotta Vanille Vegetale, Coulis d'Abricot]] 🌱 ⓖ
+- [[Paris-Brest Praline, Coeur Coulant]] 🥬
+- [[Pate Brisee Fine au Beurre]] 🥬
+- [[Pate Feuilletee Classique, Cinq Tours]] 🥬
+- [[Pate Sablee Noisette]] 🥬
+- [[Pate Sucree Sans Gluten, Riz-Amande]] 🥬 ⓖ
+- [[Pate Sucree Vanille, Ferrandi Base]] 🥬
+- [[Pate a Baba au Rhum]] 🥬
+- [[Pate a Choux Maitre, Ratio 2-1-1-2]] 🥬
+- [[Pate de Cacao Sablés Viennois]] 🥬
+- [[Pates de Fruits Framboise]] 🌱 ⓖ
+- [[Pates de Fruits Mangue-Passion]] 🌱 ⓖ
+- [[Pavlova aux Agrumes d'Hiver]] 🥬 ⓖ
+- [[Peche Pochee, Sabayon Verveine]] 🥬 ⓖ
+- [[Petit Gateau Pistache-Griotte]] 🥬
+- [[Petit Gateau Vanille-Pecan]] 🥬
+- [[Praline Noisette 60-40 Maison]] 🌱 ⓖ
+- [[Pralines Anciennes aux Noisettes]] 🌱 ⓖ
+- [[Profiteroles, Sauce Chocolat Minute]] 🥬
+- [[Religieuse Caramel Beurre Sale]] 🥬
+- [[Riz au Lait Vanille, Caramel de la Mere]] 🥬 ⓖ
+- [[Rochers Praline Feuilletine]] 🥬 ⓖ
+- [[Sable Breton a la Fleur de Sel]] 🥬
+- [[Sables Diamant Vanille]] 🥬
+- [[Saint-Honore Vanille-Caramel]] 🥬
+- [[Sirop de Sorbet 60 Brix]] 🌱 ⓖ
+- [[Sorbet Abricot-Lavande du Luberon]] 🌱 ⓖ
+- [[Sorbet Chocolat Noir, Sans Lait]] 🌱 ⓖ
+- [[Sorbet Citron-Basilic]] 🌱 ⓖ
+- [[Sorbet Framboise Plein Fruit]] 🌱 ⓖ
+- [[Sorbet Mangue-Passion]] 🌱 ⓖ
+- [[Souffle Chaud au Grand Marnier]] 🥬
+- [[Streusel Amande-Fleur de Sel]] 🥬
+- [[Tarte Abricot-Romarin, Frangipane]] 🥬
+- [[Tarte Bourdaloue Poire-Amande]] 🥬
+- [[Tarte Chocolat Grand Cru, Fleur de Sel]] 🥬
+- [[Tarte Chocolat-Framboise Vegetale]] 🌱
+- [[Tarte Citron Vegetale, Meringue Aquafaba]] 🌱
+- [[Tarte Citron de Menton, Meringue Torchee]] 🥬
+- [[Tarte Figue-Miel de Lavande, Chevre Frais]] 🥬
+- [[Tarte Fine aux Pommes, Caramel au Calvados]] 🥬
+- [[Tarte Framboise-Pistache de Sicile]] 🥬
+- [[Tarte Noisette-Cafe]] 🥬
+- [[Tarte Passion-Coco]] 🥬
+- [[Tarte Tatin aux Reinettes, Creme d'Isigny]] 🥬
+- [[Tarte Vanille Intense]] 🥬
+- [[Tarte aux Fraises Gariguette, Diplomate Vanille]] 🥬
+- [[Textures de Fraise, Estragon]] 🥬 ⓖ
+- [[Torte Chocolat Sans Farine, Creme Crue]] 🥬 ⓖ
+- [[Truffes au Chocolat 70, Cacao Amer]] 🥬 ⓖ
+- [[Tuiles Dentelle a l'Orange]] 🥬
