@@ -99,6 +99,9 @@ export function offerNavLabel(href: string, fallback: string, locale: 'en' | 'fr
   if (href === '/gift') return 'Cadeau'
   if (href === '/masterclass') return 'Cours'
   if (href === '/chefs-kitchen') return 'Cuisine'
+  if (href === '/shop/recipe-books') return 'Livres'
+  if (href === '/plans') return 'Programmes'
+  if (href === '/partners') return 'Partenaires'
   return fallback
 }
 
@@ -140,3 +143,33 @@ export const KITCHEN_META = {
       'Couteaux, poêles et garde-manger qu’Adrian utilise. Les liens affiliés sont des placeholders, pas encore actifs. Aucun prix, aucun avis.',
   },
 } as const
+
+/** A price Adrian types himself, and his Stripe Payment Link. Both stay null until his accounts exist. */
+export type PriceSlot = {
+  price: string | null
+  stripe: string | null
+}
+
+/** Digital recipe books. Leave price and stripe null to show Coming soon. Do not invent a number. */
+export const RECIPE_BOOK_SLOTS: Record<string, PriceSlot> = {
+  'riviera-summer': { price: null, stripe: null },
+  'christmas-dinner': { price: null, stripe: null },
+  'market-week': { price: null, stripe: null },
+  'dinner-party-playbook': { price: null, stripe: null },
+}
+
+/** Menu plans. Leave price and stripe null. The Buy button stays a placeholder and shows no price. */
+export const PLAN_SLOTS: Record<string, PriceSlot> = {
+  'blood-sugar': { price: null, stripe: null },
+  hormones: { price: null, stripe: null },
+  heart: { price: null, stripe: null },
+  gut: { price: null, stripe: null },
+  training: { price: null, stripe: null },
+}
+
+/**
+ * Audience figures for the media kit.
+ * Leave this empty. The partners page hides the block when there is no value.
+ * Do not invent followers, reach, or rates.
+ */
+export const PARTNER_STATS: { id: string; label: string; labelFr: string; value: string }[] = []

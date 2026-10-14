@@ -61,6 +61,9 @@ export const FOOTER_LINKS: NavItem[] = [
   { name: "Gift", href: "/gift" },
   { name: "Classes", href: "/masterclass" },
   { name: "Kitchen", href: "/chefs-kitchen" },
+  { name: "Books", href: "/shop/recipe-books" },
+  { name: "Plans", href: "/plans" },
+  { name: "Partners", href: "/partners" },
   { name: "Enquire", href: "/pricing" },
 ]
 

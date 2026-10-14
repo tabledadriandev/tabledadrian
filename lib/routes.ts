@@ -30,6 +30,14 @@ export const LOCALE_PAIRS = [
   ['/gift', '/fr/cadeau'],
   ['/masterclass', '/fr/cours-de-cuisine'],
   ['/chefs-kitchen', '/fr/cuisine-du-chef'],
+  ['/shop/recipe-books', '/fr/livres-de-recettes'],
+  ['/plans', '/fr/programmes'],
+  ['/plans/blood-sugar', '/fr/programmes/glycemie'],
+  ['/plans/hormones', '/fr/programmes/hormones'],
+  ['/plans/heart', '/fr/programmes/coeur'],
+  ['/plans/gut', '/fr/programmes/intestin'],
+  ['/plans/training', '/fr/programmes/entrainement'],
+  ['/partners', '/fr/partenaires'],
 ] as const
 
 export type EnPath = (typeof LOCALE_PAIRS)[number][0]
