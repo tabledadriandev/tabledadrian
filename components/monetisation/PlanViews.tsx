@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import type { OfferPlan } from '@/lib/offer-copy'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover, TABLE_COVER } from '@/lib/cover'
 import { DISCLAIMER, PLAN_CREDENTIAL, PLANS_COPY, planDetail, planList, plansPath } from '@/lib/view-copy'
 import { Arrow } from '@/components/b2/ui'
 import { Band, Opt } from '@/components/b2/Tiles'
@@ -12,12 +14,24 @@ export function PlansIndex({ locale }: { locale: 'en' | 'fr' }) {
     <div className="wrap b2-page">
       <Band kicker={c.kicker} title={c.h1} text={c.lede} />
       <section className="sec row3 b2-plans">
-        {planList(locale).map((p, i) => (
-          <Link key={p.id} href={p.href} className={`xc ${['e', '', 'o'][i % 3]}`}>
-            <div className="n"><span>{String(i + 1).padStart(2, '0')}</span><span className="c"><Arrow /></span></div>
-            <div><h2 className="disp h3">{p.title}</h2><p>{p.lede}</p></div>
-          </Link>
-        ))}
+        {planList(locale).map((p, i) => {
+          const cover = splitCover(p.title)
+          return (
+            <Link key={p.id} href={p.href} className={`xc plan-tile ${['e', '', 'o'][i % 3]}`}>
+              <BrandCover
+                word={cover.word}
+                italic={cover.italic}
+                meta={locale === 'fr' ? 'PROGRAMME' : 'MENU PLAN'}
+                src={TABLE_COVER}
+                variant={i % 4}
+                sizes="(max-width: 600px) 100vw, 400px"
+                className="plan-tile-cover"
+              />
+              <div className="n"><span>{String(i + 1).padStart(2, '0')}</span><span className="c"><Arrow /></span></div>
+              <div><h2 className="sr-only">{p.title}</h2><p>{p.lede}</p></div>
+            </Link>
+          )
+        })}
       </section>
       <div className="b2-note" role="note"><p>{DISCLAIMER[locale]}</p><p className="m">{PLAN_CREDENTIAL}</p></div>
     </div>
@@ -34,6 +48,16 @@ export function PlanArticle({ plan, locale }: { plan: OfferPlan; locale: 'en' | 
   ]
   return (
     <article className="wrap b2-page">
+      <BrandCover
+        {...splitCover(d.title)}
+        meta={locale === 'fr' ? 'PROGRAMME' : 'MENU PLAN'}
+        src={TABLE_COVER}
+        seed={plan.id}
+        entrance
+        priority
+        sizes="(max-width: 600px) 100vw, 1200px"
+        className="plan-hero-cover"
+      />
       <section className="hero b2-split">
         <div className="hl">
           <div>

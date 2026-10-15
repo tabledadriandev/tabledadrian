@@ -5,6 +5,7 @@ import { JournalArticle } from '@/components/journal/JournalArticle'
 import { articles } from '@/data/articles'
 import { journal } from '@/data/library/journal'
 import { localeAlternates } from '@/lib/routes'
+import { COVER_OG } from '@/lib/cover'
 import { articleJsonLd } from '@/lib/schema'
 
 export function generateStaticParams() {
@@ -24,7 +25,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       title: post.title,
       description: post.excerpt,
       alternates: localeAlternates(path, path, fr),
-      openGraph: { title: post.title, description: post.excerpt, type: 'article', images: [{ url: post.image, alt: post.imageAlt }] },
+      openGraph: { title: post.title, description: post.excerpt, type: 'article', images: [{ url: COVER_OG.en, alt: post.title }] },
     }
   }
   const article = articles.find((item) => item.slug === params.slug)
@@ -37,7 +38,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       title: article.title,
       description: article.excerpt,
       type: 'article',
-      images: [{ url: article.image, alt: article.title }],
+      images: [{ url: COVER_OG.en, alt: article.title }],
     },
   }
 }
@@ -52,7 +53,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   const schema = articleJsonLd({
     headline: article.title,
     description: article.excerpt,
-    image: article.image,
+    image: COVER_OG.en,
     path: `/articles/${article.slug}`,
     datePublished: article.publishedAt,
     locale: 'en',

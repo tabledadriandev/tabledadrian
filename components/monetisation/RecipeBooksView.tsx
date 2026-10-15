@@ -1,4 +1,5 @@
-import Image from 'next/image'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover, TABLE_COVER } from '@/lib/cover'
 import { BOOKS_COPY, bookCredit, bookList } from '@/lib/view-copy'
 import { Band, Opt } from '@/components/b2/Tiles'
 import { Buy } from './Buy'
@@ -11,7 +12,8 @@ export function RecipeBooksView({ locale }: { locale: 'en' | 'fr' }) {
     <div className="wrap b2-page">
       <Band kicker={c.kicker} title={c.h1} text={c.lede} />
       {bookList(locale).map((b, i) => {
-        const cover = b.recipes.find((r) => r.src)
+        const cover = splitCover(b.title)
+        const n = String(i + 1).padStart(2, '0')
         return (
           <section key={b.id} id={`book-${b.id}`} className={`about b2-book ${i % 2 ? 'flip' : ''}`}>
             <div className="ab">
@@ -24,9 +26,17 @@ export function RecipeBooksView({ locale }: { locale: 'en' | 'fr' }) {
                 <span className="m">{credit}</span>
               </div>
             </div>
-            <div className={`bc ${['gold', 'olive', 'champ'][i % 3]} b2-cover`}>
-              {cover?.src ? <div className="im"><Image src={cover.src} alt="" fill sizes="(max-width: 600px) 100vw, 560px" /></div> : null}
-              <figcaption><span className="tag">{b.recipes.length} {locale === 'fr' ? 'recettes' : 'recipes'}</span><b>{b.title}</b></figcaption>
+            <div className="bc b2-cover">
+              <BrandCover
+                word={cover.word}
+                italic={cover.italic || (locale === 'fr' ? 'Menu' : 'Menu')}
+                meta={locale === 'fr' ? `N° ${n} · LIVRE DE RECETTES` : `N° ${n} · RECIPE BOOK`}
+                src={TABLE_COVER}
+                variant={i % 4}
+                fill
+                priority={i === 0}
+                sizes="(max-width: 600px) 100vw, 560px"
+              />
             </div>
           </section>
         )

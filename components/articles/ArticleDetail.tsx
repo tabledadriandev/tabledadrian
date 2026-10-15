@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Clock, User } from 'lucide-react'
-import { DishPhoto } from '@/components/media/DishPhoto'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover, TABLE_COVER } from '@/lib/cover'
 import ReactMarkdown from 'react-markdown'
 import { Article } from '@/data/articles'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
@@ -43,13 +44,16 @@ export function ArticleDetail({ article }: ArticleDetailProps) {
           className="space-y-8"
         >
           {/* Hero Image */}
-          <motion.div variants={fadeInUp} className="dish-well relative mb-8 overflow-hidden">
-            <DishPhoto
-              src={article.image}
-              alt={article.title}
-              className="mx-auto max-h-[70vh] w-auto"
-              sizes="(max-width: 768px) 100vw, 896px"
+          <motion.div variants={fadeInUp} className="relative mb-8 overflow-hidden">
+            <BrandCover
+              {...splitCover(article.title)}
+              meta={article.category}
+              src={TABLE_COVER}
+              seed={article.slug}
               priority
+              entrance
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="journal-cover"
             />
           </motion.div>
 

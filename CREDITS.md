@@ -1,7 +1,15 @@
 # Photo credits
 
-Photographs on recipe pages are used under the [Pexels Licence](https://www.pexels.com/license/).
-They are not captioned on the page. Dishes without a matching photograph use a colour block.
+Photographs outside the gallery are used under the [Pexels Licence](https://www.pexels.com/license/).
+They are not captioned on the page. Each one sits inside a branded cover with the dish or the title and the Table d'Adrian wordmark.
+Where no photograph genuinely matches, the cover is type on ivory (or olive) instead of a picture.
+Adrian's own plates appear only in the gallery.
+
+Table setting used on menus, books, plans, the journal, the gift page, location pages, and the home hero:
+
+- table-riviera: https://www.pexels.com/photo/a-table-in-a-restaurant-9367128/ — Erik Mclean
+
+Recipe plates:
 
 - shakshuka: https://www.pexels.com/photo/delicious-shakshuka-in-cast-iron-skillet-35672951/
 - steak-frites: https://www.pexels.com/photo/delicious-grilled-steak-and-fries-plate-34574561/

@@ -1,5 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover, TABLE_COVER } from '@/lib/cover'
 import { GIFT_CARDS, GIFT_COPY } from '@/lib/view-copy'
 import { Arrow } from '@/components/b2/ui'
 import { Opt } from '@/components/b2/Tiles'
@@ -24,8 +25,15 @@ export function GiftView({ locale }: { locale: 'en' | 'fr' }) {
           <ul className="b2-points">{t.points.map((p) => <li key={p}>{p}</li>)}</ul>
         </div>
         <div className="hr plain">
-          <div className="photo-bg" />
-          <Image src="/gallery/rose-tartlets.jpeg" alt="" fill sizes="(max-width: 600px) 100vw, 680px" />
+          <BrandCover
+            {...splitCover(t.h1)}
+            meta={locale === 'fr' ? 'CADEAU' : 'GIFT'}
+            src={TABLE_COVER}
+            fill
+            priority
+            entrance
+            sizes="(max-width: 600px) 100vw, 680px"
+          />
         </div>
       </section>
       <section id="gift-cards" className="enq">

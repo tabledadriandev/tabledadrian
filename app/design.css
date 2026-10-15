@@ -434,3 +434,158 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
   .tda h3.display,
   .tda .marquee-item { font-size: 28px !important; }
 }
+
+/* Branded covers. Cormorant is only for this plate, not the site UI. */
+@font-face {
+  font-family: "Cover Serif";
+  src: url("/brand/fonts/CormorantGaramond[wght].ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cover Serif";
+  src: url("/brand/fonts/CormorantGaramond-Italic[wght].ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+.tda .brand-cover {
+  position: relative;
+  container-type: inline-size;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background: #F6F1E6;
+  color: #1C2019;
+  width: 100%;
+}
+.tda .brand-cover.fill { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; }
+.tda .brand-cover.v1 { background: #E7E0D0; }
+.tda .brand-cover.tone-ink { background: #2F3529; color: #F6F1E6; }
+.tda .brand-cover.v3.is-cream { background: #D9C79F; }
+.tda .brand-cover .cover-photo { object-fit: cover; object-position: center; }
+.tda .brand-cover .cover-scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(18,16,10,.58) 0%, rgba(18,16,10,.18) 40%, rgba(18,16,10,.66) 100%),
+    linear-gradient(90deg, rgba(18,16,10,.42), transparent 72%);
+}
+.tda .brand-cover .cover-type {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 8% 8% 7%;
+}
+.tda .brand-cover .cover-meta {
+  margin: 0 0 .7rem;
+  font-family: var(--font-body), Jost, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.tda .brand-cover .cover-word {
+  margin: 0;
+  font-family: "Cover Serif", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 18cqi, 5.2rem);
+  line-height: .86;
+  letter-spacing: -.02em;
+  overflow-wrap: break-word;
+}
+.tda .brand-cover.long .cover-word { font-size: clamp(1.4rem, 12cqi, 3.2rem); }
+.tda .brand-cover .cover-italic {
+  margin: .2em 0 0;
+  font-family: "Cover Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1rem, 6.5cqi, 1.65rem);
+  line-height: 1.15;
+}
+.tda .brand-cover .cover-rule {
+  display: block;
+  width: 38%;
+  height: 1px;
+  margin: .85rem 0 0;
+  background: currentColor;
+  opacity: .7;
+}
+.tda .brand-cover .cover-mark {
+  display: block;
+  width: min(46%, 168px);
+  height: auto;
+  margin-top: 1rem;
+  object-fit: contain;
+}
+.tda .brand-cover.is-photo { color: #F6F1E6; background: #2F3529; }
+.tda .brand-cover.is-photo .cover-word,
+.tda .brand-cover.is-photo .cover-italic { text-shadow: 0 1px 16px rgba(12,10,6,.45); }
+.tda .brand-cover.is-photo .mark-on-cream,
+.tda .brand-cover.is-cream:not(.tone-ink) .mark-on-photo { display: none; }
+.tda .brand-cover.tone-ink .mark-on-cream { display: none; }
+.tda .brand-cover.tone-ink .mark-on-photo { display: block; }
+.tda .brand-cover.v1 .cover-type { text-align: center; align-items: center; }
+.tda .brand-cover.v1 .cover-top { width: 100%; }
+.tda .brand-cover.v1 .cover-rule { margin-left: auto; margin-right: auto; }
+.tda .brand-cover.v2 .cover-type { justify-content: flex-end; gap: .4rem; }
+.tda .brand-cover.v3 .cover-type { text-align: right; align-items: flex-end; }
+.tda .brand-cover.v3 .cover-rule { margin-left: auto; }
+html[data-resolved='dark'] .tda .brand-cover.is-cream { background: #1F241B; color: #F6F1E6; }
+html[data-resolved='dark'] .tda .brand-cover.is-cream .mark-on-cream { display: none; }
+html[data-resolved='dark'] .tda .brand-cover.is-cream .mark-on-photo { display: block; }
+html[data-resolved='dark'] .tda .brand-cover.tone-ink { background: #14170F; }
+.tda .hr .brand-cover .cover-photo,
+.tda .bc .brand-cover .cover-photo,
+.tda .hr .brand-cover img.cover-photo,
+.tda .bc .brand-cover img.cover-photo {
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
+  object-position: center;
+  border-radius: 0;
+}
+.tda .hr .brand-cover .cover-mark,
+.tda .bc .brand-cover .cover-mark {
+  width: min(46%, 168px);
+  height: auto;
+  object-fit: contain;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
+  position: static;
+}
+.tda .hr:has(.chip) .brand-cover .cover-type { padding-bottom: 118px; }
+.tda .hr .chip { z-index: 4; }
+.tda .bc:has(.brand-cover) figcaption { display: none; }
+.tda .ra-figure .brand-cover,
+.tda .journal-cover { aspect-ratio: 4/5; max-height: 72vh; border-radius: 40px; }
+.tda .plan-hero-cover { aspect-ratio: 16/7; border-radius: 40px; margin: 8px 0 16px; max-height: 420px; }
+.tda .plan-tile { display: flex; flex-direction: column; }
+.tda .plan-tile-cover { aspect-ratio: 4/3; border-radius: 28px; margin-bottom: 18px; }
+.tda .menu-card-cover { aspect-ratio: 3/4; border-radius: 28px; }
+.tda .b2-cover { display: block; }
+.tda .b2-cover .brand-cover.fill { border-radius: 0; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .tda .brand-cover .cover-photo { transition: transform .6s ease; }
+  .tda a:hover .brand-cover .cover-photo { transform: scale(1.04); }
+  .tda .brand-cover.cover-in { animation: coverIn .7s ease both; }
+}
+@keyframes coverIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tda .brand-cover .cover-photo { transition: none; }
+  .tda .brand-cover.cover-in { animation: none; }
+}
+.tda a:focus-visible,
+.tda button:focus-visible,
+.tda .btn:focus-visible {
+  outline: 2px solid var(--m-acc);
+  outline-offset: 3px;
+}
+.tda .btn { min-height: 46px; }
+.tda .opt { min-height: 48px; }
+.tda .b2-nav a { min-height: 44px; display: inline-flex; align-items: center; }
+.tda article.bg-background .container > p,
+.tda .ra-intro { max-width: 62ch; }
+.tda .site-main { overflow-x: clip; }

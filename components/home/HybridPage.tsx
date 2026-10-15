@@ -1,8 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
+import { BrandCover } from '@/components/brand/BrandCover'
 import { GALLERY } from '@/data/gallery'
+import { splitCover, TABLE_COVER } from '@/lib/cover'
 import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
 import { FAQ } from '@/lib/faq'
 import { faqJsonLd } from '@/lib/schema'
@@ -23,14 +24,14 @@ const X = {
   en: {
     dm: 'Instagram DM',
     creds: ['Swiss-trained (EHL)', '10+ years', 'Nutrition certificate, Stanford'],
-    band: "A few plates from recent tables, cooked in clients' kitchens across Antibes, Monaco and the Riviera.",
+    band: 'Six plates from the gallery. The photographs stay on that page.',
     facts: [['Training', 'Swiss-trained (EHL)'], ['Kitchens', '10+ years'], ['Nutrition', 'Certificate, Stanford']],
     weekly: 'Weekly at home, on request',
   },
   fr: {
     dm: 'Message Instagram',
     creds: ['Formation suisse (EHL)', '10+ ans', 'Certificat en nutrition, Stanford'],
-    band: 'Quelques assiettes de tables récentes, cuisinées chez nos clients à Antibes, Monaco et sur la Riviera.',
+    band: 'Six assiettes de la galerie. Les photographies restent sur cette page.',
     facts: [['Formation', 'Formation suisse (EHL)'], ['Cuisines', '10+ ans'], ['Nutrition', 'Certificat, Stanford']],
     weekly: 'Chaque semaine, sur demande',
   },
@@ -61,9 +62,16 @@ export function HybridPage() {
           <div className="credrow">{x.creds.map((c) => <span key={c}>{c}</span>)}</div>
         </div>
         <div className="hr">
-          <div className="photo-bg" />
-          <Image src="/gallery/hero-olive-b2.webp" alt="" fill priority sizes="(max-width: 600px) 100vw, 680px" quality={80} />
-          <div className="dots" aria-hidden="true" />
+          <BrandCover
+            word="Riviera"
+            italic={locale === 'fr' ? 'Table privée' : 'Private table'}
+            meta={locale === 'fr' ? 'PAR ADRIAN STEFAN' : 'BY ADRIAN STEFAN'}
+            src={TABLE_COVER}
+            fill
+            priority
+            entrance
+            sizes="(max-width: 600px) 100vw, 680px"
+          />
           <Link className="chip" href={contactHref}>
             <div><b>{h.dinnerLabel}</b><span>{h.dinnerFigure} {h.dinnerNote}</span></div>
             <span className="go"><Arrow /></span>
@@ -86,12 +94,15 @@ export function HybridPage() {
       </div>
 
       <section className="bento" aria-label="Gallery">
-        {plates.map(({ cls, plate }, i) => (
-          <Link key={plate.id} href={withLocale('/gallery', locale)} className={`bc ${cls}`}>
-            <div className="im"><Image src={plate.src} alt={plate.caption} fill sizes="(max-width: 600px) 100vw, 520px" /></div>
-            <figcaption><span className="tag">0{i + 1}</span><b>{plate.title}</b><p>{plate.caption}</p></figcaption>
-          </Link>
-        ))}
+        {plates.map(({ plate }, i) => {
+          const cover = splitCover(plate.title)
+          return (
+            <Link key={plate.id} href={withLocale('/gallery', locale)} className={`bc b${i % 6}`}>
+              <BrandCover word={cover.word} italic={cover.italic} meta={locale === 'fr' ? 'GALERIE' : 'GALLERY'} seed={plate.id} fill sizes="(max-width: 600px) 100vw, 420px" />
+              <span className="sr-only">{plate.title}</span>
+            </Link>
+          )
+        })}
       </section>
 
       <section id="about" className="about" aria-labelledby="about-title">

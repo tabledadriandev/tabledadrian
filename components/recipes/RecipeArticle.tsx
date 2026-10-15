@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { DishPhoto } from '@/components/media/DishPhoto'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover, stockSrc } from '@/lib/cover'
 import { BookChefCta } from '@/components/monetisation/BookChefCta'
 import { NewsletterForm } from '@/components/monetisation/NewsletterForm'
 import { CREDIT, CREDIT_FR, libraryRecipePath, type LibraryRecipe } from '@/lib/library'
@@ -34,17 +35,10 @@ const UI = {
 } as const
 
 
-function dishTone(slug: string) {
-  let n = 0
-  for (let i = 0; i < slug.length; i += 1) n += slug.charCodeAt(i)
-  return (['olive', 'gold', 'champ'] as const)[n % 3]
-}
-
 export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; locale: 'en' | 'fr' }) {
   const ui = UI[locale]
   const title = locale === 'fr' ? recipe.titleFr : recipe.title
   const intro = locale === 'fr' ? recipe.introFr : recipe.intro
-  const alt = locale === 'fr' ? recipe.image.altFr : recipe.image.alt
   const minutes = locale === 'fr' ? 'min' : 'min'
 
   return (
@@ -59,19 +53,15 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
         <p className="ra-credit mt-4 text-sm text-foreground">{ui.credit}</p>
 
         <figure className="ra-figure mt-8">
-          {recipe.image.src ? (
-            <DishPhoto
-              src={recipe.image.src}
-              alt={alt}
-              sizes="(max-width: 768px) 100vw, 768px"
-              priority
-              className="max-h-[70vh] w-full object-cover"
-            />
-          ) : (
-            <div className={`dish-fallback dish-${dishTone(recipe.slug)}`}>
-              <span>{title}</span>
-            </div>
-          )}
+          <BrandCover
+            {...splitCover(title)}
+            meta={recipe.cuisine}
+            src={stockSrc(recipe.image.src)}
+            seed={recipe.slug}
+            priority
+            entrance
+            sizes="(max-width: 768px) 100vw, 768px"
+          />
         </figure>
 
         <dl className="ra-facts mt-8 grid grid-cols-3 gap-3 border-y border-border py-4 text-sm">

@@ -1,25 +1,29 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import { Arrow, TONES } from './ui'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover, stockSrc } from '@/lib/cover'
+import { Arrow } from './ui'
 
-export type Tile = { key: string; href: string; title: string; text?: string | null; tag?: string; src?: string | null; alt?: string }
+export type Tile = { key: string; href: string; title: string; text?: string | null; tag?: string; src?: string | null; alt?: string; meta?: string }
 
-/* The mockup's bento, repeated: spans 4/5/3 then 3/4/5, tones gold · photo · olive · photo · champ · photo. */
+/* Each card is a branded cover. A stock photograph is used only when one matches. */
 export function Bento({ items, label }: { items: Tile[]; label: string }) {
   return (
     <section className="bento" aria-label={label}>
       {items.map((it, i) => {
-        const tone = it.src ? TONES[i % 6] : (['card', 'olive', 'gold'] as const)[i % 3]
+        const cover = splitCover(it.title)
+        const src = stockSrc(it.src)
         return (
-          <Link key={it.key} href={it.href} className={`bc b${i % 6} ${tone}`}>
-            {it.src ? (
-              <div className="im"><Image src={it.src} alt={it.alt ?? it.title} fill sizes="(max-width: 600px) 100vw, 520px" /></div>
-            ) : null}
-            <figcaption>
-              {it.tag ? <span className="tag">{it.tag}</span> : null}
-              <b>{it.title}</b>
-              {it.text ? <p>{it.text}</p> : null}
-            </figcaption>
+          <Link key={it.key} href={it.href} className={`bc b${i % 6}`}>
+            <BrandCover
+              word={cover.word}
+              italic={cover.italic}
+              meta={it.meta || it.tag}
+              src={src}
+              seed={it.key}
+              fill
+              sizes="(max-width: 600px) 100vw, 420px"
+            />
+            <span className="sr-only">{it.title}</span>
           </Link>
         )
       })}
