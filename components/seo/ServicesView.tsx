@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Locale } from '@/lib/copy'
+import { SeasonPush } from '@/components/season/SeasonPush'
 
 const COPY = {
   en: {
@@ -10,7 +11,7 @@ const COPY = {
       { href: '/yacht-chef', title: 'Yacht chef', text: 'Galley cooking for the people on board, alongside or underway.' },
       { href: '/villa-chef', title: 'Villa chef', text: 'Breakfast, lunch and dinner for a week, shopped that morning.' },
       { href: '/events-and-weddings', title: 'Events and weddings', text: 'A wedding weekend or a longer guest list. Enquire for a tailored quote.' },
-      { href: '/gift', title: 'Gift a dinner', text: 'A private dinner voucher. Enquire, or use the payment link once it is connected.' },
+      { href: '/gift', title: 'Gift a dinner', text: 'Choose a €150, €300 or €500 card and pay online.' },
       { href: '/masterclass', title: 'Cooking class', text: 'An at-home class or a small-group tasting evening.' },
       { href: '/chefs-kitchen', title: "Chef's kitchen", text: 'Knives, pans and pantry pieces. Affiliate links are not live.' },
       { href: '/private-chef-nice', title: 'Nice', text: 'Market mornings and dinners above the Baie des Anges.' },
@@ -28,7 +29,7 @@ const COPY = {
       { href: '/fr/chef-de-yacht', title: 'Chef de yacht', text: 'La cuisine de l’office, à quai ou en navigation.' },
       { href: '/fr/chef-en-villa', title: 'Chef en villa', text: 'Petit déjeuner, déjeuner et dîner pour une semaine, courses du matin.' },
       { href: '/fr/evenements-et-mariages', title: 'Événements et mariages', text: 'Un week-end de mariage ou une liste plus longue. Devis sur mesure.' },
-      { href: '/fr/cadeau', title: 'Offrir un dîner', text: 'Un bon pour un dîner privé. Demandez, ou le lien de paiement une fois connecté.' },
+      { href: '/fr/cadeau', title: 'Offrir un dîner', text: 'Choisissez un bon de 150 €, 300 € ou 500 € et payez en ligne.' },
       { href: '/fr/cours-de-cuisine', title: 'Cours de cuisine', text: 'Un cours à domicile ou une dégustation en petit groupe.' },
       { href: '/fr/cuisine-du-chef', title: 'Cuisine du chef', text: 'Couteaux, poêles et garde-manger. Les liens affiliés ne sont pas actifs.' },
       { href: '/fr/chef-prive-nice', title: 'Nice', text: 'Matins au marché et dîners au-dessus de la Baie des Anges.' },
@@ -47,7 +48,8 @@ export function ServicesView({ locale }: { locale: Locale }) {
       <div className="container max-w-3xl">
         <h1 className="font-display text-5xl tracking-tight sm:text-6xl">{copy.h1}</h1>
         <p className="mt-5 text-lg leading-relaxed text-foreground-muted">{copy.lede}</p>
-        <ul className="mt-12 divide-y divide-border border-y border-border">
+        <SeasonPush locale={locale} place="page" />
+        <ul className="mt-8 divide-y divide-border border-y border-border">
           {copy.items.map((item) => (
             <li key={item.href}>
               <Link href={item.href} className="block py-6">
