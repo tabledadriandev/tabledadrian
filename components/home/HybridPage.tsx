@@ -32,7 +32,17 @@ export function HybridPage() {
 
   return (
     <div className="hybrid-home">
-      <section className="hybrid-hero container" aria-labelledby="hero-title">
+      <section className="hybrid-hero hybrid-hero-olive container" aria-labelledby="hero-title">
+        <figure className="hero-olive" aria-hidden="true">
+          <Image
+            src="/gallery/hero-olive.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            quality={75}
+          />
+        </figure>
         <div className="hybrid-hero-copy">
           <p className="hybrid-kicker">{h.kicker}</p>
           <h1 id="hero-title" className="hybrid-title">
@@ -47,16 +57,7 @@ export function HybridPage() {
             <p className="credential-pill">{h.credential}</p>
           </div>
         </div>
-        <figure className="hero-plate">
-          <Image
-            src="/gallery/hero-plate.jpg"
-            alt="Seared langoustine with broad beans and a butter sauce, plated by Table d'Adrian"
-            fill
-            priority
-            sizes="(max-width: 860px) 92vw, 34rem"
-            quality={70}
-          />
-        </figure>
+
       </section>
 
       <section id="experiences" className="container hybrid-offers" aria-labelledby="experiences-title">

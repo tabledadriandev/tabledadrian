@@ -1633,3 +1633,42 @@ html[data-sola-banner='1'] .site-main { padding-top: 2.5rem; }
   color: hsl(var(--background));
   text-decoration: none;
 }
+
+/* Olive hero (photo: Anna Tarazevich, Pexels) */
+.hybrid-hero-olive {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+.hybrid-hero-olive .hybrid-hero-copy { grid-column: 2; max-width: 34rem; position: relative; z-index: 1; }
+.hybrid-hero-olive .hybrid-title { font-size: clamp(2.4rem, 3.9vw, 4rem); }
+.hero-olive {
+  position: absolute;
+  top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%);
+  z-index: -1;
+  margin: 0;
+  overflow: hidden;
+  background: #f4f3f0;
+}
+.hero-olive img { object-fit: cover; object-position: left center; }
+.hero-olive::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 35%, hsl(var(--background) / 0.35) 70%, hsl(var(--background) / 0.55));
+  pointer-events: none;
+}
+.hero-olive { box-shadow: inset 0 -6rem 6rem -4rem hsl(var(--background)); }
+html[data-resolved='dark'] .hero-olive { background: hsl(var(--background)); }
+html[data-resolved='dark'] .hero-olive img { filter: invert(1) hue-rotate(180deg) brightness(0.62) contrast(0.95) saturate(0.85); }
+html[data-resolved='dark'] .hero-olive::after {
+  background: linear-gradient(90deg, hsl(var(--background) / 0.15) 20%, hsl(var(--background) / 0.55) 65%, hsl(var(--background) / 0.75));
+}
+@media (max-width: 860px) {
+  .hybrid-hero-olive { grid-template-columns: 1fr; padding-top: 19rem; }
+  .hybrid-hero-olive .hybrid-hero-copy { grid-column: 1; }
+  .hero-olive { bottom: auto; height: 22rem; }
+  .hero-olive::after { background: linear-gradient(180deg, transparent 45%, hsl(var(--background))); }
+  html[data-resolved='dark'] .hero-olive::after { background: linear-gradient(180deg, hsl(var(--background) / 0.2) 30%, hsl(var(--background))); }
+  .hybrid-hero-olive .hybrid-title { font-size: clamp(2.2rem, 9vw, 3rem); }
+}
