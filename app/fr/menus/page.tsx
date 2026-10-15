@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover, TABLE_COVER } from '@/lib/cover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { MENUS } from '@/data/menus'
@@ -33,14 +34,13 @@ export default function FrenchMenusPage() {
           animate={false}
         />
         <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {MENUS.map((collection, i) => (
+          {MENUS.map((collection) => (
             <Link key={collection.id} href={`/menus/${collection.id}`} className="group relative block">
               <h2 className="sr-only">{collection.title}</h2>
               <BrandCover
                 {...splitCover(collection.title)}
                 meta={`${collection.region} · Cinq menus`}
-                src={TABLE_COVER}
-                variant={i % 4}
+                cover={coverPhoto(`menu-${collection.id}`)}
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="menu-card-cover"
               />

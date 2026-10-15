@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover, TABLE_COVER } from '@/lib/cover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { GIFT_CARDS, GIFT_COPY } from '@/lib/view-copy'
 import { Arrow } from '@/components/b2/ui'
 import { Opt } from '@/components/b2/Tiles'
@@ -28,7 +29,7 @@ export function GiftView({ locale }: { locale: 'en' | 'fr' }) {
           <BrandCover
             {...splitCover(t.h1)}
             meta={locale === 'fr' ? 'CADEAU' : 'GIFT'}
-            src={TABLE_COVER}
+            cover={coverPhoto('gift')}
             fill
             priority
             entrance

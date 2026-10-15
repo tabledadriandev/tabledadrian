@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
 import { splitCover, stockSrc } from '@/lib/cover'
+import type { CoverRecord } from '@/lib/cover-photos'
 import { Arrow } from './ui'
 
-export type Tile = { key: string; href: string; title: string; text?: string | null; tag?: string; src?: string | null; alt?: string; meta?: string }
+export type Tile = { key: string; href: string; title: string; text?: string | null; tag?: string; src?: string | null; alt?: string; meta?: string; cover?: CoverRecord | null }
 
 /* Each card is a branded cover. A stock photograph is used only when one matches. */
 export function Bento({ items, label }: { items: Tile[]; label: string }) {
@@ -18,7 +19,8 @@ export function Bento({ items, label }: { items: Tile[]; label: string }) {
               word={cover.word}
               italic={cover.italic}
               meta={it.meta || it.tag}
-              src={src}
+              src={it.cover ? null : src}
+              cover={it.cover}
               seed={it.key}
               fill
               sizes="(max-width: 600px) 100vw, 420px"

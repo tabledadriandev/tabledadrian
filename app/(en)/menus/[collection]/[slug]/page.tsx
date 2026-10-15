@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
-import { COVER_OG, splitCover, TABLE_COVER } from '@/lib/cover'
+import { COVER_OG, splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { notFound } from 'next/navigation'
 import { getMenu, MENUS } from '@/data/menus'
 import { Button } from '@/components/ui/Button'
@@ -89,7 +90,7 @@ export default function MenuPage({ params }: { params: { collection: string; slu
             <BrandCover
               {...splitCover(heading)}
               meta={`${collection.region} · Menu ${menu.number}`}
-              src={TABLE_COVER}
+              cover={coverPhoto(`menu-${collection.id}-${menu.slug}`)}
               seed={menu.slug}
               fill
               priority

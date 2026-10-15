@@ -1,7 +1,5 @@
 /** Branded cover helpers. Gallery files never leave the gallery. */
 
-export const TABLE_COVER = '/media/covers/table-riviera.webp'
-
 export const COVER_OG = {
   en: '/og_tabledadrian_en.jpg',
   fr: '/og_tabledadrian_fr.jpg',

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
-import { COVER_OG, splitCover, TABLE_COVER } from '@/lib/cover'
+import { COVER_OG, splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { BookChefCta } from '@/components/monetisation/BookChefCta'
 import type { JournalPost } from '@/data/library/journal'
 import { articleJsonLd } from '@/lib/schema'
@@ -34,7 +35,7 @@ export function JournalArticle({ post, locale }: { post: JournalPost; locale: 'e
           <BrandCover
             {...splitCover(title)}
             meta={category}
-            src={TABLE_COVER}
+            cover={coverPhoto(`journal-${post.slug}`)}
             seed={post.slug}
             priority
             entrance

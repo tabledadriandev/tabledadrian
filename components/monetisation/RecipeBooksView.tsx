@@ -1,5 +1,6 @@
 import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover, TABLE_COVER } from '@/lib/cover'
+import { splitCover } from '@/lib/cover'
+import { bookCoverId, coverPhoto } from '@/lib/cover-photos'
 import { BOOKS_COPY, bookCredit, bookList } from '@/lib/view-copy'
 import { Band, Opt } from '@/components/b2/Tiles'
 import { Buy } from './Buy'
@@ -31,8 +32,7 @@ export function RecipeBooksView({ locale }: { locale: 'en' | 'fr' }) {
                 word={cover.word}
                 italic={cover.italic || (locale === 'fr' ? 'Menu' : 'Menu')}
                 meta={locale === 'fr' ? `N° ${n} · LIVRE DE RECETTES` : `N° ${n} · RECIPE BOOK`}
-                src={TABLE_COVER}
-                variant={i % 4}
+                cover={coverPhoto(bookCoverId(b.id))}
                 fill
                 priority={i === 0}
                 sizes="(max-width: 600px) 100vw, 560px"

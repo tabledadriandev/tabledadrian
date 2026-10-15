@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover, TABLE_COVER } from '@/lib/cover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { Button } from '@/components/ui/Button'
 import { EventPackages } from '@/components/monetisation/EventPackages'
 import { FaqSection } from '@/components/seo/FaqSection'
@@ -105,7 +106,7 @@ export function LocationScreen({ id, locale }: { id: LocationId; locale: Locale 
                 <BrandCover
                   {...splitCover(page.name)}
                   meta={locale === 'fr' ? 'CHEF PRIVÉ' : 'PRIVATE CHEF'}
-                  src={TABLE_COVER}
+                  cover={coverPhoto(`location-${page.id}`)}
                   seed={page.id}
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
