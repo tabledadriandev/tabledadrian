@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { DishPhoto } from '@/components/media/DishPhoto'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { COVER_OG, splitCover, TABLE_COVER } from '@/lib/cover'
 import { BookChefCta } from '@/components/monetisation/BookChefCta'
 import type { JournalPost } from '@/data/library/journal'
 import { articleJsonLd } from '@/lib/schema'
@@ -8,14 +9,13 @@ export function JournalArticle({ post, locale }: { post: JournalPost; locale: 'e
   const title = locale === 'fr' ? post.titleFr : post.title
   const paragraphs = locale === 'fr' ? post.bodyFr : post.body
   const excerpt = locale === 'fr' ? post.excerptFr : post.excerpt
-  const alt = locale === 'fr' ? post.imageAltFr : post.imageAlt
   const category = locale === 'fr' ? post.categoryFr : post.category
   const path = locale === 'fr' ? `/fr/articles/${post.slugFr}` : `/articles/${post.slug}`
   const credit = locale === 'fr' ? 'Adrian Stefan, Table d’Adrian' : "Adrian Stefan, Table d'Adrian"
   const schema = articleJsonLd({
     headline: title,
     description: excerpt,
-    image: post.image,
+    image: COVER_OG[locale],
     path,
     datePublished: post.publishedAt,
     locale,
@@ -31,8 +31,16 @@ export function JournalArticle({ post, locale }: { post: JournalPost; locale: 'e
           {post.publishedAt} · {credit}
         </p>
         <figure className="mt-8">
-          <DishPhoto src={post.image} alt={alt} sizes="(max-width: 768px) 100vw, 768px" priority className="max-h-[70vh] w-full object-cover" />
-          <figcaption className="mt-2 text-xs text-foreground-subtle">{post.credit}</figcaption>
+          <BrandCover
+            {...splitCover(title)}
+            meta={category}
+            src={TABLE_COVER}
+            seed={post.slug}
+            priority
+            entrance
+            sizes="(max-width: 768px) 100vw, 768px"
+            className="journal-cover"
+          />
         </figure>
         {paragraphs.map((paragraph) => (
           <p key={paragraph.slice(0, 48)} className="mt-6 text-lg leading-relaxed text-foreground-muted">

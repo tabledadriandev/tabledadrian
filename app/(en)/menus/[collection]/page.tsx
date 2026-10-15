@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { COVER_OG, splitCover, TABLE_COVER } from '@/lib/cover'
 import { notFound } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import { getCollection, MENUS } from '@/data/menus'
@@ -20,7 +21,7 @@ export function generateMetadata({ params }: { params: { collection: string } })
     openGraph: {
       title: collection.title,
       description: collection.description,
-      images: [{ url: collection.cover, alt: collection.title }],
+      images: [{ url: COVER_OG.en, alt: collection.title }],
     },
   }
 }
@@ -53,19 +54,15 @@ export default function MenuCollectionPage({ params }: { params: { collection: s
               className="group surface overflow-hidden"
             >
               <div className="relative aspect-[4/5] overflow-hidden bg-background-secondary">
-                <DishPhoto
-                  src={menu.cover}
-                  alt={menu.title}
+                <h2 className="sr-only">{menu.title}</h2>
+                <BrandCover
+                  {...splitCover(menu.title)}
+                  meta={`${collection.region} · Menu ${menu.number}`}
+                  src={TABLE_COVER}
+                  seed={menu.slug + collection.id}
                   fill
-                  className="transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent p-5">
-                  <p className="text-[11px] uppercase tracking-caps text-ink-foreground/70">Menu {menu.number}</p>
-                  <h2 className="mt-1 font-display text-xl leading-snug text-ink-foreground sm:text-2xl">
-                    {menu.title.replace(/^Menu \d+:\s*/, '')}
-                  </h2>
-                </div>
               </div>
               <div className="flex items-center justify-between gap-3 p-5">
                 <p className="text-sm text-foreground-muted">Open this menu</p>

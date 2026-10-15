@@ -1,6 +1,6 @@
-import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover, TABLE_COVER } from '@/lib/cover'
 import { MENUS } from '@/data/menus'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
@@ -34,34 +34,22 @@ export default function MenusPage() {
         />
 
         <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {MENUS.map((collection) => (
+          {MENUS.map((collection, i) => (
             <Link
               key={collection.id}
               href={`/menus/${collection.id}`}
-              className="group relative block overflow-hidden bg-ink"
-              data-cursor="Open"
+              className="group relative block"
             >
-              <div className="relative aspect-[3/4] overflow-hidden" data-reveal="up" data-parallax="6" data-distort>
-                <DishPhoto
-                  src={collection.cover}
-                  alt={collection.title}
-                  fill
-                  priority={MENUS.indexOf(collection) < 3}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 z-[2] bg-gradient-to-t from-ink via-ink/25 to-ink/10" />
-                <div className="absolute inset-x-0 bottom-0 z-[3] p-6 sm:p-7">
-                  <h2 className="lh-display font-display text-4xl text-ink-foreground">{collection.title}</h2>
-                  <p className="mt-3 text-[11px] uppercase tracking-caps text-gold">
-                    {collection.region}
-                    <span className="text-ink-foreground/60"> · Five menus</span>
-                  </p>
-                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink-foreground/80">{collection.description}</p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-[11px] uppercase tracking-caps text-ink-foreground">
-                    Open <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </span>
-                </div>
-              </div>
+              <h2 className="sr-only">{collection.title}</h2>
+              <BrandCover
+                {...splitCover(collection.title)}
+                meta={`${collection.region} · Five menus`}
+                src={TABLE_COVER}
+                variant={i % 4}
+                priority={i < 2}
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="menu-card-cover"
+              />
             </Link>
           ))}
         </div>

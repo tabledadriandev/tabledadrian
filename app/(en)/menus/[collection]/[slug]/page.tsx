@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import { DishPhoto } from '@/components/media/DishPhoto'
 import Link from 'next/link'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { COVER_OG, splitCover, TABLE_COVER } from '@/lib/cover'
 import { notFound } from 'next/navigation'
 import { getMenu, MENUS } from '@/data/menus'
 import { Button } from '@/components/ui/Button'
@@ -28,7 +29,7 @@ export function generateMetadata({
     openGraph: {
       title: found.menu.title,
       description: found.collection.description,
-      images: [{ url: found.menu.cover, alt: found.menu.title }],
+      images: [{ url: COVER_OG.en, alt: found.menu.title }],
     },
   }
 }
@@ -85,11 +86,14 @@ export default function MenuPage({ params }: { params: { collection: string; slu
 
         <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="relative aspect-[5/4] max-h-[42vh] overflow-hidden rounded-[1.5rem] bg-background-secondary sm:aspect-[4/5] sm:max-h-none lg:col-span-5 lg:max-h-none">
-            <DishPhoto
-              src={menu.cover}
-              alt={menu.title}
+            <BrandCover
+              {...splitCover(heading)}
+              meta={`${collection.region} · Menu ${menu.number}`}
+              src={TABLE_COVER}
+              seed={menu.slug}
               fill
               priority
+              entrance
               sizes="(max-width: 1024px) 100vw, 40vw"
             />
           </div>

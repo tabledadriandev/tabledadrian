@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { DishPhoto } from '@/components/media/DishPhoto'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover, TABLE_COVER } from '@/lib/cover'
 import { Button } from '@/components/ui/Button'
 import { EventPackages } from '@/components/monetisation/EventPackages'
 import { FaqSection } from '@/components/seo/FaqSection'
@@ -101,8 +102,14 @@ export function LocationScreen({ id, locale }: { id: LocationId; locale: Locale 
             </div>
             <div className="lg:col-span-5">
               <div className="relative aspect-[4/5] overflow-hidden bg-ink">
-                <DishPhoto src={page.imageSrc} alt={page.imageAlt} fill sizes="(max-width: 1024px) 100vw, 40vw" />
-                <span className="hero-rim" />
+                <BrandCover
+                  {...splitCover(page.name)}
+                  meta={locale === 'fr' ? 'CHEF PRIVÉ' : 'PRIVATE CHEF'}
+                  src={TABLE_COVER}
+                  seed={page.id}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
               </div>
             </div>
           </div>

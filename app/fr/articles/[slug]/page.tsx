@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { JournalArticle } from '@/components/journal/JournalArticle'
 import { journal } from '@/data/library/journal'
+import { COVER_OG } from '@/lib/cover'
 import { localeAlternates } from '@/lib/routes'
 
 export function generateStaticParams() {
@@ -22,7 +23,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       description: post.excerptFr,
       locale: 'fr_FR',
       type: 'article',
-      images: [{ url: post.image, alt: post.imageAltFr }],
+      images: [{ url: COVER_OG.fr, alt: post.titleFr }],
     },
   }
 }
