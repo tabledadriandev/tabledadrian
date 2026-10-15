@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next"
-import { Bodoni_Moda, Hanken_Grotesk, Source_Serif_4 } from "next/font/google"
+import { Source_Serif_4 } from "next/font/google"
+import localFont from "next/font/local"
 import "./globals.css"
 import "./design.css"
 import { SmoothScroll } from "@/components/layout/SmoothScroll"
@@ -20,18 +21,16 @@ import { localeAlternates } from "@/lib/routes"
 import { localBusinessJsonLd, siteJsonLd } from "@/lib/schema"
 import { SolaBanner } from "@/components/layout/SolaBanner"
 
-const display = Bodoni_Moda({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
+const display = localFont({
+  src: './fonts/Jost-Variable.woff',
+  weight: '100 900',
   variable: '--font-display',
   display: 'swap',
-  adjustFontFallback: false,
 })
 
-const body = Hanken_Grotesk({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+const body = localFont({
+  src: './fonts/Jost-Variable.woff',
+  weight: '100 900',
   variable: '--font-body',
   display: 'swap',
 })
@@ -130,7 +129,7 @@ export function RootShell({ children, lang }: { children: React.ReactNode; lang:
           />
         ) : null}
       </head>
-      <body className="antialiased font-body bg-background text-foreground">
+      <body className="tda antialiased font-body bg-background text-foreground">
         <SolaBanner />
         <a
           href="#main"

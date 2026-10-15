@@ -1,51 +1,45 @@
-import { Button } from '@/components/ui/Button'
-import { GIFT_CARDS } from '@/lib/monetisation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { GIFT_CARDS, GIFT_COPY } from '@/lib/view-copy'
+import { Arrow } from '@/components/b2/ui'
+import { Opt } from '@/components/b2/Tiles'
 
-import { GIFT_COPY as COPY } from '@/lib/view-copy'
-
+/* Gift: the home hero pattern — copy card with points as chips, olive photo card right; then the gold enquiry block with one option per card. */
 export function GiftView({ locale }: { locale: 'en' | 'fr' }) {
-  const t = COPY[locale]
-  const cardsTitle = locale === 'fr' ? 'Bons cadeaux' : 'Gift cards'
+  const t = GIFT_COPY[locale]
   const pay = locale === 'fr' ? 'Payer' : 'Pay'
   return (
-    <article className="bg-background pb-20 pt-28 text-foreground sm:pt-32">
-      <div className="container max-w-5xl">
-        <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{t.eyebrow}</p>
-        <h1 className="mt-3 max-w-3xl font-display text-5xl tracking-tight sm:text-6xl">{t.h1}</h1>
-        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-foreground-muted">{t.lede}</p>
-        <div className="mt-12 grid gap-12 lg:grid-cols-2">
+    <div className="wrap b2-page">
+      <section className="hero">
+        <div className="hl">
           <div>
-            <ul className="space-y-4 border-t border-border pt-6 text-foreground-muted">
-              {t.points.map((point) => (
-                <li key={point} className="border-b border-border pb-4">
-                  {point}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8">
-              <Button href={t.enquireHref} variant="ink">
-                {t.enquire}
-              </Button>
+            <span className="tagr">{t.eyebrow}</span>
+            <h1 className="disp">{t.h1}</h1>
+            <p>{t.lede}</p>
+            <div className="cta">
+              <a className="btn ink" href="#gift-cards">{locale === 'fr' ? 'Choisir un bon' : 'Choose a card'} <Arrow /></a>
+              <Link className="btn ghost" href={t.enquireHref}>{t.enquire}</Link>
             </div>
           </div>
-          <aside className="border border-border-strong p-6 sm:p-8" aria-labelledby="gift-cards">
-            <h2 id="gift-cards" className="font-display text-3xl tracking-tight">{cardsTitle}</h2>
-            <ul className="mt-6 divide-y divide-border border-y border-border">
-              {GIFT_CARDS.map((card) => {
-                const label = locale === 'fr' ? card.labelFr : card.labelEn
-                return (
-                  <li key={card.id} className="flex items-center justify-between gap-4 py-4">
-                    <span className="font-display text-3xl tracking-tight">{label}</span>
-                    <a href={card.stripe} className="paywall-cta" rel="nofollow noopener noreferrer" target="_blank">
-                      {pay} {label}
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </aside>
+          <ul className="b2-points">{t.points.map((p) => <li key={p}>{p}</li>)}</ul>
         </div>
-      </div>
-    </article>
+        <div className="hr plain">
+          <div className="photo-bg" />
+          <Image src="/gallery/rose-tartlets.jpeg" alt="" fill sizes="(max-width: 600px) 100vw, 680px" />
+        </div>
+      </section>
+      <section id="gift-cards" className="enq">
+        <div>
+          <h2 className="disp">{locale === 'fr' ? 'Bons cadeaux' : 'Gift cards'}</h2>
+          <p>{t.lede}</p>
+        </div>
+        <div className="opts">
+          {GIFT_CARDS.map((card) => {
+            const label = locale === 'fr' ? card.labelFr : card.labelEn
+            return <Opt key={card.id} href={card.stripe} title={label} sub={`${t.eyebrow} · ${pay}`} external />
+          })}
+        </div>
+      </section>
+    </div>
   )
 }
