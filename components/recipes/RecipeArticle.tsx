@@ -1,9 +1,9 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover, stockSrc } from '@/lib/cover'
+import { stockSrc } from '@/lib/cover'
 import { BookChefCta } from '@/components/monetisation/BookChefCta'
 import { NewsletterForm } from '@/components/monetisation/NewsletterForm'
-import { CREDIT, CREDIT_FR, libraryRecipePath, type LibraryRecipe } from '@/lib/library'
+import { CREDIT, CREDIT_FR, type LibraryRecipe } from '@/lib/library'
 
 const UI = {
   en: {
@@ -40,29 +40,45 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
   const title = locale === 'fr' ? recipe.titleFr : recipe.title
   const intro = locale === 'fr' ? recipe.introFr : recipe.intro
   const minutes = locale === 'fr' ? 'min' : 'min'
+  const photo = stockSrc(recipe.image.src)
+  const alt = locale === 'fr' ? recipe.image.altFr || recipe.image.alt : recipe.image.alt
+  const category = [recipe.cuisine, recipe.course].filter(Boolean).join(' · ')
 
   return (
     <article className="recipe-article bg-background pb-20 pt-28 text-foreground sm:pt-32">
       <div className="ra-wrap container max-w-3xl">
-        <p className="ra-kicker text-[11px] uppercase tracking-caps text-foreground-subtle">
-          {recipe.cuisine}
-          {recipe.course ? ` · ${recipe.course}` : ''}
+        <header className={photo ? 'ra-hero is-photo' : 'ra-hero is-cream'}>
+          {photo ? (
+            <Image
+              className="ra-hero-photo"
+              src={photo}
+              alt={alt}
+              fill
+              priority
+              sizes="(max-width: 800px) 100vw, 1280px"
+              quality={75}
+            />
+          ) : null}
+          <div className="ra-hero-copy">
+            {category ? <p className="ra-hero-cat">{category}</p> : null}
+            <h1 className="ra-hero-title">{title}</h1>
+            <span className="ra-hero-rule" aria-hidden="true" />
+            <p className="ra-hero-intro">{intro}</p>
+          </div>
+        </header>
+        <p className="ra-byline">
+          {photo && recipe.image.credit ? (
+            recipe.image.creditUrl ? (
+              <a href={recipe.image.creditUrl} rel="noreferrer">
+                {recipe.image.credit}
+              </a>
+            ) : (
+              <span>{recipe.image.credit}</span>
+            )
+          ) : null}
+          {photo && recipe.image.credit ? <span aria-hidden="true"> · </span> : null}
+          <span>{ui.credit}</span>
         </p>
-        <h1 className="ra-title mt-3 font-display text-4xl tracking-tight sm:text-6xl">{title}</h1>
-        <p className="ra-intro mt-5 text-lg leading-relaxed text-foreground-muted">{intro}</p>
-        <p className="ra-credit mt-4 text-sm text-foreground">{ui.credit}</p>
-
-        <figure className="ra-figure mt-8">
-          <BrandCover
-            {...splitCover(title)}
-            meta={recipe.cuisine}
-            src={stockSrc(recipe.image.src)}
-            seed={recipe.slug}
-            priority
-            entrance
-            sizes="(max-width: 768px) 100vw, 768px"
-          />
-        </figure>
 
         <dl className="ra-facts mt-8 grid grid-cols-3 gap-3 border-y border-border py-4 text-sm">
           <div>

@@ -3,6 +3,7 @@ import path from 'path'
 import { articles } from '@/data/articles'
 import { journal } from '@/data/library/journal'
 import { MENUS } from '@/data/menus'
+import { splitCover } from '@/lib/cover'
 import { bookCoverId, COVER_PHOTOS, coverPhoto } from '@/lib/cover-photos'
 import { libraryRecipes } from '@/lib/library'
 import { OFFER_BOOKS, OFFER_PLANS } from '@/lib/offer-copy'
@@ -52,5 +53,37 @@ describe('cover photographs', () => {
 
     expect(coverPhoto('plan-gut').src).not.toBe(coverPhoto('hero-home').src)
     expect(coverPhoto('location-yacht').page).toMatch(/pexels\.com|unsplash\.com/)
+  })
+
+  it('gives every recipe its own photograph, or a titled text cover when nothing matches', () => {
+    const coverSrcs = new Set(Object.values(COVER_PHOTOS).map((cover) => cover.src))
+    const coverIds = new Set(
+      Object.values(COVER_PHOTOS).map((cover) => {
+        const match = cover.page.match(/(\d+)\/?$/)
+        return match ? match[1] : cover.page
+      }),
+    )
+    const srcs = libraryRecipes.map((recipe) => recipe.image.src)
+    const photos = srcs.filter(Boolean)
+    expect(new Set(photos).size).toBe(photos.length)
+    expect(photos.length).toBeGreaterThanOrEqual(120)
+    expect(photos.length + srcs.filter((src) => !src).length).toBe(libraryRecipes.length)
+    for (const recipe of libraryRecipes.filter((item) => !item.image.src)) {
+      expect(splitCover(recipe.title).word.trim().length).toBeGreaterThan(0)
+    }
+
+    for (const recipe of libraryRecipes) {
+      const src = recipe.image.src
+      if (!src) continue
+      expect(src.startsWith('/media/recipes/')).toBe(true)
+      expect(src.endsWith('.webp')).toBe(true)
+      expect(src.includes('/gallery/')).toBe(false)
+      expect(coverSrcs.has(src)).toBe(false)
+      expect(fs.existsSync(path.join(process.cwd(), 'public', src))).toBe(true)
+      expect(recipe.image.creditUrl).toMatch(/pexels\.com|unsplash\.com/)
+      const id = recipe.image.creditUrl.match(/(\d+)\/?$/)
+      expect(id).not.toBeNull()
+      expect(coverIds.has(id?.[1])).toBe(false)
+    }
   })
 })
