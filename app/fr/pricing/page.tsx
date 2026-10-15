@@ -1,1 +1,1 @@
-export { default } from '../../pricing/page'
+export { default } from '../../(en)/pricing/page'

@@ -1,3 +1,3 @@
 'use client'
 
-export { default } from '../../gallery/page'
+export { default } from '../../(en)/gallery/page'

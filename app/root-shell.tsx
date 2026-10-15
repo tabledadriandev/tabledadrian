@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next"
-import { headers } from "next/headers"
 import { Bodoni_Moda, Hanken_Grotesk, Source_Serif_4 } from "next/font/google"
 import "./globals.css"
 import "./design.css"
@@ -45,7 +44,7 @@ const sola = Source_Serif_4({
   display: 'swap',
 })
 
-export const metadata: Metadata = {
+export const baseMetadata: Metadata = {
   title: {
     default: "Table d'Adrian | Private Chef and Longevity Cuisine | Côte d'Azur and Monaco",
     template: "%s | Table d'Adrian",
@@ -98,13 +97,7 @@ export const viewport: Viewport = {
   themeColor: THEME_COLOR,
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const pathname = headers().get('x-pathname') || '/'
-  const lang = pathname === '/fr' || pathname.startsWith('/fr/') ? 'fr' : 'en'
+export function RootShell({ children, lang }: { children: React.ReactNode; lang: 'en' | 'fr' }) {
   const business = localBusinessJsonLd()
 
   return (
