@@ -147,9 +147,37 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
 .tda .b2-head { position: relative; z-index: 40; }
 .tda .b2-nav-item { display: flex; align-items: center; }
 .tda .b2-nav a[aria-current='page'] { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1.5px; }
+.tda .b2-more { position: relative; display: flex; align-items: center; align-self: stretch; }
+.tda .b2-more-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 44px; padding: 0 22px; border: 0; border-radius: 800px;
+  background: none; color: inherit; font: inherit; font-weight: 500; cursor: pointer;
+}
+.tda .b2-more.is-open .b2-more-btn,
+.tda .b2-more-btn:hover { background: var(--m-bg); }
+.tda .b2-chevron { display: block; transition: transform .2s ease; }
+.tda .b2-more.is-open .b2-chevron { transform: rotate(180deg); }
+.tda .b2-more-panel {
+  position: absolute; top: 100%; right: 0; z-index: 50;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  width: max-content; min-width: 360px; max-width: min(440px, calc(100vw - 32px));
+  padding: 18px 8px 8px;
+  border-radius: 28px;
+  background: linear-gradient(var(--m-card), var(--m-card)) 0 10px / 100% calc(100% - 10px) no-repeat;
+}
+.tda .b2-more-panel a {
+  min-height: 44px; padding: 10px 14px !important; border-radius: 16px;
+  font-weight: 500;
+}
+.tda .b2-more-panel a:hover,
+.tda .b2-more-panel a:focus-visible { background: var(--m-bg); }
 .tda .b2-head-r { display: flex; align-items: center; gap: 8px; }
 .tda .b2-burger { display: none; width: 42px; height: 42px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--m-ink); background: none; place-content: center; gap: 5px; cursor: pointer; color: var(--m-ink); }
 .tda .b2-burger span { display: block; width: 16px; height: 1.6px; background: currentColor; }
+@media (max-width: 1080px) {
+  .tda .b2-nav { display: none; }
+  .tda .b2-burger { display: grid; }
+}
 .tda .b2-sheet { margin-top: 8px; background: var(--m-card); border-radius: 32px; padding: 10px; display: grid; gap: 4px; }
 .tda .b2-sheet a { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-radius: 22px; font-weight: 500; }
 .tda .b2-sheet a:hover { background: var(--m-bg); }
@@ -233,7 +261,6 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
 .tda .ra-ingredients, .tda .ra-method, .tda .ra-also { background: var(--m-card); border-radius: 40px; padding: 44px 52px !important; margin-top: 16px !important; border: 0 !important; }
 
 @media (max-width: 600px) {
-  .tda .b2-burger { display: grid; }
   .tda .b2-foot-row { flex-direction: column; align-items: flex-start; gap: 20px; }
   .tda .b2-foot-sub { flex-direction: column; align-items: flex-start; }
   .tda .b2-band h1, .tda .b2-split .hl h1 { font-size: 38px; }
