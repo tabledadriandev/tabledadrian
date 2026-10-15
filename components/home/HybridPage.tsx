@@ -1,9 +1,9 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
 import { GALLERY } from '@/data/gallery'
-import { splitCover } from '@/lib/cover'
 import { coverPhoto } from '@/lib/cover-photos'
 import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
 import { FAQ } from '@/lib/faq'
@@ -45,7 +45,10 @@ export function HybridPage() {
   const x = X[locale]
   const contactHref = withLocale('/contact', locale)
   const [bandA, bandB] = h.libraryTitle.split(', ')
-  const plates = BENTO.map(([id, cls]) => ({ cls, plate: GALLERY.find((g) => g.id === id)! })).filter((p) => p.plate)
+  const plates = BENTO.flatMap(([id, cls]) => {
+    const plate = GALLERY.find((g) => g.id === id)
+    return plate?.src ? [{ cls, plate }] : []
+  })
 
   return (
     <div className="wrap b2-home">
@@ -95,15 +98,18 @@ export function HybridPage() {
       </div>
 
       <section className="bento" aria-label="Gallery">
-        {plates.map(({ plate }, i) => {
-          const cover = splitCover(plate.title)
-          return (
-            <Link key={plate.id} href={withLocale('/gallery', locale)} className={`bc b${i % 6}`}>
-              <BrandCover word={cover.word} italic={cover.italic} meta={locale === 'fr' ? 'GALERIE' : 'GALLERY'} seed={plate.id} fill sizes="(max-width: 600px) 100vw, 420px" />
-              <span className="sr-only">{plate.title}</span>
-            </Link>
-          )
-        })}
+        {plates.map(({ cls, plate }, i) => (
+          <Link key={plate.id} href={withLocale('/gallery', locale)} className={`bc ${cls}`}>
+            <div className="im">
+              <Image src={plate.src} alt={plate.caption} fill sizes="(max-width: 600px) 100vw, 520px" />
+            </div>
+            <figcaption>
+              <span className="tag">0{i + 1}</span>
+              <b>{plate.title}</b>
+              <p>{plate.caption}</p>
+            </figcaption>
+          </Link>
+        ))}
       </section>
 
       <section id="about" className="about" aria-labelledby="about-title">

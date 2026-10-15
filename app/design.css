@@ -110,7 +110,7 @@ html[data-resolved='dark']{--m-bg:#14170F;--m-card:#1F241B;--m-ink:#F6F1E6;--m-m
 .tda .b2,.tda .b3{grid-column:span 1!important}
 .tda .b2 figcaption,.tda .b3 figcaption{padding:20px}
 .tda .b2 b,.tda .b3 b{font-size:20px}
-.tda .b2 p,.tda .b3 p{display:none}
+.tda .b2 figcaption p,.tda .b3 figcaption p{display:none}
 .tda .about{grid-template-columns:1fr}
 .tda .ab{padding:36px 26px;border-radius:32px}
 .tda .ab h2{font-size:40px}
@@ -452,7 +452,7 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
 }
 .tda .brand-cover {
   position: relative;
-  container-type: inline-size;
+  container-type: size;
   overflow: hidden;
   aspect-ratio: 3/4;
   background: #F6F1E6;
@@ -477,33 +477,39 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
 .tda .brand-cover .cover-type {
   position: absolute; inset: 0; z-index: 3;
   display: flex; flex-direction: column; justify-content: space-between;
-  padding: 8% 8% 7%;
+  gap: .35rem;
+  padding: clamp(8px, 5cqmin, 8%);
+  min-height: 0;
 }
+.tda .brand-cover .cover-top { min-width: 0; max-width: 100%; }
 .tda .brand-cover .cover-meta {
-  margin: 0 0 .7rem;
+  margin: 0 0 .45rem;
   font-family: var(--font-body), Jost, sans-serif;
-  font-size: 11px;
+  font-size: clamp(8px, 2.4cqmin, 11px);
   font-weight: 600;
-  letter-spacing: .22em;
+  letter-spacing: .16em;
   text-transform: uppercase;
 }
 .tda .brand-cover .cover-word {
   margin: 0;
+  display: block;
   font-family: "Cover Serif", Georgia, serif;
   font-weight: 500;
-  font-size: clamp(1.8rem, 18cqi, 5.2rem);
-  line-height: .86;
+  font-size: clamp(0.95rem, 16cqmin, 5.2rem);
+  line-height: .9;
   letter-spacing: -.02em;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
-.tda .brand-cover.long .cover-word { font-size: clamp(1.4rem, 12cqi, 3.2rem); }
+.tda .brand-cover.long .cover-word { font-size: clamp(0.85rem, 11cqmin, 3.2rem); }
 .tda .brand-cover .cover-italic {
-  margin: .2em 0 0;
+  margin: .15em 0 0;
+  display: block;
   font-family: "Cover Serif", Georgia, serif;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1rem, 6.5cqi, 1.65rem);
+  font-size: clamp(0.72rem, 6.5cqmin, 1.65rem);
   line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 .tda .brand-cover .cover-rule {
   display: block;
@@ -515,10 +521,20 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
 }
 .tda .brand-cover .cover-mark {
   display: block;
-  width: min(46%, 168px);
+  width: min(42%, 168px);
+  max-height: 14cqmin;
   height: auto;
-  margin-top: 1rem;
+  margin-top: .35rem;
   object-fit: contain;
+  flex: none;
+}
+.tda .b2 .brand-cover .cover-word,
+.tda .b2 .brand-cover .cover-italic,
+.tda .b2 .brand-cover .cover-meta,
+.tda .b3 .brand-cover .cover-word,
+.tda .b3 .brand-cover .cover-italic,
+.tda .b3 .brand-cover .cover-meta {
+  display: block;
 }
 .tda .brand-cover.is-photo { color: #F6F1E6; background: #2F3529; }
 .tda .brand-cover.is-photo .cover-word,
