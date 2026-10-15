@@ -1,6 +1,7 @@
 import type { Locale } from '@/lib/copy'
 import type { FaqItem } from '@/lib/faq'
 import { FAQ } from '@/lib/faq'
+import { townFaq } from '@/lib/location-faq'
 
 export type LocationId = 'hub' | 'monaco' | 'nice' | 'cannes' | 'antibes' | 'saint-tropez' | 'yacht' | 'villa' | 'events'
 
@@ -95,7 +96,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Monaco is the booking. The neighbouring communes are listed because the coast is short and the same kitchen can travel.",
     imageSrc: "/gallery/lobster-claw.jpeg",
     imageAlt: "Lobster claw with pickled onion on a Monaco table, Table d'Adrian private chef.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "monaco",
@@ -119,7 +120,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Monaco est la r\u00e9servation. Les communes voisines figurent parce que la c\u00f4te est courte et que la m\u00eame cuisine peut s'y d\u00e9placer.",
     imageSrc: "/gallery/lobster-claw.jpeg",
     imageAlt: "Pince de homard et oignon marin\u00e9 sur une table \u00e0 Monaco, chef priv\u00e9 Table d'Adrian.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "nice",
@@ -143,7 +144,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Nice is the booking. The eastern communes are listed because a week based in the city often includes a dinner along that stretch.",
     imageSrc: "/gallery/zucchini-carpaccio.jpeg",
     imageAlt: "Courgette carpaccio with sage and lemon on a Nice table, Table d'Adrian private chef.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "nice",
@@ -167,7 +168,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Nice est la r\u00e9servation. Les communes de l'est figurent parce qu'une semaine en ville inclut souvent un d\u00eener sur ce trait de c\u00f4te.",
     imageSrc: "/gallery/zucchini-carpaccio.jpeg",
     imageAlt: "Carpaccio de courgette, sauge et citron sur une table \u00e0 Nice, chef priv\u00e9 Table d'Adrian.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "cannes",
@@ -191,7 +192,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Cannes is the booking. Mougins and the hills are listed because a weekend on the bay often includes a dinner above it.",
     imageSrc: "/gallery/rose-tartlets.jpeg",
     imageAlt: "Berry rose tartlets with whipped cream on a Cannes table, Table d'Adrian private chef.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "cannes",
@@ -215,7 +216,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Cannes est la r\u00e9servation. Mougins et les collines figurent parce qu'un week-end sur la baie inclut souvent un d\u00eener au-dessus.",
     imageSrc: "/gallery/rose-tartlets.jpeg",
     imageAlt: "Tartelettes rose aux fruits rouges sur une table \u00e0 Cannes, chef priv\u00e9 Table d'Adrian.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "antibes",
@@ -239,7 +240,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Antibes is the booking. Cap d'Antibes and Juan-les-Pins are the same commune's two faces; Cannes and Nice are the neighbouring towns.",
     imageSrc: "/gallery/duck-breast.jpeg",
     imageAlt: "Duck breast with shimeji on an Antibes table, Table d'Adrian private chef.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "antibes",
@@ -263,7 +264,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Antibes est la r\u00e9servation. Le Cap d'Antibes et Juan-les-Pins sont les deux visages de la m\u00eame commune ; Cannes et Nice sont les villes voisines.",
     imageSrc: "/gallery/duck-breast.jpeg",
     imageAlt: "Magret de canard et shimeji sur une table \u00e0 Antibes, chef priv\u00e9 Table d'Adrian.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "saint-tropez",
@@ -287,7 +288,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Saint-Tropez and St Tropez are the same town. Ramatuelle is the neighbouring commune people search when the villa sits outside the village.",
     imageSrc: "/gallery/honeycomb-dessert.jpeg",
     imageAlt: "Honeycomb dessert over cream on a Saint-Tropez table, Table d'Adrian private chef.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "saint-tropez",
@@ -311,7 +312,7 @@ export const LOCATIONS: LocationRecord[] = [
     nearbyNote: "Saint-Tropez et St Tropez sont la m\u00eame ville. Ramatuelle est la commune voisine que l'on cherche lorsque la villa est hors du village.",
     imageSrc: "/gallery/honeycomb-dessert.jpeg",
     imageAlt: "Dessert alv\u00e9ol\u00e9 sur cr\u00e8me, table \u00e0 Saint-Tropez, chef priv\u00e9 Table d'Adrian.",
-    showFaq: false,
+    showFaq: true,
   },
   {
     id: "yacht",
@@ -488,5 +489,7 @@ export function siblingLocations(id: LocationId, locale: Locale) {
 }
 
 export function locationFaq(record: LocationRecord): FaqItem[] {
-  return record.showFaq ? FAQ[record.locale] : []
+  if (!record.showFaq) return []
+  if (record.id === 'hub') return FAQ[record.locale]
+  return townFaq(record.id, record.locale)
 }

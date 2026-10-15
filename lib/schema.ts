@@ -28,12 +28,12 @@ export function siteJsonLd() {
         knowsAbout: ['Private chef', 'Longevity cuisine', 'Chef priv\u00e9', 'Chef \u00e0 domicile'],
       },
       {
-        '@type': ['LocalBusiness', 'FoodService'],
+        '@type': ['FoodEstablishment', 'LocalBusiness'],
         '@id': businessId,
         name: SITE_NAME,
         alternateName: "Table d'Adrian private chef",
         description:
-          "Table d'Adrian is Adrian Stefan's private chef service on the C\u00f4te d'Azur and in Monaco.",
+          "Table d'Adrian is Adrian Stefan's private chef service on the C\u00f4te d'Azur and in Monaco, based in Antibes.",
         url: SITE_URL,
         image,
         email: CONTACT_INFO.email,
@@ -53,6 +53,7 @@ export function siteJsonLd() {
         currenciesAccepted: 'EUR',
         address: {
           '@type': 'PostalAddress',
+          addressLocality: 'Antibes',
           addressRegion: "Provence-Alpes-C\u00f4te d'Azur",
           addressCountry: 'FR',
         },
