@@ -41,17 +41,17 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
   const minutes = locale === 'fr' ? 'min' : 'min'
 
   return (
-    <article className="bg-background pb-20 pt-28 text-foreground sm:pt-32">
-      <div className="container max-w-3xl">
-        <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">
+    <article className="recipe-article bg-background pb-20 pt-28 text-foreground sm:pt-32">
+      <div className="ra-wrap container max-w-3xl">
+        <p className="ra-kicker text-[11px] uppercase tracking-caps text-foreground-subtle">
           {recipe.cuisine}
           {recipe.course ? ` · ${recipe.course}` : ''}
         </p>
-        <h1 className="mt-3 font-display text-4xl tracking-tight sm:text-6xl">{title}</h1>
-        <p className="mt-5 text-lg leading-relaxed text-foreground-muted">{intro}</p>
-        <p className="mt-4 text-sm text-foreground">{ui.credit}</p>
+        <h1 className="ra-title mt-3 font-display text-4xl tracking-tight sm:text-6xl">{title}</h1>
+        <p className="ra-intro mt-5 text-lg leading-relaxed text-foreground-muted">{intro}</p>
+        <p className="ra-credit mt-4 text-sm text-foreground">{ui.credit}</p>
 
-        <figure className="mt-8">
+        <figure className="ra-figure mt-8">
           {recipe.image.src ? (
             <DishPhoto
               src={recipe.image.src}
@@ -76,7 +76,7 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
           ) : null}
         </figure>
 
-        <dl className="mt-8 grid grid-cols-3 gap-3 border-y border-border py-4 text-sm">
+        <dl className="ra-facts mt-8 grid grid-cols-3 gap-3 border-y border-border py-4 text-sm">
           <div>
             <dt className="text-[11px] uppercase tracking-caps text-foreground-subtle">{ui.prep}</dt>
             <dd className="mt-1">
@@ -95,7 +95,7 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
           </div>
         </dl>
 
-        <section className="mt-10" aria-labelledby="ingredients-heading">
+        <section className="ra-ingredients mt-10" aria-labelledby="ingredients-heading">
           <h2 id="ingredients-heading" className="font-display text-3xl tracking-tight">
             {ui.ingredients}
           </h2>
@@ -108,7 +108,7 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
           </ul>
         </section>
 
-        <section className={recipe.free ? 'mt-10' : 'paywall mt-10'} aria-labelledby="method-heading">
+        <section className={recipe.free ? 'ra-method mt-10' : 'ra-method paywall mt-10'} aria-labelledby="method-heading">
           <h2 id="method-heading" className="font-display text-3xl tracking-tight">
             {ui.method}
           </h2>
@@ -131,7 +131,7 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
         <BookChefCta locale={locale} />
         <NewsletterForm locale={locale} id="journal-email-recipe" />
 
-        <aside className="mt-12 border-t border-border pt-6 text-sm">
+        <aside className="ra-also mt-12 border-t border-border pt-6 text-sm">
           <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{ui.also}</p>
           <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
             <Link href={locale === 'fr' ? '/fr/chef-de-yacht' : '/yacht-chef'} className="underline-offset-4 hover:underline">

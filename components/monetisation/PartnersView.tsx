@@ -1,42 +1,7 @@
 import { CONTACT_INFO } from '@/lib/constants'
 import { PARTNER_STATS } from '@/lib/monetisation'
 
-const COPY = {
-  en: {
-    kicker: 'Partners',
-    h1: 'A media kit',
-    lede: 'Table d’Adrian cooks in private kitchens on the Côte d’Azur and in Monaco, and publishes the journal and the recipe library.',
-    who: 'Adrian Stefan. Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford.',
-    audienceTitle: 'Audience',
-    audience:
-      'People who read the journal and the recipes, and hosts who book a private chef between Monaco and Saint-Tropez. Figures are not published here.',
-    optionsTitle: 'Ways to work together',
-    options: [
-      { title: 'Affiliate', text: 'A tracked link on a relevant page, once Adrian’s affiliate ID exists. The kitchen page already marks those slots.' },
-      { title: 'Sponsored recipe', text: 'A recipe in the library or the journal, credited, with the product in the method only if it belongs there.' },
-      { title: 'Product at the table', text: 'A bottle, a tool, or a pantry item featured at a private dinner, agreed in the quote.' },
-      { title: 'Event sponsorship', text: 'A name beside a wedding weekend or a corporate dinner. The menu stays Adrian’s.' },
-    ],
-    contact: 'Write to the kitchen',
-  },
-  fr: {
-    kicker: 'Partenaires',
-    h1: 'Dossier presse',
-    lede: 'Table d’Adrian cuisine dans des cuisines privées sur la Côte d’Azur et à Monaco, et publie le journal et la bibliothèque de recettes.',
-    who: 'Adrian Stefan. Formation suisse (EHL). 10+ ans. Nutrition certificate, Stanford.',
-    audienceTitle: 'Public',
-    audience:
-      'Les lecteurs du journal et des recettes, et les hôtes qui réservent un chef privé entre Monaco et Saint-Tropez. Les chiffres ne sont pas publiés ici.',
-    optionsTitle: 'Façons de travailler ensemble',
-    options: [
-      { title: 'Affiliation', text: 'Un lien suivi sur une page pertinente, une fois l’identifiant affilié d’Adrian en place. La page cuisine marque déjà ces emplacements.' },
-      { title: 'Recette sponsorisée', text: 'Une recette dans la bibliothèque ou le journal, créditée, avec le produit dans la méthode seulement s’il y a sa place.' },
-      { title: 'Produit à table', text: 'Une bouteille, un outil, ou un produit du garde-manger à un dîner privé, accordé dans le devis.' },
-      { title: 'Parrainage d’événement', text: 'Un nom à côté d’un week-end de mariage ou d’un dîner d’entreprise. Le menu reste celui d’Adrian.' },
-    ],
-    contact: 'Écrire à la cuisine',
-  },
-} as const
+import { PARTNERS_COPY as COPY } from '@/lib/view-copy'
 
 export function PartnersView({ locale }: { locale: 'en' | 'fr' }) {
   const t = COPY[locale]

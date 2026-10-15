@@ -1,44 +1,7 @@
 import { Button } from '@/components/ui/Button'
 import { GIFT_CARDS } from '@/lib/monetisation'
 
-const COPY = {
-  en: {
-    eyebrow: 'Gift',
-    h1: 'A private dinner, given',
-    lede: 'A voucher for a table cooked in someone’s kitchen on the Côte d’Azur or in Monaco. The date and the menu are agreed afterwards.',
-    points: [
-      'The gift is the dinner. The menu is written for the people who will sit down.',
-      'Dietary preferences and allergies are accommodated on request.',
-      'Three gift cards: €150, €300, and €500. The date and the menu are agreed afterwards.',
-    ],
-    enquire: 'Enquire about a gift',
-    enquireHref: '/contact?intent=gift',
-    stripeKicker: 'Placeholder · not connected',
-    stripeTitle: 'Stripe Payment Link',
-    stripeBody:
-      'Adrian pastes the Payment Link from his Stripe account here. This control does not take a card, and no Stripe account is connected.',
-    stripeLabel: 'Payment link placeholder',
-    stripeHint: 'Replace this with the live Payment Link:',
-  },
-  fr: {
-    eyebrow: 'Cadeau',
-    h1: 'Un dîner privé, offert',
-    lede: 'Un bon pour une table cuisinée dans une cuisine de la Côte d’Azur ou de Monaco. La date et le menu se décident ensuite.',
-    points: [
-      'Le cadeau est le dîner. Le menu s’écrit pour ceux qui s’assoient.',
-      'Les préférences alimentaires et les allergies sont prises en compte sur demande.',
-      'Trois bons : 150 €, 300 € et 500 €. La date et le menu se décident ensuite.',
-    ],
-    enquire: 'Demander un cadeau',
-    enquireHref: '/fr/contact?intent=gift',
-    stripeKicker: 'Placeholder · non connecté',
-    stripeTitle: 'Lien de paiement Stripe',
-    stripeBody:
-      'Adrian colle ici le Payment Link de son compte Stripe. Ce bouton ne prend aucune carte, et aucun compte Stripe n’est connecté.',
-    stripeLabel: 'Placeholder du lien de paiement',
-    stripeHint: 'À remplacer par le lien actif :',
-  },
-} as const
+import { GIFT_COPY as COPY } from '@/lib/view-copy'
 
 export function GiftView({ locale }: { locale: 'en' | 'fr' }) {
   const t = COPY[locale]
