@@ -749,3 +749,39 @@ html[data-resolved='dark'] .tda .brand-cover.tone-ink { background: #14170F; }
   }
 }
 .tda .site-main { overflow-x: clip; }
+
+/* Christmas gift strip. Body-size type, one row with the small book card. */
+.tda .season-slot { margin-top: 16px; container-type: inline-size; }
+.tda .season-slot.is-page { margin-top: 28px; }
+.tda .season { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 340px); gap: 12px; align-items: stretch; }
+.tda .xmas,
+.tda .ebook-card {
+  display: flex; align-items: center; gap: 16px;
+  min-height: 88px; border-radius: 28px; padding: 16px 18px 16px 20px;
+  text-decoration: none; color: inherit;
+  transition: transform .25s ease;
+}
+.tda .xmas { background: #2F3529; color: #F6F1E6; box-shadow: inset 0 0 0 1px #D9C79F66; }
+.tda .xmas .sprig { width: 28px; height: 28px; flex: none; color: #D9C79F; }
+.tda .xmas-copy { display: grid; gap: 2px; min-width: 0; }
+.tda .xmas-copy strong { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+.tda .xmas-copy span { font-size: 15px; line-height: 1.35; color: #D9C79F; }
+.tda .xmas .go,
+.tda .ebook-card .go {
+  margin-left: auto; width: 36px; height: 36px; flex: none;
+  border-radius: 50%; display: grid; place-items: center;
+}
+.tda .xmas .go { background: #B39660; color: #1C2019; }
+.tda .ebook-card { background: var(--m-card); color: var(--m-ink); box-shadow: inset 0 0 0 1px var(--m-dot); }
+.tda .ebook-card > span:first-child { font-size: 15px; font-weight: 600; line-height: 1.35; }
+.tda .ebook-card .go { background: var(--m-bg); color: var(--m-ink); box-shadow: inset 0 0 0 1.5px var(--m-ink); }
+.tda a.xmas:hover,
+.tda a.ebook-card:hover { transform: translateY(-2px); }
+@container (max-width: 680px) {
+  .tda .season { grid-template-columns: 1fr; }
+  .tda .xmas, .tda .ebook-card { border-radius: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tda .xmas, .tda .ebook-card { transition: none; }
+  .tda a.xmas:hover, .tda a.ebook-card:hover { transform: none; }
+}

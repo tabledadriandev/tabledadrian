@@ -11,6 +11,7 @@ import { faqJsonLd } from '@/lib/schema'
 import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
 import { Arrow, Lemon } from '@/components/b2/ui'
+import { SeasonPush } from '@/components/season/SeasonPush'
 
 const BENTO = [
   ['duck-breast', 'b0 gold'],
@@ -82,6 +83,8 @@ export function HybridPage() {
           </Link>
         </div>
       </section>
+
+      <SeasonPush locale={locale} />
 
       <section id="experiences" className="sec row3" aria-label={h.offersTitle}>
         {h.offers.map((o, i) => (

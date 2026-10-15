@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Locale } from '@/lib/copy'
+import { SeasonPush } from '@/components/season/SeasonPush'
 
 const COPY = {
   en: {
@@ -47,7 +48,8 @@ export function ServicesView({ locale }: { locale: Locale }) {
       <div className="container max-w-3xl">
         <h1 className="font-display text-5xl tracking-tight sm:text-6xl">{copy.h1}</h1>
         <p className="mt-5 text-lg leading-relaxed text-foreground-muted">{copy.lede}</p>
-        <ul className="mt-12 divide-y divide-border border-y border-border">
+        <SeasonPush locale={locale} place="page" />
+        <ul className="mt-8 divide-y divide-border border-y border-border">
           {copy.items.map((item) => (
             <li key={item.href}>
               <Link href={item.href} className="block py-6">
