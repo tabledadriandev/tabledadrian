@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Clock, User } from 'lucide-react'
 import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover, TABLE_COVER } from '@/lib/cover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import ReactMarkdown from 'react-markdown'
 import { Article } from '@/data/articles'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
@@ -48,7 +49,7 @@ export function ArticleDetail({ article }: ArticleDetailProps) {
             <BrandCover
               {...splitCover(article.title)}
               meta={article.category}
-              src={TABLE_COVER}
+              cover={coverPhoto(`article-${article.slug}`)}
               seed={article.slug}
               priority
               entrance

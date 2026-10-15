@@ -1,5 +1,4 @@
 export const DISH_NATIVE_SIZE: Record<string, { w: number; h: number }> = {
-  '/media/covers/table-riviera.webp': { w: 1600, h: 1067 },
   '/media/recipes/carbonara.webp': { w: 1400, h: 1750 },
   '/media/recipes/chocolate-mousse.webp': { w: 1400, h: 1750 },
   '/media/recipes/coq-au-vin.webp': { w: 1400, h: 934 },

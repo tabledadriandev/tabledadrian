@@ -463,15 +463,19 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
 .tda .brand-cover.v1 { background: #E7E0D0; }
 .tda .brand-cover.tone-ink { background: #2F3529; color: #F6F1E6; }
 .tda .brand-cover.v3.is-cream { background: #D9C79F; }
-.tda .brand-cover .cover-photo { object-fit: cover; object-position: center; }
-.tda .brand-cover .cover-scrim {
+.tda .brand-cover .cover-photo { object-fit: cover; object-position: var(--cover-crop, center); }
+.tda .brand-cover .cover-tint {
   position: absolute; inset: 0; z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(18,16,10,.58) 0%, rgba(18,16,10,.18) 40%, rgba(18,16,10,.66) 100%),
-    linear-gradient(90deg, rgba(18,16,10,.42), transparent 72%);
+  background: var(--cover-tint, transparent);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.tda .brand-cover .cover-scrim {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(180deg, rgba(18,16,10,.55) 0%, rgba(18,16,10,.14) 46%, rgba(18,16,10,.58) 100%);
 }
 .tda .brand-cover .cover-type {
-  position: absolute; inset: 0; z-index: 2;
+  position: absolute; inset: 0; z-index: 3;
   display: flex; flex-direction: column; justify-content: space-between;
   padding: 8% 8% 7%;
 }
@@ -506,8 +510,8 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
   width: 38%;
   height: 1px;
   margin: .85rem 0 0;
-  background: currentColor;
-  opacity: .7;
+  background: var(--cover-accent, currentColor);
+  opacity: .85;
 }
 .tda .brand-cover .cover-mark {
   display: block;
@@ -519,6 +523,34 @@ body.tda { background: var(--m-bg); color: var(--m-ink); font-family: var(--font
 .tda .brand-cover.is-photo { color: #F6F1E6; background: #2F3529; }
 .tda .brand-cover.is-photo .cover-word,
 .tda .brand-cover.is-photo .cover-italic { text-shadow: 0 1px 16px rgba(12,10,6,.45); }
+.tda .brand-cover.is-photo:not(.text-dark).v0 .cover-scrim {
+  background: linear-gradient(180deg, rgba(18,16,10,.7) 0%, rgba(18,16,10,.16) 48%, rgba(18,16,10,.38) 100%);
+}
+.tda .brand-cover.is-photo:not(.text-dark).v1 .cover-scrim {
+  background: radial-gradient(ellipse at 50% 42%, rgba(18,16,10,.6) 0%, rgba(18,16,10,.16) 54%, rgba(18,16,10,.38) 100%);
+}
+.tda .brand-cover.is-photo:not(.text-dark).v2 .cover-scrim {
+  background: linear-gradient(180deg, rgba(18,16,10,.08) 0%, rgba(18,16,10,.14) 40%, rgba(18,16,10,.76) 100%);
+}
+.tda .brand-cover.is-photo:not(.text-dark).v3 .cover-scrim {
+  background: linear-gradient(270deg, rgba(18,16,10,.72) 0%, rgba(18,16,10,.2) 54%, rgba(18,16,10,.1) 100%);
+}
+.tda .brand-cover.text-dark { color: #1C2019; }
+.tda .brand-cover.text-dark .cover-word,
+.tda .brand-cover.text-dark .cover-italic { text-shadow: 0 1px 0 rgba(246,241,230,.45); }
+.tda .brand-cover.text-dark .mark-on-photo { filter: brightness(0); }
+.tda .brand-cover.text-dark.v0 .cover-scrim {
+  background: linear-gradient(180deg, rgba(246,241,230,.84) 0%, rgba(246,241,230,.16) 50%, rgba(246,241,230,.28) 100%);
+}
+.tda .brand-cover.text-dark.v1 .cover-scrim {
+  background: radial-gradient(ellipse at 50% 42%, rgba(246,241,230,.8) 0%, rgba(246,241,230,.2) 56%, rgba(246,241,230,.28) 100%);
+}
+.tda .brand-cover.text-dark.v2 .cover-scrim {
+  background: linear-gradient(180deg, rgba(246,241,230,.1) 0%, rgba(246,241,230,.16) 42%, rgba(246,241,230,.86) 100%);
+}
+.tda .brand-cover.text-dark.v3 .cover-scrim {
+  background: linear-gradient(270deg, rgba(246,241,230,.86) 0%, rgba(246,241,230,.22) 56%, rgba(246,241,230,.1) 100%);
+}
 .tda .brand-cover.is-photo .mark-on-cream,
 .tda .brand-cover.is-cream:not(.tone-ink) .mark-on-photo { display: none; }
 .tda .brand-cover.tone-ink .mark-on-cream { display: none; }
@@ -540,7 +572,7 @@ html[data-resolved='dark'] .tda .brand-cover.tone-ink { background: #14170F; }
   filter: none;
   mix-blend-mode: normal;
   opacity: 1;
-  object-position: center;
+  object-position: var(--cover-crop, center);
   border-radius: 0;
 }
 .tda .hr .brand-cover .cover-mark,
@@ -552,6 +584,11 @@ html[data-resolved='dark'] .tda .brand-cover.tone-ink { background: #14170F; }
   mix-blend-mode: normal;
   opacity: 1;
   position: static;
+}
+.tda .hr .brand-cover.text-dark .cover-mark.mark-on-photo,
+.tda .bc .brand-cover.text-dark .cover-mark.mark-on-photo,
+.tda .brand-cover.text-dark .cover-mark.mark-on-photo {
+  filter: brightness(0);
 }
 .tda .hr:has(.chip) .brand-cover .cover-type { padding-bottom: 118px; }
 .tda .hr .chip { z-index: 4; }

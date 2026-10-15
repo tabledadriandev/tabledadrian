@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import type { OfferPlan } from '@/lib/offer-copy'
 import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover, TABLE_COVER } from '@/lib/cover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { DISCLAIMER, PLAN_CREDENTIAL, PLANS_COPY, planDetail, planList, plansPath } from '@/lib/view-copy'
 import { Arrow } from '@/components/b2/ui'
 import { Band, Opt } from '@/components/b2/Tiles'
@@ -22,8 +23,7 @@ export function PlansIndex({ locale }: { locale: 'en' | 'fr' }) {
                 word={cover.word}
                 italic={cover.italic}
                 meta={locale === 'fr' ? 'PROGRAMME' : 'MENU PLAN'}
-                src={TABLE_COVER}
-                variant={i % 4}
+                cover={coverPhoto(`plan-${p.id}`)}
                 sizes="(max-width: 600px) 100vw, 400px"
                 className="plan-tile-cover"
               />
@@ -51,7 +51,7 @@ export function PlanArticle({ plan, locale }: { plan: OfferPlan; locale: 'en' | 
       <BrandCover
         {...splitCover(d.title)}
         meta={locale === 'fr' ? 'PROGRAMME' : 'MENU PLAN'}
-        src={TABLE_COVER}
+        cover={coverPhoto(`plan-${plan.id}`)}
         seed={plan.id}
         entrance
         priority

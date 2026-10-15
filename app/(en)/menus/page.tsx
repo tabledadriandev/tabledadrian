@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover, TABLE_COVER } from '@/lib/cover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { MENUS } from '@/data/menus'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Garnish, type GarnishItem } from '@/components/motion/Garnish'
@@ -44,8 +45,7 @@ export default function MenusPage() {
               <BrandCover
                 {...splitCover(collection.title)}
                 meta={`${collection.region} · Five menus`}
-                src={TABLE_COVER}
-                variant={i % 4}
+                cover={coverPhoto(`menu-${collection.id}`)}
                 priority={i < 2}
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="menu-card-cover"

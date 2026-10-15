@@ -1,15 +1,133 @@
 # Photo credits
 
 Photographs outside the gallery are used under the [Pexels Licence](https://www.pexels.com/license/).
-They are not captioned on the page. Each one sits inside a branded cover with the dish or the title and the Table d'Adrian wordmark.
-Where no photograph genuinely matches, the cover is type on ivory (or olive) instead of a picture.
+Each menu, book, plan, journal article, gift, location, and the home hero has its own photograph.
+They are not captioned on the page. The title and the Table d'Adrian wordmark sit on the picture.
+Recipe plates that have their own photograph are listed separately. Where a recipe has no matching photograph, the cover is type on ivory.
 Adrian's own plates appear only in the gallery.
 
-Table setting used on menus, books, plans, the journal, the gift page, location pages, and the home hero:
+## Covers
 
-- table-riviera: https://www.pexels.com/photo/a-table-in-a-restaurant-9367128/ — Erik Mclean
+- article-anti-inflammatory-cooking: https://www.pexels.com/photo/top-view-of-a-pot-with-stew-vegetable-22616265/ — Boryslav Shoot
+- article-art-of-plating: https://www.pexels.com/photo/chef-preparing-elegant-gourmet-dish-28445970/ — Alexander Afanasyev
+- article-circadian-nutrition: https://www.pexels.com/photo/cozy-breakfast-setup-by-sunny-window-35204470/ — Gülnihalce
+- article-gut-brain-connection: https://www.pexels.com/photo/pickled-cucumbers-on-glass-jars-9462573/ — Леся Терехова
+- article-intermittent-fasting-guide: https://www.pexels.com/photo/an-empty-table-standing-in-sunlight-in-a-cafe-26595240/ — Lisa from Pexels
+- article-mediterranean-okinawan-fusion: https://www.pexels.com/photo/delicious-asian-cuisine-with-grilled-fish-and-vegetables-37261965/ — Gu Ko
+- article-nutrition-wellness-chef: https://www.pexels.com/photo/cozy-kitchen-setup-with-cookbook-and-pot-29834258/ — Daniel & Hannah Snipes
+- article-omega-3-masterclass: https://www.pexels.com/photo/solitary-tree-in-a-foggy-black-and-white-landscape-29907156/
+- article-science-of-longevity: https://www.pexels.com/photo/elegant-mediterranean-dinner-table-setting-34032343/
+- article-sulforaphane-superfood: https://www.pexels.com/photo/a-broccoli-and-carrots-on-the-frying-pan-7515373/
+- book-christmas-dinner: https://www.pexels.com/photo/food-and-candles-on-a-christmas-dinner-table-19746794/
+- book-dinner-party: https://www.pexels.com/photo/friends-sitting-around-a-table-6210505/
+- book-market-week: https://www.pexels.com/photo/farmer-holding-basket-with-fresh-harvest-of-fruits-and-vegetables-4975353/
+- book-riviera-summer: https://www.pexels.com/photo/tomatoes-with-garlic-cloves-near-fresh-parsley-and-oil-4134551/
+- gift: https://www.pexels.com/photo/elegant-dining-setup-with-candles-and-flowers-36239185/
+- hero-home: https://www.pexels.com/photo/rustic-outdoor-dining-with-colorful-mediterranean-dishes-36686874/ — Аліна Могиленко
+- journal-a-day-in-the-house: https://www.pexels.com/photo/coffee-served-for-breakfast-23744698/ — Gül Işık
+- journal-a-table-for-two-in-monaco: https://www.pexels.com/photo/two-people-eating-at-a-table-6496070/
+- journal-a-villa-stock: https://www.pexels.com/photo/enamel-pot-on-gas-stove-with-steaming-soup-34640219/ — betül nur akyürek
+- journal-a-wedding-weekend: https://www.pexels.com/photo/elegant-beach-wedding-table-setting-by-the-ocean-32273800/ — Valeria Villao
+- journal-a-week-in-the-villa-kitchen: https://www.pexels.com/photo/luxury-seaside-villa-with-modern-interior-design-31817155/
+- journal-autumn-figs: https://www.pexels.com/photo/close-up-of-freshly-cut-juicy-ripe-figs-34475835/ — Hafza Eflin Keklik
+- journal-cooking-in-a-yacht-galley: https://www.pexels.com/photo/table-with-food-on-yacht-7766409/ — Furkan Tumer
+- journal-emulsions: https://www.pexels.com/photo/creamy-batter-being-whisked-in-metal-bowl-33775627/ — Nano Erdozain
+- journal-herbs-from-the-maquis: https://www.pexels.com/photo/green-spices-on-marble-surface-7026916/ — Electra Studio
+- journal-how-many-courses: https://www.pexels.com/photo/elegant-fine-dining-plated-gourmet-dishes-30469688/
+- journal-how-to-braise: https://www.pexels.com/photo/delicious-brazilian-beef-stew-with-vegetables-30635676/ — IARA MELO
+- journal-morning-at-cours-saleya: https://www.pexels.com/photo/vibrant-street-market-in-nice-france-28602894/
+- journal-olive-oil-at-the-table: https://www.pexels.com/photo/person-pouring-olive-oil-5737579/ — RDNE Stock project
+- journal-planning-a-private-dinner: https://www.pexels.com/photo/cozy-kitchen-scene-with-recipe-and-utensils-33669383/ — Derya Nur 🕊️
+- journal-resting-meat: https://www.pexels.com/photo/roast-meat-with-vegetables-on-a-cutting-board-8408994/ — Mithul Varshan
+- journal-salt-and-acid: https://www.pexels.com/photo/appetizing-sardines-with-lemon-on-ceramic-plate-34038236/
+- journal-setting-the-dining-room: https://www.pexels.com/photo/elegant-fine-dining-table-setup-with-glassware-38794256/
+- journal-spring-on-the-market: https://www.pexels.com/photo/fresh-green-asparagus-at-wroclaw-market-37640385/ — Niko Prodan
+- journal-summer-tomatoes: https://www.pexels.com/photo/fresh-heirloom-tomatoes-on-rustic-wooden-table-29081091/ — Dilara
+- journal-the-morning-boats: https://www.pexels.com/photo/fresh-catch-display-on-ice-at-seafood-market-34762458/ — Tamara G.P
+- journal-wine-with-the-meal: https://www.pexels.com/photo/wine-glasses-and-a-bottle-on-a-table-13574105/
+- journal-winter-citrus: https://www.pexels.com/photo/refreshing-lemonade-with-citrus-fruits-on-wooden-table-37658046/ — Matvei
+- location-antibes: https://www.pexels.com/photo/picturesque-view-of-antibes-with-sea-and-yacht-32729194/ — April Choitz
+- location-cannes: https://www.pexels.com/photo/scenic-view-of-cannes-harbor-and-cityscape-32457956/ — Balázs Gábor
+- location-events: https://www.pexels.com/photo/elegant-outdoor-wedding-reception-under-trees-32179373/ — Caio Mantovani
+- location-hub: https://www.pexels.com/photo/scenic-french-riviera-coastal-view-from-antibes-31405347/ — Ben B.
+- location-monaco: https://www.pexels.com/photo/luxury-yachts-in-scenic-monaco-harbor-with-skyline-30673482/ — Jean-Paul Wettstein
+- location-nice: https://www.pexels.com/photo/scenic-view-of-nice-french-riviera-beachfront-28602953/ — Huy Phan
+- location-saint-tropez: https://www.pexels.com/photo/luxury-yachts-at-saint-tropez-harbor-29851512/ — AXP Photography
+- location-villa: https://www.pexels.com/photo/charming-provence-villa-surrounded-by-cypress-trees-35778170/ — Alisa Skripina
+- location-yacht: https://www.pexels.com/photo/white-yacht-on-sea-10256555/ — Diego F. Parra
+- menu-asia: https://www.pexels.com/photo/merchandise-in-market-8407274/ — Minh Tri
+- menu-asia-1: https://www.pexels.com/photo/authentic-japanese-sushi-and-tempura-table-39212611/ — Greenmax Techphotograph
+- menu-asia-2: https://www.pexels.com/photo/raw-squid-on-barbecue-sticks-5602496/ — cottonbro studio
+- menu-asia-3: https://www.pexels.com/photo/assorted-korean-side-dishes-in-white-bowls-36872900/ — Sherine
+- menu-asia-4: https://www.pexels.com/photo/delicious-hot-and-sour-soup-in-white-bowl-36680510/ — Jaysee Pingkian
+- menu-asia-5: https://www.pexels.com/photo/aloo-chaat-served-in-spiral-bowl-16171917/ — Vinit Jain
+- menu-asia-ii: https://www.pexels.com/photo/nighttime-street-food-stall-in-bangkok-market-36817184/ — Noland Live
+- menu-asia-ii-1: https://www.pexels.com/photo/vietnamese-banh-xeo-with-fresh-herbs-39030442/ — bynamnamnam
+- menu-asia-ii-2: https://www.pexels.com/photo/close-up-of-satay-with-sauce-and-salad-on-a-plate-19792082/ — Markus Winkler
+- menu-asia-ii-3: https://www.pexels.com/photo/traditional-roti-canai-with-curry-sauce-38954055/ — Ahmad Shakir Shamsulbadri
+- menu-asia-ii-4: https://www.pexels.com/photo/close-up-shot-of-a-delicious-cuisine-14132109/ — Saveurs Secretes
+- menu-asia-ii-5: https://www.pexels.com/photo/delicious-stir-fried-noodles-with-sesame-and-vegetables-37417633/ — Husien Bisky
+- menu-celebration: https://www.pexels.com/photo/served-table-decorated-with-flowers-bouquet-and-candles-during-festive-dinner-6479604/ — Tara Winstead
+- menu-celebration-1: https://www.pexels.com/photo/fresh-guacamole-with-tortilla-chips-and-salsa-28525164/ — Alejandro Aznar
+- menu-celebration-2: https://www.pexels.com/photo/gourmet-beef-tartare-with-pickled-vegetables-29653127/ — Valeria Boltneva
+- menu-celebration-3: https://www.pexels.com/photo/elegant-breakfast-setup-with-pastries-and-eggs-32597965/ — Muneeb Malhotra
+- menu-celebration-4: https://www.pexels.com/photo/ham-and-cheese-toasts-15110224/ — MikeGz
+- menu-celebration-5: https://www.pexels.com/photo/georgian-khachapuri-with-egg-18330968/ — Valeria Boltneva
+- menu-coastal: https://www.pexels.com/photo/seafood-platter-with-oysters-and-prawns-39537674/ — fiddaria Jimenez Casellas Gonzalez
+- menu-coastal-1: https://www.pexels.com/photo/a-bowl-of-soup-with-shrimp-and-herbs-17598231/ — Shameel mukkath
+- menu-coastal-2: https://www.pexels.com/photo/salmon-and-cheese-on-plate-4580112/ — Kaysha
+- menu-coastal-3: https://www.pexels.com/photo/grilled-sardines-on-tray-lisbon-street-food-delight-32561233/ — Jose Cruz
+- menu-coastal-4: https://www.pexels.com/photo/delicious-brazilian-pao-de-queijo-on-display-38598140/ — Wolf Art
+- menu-coastal-5: https://www.pexels.com/photo/crab-cakes-with-salad-20184712/ — Valeria Boltneva
+- menu-collection: https://www.pexels.com/photo/elegant-plated-dish-on-fine-dining-table-30729106/ — M.Emin BİLİR
+- menu-collection-1: https://www.pexels.com/photo/close-up-photo-of-a-delicious-falafel-10527299/ — Dora Cocea
+- menu-collection-2: https://www.pexels.com/photo/hands-holding-plate-of-food-4669299/ — Denys Gromov
+- menu-collection-3: https://www.pexels.com/photo/delicious-tuna-tostada-with-avocado-sauce-39022457/ — Deane Bayas
+- menu-collection-4: https://www.pexels.com/photo/vegetable-salad-with-seafood-on-white-ceramic-plate-7151075/ — Anna Romyanon
+- menu-collection-5: https://www.pexels.com/photo/a-person-slicing-barbecue-beef-brisket-9397270/ — Hayden Walker
+- menu-france: https://www.pexels.com/photo/french-cheese-platter-with-baguette-39040315/ — Alona Kim
+- menu-france-1: https://www.pexels.com/photo/sausage-salami-ham-on-round-wood-plate-7175710/ — Vilnis Husko
+- menu-france-2: https://www.pexels.com/photo/plate-of-pincho-10309442/ — Igor Murakhin
+- menu-france-3: https://www.pexels.com/photo/elegant-poached-eggs-with-dill-on-potatoes-37689643/ — Sofie Slaninová
+- menu-france-4: https://www.pexels.com/photo/gourmet-scallops-being-prepared-in-restaurant-31682348/ — Filipp Romanovski
+- menu-france-5: https://www.pexels.com/photo/rustic-cheese-quiche-with-fresh-ingredients-34318141/ — Bia Metidieri
+- menu-italy: https://www.pexels.com/photo/fresh-tomato-and-mozzarella-caprese-salad-32570605/ — Gundula Vogel
+- menu-italy-1: https://www.pexels.com/photo/caponata-on-ceramic-plate-11999171/ — Max Griss
+- menu-italy-2: https://www.pexels.com/photo/rustic-fig-and-cheese-crostini-on-wooden-platter-34190187/ — Lara
+- menu-italy-3: https://www.pexels.com/photo/aperol-spritz-and-antipasto-by-venetian-canal-38072464/ — Christos S.
+- menu-italy-4: https://www.pexels.com/photo/elegant-plate-of-beef-carpaccio-with-garnish-14977334/ — Sylwester Ficek
+- menu-italy-5: https://www.pexels.com/photo/burrata-cheese-with-tomatoes-and-basil-22882531/ — Nadin Sh
+- menu-latin-america: https://www.pexels.com/photo/hot-small-chili-peppers-on-market-stall-15049163/ — Thomas K
+- menu-latin-america-1: https://www.pexels.com/photo/colorful-peruvian-causa-rellena-dish-close-up-28448382/ — Nano Erdozain
+- menu-latin-america-2: https://www.pexels.com/photo/sausages-and-cheese-on-wooden-surface-13149097/ — Roxana Palos
+- menu-latin-america-3: https://www.pexels.com/photo/traditional-arepa-with-shredded-beef-filling-29465175/ — Nano Erdozain
+- menu-latin-america-4: https://www.pexels.com/photo/a-close-up-shot-of-fried-fish-cakes-on-a-wooden-board-8732583/ — Andi Farruku
+- menu-latin-america-5: https://www.pexels.com/photo/slicing-of-sandwich-on-a-pan-5779828/ — RDNE Stock project
+- menu-mediterranean: https://www.pexels.com/photo/fresh-mediterranean-salad-with-colorful-vegetables-37206677/
+- menu-mediterranean-1: https://www.pexels.com/photo/food-wine-tapas-barcelona-21327986/ — Ana Lourenco
+- menu-mediterranean-2: https://www.pexels.com/photo/delicious-middle-eastern-hummus-dip-32986469/ — J KREATOR
+- menu-mediterranean-3: https://www.pexels.com/photo/mediterranean-grilled-vegetable-platter-33369756/ — Bengi 🌸
+- menu-mediterranean-4: https://www.pexels.com/photo/elegant-champagne-glasses-on-silver-tray-31909814/ — Rodrigo Ortega
+- menu-mediterranean-5: https://www.pexels.com/photo/fresh-greek-salad-with-feta-and-olives-38399754/ — Anthony Rahayel
+- menu-seasonal: https://www.pexels.com/photo/a-display-of-vegetables-at-a-farmers-market-27666301/ — Natalia S
+- menu-seasonal-1: https://www.pexels.com/photo/top-view-of-gourmet-toast-14611857/ — Sylwester Ficek
+- menu-seasonal-2: https://www.pexels.com/photo/close-up-of-gourmet-scallops-on-creamy-risotto-28503605/ — Nano Erdozain
+- menu-seasonal-3: https://www.pexels.com/photo/green-peas-cream-soup-10715471/ — Chiaroscuro
+- menu-seasonal-4: https://www.pexels.com/photo/delicious-brazilian-bean-stew-with-sausage-34442359/ — Laura oliveira
+- menu-seasonal-5: https://www.pexels.com/photo/close-up-of-food-on-plate-20185225/ — Filipp Romanovski
+- menu-world: https://www.pexels.com/photo/vibrant-display-of-colorful-market-spices-34375935/ — Dirk Pothen
+- menu-world-1: https://www.pexels.com/photo/lebanese-mezze-platter-with-hummus-and-kibbeh-38997822/ — Anthony Rahayel
+- menu-world-2: https://www.pexels.com/photo/top-view-of-stuffed-aubergines-with-cherry-tomatoes-on-top-16461839/ — Ana Palade
+- menu-world-3: https://www.pexels.com/photo/grilled-sausage-on-bbq-with-glowing-coals-38525665/ — Joel SIMEON
+- menu-world-4: https://www.pexels.com/photo/poke-in-white-paper-bowl-4828093/ — Polina Tankilevitch
+- menu-world-5: https://www.pexels.com/photo/lemon-pepper-grilled-fish-with-vegetables-36857740/ — Jay Gleaton
+- plan-blood-sugar: https://www.pexels.com/photo/a-bowl-with-vegetables-and-an-egg-15611222/
+- plan-gut: https://www.pexels.com/photo/close-up-shot-of-kimchi-on-a-plate-8980376/ — makafood
+- plan-heart: https://www.pexels.com/photo/delicious-grilled-fish-with-vegetables-36556111/
+- plan-hormones: https://www.pexels.com/photo/healthy-breakfast-with-avocado-and-seeds-3850624/ — ready made
+- plan-training: https://www.pexels.com/photo/delicious-chicken-and-rice-dish-with-vegetables-34628052/ — UNDO KIM
 
-Recipe plates:
+## Recipe plates
 
 - shakshuka: https://www.pexels.com/photo/delicious-shakshuka-in-cast-iron-skillet-35672951/
 - steak-frites: https://www.pexels.com/photo/delicious-grilled-steak-and-fries-plate-34574561/

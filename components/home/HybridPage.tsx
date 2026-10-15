@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
 import { GALLERY } from '@/data/gallery'
-import { splitCover, TABLE_COVER } from '@/lib/cover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
 import { FAQ } from '@/lib/faq'
 import { faqJsonLd } from '@/lib/schema'
@@ -66,7 +67,7 @@ export function HybridPage() {
             word="Riviera"
             italic={locale === 'fr' ? 'Table privée' : 'Private table'}
             meta={locale === 'fr' ? 'PAR ADRIAN STEFAN' : 'BY ADRIAN STEFAN'}
-            src={TABLE_COVER}
+            cover={coverPhoto('hero-home')}
             fill
             priority
             entrance
