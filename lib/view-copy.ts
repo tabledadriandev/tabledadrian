@@ -3,7 +3,7 @@ import { articles } from '@/data/articles'
 import { journal } from '@/data/library/journal'
 import { libraryRecipePath, libraryRecipes } from '@/lib/library'
 import { DISCLAIMER, OFFER_BOOKS, OFFER_PLANS, PLAN_CREDENTIAL, BOOK_CREDIT, COMING_SOON, planPath, plansPath, type OfferPlan } from '@/lib/offer-copy'
-import { PLAN_SLOTS, PRODUCTS_LIVE, RECIPE_BOOK_SLOTS, GIFT_CARDS, PARTNER_STATS } from '@/lib/monetisation'
+import { BOOK_BUNDLE, PLAN_SLOTS, PRODUCTS_LIVE, RECIPE_BOOK_SLOTS, GIFT_CARDS, PARTNER_STATS } from '@/lib/monetisation'
 
 export type Locale = 'en' | 'fr'
 export { DISCLAIMER, PLAN_CREDENTIAL, COMING_SOON, PRODUCTS_LIVE, GIFT_CARDS, PARTNER_STATS, plansPath }
@@ -169,7 +169,7 @@ export const BOOKS_COPY = {
   fr: { kicker: 'Livres', h1: 'Livres de recettes', lede: 'Quatre livres numériques tirés de la bibliothèque de recettes d’Adrian. Été, Noël, semaine de marché, et dîner d’amis.', buy: 'Acheter le livre' },
 } as const
 
-export function bookList(locale: Locale) {
+export function bookList(locale: Locale, live = PRODUCTS_LIVE) {
   const fr = locale === 'fr'
   return OFFER_BOOKS.map((book) => {
     const slot = RECIPE_BOOK_SLOTS[book.id]
@@ -182,9 +182,26 @@ export function bookList(locale: Locale) {
       title: fr ? book.titleFr : book.title,
       intro: fr ? book.ledeFr : book.lede,
       price: fr ? slot.priceFr : slot.priceEn,
-      stripe: PRODUCTS_LIVE && slot.stripe ? slot.stripe : null,
+      stripe: live && slot.stripe ? slot.stripe : null,
       recipes,
     }
   })
+}
+
+export function bundleOffer(locale: Locale, live = PRODUCTS_LIVE) {
+  const fr = locale === 'fr'
+  return {
+    id: BOOK_BUNDLE.id,
+    title: 'The Recipe Books',
+    intro: fr
+      ? 'Été en Riviera, Dîner de Noël, Semaine de marché, et Dîner d’amis.'
+      : 'Riviera Summer, Christmas Dinner, Market Week, and the Dinner Party Playbook.',
+    price: fr ? BOOK_BUNDLE.priceFr : BOOK_BUNDLE.priceEn,
+    stripe: live ? BOOK_BUNDLE.stripe : null,
+    buy: fr ? 'Acheter les livres' : 'Buy The Recipe Books',
+    word: 'Recipe',
+    italic: 'Books',
+    meta: fr ? 'THE RECIPE BOOKS · 44 €' : 'THE RECIPE BOOKS · €44',
+  }
 }
 export const bookCredit = (l: Locale) => BOOK_CREDIT[l]

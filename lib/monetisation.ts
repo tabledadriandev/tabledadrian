@@ -1,13 +1,12 @@
 /**
  * Monetisation.
- * Gift cards use live Stripe Payment Links.
- * Recipe books and menu plans store a price and a Payment Link, but stay
- * off sale while PRODUCTS_LIVE is false (the PDFs are not ready).
+ * Gift cards and recipe books use live Stripe Payment Links.
+ * Plan payment links use the same PRODUCTS_LIVE switch.
  * Affiliate hrefs stay null until Adrian adds programme IDs.
  */
 
-/** Flip to true when the recipe-book and plan PDFs exist. Buy buttons stay "Coming soon" until then. */
-export const PRODUCTS_LIVE = false
+/** Recipe-book Buy buttons use the live Payment Links. Plans share this switch. */
+export const PRODUCTS_LIVE = true
 
 export const GIFT_CARDS = [
   { id: '150', eur: 150, labelEn: '€150', labelFr: '150 €', stripe: 'https://buy.stripe.com/eVq8wP1p9bnkavWchRbV609' },
@@ -167,6 +166,14 @@ export const RECIPE_BOOK_SLOTS: Record<string, PriceSlot> = {
   'market-week': { priceEn: BOOK_PRICE.en, priceFr: BOOK_PRICE.fr, stripe: 'https://buy.stripe.com/eVq9ATd7RcroavWepZbV602' },
   'dinner-party-playbook': { priceEn: BOOK_PRICE.en, priceFr: BOOK_PRICE.fr, stripe: 'https://buy.stripe.com/14A28r8RB3US33udlVbV603' },
 }
+
+/** The Recipe Books, all four files, €44. */
+export const BOOK_BUNDLE = {
+  id: 'bundle',
+  priceEn: '€44',
+  priceFr: '44 €',
+  stripe: 'https://buy.stripe.com/3cIaEXgk3630avW4PpbV60c',
+} as const
 
 /** Menu plans. €29.90. Buy stays Coming soon until PRODUCTS_LIVE. */
 export const PLAN_SLOTS: Record<string, PriceSlot> = {
