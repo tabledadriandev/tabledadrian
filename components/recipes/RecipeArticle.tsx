@@ -33,6 +33,13 @@ const UI = {
   },
 } as const
 
+
+function dishTone(slug: string) {
+  let n = 0
+  for (let i = 0; i < slug.length; i += 1) n += slug.charCodeAt(i)
+  return (['olive', 'gold', 'champ'] as const)[n % 3]
+}
+
 export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; locale: 'en' | 'fr' }) {
   const ui = UI[locale]
   const title = locale === 'fr' ? recipe.titleFr : recipe.title
@@ -58,22 +65,13 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
               alt={alt}
               sizes="(max-width: 768px) 100vw, 768px"
               priority
-              className="max-h-[70vh] w-full rounded-sm object-cover"
+              className="max-h-[70vh] w-full object-cover"
             />
-          ) : null}
-          {recipe.image.credit ? (
-            <figcaption className="mt-2 text-xs text-foreground-subtle">
-              {ui.photo}:{' '}
-              {recipe.image.creditUrl ? (
-                <a href={recipe.image.creditUrl} className="underline-offset-2 hover:underline" rel="noopener noreferrer">
-                  {recipe.image.credit}
-                </a>
-              ) : (
-                recipe.image.credit
-              )}
-              {recipe.image.license ? ` · ${recipe.image.license}` : ''}
-            </figcaption>
-          ) : null}
+          ) : (
+            <div className={`dish-fallback dish-${dishTone(recipe.slug)}`}>
+              <span>{title}</span>
+            </div>
+          )}
         </figure>
 
         <dl className="ra-facts mt-8 grid grid-cols-3 gap-3 border-y border-border py-4 text-sm">
@@ -131,9 +129,9 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
         <BookChefCta locale={locale} />
         <NewsletterForm locale={locale} id="journal-email-recipe" />
 
-        <aside className="ra-also mt-12 border-t border-border pt-6 text-sm">
-          <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{ui.also}</p>
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+        <aside className="b2-also">
+          <p className="k">{ui.also}</p>
+          <div className="links">
             <Link href={locale === 'fr' ? '/fr/chef-de-yacht' : '/yacht-chef'} className="underline-offset-4 hover:underline">
               {locale === 'fr' ? 'Chef de yacht' : 'Yacht chef'}
             </Link>

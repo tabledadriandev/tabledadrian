@@ -38,12 +38,13 @@ export const LOCALE_PAIRS = [
   ['/plans/gut', '/fr/programmes/intestin'],
   ['/plans/training', '/fr/programmes/entrainement'],
   ['/partners', '/fr/partenaires'],
+  ['/sola', '/fr/sola'],
 ] as const
 
 export type EnPath = (typeof LOCALE_PAIRS)[number][0]
 export type FrPath = (typeof LOCALE_PAIRS)[number][1]
 
-const UNTRANSLATED = [/^\/nutrition$/, /^\/bmi$/, /^\/sola(\/|$)/]
+const UNTRANSLATED = [/^\/nutrition$/, /^\/bmi$/, /^\/sola\/privacy$/]
 
 export function pairForPath(pathname: string): readonly [string, string] | undefined {
   const path = pathname.split('#')[0].split('?')[0]

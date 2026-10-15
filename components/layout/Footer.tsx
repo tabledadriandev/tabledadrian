@@ -17,8 +17,6 @@ import { DustField } from '@/components/motion/DustField'
 import { MaisonFooter } from '@/components/layout/MaisonFooter'
 
 export function Footer() {
-  const pathname = usePathname()
-  if (pathname.startsWith('/sola')) return <LegacyFooter />
   return <MaisonFooter />
 }
 

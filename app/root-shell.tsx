@@ -94,6 +94,7 @@ export const baseMetadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: THEME_COLOR,
+  viewportFit: 'cover',
 }
 
 export function RootShell({ children, lang }: { children: React.ReactNode; lang: 'en' | 'fr' }) {
@@ -111,7 +112,7 @@ export function RootShell({ children, lang }: { children: React.ReactNode; lang:
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var p=location.pathname;var sola=p==="/sola"||p.indexOf("/sola/")===0;document.documentElement.dataset.brand=sola?"sola":"maison";document.documentElement.lang=(p==="/fr"||p.indexOf("/fr/")===0)?"fr":"en";var stored=null;try{stored=localStorage.getItem("tda-theme")}catch(err){}var choice=stored==="light"||stored==="dark"||stored==="system"?stored:"system";document.documentElement.dataset.theme=choice;var systemDark=window.matchMedia("(prefers-color-scheme: dark)").matches;var dark=choice==="dark"||(choice==="system"&&systemDark);document.documentElement.dataset.resolved=dark?"dark":"light";document.documentElement.style.colorScheme=!sola&&dark?"dark":"light";var dismissed=false;try{dismissed=localStorage.getItem("tda-sola-banner")==="dismissed"}catch(err){}document.documentElement.dataset.solaBanner=dismissed?"0":"1"}catch(e){}`,
+            __html: `try{var p=location.pathname;document.documentElement.dataset.brand="maison";document.documentElement.lang=(p==="/fr"||p.indexOf("/fr/")===0)?"fr":"en";var stored=null;try{stored=localStorage.getItem("tda-theme")}catch(err){}var choice=stored==="light"||stored==="dark"||stored==="system"?stored:"system";document.documentElement.dataset.theme=choice;var systemDark=window.matchMedia("(prefers-color-scheme: dark)").matches;var dark=choice==="dark"||(choice==="system"&&systemDark);document.documentElement.dataset.resolved=dark?"dark":"light";document.documentElement.style.colorScheme=dark?"dark":"light";var dismissed=false;try{dismissed=localStorage.getItem("tda-sola-banner")==="dismissed"}catch(err){}document.documentElement.dataset.solaBanner=dismissed||p==="/sola"||p.indexOf("/sola/")===0||p==="/fr/sola"||p.indexOf("/fr/sola/")===0?"0":"1"}catch(e){}`,
           }}
         />
         <script

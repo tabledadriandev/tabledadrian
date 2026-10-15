@@ -1,9 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Clock, Instagram } from 'lucide-react'
 import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
 import { copy, MARKET } from '@/lib/copy'
 import { useLocale } from '@/lib/i18n'
 
@@ -18,13 +16,8 @@ export function ContactInfo() {
     { icon: Clock, label: locale === 'fr' ? 'Réponse' : 'Response', value: CONTACT_INFO.responseTime },
   ]
   return (
-    <motion.div
-      variants={staggerContainer}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6"
-    >
-      <motion.div variants={fadeInUp} className="surface p-6 sm:p-8">
+    <div className="space-y-6">
+      <div className="surface p-6 sm:p-8">
         <h2 className="font-display text-2xl">Reach Adrian</h2>
         <ul className="mt-6 space-y-5">
           {details.map((item) => (
@@ -49,9 +42,9 @@ export function ContactInfo() {
             </li>
           ))}
         </ul>
-      </motion.div>
+      </div>
 
-      <motion.div variants={fadeInUp} className="surface p-6 sm:p-8">
+      <div className="surface p-6 sm:p-8">
         <h3 className="font-display text-2xl">How a booking unfolds</h3>
         <ol className="mt-6 space-y-4">
           {['Conversation about the table', 'Menu written and confirmed', 'Cook, serve, leave the kitchen as we found it', 'A note afterwards, if you wish'].map(
@@ -63,7 +56,7 @@ export function ContactInfo() {
             )
           )}
         </ol>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }

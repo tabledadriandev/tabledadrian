@@ -12,6 +12,5 @@ export function useLocale(): Locale {
 }
 
 export function withLocale(href: string, locale: Locale): string {
-  if (href.startsWith('/sola')) return href
   return toLocalePath(href, locale)
 }
