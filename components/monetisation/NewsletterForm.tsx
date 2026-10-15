@@ -6,7 +6,6 @@ import { CONTACT_INFO } from '@/lib/constants'
 const COPY = {
   en: {
     title: 'The journal, by email',
-    note: 'No mailing list is connected. Sending opens a note to the kitchen.',
     label: 'Email',
     placeholder: 'you@email.com',
     button: 'Send a note',
@@ -15,12 +14,11 @@ const COPY = {
   },
   fr: {
     title: 'Le journal, par email',
-    note: 'Aucune liste n’est connectée. L’envoi ouvre un message pour la cuisine.',
     label: 'Email',
     placeholder: 'vous@email.com',
     button: 'Envoyer un mot',
     subject: "Journal, Table d'Adrian",
-    bodyLead: 'Merci d’ajouter cette adresse à la liste du journal :',
+    bodyLead: "Merci d'ajouter cette adresse à la liste du journal :",
   },
 } as const
 
@@ -38,7 +36,7 @@ export function NewsletterForm({
 
   return (
     <form
-      className={compact ? 'flex flex-wrap items-end gap-3' : 'mt-12 border-t border-border pt-8'}
+      className={compact ? 'b2-news is-compact' : 'b2-news'}
       onSubmit={(event) => {
         event.preventDefault()
         const subject = encodeURIComponent(t.subject)
@@ -46,12 +44,9 @@ export function NewsletterForm({
         window.location.href = `mailto:${CONTACT_INFO.email}?subject=${subject}&body=${body}`
       }}
     >
-      <div className={compact ? 'min-w-[14rem] flex-1' : 'max-w-xl'}>
-        <p className={compact ? 'text-sm text-foreground' : 'font-display text-3xl tracking-tight'}>{t.title}</p>
-        <p className="mt-1 text-sm text-foreground-muted">{t.note}</p>
-        <label htmlFor={id} className="mt-3 block text-[11px] uppercase tracking-caps text-foreground-subtle">
-          {t.label}
-        </label>
+      <p className="disp">{t.title}</p>
+      <label htmlFor={id}>{t.label}</label>
+      <div className="b2-news-row">
         <input
           id={id}
           name="email"
@@ -60,13 +55,13 @@ export function NewsletterForm({
           autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="field mt-1 w-full max-w-md"
+          className="field"
           placeholder={t.placeholder}
         />
+        <button type="submit" className="btn ink">
+          {t.button}
+        </button>
       </div>
-      <button type="submit" className="inline-flex h-11 items-center bg-ink px-5 text-sm text-ink-foreground">
-        {t.button}
-      </button>
     </form>
   )
 }

@@ -17,8 +17,6 @@ import { MaisonNav } from '@/components/layout/MaisonNav'
 const ease = [0.76, 0, 0.24, 1] as const
 
 export function Navbar() {
-  const pathname = usePathname()
-  if (pathname.startsWith('/sola')) return <LegacyNavbar />
   return <MaisonNav />
 }
 

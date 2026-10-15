@@ -35,7 +35,7 @@ export default function FrenchRecipePage({ params }: { params: { slug: string } 
   const schema = recipeJsonLd({
     name: recipe.titleFr,
     description: recipe.introFr,
-    image: recipe.image.src || '/gallery/hero-plate.jpg',
+    image: recipe.image.src || '/og_tabledadrian_fr.jpg',
     path,
     prepMin: recipe.prepMin,
     cookMin: recipe.cookMin,
