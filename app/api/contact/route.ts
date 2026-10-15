@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { deliverEnquiry } from '@/lib/contact-mail'
+import { rateLimit, tooManyResponse } from '@/lib/rate-limit'
 
 const schema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -16,22 +17,9 @@ const schema = z.object({
   startedAt: z.number().int().positive(),
 })
 
-const recent = new Map<string, number>()
-
-function tooMany(ip: string) {
-  const now = Date.now()
-  const last = recent.get(ip) ?? 0
-  if (now - last < 30_000) return true
-  recent.set(ip, now)
-  return false
-}
-
 export async function POST(request: Request) {
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
-
-  if (tooMany(ip)) {
-    return NextResponse.json({ error: 'Please wait a moment before sending again.' }, { status: 429 })
-  }
+  const rl = await rateLimit('contact', request.headers)
+  if (!rl.ok) return tooManyResponse(rl.retryAfter)
 
   let body: unknown
   try {

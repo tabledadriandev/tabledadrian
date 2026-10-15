@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { rateLimit, tooManyResponse } from '@/lib/rate-limit'
 import slugs from '@/data/library/slugs.json'
 
 type SlugPair = { slug: string; slugFr: string }
@@ -12,8 +13,14 @@ function redirectTo(request: NextRequest, pathname: string) {
   return NextResponse.redirect(url, 308)
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
+
+  // Every POST/PUT/PATCH/DELETE to /api/* is rate limited (5/min/IP), so new form routes are covered automatically.
+  if (path.startsWith('/api/') && request.method !== 'GET' && request.method !== 'HEAD' && request.method !== 'OPTIONS') {
+    const rl = await rateLimit(`mw:${path}`, request.headers)
+    if (!rl.ok) return tooManyResponse(rl.retryAfter)
+  }
 
   if (path === '/fr/privacy') return redirectTo(request, '/fr/confidentialite')
   if (path === '/fr/terms') return redirectTo(request, '/fr/conditions')
