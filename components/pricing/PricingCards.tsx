@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Check, Shield, Lock, Calendar, Heart } from 'lucide-react'
 import * as Accordion from '@radix-ui/react-accordion'
-import { pricingTiers, subscriptionPlans, guarantees, pricingFAQ, urgencyElements } from '@/data/pricing'
+import { pricingTiers, subscriptionPlans, guarantees, pricingFAQ } from '@/data/pricing'
 import { cn } from '@/lib/utils'
 import { DustField } from '@/components/motion/DustField'
 import { ON_REQUEST, copy } from '@/lib/copy'
@@ -70,7 +70,7 @@ export function PricingCards() {
                 {tier.badge && (
                   <p className="text-[11px] uppercase tracking-caps text-olive">{tier.badge}</p>
                 )}
-                <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{tier.name}</h3>
+                <h2 className="lh-display mt-2 font-display text-4xl tracking-tight">{tier.name}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{tier.tagline}</p>
                 <p className="lh-display mt-6 font-display text-5xl tracking-tight">
                   {ON_REQUEST[locale]}
@@ -115,7 +115,7 @@ export function PricingCards() {
             <article key={plan.id} className="relative grid gap-6 border-b border-border py-10 lg:grid-cols-12 lg:gap-10">
               <div className="lg:col-span-4">
                 {plan.popular && <p className="text-[11px] uppercase tracking-caps text-olive">MOST POPULAR</p>}
-                <h3 className="lh-display mt-2 font-display text-4xl tracking-tight">{plan.name}</h3>
+                <h2 className="lh-display mt-2 font-display text-4xl tracking-tight">{plan.name}</h2>
                 <p className="lh-display mt-6 font-display text-5xl tracking-tight">
                   {ON_REQUEST[locale]}
                 </p>
@@ -143,10 +143,10 @@ export function PricingCards() {
           const Icon = iconMap[guarantee.icon] || Shield
           return (
             <div key={guarantee.title}>
-              <h3 className="flex items-center gap-2 font-display text-2xl">
+              <h2 className="flex items-center gap-2 font-display text-2xl">
                 <Icon size={16} className="text-olive" aria-hidden="true" />
                 {guarantee.title}
-              </h3>
+              </h2>
               <p className="mt-2 max-w-md text-sm leading-relaxed text-foreground-muted">{guarantee.description}</p>
             </div>
           )
@@ -154,7 +154,7 @@ export function PricingCards() {
       </div>
 
       <div className="mt-16 border-t border-border pt-10">
-        <h3 className="font-display text-4xl tracking-tight">Frequently Asked Questions</h3>
+        <h2 className="font-display text-4xl tracking-tight">Frequently Asked Questions</h2>
         <Accordion.Root type="single" collapsible className="mt-6">
           {pricingFAQ.map((faq, index) => (
             <Accordion.Item key={faq.question} value={`item-${index}`} className="border-b border-border">
@@ -174,12 +174,12 @@ export function PricingCards() {
 
       <div className="relative mt-16 overflow-hidden bg-ink px-6 py-12 text-ink-foreground sm:px-10" data-reveal="iris">
         <DustField density={36} />
-        <h3 className="relative font-display text-4xl tracking-tight sm:text-5xl">Limited Availability</h3>
+        <h2 className="relative font-display text-4xl tracking-tight sm:text-5xl">Enquire for a tailored quote</h2>
         <p className="relative mt-4 max-w-xl text-base leading-relaxed text-ink-foreground/80">
-          {urgencyElements.consultationSlots}. Book your consultation to secure your preferred date.
+          Fees are on request, quoted in €. Send the date, the place and the guest list.
         </p>
         <Link href={locale === 'fr' ? '/fr/contact' : '/contact'} className="maison-link relative mt-6 text-ink-foreground">
-          Book Consultation Now
+          {t.bookCta}
         </Link>
       </div>
     </div>

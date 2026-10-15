@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -29,12 +29,70 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>
 
+const ENQUIRY_PRESET = {
+  en: {
+    gift: {
+      service: 'gift',
+      message: 'I would like to give a private dinner. Please tell me how a voucher works.',
+      note: 'This enquiry is for a gift voucher. No payment is taken on this form.',
+    },
+    masterclass: {
+      service: 'masterclass',
+      message: 'I would like an at-home cooking class or a chef’s table evening.',
+      note: 'This enquiry is for a cooking class or a chef’s table.',
+    },
+    'chefs-table': {
+      service: 'chefs-table',
+      message: 'I would like a small-group tasting evening, a chef’s table.',
+      note: 'This enquiry is for a chef’s table.',
+    },
+    corporate: {
+      service: 'corporate',
+      message: 'I would like a quote for a corporate dinner or another event.',
+      note: 'This enquiry is for a corporate or event package.',
+    },
+    dinner: {
+      service: 'dinner-party',
+      message: 'I would like to book a private chef for a dinner in my kitchen.',
+      note: 'This enquiry is for a private chef.',
+    },
+  },
+  fr: {
+    gift: {
+      service: 'gift',
+      message: 'Je souhaite offrir un dîner privé. Dites-moi comment le bon fonctionne.',
+      note: 'Cette demande concerne un bon cadeau. Aucun paiement n’est pris sur ce formulaire.',
+    },
+    masterclass: {
+      service: 'masterclass',
+      message: 'Je souhaite un cours de cuisine à domicile ou une table du chef.',
+      note: 'Cette demande concerne un cours ou une table du chef.',
+    },
+    'chefs-table': {
+      service: 'chefs-table',
+      message: 'Je souhaite une dégustation en petit groupe, une table du chef.',
+      note: 'Cette demande concerne une table du chef.',
+    },
+    corporate: {
+      service: 'corporate',
+      message: 'Je souhaite un devis pour un dîner d’entreprise ou un autre événement.',
+      note: 'Cette demande concerne une formule entreprise ou événement.',
+    },
+    dinner: {
+      service: 'dinner-party',
+      message: 'Je souhaite réserver un chef privé pour un dîner dans ma cuisine.',
+      note: 'Cette demande concerne un chef privé.',
+    },
+  },
+} as const
+
 export function ContactForm() {
   const locale = useLocale()
   const t = copy[locale]
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
+  const [intentNote, setIntentNote] = useState<string | null>(null)
   const startedAt = useRef(Date.now())
 
   const {
@@ -42,9 +100,20 @@ export function ContactForm() {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   })
+
+  useEffect(() => {
+    const intent = new URLSearchParams(window.location.search).get('intent')
+    if (!intent) return
+    const preset = ENQUIRY_PRESET[locale][intent as keyof (typeof ENQUIRY_PRESET)['en']]
+    if (!preset) return
+    setValue('serviceType', preset.service)
+    setValue('message', preset.message)
+    setIntentNote(preset.note)
+  }, [locale, setValue])
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true)
@@ -78,6 +147,7 @@ export function ContactForm() {
       className="surface relative space-y-6 p-6 sm:p-8"
       noValidate
     >
+      {intentNote ? <p className="text-sm text-foreground-muted">{intentNote}</p> : null}
       <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
         <label htmlFor="website">Website</label>
         <input id="website" tabIndex={-1} autoComplete="off" {...register('website')} />
@@ -152,6 +222,9 @@ export function ContactForm() {
         <select id="serviceType" {...register('serviceType')} className="field">
           <option value="">Select a service</option>
           <option value="dinner-party">Private dinner party</option>
+          <option value="gift">Gift voucher</option>
+          <option value="masterclass">Cooking class</option>
+          <option value="chefs-table">Chef&apos;s table</option>
           <option value="meal-prep">Weekly meal prep</option>
           <option value="corporate">Corporate event</option>
           <option value="special">Special occasion</option>
@@ -172,7 +245,7 @@ export function ContactForm() {
           {...register('dietaryRequirements')}
           rows={2}
           className="field"
-          placeholder="Vegetarian, gluten-free, allergies"
+          placeholder="Dietary preferences and allergies, on request"
         />
       </div>
 

@@ -6,10 +6,12 @@ type DishPhotoProps = Omit<ImageProps, 'src'> & {
   src: string
 }
 
-export function DishPhoto({ src, alt, className, fill, sizes, width, height, style, ...rest }: DishPhotoProps) {
+export function DishPhoto({ src, alt, className, fill, sizes, width, height, style, quality, ...rest }: DishPhotoProps) {
   const native = dishNativeSize(src)
   const modest = dishIsModest(src)
   const fit = modest ? 'object-contain' : 'object-cover'
+  const q = quality ?? 70
+  const resolvedSizes = sizes ?? '(max-width: 768px) 100vw, 768px'
 
   if (fill) {
     return (
@@ -17,7 +19,8 @@ export function DishPhoto({ src, alt, className, fill, sizes, width, height, sty
         src={src}
         alt={alt}
         fill
-        sizes={sizes}
+        sizes={resolvedSizes}
+        quality={q}
         className={cn('photo', fit, className)}
         style={style}
         {...rest}
@@ -34,7 +37,8 @@ export function DishPhoto({ src, alt, className, fill, sizes, width, height, sty
       alt={alt}
       width={w}
       height={h}
-      sizes={sizes}
+      sizes={resolvedSizes}
+      quality={q}
       className={cn('photo h-auto w-full', fit, className)}
       style={{
         ...(modest ? { maxWidth: native?.w ?? MODEST_FALLBACK } : null),

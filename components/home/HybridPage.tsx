@@ -4,138 +4,122 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { GALLERY } from '@/data/gallery'
 import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
+import { FAQ } from '@/lib/faq'
+import { faqJsonLd } from '@/lib/schema'
 import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
-import { Testimonials } from '@/components/sections/Testimonials'
-import { HeroCloche } from './HeroCloche'
+import { Arrow, Lemon } from '@/components/b2/ui'
 
-const STRIP = [
-  'langoustine',
-  'pea-risotto',
-  'lobster-claw',
-  'burrata-peach',
-  'seabass',
-  'zucchini-carpaccio',
-  'duck-breast',
-  'rose-tartlets',
-  'wellington',
-  'salmon-tartare',
-]
-  .map((id) => GALLERY.find((plate) => plate.id === id))
-  .filter((plate): plate is (typeof GALLERY)[number] => Boolean(plate))
+const BENTO = [
+  ['duck-breast', 'b0 gold'],
+  ['langoustine', 'b1 photo'],
+  ['burrata-peach', 'b2 olive'],
+  ['squid-ink-pasta', 'b3 photo'],
+  ['rose-tartlets', 'b4 champ'],
+  ['salmon-tartare', 'b5 photo'],
+] as const
+
+const X = {
+  en: {
+    dm: 'Instagram DM',
+    creds: ['Swiss-trained (EHL)', '10+ years', 'Nutrition certificate, Stanford'],
+    band: "A few plates from recent tables, cooked in clients' kitchens across Antibes, Monaco and the Riviera.",
+    facts: [['Training', 'Swiss-trained (EHL)'], ['Kitchens', '10+ years'], ['Nutrition', 'Certificate, Stanford']],
+    weekly: 'Weekly at home, on request',
+  },
+  fr: {
+    dm: 'Message Instagram',
+    creds: ['Formation suisse (EHL)', '10+ ans', 'Certificat en nutrition, Stanford'],
+    band: 'Quelques assiettes de tables récentes, cuisinées chez nos clients à Antibes, Monaco et sur la Riviera.',
+    facts: [['Formation', 'Formation suisse (EHL)'], ['Cuisines', '10+ ans'], ['Nutrition', 'Certificat, Stanford']],
+    weekly: 'Chaque semaine, sur demande',
+  },
+}
 
 export function HybridPage() {
   const locale = useLocale()
   const t = copy[locale]
   const h = t.hybrid
+  const x = X[locale]
   const contactHref = withLocale('/contact', locale)
+  const [bandA, bandB] = h.libraryTitle.split(', ')
+  const plates = BENTO.map(([id, cls]) => ({ cls, plate: GALLERY.find((g) => g.id === id)! })).filter((p) => p.plate)
 
   return (
-    <div className="hybrid-home">
-      <section className="hybrid-hero container" aria-labelledby="hero-title">
-        <div className="hybrid-hero-copy">
-          <p className="hybrid-kicker">{h.kicker}</p>
-          <h1 id="hero-title" className="hybrid-title">
-            <span>{h.titleA}</span>
-            <span>{h.titleB}</span>
-          </h1>
-          <p className="hybrid-lede">{h.lede}</p>
-          <div className="hybrid-hero-actions">
-            <a className="enquire-pill" href="#enquire">
-              {h.cta}
-            </a>
-            <p className="credential-pill">{h.credential}</p>
+    <div className="wrap b2-home">
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hl">
+          <div>
+            <span className="tagr">{h.kicker}</span>
+            <h1 id="hero-title" className="disp">{h.titleA} {h.titleB}</h1>
+            <p>{h.lede}</p>
+            <div className="cta">
+              <Link className="btn ink" href={contactHref}>{h.cta} <Arrow /></Link>
+              <a className="btn ghost" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">{x.dm}</a>
+            </div>
           </div>
+          <div className="credrow">{x.creds.map((c) => <span key={c}>{c}</span>)}</div>
         </div>
-        <HeroCloche />
-      </section>
-
-      <section id="experiences" className="container hybrid-offers" aria-labelledby="experiences-title">
-        <h2 id="experiences-title" className="sr-only">
-          {h.offersTitle}
-        </h2>
-        <div className="offer-stack">
-          {h.offers.map((offer, index) => (
-            <article key={offer.n} className="offer-panel" style={{ ['--i' as string]: index }}>
-              <div className="offer-copy">
-                <p className="offer-index">{offer.n}</p>
-                <h3>{offer.title}</h3>
-                <p>{offer.body}</p>
-              </div>
-              <div className="offer-photo">
-                <Image src={offer.image} alt={offer.alt} fill sizes="(max-width: 800px) 92vw, 460px" />
-              </div>
-            </article>
-          ))}
+        <div className="hr">
+          <div className="photo-bg" />
+          <Image src="/gallery/hero-olive-b2.webp" alt="" fill priority sizes="(max-width: 600px) 100vw, 680px" quality={80} />
+          <div className="dots" aria-hidden="true" />
+          <Link className="chip" href={contactHref}>
+            <div><b>{h.dinnerLabel}</b><span>{h.dinnerFigure} {h.dinnerNote}</span></div>
+            <span className="go"><Arrow /></span>
+          </Link>
         </div>
       </section>
 
-      <section id="about" className="hybrid-library" aria-labelledby="library-title">
-        <div className="container hybrid-center" id="chef">
-          <p className="hybrid-kicker">{h.libraryKicker}</p>
-          <h2 id="library-title" className="hybrid-title hybrid-title-center">
-            {h.libraryTitle}
-          </h2>
-          <p className="hybrid-lede hybrid-lede-center">{h.libraryBody}</p>
-        </div>
-        <div className="plate-strip" aria-label={h.libraryTitle}>
-          <div className="plate-strip-track">
-            {[0, 1].map((copyIndex) => (
-              <ul key={copyIndex} className="plate-strip-group" aria-hidden={copyIndex === 1 ? true : undefined}>
-                {STRIP.map((plate) => (
-                  <li key={`${copyIndex}-${plate.id}`}>
-                    <Image
-                      src={plate.src}
-                      alt={copyIndex === 0 ? plate.caption : ''}
-                      width={480}
-                      height={320}
-                      sizes="220px"
-                    />
-                  </li>
-                ))}
-              </ul>
-            ))}
-          </div>
-        </div>
+      <section id="experiences" className="sec row3" aria-label={h.offersTitle}>
+        {h.offers.map((o, i) => (
+          <Link key={o.n} href={withLocale('/services', locale)} className={`xc ${['e', '', 'o'][i]}`}>
+            <div className="n"><span>{o.n}</span><span className="c"><Arrow /></span></div>
+            <div><h3 className="disp">{o.title}</h3><p>{o.body}</p></div>
+          </Link>
+        ))}
       </section>
 
-      <Testimonials />
+      <div className="band">
+        <h2 className="disp">{bandA},<br />{bandB}</h2>
+        <p>{x.band}</p>
+      </div>
 
-      <section id="enquire" className="hybrid-begin container" aria-labelledby="begin-title">
-        <div className="hybrid-center" id="contact">
-          <p className="hybrid-kicker">{h.beginKicker}</p>
-          <h2 id="begin-title" className="hybrid-title hybrid-title-center">
-            {h.beginTitle}
-          </h2>
-          <div className="plan-row">
-            <Link className="plan-card" href={contactHref}>
-              <span>{h.dinnerLabel}</span>
-              <strong>{h.dinnerFigure}</strong>
-              <small>{h.dinnerNote}</small>
-            </Link>
-            <Link className="plan-card" href={contactHref}>
-              <span>{h.weeklyLabel}</span>
-              <strong>{h.weeklyFigure}</strong>
-              <small>{h.weeklyNote}</small>
-            </Link>
-          </div>
-          <p className="begin-note">
-            {h.beginNote}{' '}
-            <a href={`mailto:${CONTACT_INFO.email}`}>{CONTACT_INFO.email}</a>
-          </p>
-          <div className="route-row">
-            <Link className="route-link" href={contactHref}>
-              {h.formLabel}
-            </Link>
-            <a className="route-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-              {t.instagramLabel}
-            </a>
-            <a className="route-link" href={`mailto:${CONTACT_INFO.email}`}>
-              {CONTACT_INFO.email}
-            </a>
+      <section className="bento" aria-label="Gallery">
+        {plates.map(({ cls, plate }, i) => (
+          <Link key={plate.id} href={withLocale('/gallery', locale)} className={`bc ${cls}`}>
+            <div className="im"><Image src={plate.src} alt={plate.caption} fill sizes="(max-width: 600px) 100vw, 520px" /></div>
+            <figcaption><span className="tag">0{i + 1}</span><b>{plate.title}</b><p>{plate.caption}</p></figcaption>
+          </Link>
+        ))}
+      </section>
+
+      <section id="about" className="about" aria-labelledby="about-title">
+        <div className="ab">
+          <span className="tagr">{h.navChef}</span>
+          <h2 id="about-title" className="disp">Adrian Stefan</h2>
+          <p>{h.libraryBody}</p>
+          <div className="facts">{x.facts.map(([k, v]) => <div key={k}><span>{k}</span>{v}</div>)}</div>
+        </div>
+        <div className="lemoncard" aria-hidden="true"><Lemon /></div>
+      </section>
+
+      <section id="enquire" className="enq" aria-labelledby="enq-title">
+        <div>
+          <h2 id="enq-title" className="disp">{h.beginTitle}</h2>
+          <p>{h.beginNote}</p>
+          <div className="btns">
+            <Link className="btn ink" href={contactHref}>{h.formLabel} <Arrow /></Link>
+            <a className="btn ghost" href={`mailto:${CONTACT_INFO.email}`}>{CONTACT_INFO.email}</a>
           </div>
         </div>
+        <div className="opts">
+          <Link className="opt" href={contactHref}><div>{h.dinnerLabel}<span>{h.dinnerFigure} {h.dinnerNote}</span></div><span className="go"><Arrow /></span></Link>
+          <Link className="opt" href={contactHref}><div>{h.weeklyLabel}<span>{x.weekly}</span></div><span className="go"><Arrow /></span></Link>
+          <a className="opt" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><div>{x.dm}<span>{t.instagramHandle}</span></div><span className="go"><Arrow /></span></a>
+        </div>
       </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQ[locale])) }} />
     </div>
   )
 }

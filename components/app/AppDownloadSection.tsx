@@ -17,18 +17,18 @@ const features = [
   },
   {
     icon: Sparkles,
-    title: 'Your longevity score',
-    description: 'Inflammation, glycaemic load and micronutrients, explained plainly.',
+    title: 'A note on the meal',
+    description: 'A plain record of what was cooked and served.',
   },
   {
     icon: ChefHat,
     title: "Chef Adrian's recipes",
-    description: 'Dishes matched to your goals, allergies and what you already love.',
+    description: 'Dishes from the Table d’Adrian kitchen. Dietary preferences and allergies are accommodated on request.',
   },
   {
     icon: HeartPulse,
     title: 'Screened before you cook',
-    description: 'Recipes that do not fit your allergies or a marked condition stay off the plan. Nutrition guidance, not a treatment.',
+    description: 'Dietary preferences and allergies are accommodated on request. This is not medical advice.',
   },
 ]
 

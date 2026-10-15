@@ -3,105 +3,79 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
-import { FOOTER_LINKS, WELLNESS_LINKS } from '@/lib/constants'
+import { FOOTER_LINKS } from '@/lib/constants'
 import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
-import { ThemeToggle } from '@/components/theme/ThemeToggle'
+import { offerNavLabel } from '@/lib/monetisation'
+import { Arrow, LemonBox } from '@/components/b2/ui'
 
+export const B2_NAV = {
+  en: [
+    { href: '/services', label: 'Experiences' },
+    { href: '/gallery', label: 'Gallery' },
+    { href: '/#about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
+  ],
+  fr: [
+    { href: '/services', label: 'Expériences' },
+    { href: '/gallery', label: 'Galerie' },
+    { href: '/#about', label: 'À propos' },
+    { href: '/contact', label: 'Contact' },
+  ],
+}
+
+/* Mockup B header: one 64px card pill — lemon brand, dotted-divider links, gold Enquire button. */
 export function MaisonNav() {
   const pathname = usePathname()
   const locale = useLocale()
   const t = copy[locale]
-  const h = t.hybrid
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    setOpen(false)
-  }, [pathname])
-
-  useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [open])
-
-  useEffect(() => {
-    if (!open) return
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open])
-
-  const chef = withLocale('/#chef', locale)
-  const experiences = withLocale('/#experiences', locale)
-  const enquire = withLocale('/#enquire', locale)
-
+  useEffect(() => setOpen(false), [pathname])
+  const links = B2_NAV[locale]
   return (
-    <header className="maison-nav">
-      <nav className="nav-pill" aria-label="Primary">
-        <Link href={withLocale('/', locale)} className="nav-word" aria-label="Table d'Adrian">
+    <header className="b2-head">
+      <div className="wrap">
+      <div className="pill">
+        <Link href={withLocale('/', locale)} className="brand">
+          <LemonBox />
           Table d&apos;Adrian
         </Link>
-        <div className="nav-links-desktop">
-          <a href={chef}>{h.navChef}</a>
-          <a href={experiences}>{h.navExperiences}</a>
-          <details className="nav-index">
-            <summary>{h.navIndex}</summary>
-            <div className="nav-index-panel">
-              {FOOTER_LINKS.map((item) => (
-                <Link key={item.href} href={withLocale(item.href, locale)}>
-                  {item.href === '/pricing' ? t.navPricing : item.name}
-                </Link>
-              ))}
-              {WELLNESS_LINKS.map((item) => (
-                <Link key={item.href} href={item.href}>
-                  {item.name}
-                </Link>
-              ))}
-              <Link href="/sola">Sola</Link>
-            </div>
-          </details>
-          <a href={enquire}>{h.navEnquire}</a>
-        </div>
-        <div className="nav-tools">
-          <ThemeToggle />
+        <nav className="b2-nav" aria-label="Primary">
+          {links.map((l, i) => (
+            <span key={l.href} className="b2-nav-item">
+              {i > 0 ? <i aria-hidden="true" /> : null}
+              <Link href={withLocale(l.href, locale)} aria-current={pathname === withLocale(l.href, locale) ? 'page' : undefined}>
+                {l.label}
+              </Link>
+            </span>
+          ))}
+        </nav>
+        <div className="b2-head-r">
           <button
             type="button"
-            className="nav-menu"
+            className="b2-burger"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
-            aria-controls="maison-menu"
-            onClick={() => setOpen((value) => !value)}
+            aria-controls="b2-menu"
+            onClick={() => setOpen((v) => !v)}
           >
-            {open ? <X size={18} /> : <Menu size={18} />}
+            <span /><span />
           </button>
-        </div>
-      </nav>
-      {open ? (
-        <div id="maison-menu" className="nav-sheet">
-          <a href={chef} onClick={() => setOpen(false)}>
-            {h.navChef}
-          </a>
-          <a href={experiences} onClick={() => setOpen(false)}>
-            {h.navExperiences}
-          </a>
-          <a href={enquire} onClick={() => setOpen(false)}>
-            {h.navEnquire}
-          </a>
-          {FOOTER_LINKS.map((item) => (
-            <Link key={item.href} href={withLocale(item.href, locale)} onClick={() => setOpen(false)}>
-              {item.href === '/pricing' ? t.navPricing : item.name}
-            </Link>
-          ))}
-          <Link href="/sola" onClick={() => setOpen(false)}>
-            Sola
+          <Link className="btn ember" href={withLocale('/contact', locale)}>
+            {t.hybrid.navEnquire} <Arrow />
           </Link>
         </div>
+      </div>
+      {open ? (
+        <div id="b2-menu" className="b2-sheet">
+          {[...links, ...FOOTER_LINKS.filter((f) => !['/gallery', '/#about', '/services', '/pricing'].includes(f.href)).map((f) => ({ href: f.href, label: offerNavLabel(f.href, f.name, locale) }))].map((l) => (
+            <Link key={l.href} href={withLocale(l.href, locale)}>
+              {l.label} <Arrow />
+            </Link>
+          ))}
+        </div>
       ) : null}
+      </div>
     </header>
   )
 }

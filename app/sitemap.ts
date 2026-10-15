@@ -1,74 +1,52 @@
 import type { MetadataRoute } from 'next'
-import { recipes } from '@/data/recipes'
 import { articles } from '@/data/articles'
+import { journal } from '@/data/library/journal'
+import { libraryRecipes } from '@/lib/library'
 import { MENUS } from '@/data/menus'
 import { LOCALE_PAIRS } from '@/lib/routes'
 import { SITE_URL } from '@/lib/site'
 
-const LOCATION_PATHS = LOCALE_PAIRS.flatMap(([en, fr]) =>
-  en.startsWith('/private-chef-') || fr.startsWith('/fr/chef-prive-') ? [en, fr] : []
-)
+const REVISED = new Date('2026-10-14')
+const LEGAL = new Date('2026-09-26')
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date()
-  const staticRoutes = [
-    '',
-    '/menus',
-    '/gallery',
-    '/recipes',
-    '/articles',
-    '/pricing',
-    '/contact',
-    '/nutrition',
-    '/bmi',
-    '/privacy',
-    '/terms',
-    '/fr',
-    '/fr/pricing',
-    '/fr/contact',
-    ...LOCATION_PATHS,
-  ].map((path) => ({
-    url: `${SITE_URL}${path || '/'}`,
-    lastModified: now,
-    changeFrequency: path === '' ? 'weekly' : 'monthly',
-    priority:
-      path === ''
-        ? 1
-        : path === '/private-chef-cote-d-azur' || path === '/fr/chef-prive-cote-d-azur'
-          ? 0.8
-          : path.startsWith('/private-chef-') || path.startsWith('/fr/chef-prive-')
-            ? 0.75
-            : 0.7,
-  })) satisfies MetadataRoute.Sitemap
+function entry(path: string, lastModified: Date, priority: number): MetadataRoute.Sitemap[number] {
+  return {
+    url: `${SITE_URL}${path === '/' ? '/' : path}`,
+    lastModified,
+    changeFrequency: path === '/' || path === '/fr' ? 'weekly' : 'monthly',
+    priority,
+  }
+}
 
-  const recipeRoutes = recipes.map((recipe) => ({
-    url: `${SITE_URL}/recipes/${recipe.slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }))
+export async function generateSitemaps() {
+  return [{ id: 0 }, { id: 1 }, { id: 2 }]
+}
 
-  const articleRoutes = articles.map((article) => ({
-    url: `${SITE_URL}/articles/${article.slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.5,
-  }))
+export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
+  if (id === 1) {
+    return libraryRecipes.flatMap((recipe) => [
+      entry(`/recipes/${recipe.slug}`, new Date(recipe.updated), 0.6),
+      entry(`/fr/recettes/${recipe.slugFr}`, new Date(recipe.updated), 0.6),
+    ])
+  }
 
-  const menuRoutes = MENUS.flatMap((collection) => [
-    {
-      url: `${SITE_URL}/menus/${collection.id}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
-    ...collection.menus.map((menu) => ({
-      url: `${SITE_URL}/menus/${collection.id}/${menu.slug}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    })),
+  if (id === 2) {
+    const fresh = journal.flatMap((post) => [
+      entry(`/articles/${post.slug}`, new Date(post.publishedAt), 0.5),
+      entry(`/fr/articles/${post.slugFr}`, new Date(post.publishedAt), 0.5),
+    ])
+    const earlier = articles.map((article) => entry(`/articles/${article.slug}`, new Date(article.publishedAt), 0.45))
+    return [...fresh, ...earlier]
+  }
+
+  const pages = LOCALE_PAIRS.flatMap(([en, fr]) => [en, fr])
+  const menuPaths = MENUS.flatMap((collection) => [
+    `/menus/${collection.id}`,
+    ...collection.menus.map((menu) => `/menus/${collection.id}/${menu.slug}`),
   ])
 
-  return [...staticRoutes, ...recipeRoutes, ...articleRoutes, ...menuRoutes]
+  return [
+    ...pages.map((path) => entry(path, path.includes('confidentialite') || path.includes('conditions') || path === '/privacy' || path === '/terms' ? LEGAL : REVISED, path === '/' || path === '/fr' ? 1 : 0.7)),
+    ...menuPaths.map((path) => entry(path, REVISED, 0.5)),
+  ]
 }

@@ -2,13 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { DishPhoto } from '@/components/media/DishPhoto'
 import { Button } from '@/components/ui/Button'
+import { EventPackages } from '@/components/monetisation/EventPackages'
 import { FaqSection } from '@/components/seo/FaqSection'
 import { credentials } from '@/lib/credentials'
 import type { Locale } from '@/lib/copy'
 import { copy } from '@/lib/copy'
+import { FAQ } from '@/lib/faq'
 import {
   getLocation,
-  locationFaq,
   locationIdFromSlug,
   siblingLocations,
   type LocationId,
@@ -67,7 +68,7 @@ export function LocationScreen({ id, locale }: { id: LocationId; locale: Locale 
   const chef = credentials[locale]
   const ui = UI[locale]
   const others = siblingLocations(id, locale)
-  const faq = locationFaq(page)
+  const faq = FAQ[locale]
 
   return (
     <article>
@@ -105,6 +106,8 @@ export function LocationScreen({ id, locale }: { id: LocationId; locale: Locale 
               </div>
             </div>
           </div>
+
+          {id === 'events' ? <EventPackages locale={locale} /> : null}
 
           <section className="mt-20 border-t border-border pt-12 sm:mt-24" aria-labelledby="location-nearby">
             <h2 id="location-nearby" className="display text-3xl sm:text-4xl">

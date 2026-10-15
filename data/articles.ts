@@ -18,1143 +18,216 @@ export interface Article {
 
 export const articles: Article[] = [
   {
-    id: '1',
-    slug: 'science-of-longevity',
-    title: 'The Science of Longevity: How Food Affects Your Healthspan',
-    excerpt: 'Discover the cutting-edge research on how specific nutrients and eating patterns can extend not just lifespan, but healthspan.',
-    content: `
-# The Science of Longevity: How Food Affects Your Healthspan
-
-The distinction between lifespan and healthspan is crucial. While medicine has extended how long we live, the quality of those years matters equally. As a chef trained in both culinary arts and nutrition science, I focus on creating meals that optimize healthspan through evidence-based nutrition.
-
-## The Hallmarks of Aging
-
-Modern longevity research has identified nine hallmarks of aging that can be influenced by nutrition:
-
-1. **Genomic Instability** - DNA damage accumulates over time
-2. **Telomere Attrition** - Protective caps on chromosomes shorten
-3. **Epigenetic Alterations** - Gene expression changes
-4. **Loss of Proteostasis** - Protein quality control declines
-5. **Mitochondrial Dysfunction** - Cellular energy production falters
-6. **Cellular Senescence** - Zombie cells accumulate
-7. **Stem Cell Exhaustion** - Regenerative capacity decreases
-8. **Altered Intercellular Communication** - Inflammation increases
-9. **Deregulated Nutrient Sensing** - Metabolic pathways malfunction
-
-## Nutritional Strategies for Each Hallmark
-
-### Protecting Your DNA
-
-Foods rich in sulforaphane (broccoli sprouts), polyphenols (berries, olive oil), and omega-3 fatty acids help protect DNA from oxidative damage. The Mediterranean diet, which I feature heavily in my cooking, has been shown to reduce DNA damage markers.
-
-### Supporting Mitochondria
-
-Mitochondria are the powerhouses of your cells. Key nutrients include:
-
-- **CoQ10** - Found in organ meats and sardines
-- **PQQ** - Present in fermented foods
-- **NAD+ precursors** - Supported by niacin-rich foods
-
-### Reducing Inflammation
-
-Chronic low-grade inflammation accelerates aging. Anti-inflammatory foods form the foundation of longevity cuisine:
-
-- Wild-caught fatty fish (salmon, sardines, mackerel)
-- Extra virgin olive oil (rich in oleocanthal)
-- Turmeric with black pepper
-- Dark leafy greens
-- Berries and pomegranate
-
-## The Blue Zone Principles
-
-Studying populations with exceptional longevity reveals common dietary patterns:
-
-1. **Plant-Forward** - 95% of food from plants
-2. **Beans Daily** - Legumes at every meal
-3. **Moderate Protein** - Just enough, not excessive
-4. **Wine at 5** - Moderate alcohol with food and friends
-5. **Mindful Eating** - Stop at 80% full
-
-## My Approach
-
-Every dish I create considers these longevity principles without sacrificing flavor or experience. Fine dining can and should support your healthspan goals.
-
-*Chef Adrian*
-    `,
-    image: '/gallery/leek-salad.jpeg',
-    category: 'Longevity Science',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "1",
+    "slug": "science-of-longevity",
+    "title": "Olive oil, fish, and a long table",
+    "excerpt": "Olive oil, fish and a long table: how a menu on the Côte d'Azur is put together.",
+    "content": "In 2013, scientists described nine \"hallmarks of aging\" in the journal *Cell*. A 2023 update expanded the list to twelve. The list covers DNA damage, shortening telomeres, changes in how genes switch on and off, declining protein quality control, tired mitochondria, accumulating senescent cells, depleted stem cells, chronic inflammation and disrupted nutrient sensing.\n\nDiet is one of several factors those papers discuss. It is not a fix for any of them. At the table it is a set of choices: what is on the plate, and how it is cooked.\n\n## How this shows up in my cooking\n\n### Colour from plants\nBroccoli sprouts, berries, leafy greens and good olive oil. A Mediterranean pattern built on these foods is how the Riviera has long eaten, and it is how I write a menu.\n\n### Fish, olive oil, fewer ultra-processed foods\nMy menus lean on:\n\n- Fatty fish: sardines, mackerel, wild salmon\n- Extra virgin olive oil\n- Turmeric with black pepper\n- Dark leafy greens\n- Berries and pomegranate\n\n## What the Blue Zones teach a cook\n\nDan Buettner's writing on the Blue Zones describes a few shared habits around the table. I use them as a way to think about a plate, not as a promise:\n\n1. **Mostly plants.** Vegetables, grains and fruit make up most of the plate.\n2. **Beans often.** Legumes show up nearly every day.\n3. **Moderate protein.** Meat is a side, not the centre.\n4. **Shared meals.** In several of those places, a small glass of wine with food and friends is part of the day. That is a habit they describe, not a drink I am recommending.\n5. **Stopping before full.** Okinawans call it *hara hachi bu*: eat until you are about 80% full.\n\n## My approach\n\nI cook with these ideas in mind without turning dinner into a prescription. A long lunch on a terrace should taste generous.\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/leek-salad.jpeg",
+    "category": "The table",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 8,
-    publishedAt: '2024-01-10',
-    tags: ['longevity', 'healthspan', 'nutrition', 'anti-aging', 'blue-zones'],
+    "readTime": 3,
+    "publishedAt": "2024-01-10",
+    "tags": [
+      "olive-oil",
+      "fish",
+      "riviera",
+      "blue-zones"
+    ]
   },
   {
-    id: '2',
-    slug: 'intermittent-fasting-guide',
-    title: "Intermittent Fasting: A Chef's Guide to Time-Restricted Eating",
-    excerpt: 'How to implement intermittent fasting while maintaining culinary excellence and optimal nutrition.',
-    content: `
-# Intermittent Fasting: A Chef's Guide to Time-Restricted Eating
-
-Intermittent fasting has emerged as one of the most powerful tools for longevity and metabolic health. But as a chef, I know that how and what you eat during your eating window matters just as much as when you eat.
-
-## Understanding Fasting Physiology
-
-When you fast, several beneficial processes activate:
-
-### The Autophagy Window (16+ hours)
-
-Autophagy, meaning "self-eating," is your body's cellular cleanup process. During extended fasting:
-
-- Damaged proteins are recycled
-- Dysfunctional mitochondria are removed
-- Cellular debris is cleared
-- New, healthy components are generated
-
-### Metabolic Switching (12-14 hours)
-
-Around 12 hours of fasting, your body begins switching from glucose to fat for fuel:
-
-- Ketone production increases
-- Brain-derived neurotrophic factor (BDNF) rises
-- Growth hormone increases
-- Insulin sensitivity improves
-
-## Optimal Fasting Protocols
-
-### 16:8 Method (Recommended Starting Point)
-
-- **Eating window**: 8 hours (e.g., 10 AM - 6 PM)
-- **Fasting window**: 16 hours
-- **Benefits**: Sustainable, social-friendly, effective
-
-### 18:6 Method (Intermediate)
-
-- **Eating window**: 6 hours
-- **Fasting window**: 18 hours
-- **Benefits**: Deeper autophagy, enhanced fat burning
-
-### One Meal a Day (OMAD) (Advanced)
-
-- **Eating window**: 1-2 hours
-- **Fasting window**: 22-23 hours
-- **Benefits**: Maximum autophagy, simplicity
-
-## Breaking Your Fast: The Chef's Approach
-
-How you break your fast matters tremendously. I recommend:
-
-**First Meal (Break-fast)**
-- Start with easily digestible foods
-- Include protein for satiety
-- Add healthy fats for satisfaction
-- Keep glycemic impact moderate
-
-**Ideal Break-Fast Foods:**
-- Bone broth (collagen, minerals)
-- Eggs with avocado
-- Wild salmon with greens
-- Fermented vegetables
-
-**Avoid Breaking Fast With:**
-- High-sugar foods
-- Processed carbohydrates
-- Large portions of heavy foods
-
-## Circadian Considerations
-
-Your body's internal clock affects how you process food:
-
-- **Morning**: Highest insulin sensitivity
-- **Midday**: Peak metabolic rate
-- **Evening**: Reduced digestive capacity
-
-For optimal results, align your eating window with morning and midday hours when possible.
-
-## My Personal Protocol
-
-As a chef, I follow a modified 16:8 approach:
-
-- **Morning**: Black coffee, green tea (fasting-friendly)
-- **11 AM**: Break fast with protein-rich meal
-- **3 PM**: Main meal with balanced macros
-- **6 PM**: Light dinner, fasting begins
-
-This allows me to create and taste dishes while maintaining the benefits of time-restricted eating.
-
-*Chef Adrian*
-    `,
-    image: '/gallery/avocado-rolls.jpeg',
-    category: 'Longevity Science',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "2",
+    "slug": "intermittent-fasting-guide",
+    "title": "Hours between meals, from the kitchen",
+    "excerpt": "How a kitchen thinks about the hours between meals, without a one-meal day.",
+    "content": "The interesting part of a shorter eating day is what happens inside the window: what you cook, and how you break the gap between meals.\n\n## Two windows I use\n\n- **16:8.** Eat within eight hours, for example 10:00 to 18:00, and leave sixteen hours until the next plate. The easiest to fit around work and a social life, and where I suggest starting.\n- **18:6.** A six-hour window. More demanding.\n\n## Breaking the gap\n\nThe first plate sets the tone. I want it easy to eat: some protein, some fat, and not a large sweet dish.\n\n**Good first plates:** bone broth; eggs with avocado; wild salmon with greens; fermented vegetables on the side.\n\n**Better later, or not at all:** sugary foods, refined carbohydrates, a large heavy plate.\n\n## When the window sits\n\nI put the window in the morning and the middle of the day when I can. The evening article is [When the table is set](/articles/circadian-nutrition).\n\n## My own day\n\nA loose 16:8:\n\n- **Morning:** black coffee or green tea\n- **11:00:** a protein-rich first meal\n- **15:00:** my main meal\n- **18:00:** a light dinner, then nothing until the next morning\n\nIt leaves room to taste and develop dishes during the day.\n\nThis pattern is not for everyone. If you are pregnant, under 18, have diabetes or take medication, or have a history of eating disorders, speak to your doctor first.\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/avocado-rolls.jpeg",
+    "category": "The table",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 7,
-    publishedAt: '2024-01-15',
-    tags: ['fasting', 'autophagy', 'metabolism', 'longevity', 'circadian'],
+    "readTime": 3,
+    "publishedAt": "2024-01-15",
+    "tags": [
+      "meals",
+      "timing",
+      "kitchen"
+    ]
   },
   {
-    id: '3',
-    slug: 'anti-inflammatory-cooking',
-    title: 'Anti-Inflammatory Cooking: Recipes for Cellular Health',
-    excerpt: 'Master the art of creating delicious meals that fight chronic inflammation and support cellular repair.',
-    content: `
-# Anti-Inflammatory Cooking: Recipes for Cellular Health
-
-Chronic inflammation is the silent driver behind most age-related diseases. As a private chef specializing in longevity cuisine, I've developed techniques and recipes that transform anti-inflammatory eating from a restriction into a celebration.
-
-## Understanding Inflammation
-
-### Acute vs. Chronic Inflammation
-
-**Acute inflammation** is your body's natural healing response - it's beneficial and temporary.
-
-**Chronic inflammation** is different - it's low-grade, persistent, and damaging. It's linked to:
-
-- Heart disease
-- Type 2 diabetes
-- Alzheimer's disease
-- Cancer
-- Accelerated aging
-
-### The Inflammation Score
-
-Every food has an inflammatory or anti-inflammatory effect. I rate foods on a scale from -10 (strongly anti-inflammatory) to +10 (pro-inflammatory).
-
-**Strongly Anti-Inflammatory (-7 to -10):**
-- Wild salmon
-- Extra virgin olive oil
-- Turmeric
-- Broccoli sprouts
-- Berries
-
-**Neutral (0):**
-- Chicken breast
-- Rice
-- Most vegetables
-
-**Pro-Inflammatory (+5 to +10):**
-- Refined sugars
-- Processed vegetable oils
-- Trans fats
-- Processed meats
-
-## Key Anti-Inflammatory Ingredients
-
-### Extra Virgin Olive Oil
-
-The cornerstone of anti-inflammatory cooking. High-quality EVOO contains oleocanthal, which works similarly to ibuprofen. I use it:
-
-- As finishing oil on all dishes
-- For low-heat sautéing
-- In dressings and marinades
-
-### Fatty Fish
-
-Wild salmon, sardines, and mackerel provide EPA and DHA omega-3s that directly reduce inflammatory markers. I recommend:
-
-- 3-4 servings per week minimum
-- Wild-caught over farmed
-- Proper cooking to preserve omega-3s
-
-### Turmeric with Black Pepper
-
-Curcumin in turmeric is powerfully anti-inflammatory, but needs piperine from black pepper for absorption. Always combine them.
-
-### Cruciferous Vegetables
-
-Broccoli, cauliflower, and especially broccoli sprouts contain sulforaphane, which activates your body's own anti-inflammatory pathways.
-
-## Cooking Techniques That Preserve Benefits
-
-### Low-Heat Methods
-
-High heat creates inflammatory compounds. I prefer:
-
-- Steaming
-- Poaching
-- Sous vide
-- Low-temperature roasting
-
-### Proper Oil Selection
-
-- **High heat**: Avocado oil, refined coconut oil
-- **Medium heat**: Extra virgin olive oil (contrary to popular belief, it's stable up to 375°F)
-- **No heat**: Flaxseed oil, walnut oil
-
-### The Power of Herbs and Spices
-
-Fresh herbs and spices are concentrated anti-inflammatory compounds:
-
-- **Ginger** - Gingerols reduce COX-2
-- **Rosemary** - Carnosic acid protects the brain
-- **Garlic** - Allicin fights inflammation
-- **Cinnamon** - Improves insulin sensitivity
-
-## Sample Anti-Inflammatory Day
-
-**Morning:**
-Golden milk with turmeric, ginger, and black pepper
-
-**Lunch:**
-Mediterranean salmon bowl with quinoa, olive oil, and vegetables
-
-**Dinner:**
-Herb-crusted lamb with roasted cruciferous vegetables
-
-**Snack:**
-Dark chocolate (85%+) with walnuts and berries
-
-*Chef Adrian*
-    `,
-    image: '/gallery/salmon-tartare.jpeg',
-    category: 'Nutrition & Health',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "3",
+    "slug": "anti-inflammatory-cooking",
+    "title": "A pot of greens, and how to cook them",
+    "excerpt": "Olive oil, oily fish, greens and a pot that is not left on a raging flame.",
+    "content": "Olive oil, oily fish, greens, turmeric, and a pot that is not left on a raging flame. That is how I build this menu. It is cooking, not a list of rules.\n\n## The ingredients I lean on\n\n### Extra virgin olive oil\nThe base of nearly everything I cook. Good oil has a peppery catch at the back of the throat, from a compound called oleocanthal. I use it to finish dishes, for gentle sautéing, and in dressings and marinades.\n\n### Oily fish\nSardines, mackerel, anchovies and wild salmon. On the Riviera, sardines and anchovies are local, cheap and wonderful.\n\n### Turmeric and black pepper\nIf turmeric goes in, so does pepper.\n\n### Greens and brassicas\nBroccoli, cauliflower and especially broccoli sprouts.\n\n### What I use less of\nRefined sugar, processed seed oils, trans fats and processed meats.\n\n## Techniques\n\n### Gentle heat\nI favour steaming, poaching, sous vide and slow roasting over a hard char.\n\n### Choosing the oil\n- **High heat:** avocado oil, refined coconut oil\n- **Medium heat:** extra virgin olive oil, which holds up well to around 190°C, more than most people think\n- **No heat:** flaxseed oil, walnut oil\n\n### Herbs and spices\nGinger, rosemary, garlic and cinnamon bring flavour, so the dish needs less salt and less sugar.\n\n## A day of menu ideas\n- **Morning:** warm milk with turmeric, ginger and black pepper\n- **Lunch:** salmon with quinoa, vegetables and olive oil\n- **Dinner:** herb-crusted lamb with roasted cauliflower and broccoli\n- **Something sweet:** 85% dark chocolate with walnuts and berries\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/salmon-tartare.jpeg",
+    "category": "The kitchen",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 6,
-    publishedAt: '2024-01-20',
-    tags: ['anti-inflammatory', 'cooking', 'health', 'recipes', 'nutrition'],
+    "readTime": 3,
+    "publishedAt": "2024-01-20",
+    "tags": [
+      "olive-oil",
+      "greens",
+      "fish"
+    ]
   },
   {
-    id: '4',
-    slug: 'mediterranean-okinawan-fusion',
-    title: 'The Mediterranean-Okinawan Fusion: Best of Both Blue Zones',
-    excerpt: 'Combining the wisdom of the two healthiest cuisines on Earth for optimal longevity.',
-    content: `
-# The Mediterranean-Okinawan Fusion: Best of Both Blue Zones
-
-Two regions stand out in longevity research: the Mediterranean basin and Okinawa, Japan. Both produce remarkable numbers of centenarians. As a chef fascinated by longevity, I've studied and combined these cuisines to create what I believe is the optimal approach to eating for a long, healthy life.
-
-## The Mediterranean Advantage
-
-### Key Components
-
-**Extra Virgin Olive Oil** - The liquid gold of longevity
-- 4+ tablespoons daily in traditional diets
-- Rich in oleocanthal and polyphenols
-- Reduces all-cause mortality
-
-**Fatty Fish** - Omega-3 powerhouse
-- 2-3 servings weekly minimum
-- Wild-caught preferred
-- Sardines, anchovies, mackerel, salmon
-
-**Legumes** - Plant protein staple
-- Daily consumption
-- Fiber and resistant starch
-- Blood sugar stability
-
-**Wine** - Moderate consumption
-- 1-2 glasses with meals
-- Red preferred for resveratrol
-- Always with food and company
-
-## The Okinawan Secrets
-
-### Key Components
-
-**Sweet Potatoes** - The purple variety
-- Primary carbohydrate source
-- Extremely low glycemic impact
-- Rich in anthocyanins
-
-**Bitter Melon (Goya)** - Blood sugar control
-- Unique to Okinawan cuisine
-- Powerful metabolic effects
-- Acquired taste, worth developing
-
-**Tofu and Fermented Soy** - Quality plant protein
-- Not processed soy products
-- Traditional preparation methods
-- Natto for vitamin K2
-
-**Seaweed** - Marine minerals
-- Iodine, selenium, zinc
-- Unique polysaccharides
-- Anti-cancer properties
-
-### The Hara Hachi Bu Principle
-
-Okinawans practice eating until 80% full. This natural caloric restriction:
-
-- Activates longevity genes
-- Reduces oxidative stress
-- Maintains healthy weight
-- Enhances insulin sensitivity
-
-## My Fusion Approach
-
-### Breakfast: Mediterranean-Okinawan Bowl
-
-- Base: Purple sweet potato
-- Protein: Soft-boiled eggs with miso
-- Fat: Drizzle of extra virgin olive oil
-- Vegetables: Sautéed greens with garlic
-
-### Lunch: Sea-to-Table Bowl
-
-- Base: Quinoa (Mediterranean) + seaweed (Okinawan)
-- Protein: Wild salmon with white miso glaze
-- Vegetables: Mediterranean salad with bitter greens
-- Fat: Tahini-olive oil dressing
-
-### Dinner: Fusion Fine Dining
-
-- Appetizer: Sardines with white bean hummus
-- Main: Miso-glazed black cod with roasted vegetables
-- Side: Fermented vegetables (sauerkraut meets kimchi)
-- Dessert: Dark chocolate with matcha
-
-## Practical Implementation
-
-### Weekly Meal Structure
-
-**Mediterranean Days (3-4):**
-- Fish as main protein
-- Olive oil generously used
-- Legumes in every meal
-- Fresh herbs and tomatoes
-
-**Okinawan Days (3-4):**
-- Tofu or tempeh as protein
-- Seaweed and mushrooms featured
-- Sweet potato as carbohydrate
-- Green tea throughout the day
-
-**Fusion Days:**
-- Combine best of both
-- Creative ingredient swaps
-- Honor both traditions
-
-*Chef Adrian*
-    `,
-    image: '/gallery/burrata-peach.jpeg',
-    category: 'Longevity Science',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "4",
+    "slug": "mediterranean-okinawan-fusion",
+    "title": "Two coasts, one way of cooking",
+    "excerpt": "Olive oil and miso on the same plate: Mediterranean cooking and Okinawan technique.",
+    "content": "I cook on the Côte d'Azur and I use Japanese technique, so olive oil and miso end up on the same plate.\n\n## The Mediterranean side\n\n**Extra virgin olive oil.** Used generously. Often the last thing on the dish.\n\n**Oily fish.** Sardines, anchovies, mackerel, salmon, more than once in a week when the counter is good.\n\n**Legumes.** Chickpeas, lentils and white beans, often enough to carry a meal.\n\n**Wine.** Traditionally a glass with food and company, never on its own. That is the custom, not advice to drink.\n\n## The Okinawan side\n\n**Purple sweet potato.** Historically the main carbohydrate. Deep violet.\n\n**Bitter melon (goya).** Central to Okinawan cooking. Bitter, yes, and worth learning to like.\n\n**Tofu and soy.** Traditionally made, not a long packaged ingredient list.\n\n**Seaweed.** A briny depth in the bowl.\n\n**Hara hachi bu.** The habit of stopping before the plate is finished, about four-fifths of the way.\n\n## How I combine them\n\n### Breakfast\nRoasted purple sweet potato, soft-boiled eggs with a little miso, greens sautéed with garlic, olive oil to finish.\n\n### Lunch\nQuinoa and seaweed, wild salmon with white miso glaze, a salad of bitter leaves, tahini and olive oil.\n\n### Dinner\n- **To start:** sardines with white bean purée\n- **Main:** miso-glazed black cod with roasted vegetables\n- **On the side:** a ferment somewhere between sauerkraut and kimchi\n- **To finish:** dark chocolate with matcha\n\n## A weekly rhythm\n\n**Mediterranean days:** fish, plenty of olive oil, legumes, tomatoes and fresh herbs.\n\n**Okinawan days:** tofu or tempeh, seaweed and mushrooms, sweet potato, green tea through the day.\n\n**In between:** borrow from both, and keep each tradition intact.\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/burrata-peach.jpeg",
+    "category": "The table",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 7,
-    publishedAt: '2024-01-25',
-    tags: ['blue-zones', 'mediterranean', 'okinawa', 'longevity', 'fusion'],
+    "readTime": 3,
+    "publishedAt": "2024-01-25",
+    "tags": [
+      "mediterranean",
+      "okinawa",
+      "olive-oil",
+      "miso"
+    ]
   },
   {
-    id: '5',
-    slug: 'omega-3-masterclass',
-    title: 'Omega-3 Masterclass: Sourcing and Preparing Fatty Fish',
-    excerpt: 'Everything you need to know about selecting, storing, and cooking omega-3 rich fish for maximum health benefits.',
-    content: `
-# Omega-3 Masterclass: Sourcing and Preparing Fatty Fish
-
-Omega-3 fatty acids are among the most important nutrients for longevity. As a chef, I've dedicated years to mastering the selection and preparation of omega-3 rich fish to maximize both flavor and health benefits.
-
-## Understanding Omega-3s
-
-### Types of Omega-3s
-
-**EPA (Eicosapentaenoic Acid)**
-- Anti-inflammatory
-- Cardiovascular benefits
-- Mood regulation
-
-**DHA (Docosahexaenoic Acid)**
-- Brain structure (60% of brain fat)
-- Eye health
-- Cognitive function
-
-**ALA (Alpha-Linolenic Acid)**
-- Plant-based (flax, chia, walnuts)
-- Converts poorly to EPA/DHA (5-10%)
-- Still beneficial for heart health
-
-### The Omega-3 to Omega-6 Ratio
-
-Modern diets are heavily skewed toward omega-6 (from vegetable oils). The ideal ratio is:
-
-- **Optimal**: 1:1 to 1:3
-- **Modern Western diet**: 1:15 to 1:20
-- **My cuisine targets**: 1:2 to 1:4
-
-## Top Omega-3 Fish Sources
-
-### Tier 1: Highest Omega-3
-
-**Wild Salmon (Sockeye)**
-- 2.7g omega-3 per 100g
-- Rich in astaxanthin
-- Best: Alaskan wild-caught
-
-**Sardines**
-- 1.5g omega-3 per 100g
-- Low mercury, sustainable
-- Bones provide calcium
-
-**Mackerel (Atlantic)**
-- 2.7g omega-3 per 100g
-- Affordable, flavorful
-- Best smoked or grilled
-
-### Tier 2: Excellent Sources
-
-**Anchovies**
-- 2.1g omega-3 per 100g
-- Intense umami flavor
-- Perfect in sauces
-
-**Herring**
-- 1.7g omega-3 per 100g
-- Often pickled or smoked
-- Underutilized gem
-
-**Trout (Rainbow)**
-- 1.0g omega-3 per 100g
-- Freshwater option
-- Mild, approachable flavor
-
-## Sourcing Quality Fish
-
-### Wild vs. Farmed
-
-**Wild-Caught Advantages:**
-- Higher omega-3 content
-- Better omega-3 to omega-6 ratio
-- Natural diet
-- Astaxanthin from natural sources
-
-**Sustainable Farming:**
-- Some farms are improving
-- Look for certifications (ASC, BAP)
-- Feed composition matters
-
-### Reading Labels
-
-- "Wild-caught" - Harvested from natural waters
-- "Atlantic salmon" - Usually farmed (wild Atlantic is rare)
-- "Pacific salmon" - More likely wild
-- "Sockeye" or "King" - Premium wild varieties
-
-### Freshness Indicators
-
-- Bright, clear eyes
-- Red, moist gills
-- Firm flesh that springs back
-- Ocean-fresh smell (not fishy)
-
-## Cooking Techniques That Preserve Omega-3s
-
-### Temperature Matters
-
-Omega-3s are delicate and can oxidize with heat. My preferred methods:
-
-**Poaching (Best)**
-- Temperature: 160-180°F (70-80°C)
-- In olive oil, wine, or broth
-- Maximum omega-3 preservation
-
-**Baking (Excellent)**
-- Temperature: 300-350°F (150-175°C)
-- Cover or en papillote
-- Gentle, even cooking
-
-**Pan-Searing (Good)**
-- Quick, high heat
-- Crispy exterior, rare interior
-- Don't overcook!
-
-**Grilling (Acceptable)**
-- Creates delicious flavor
-- Some omega-3 loss
-- Don't char excessively
-
-### Avoid
-
-- Deep frying (oxidizes omega-3s)
-- Overcooking (destroys nutrients)
-- Reheating multiple times
-
-## My Signature Preparations
-
-### Olive Oil Poached Salmon
-
-The gentlest cooking method preserves nearly all omega-3 content while infusing Mediterranean flavor.
-
-### Miso-Glazed Black Cod
-
-Japanese technique that creates a caramelized exterior while keeping the interior silky.
-
-### Sardine Toast
-
-Simple preparation that lets the quality of the fish shine through.
-
-*Chef Adrian*
-    `,
-    image: '/gallery/seabass.jpeg',
-    category: 'Cooking Techniques',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "5",
+    "slug": "omega-3-masterclass",
+    "title": "Sardines and mackerel, cooked simply",
+    "excerpt": "How to buy oily fish on this coast, and how to cook it so the fish survives the pan.",
+    "content": "Oily fish is one of the foods I cook most. Here is how I choose it, and how I cook it so the fish survives the pan.\n\n## Fish worth buying\n\n- **Mackerel:** Affordable and full-flavoured. Best grilled or smoked.\n- **Wild salmon (sockeye):** Deep colour, good for a gentle poach.\n- **Herring:** Underrated, often pickled or smoked.\n- **Anchovies:** A Riviera staple. Intense, and happy melted into a sauce.\n- **Sardines:** The small fish I trust from this coast. The soft bones are eaten with the fish.\n- **Rainbow trout:** Milder, from fresh water. A good start if a strong fish puts you off.\n\n## Sourcing\n\n### Wild or farmed\nI ask what farmed fish were fed, and I look for ASC or BAP on the label. Wild fish I buy when the monger can say when it landed.\n\n### Reading labels\n- \"Wild-caught\" means caught in open water.\n- \"Atlantic salmon\" is almost always farmed.\n- \"Pacific\", \"sockeye\" and \"king\" usually mean wild.\n\n### At the fish counter\nClear, bright eyes. Red, moist gills. Firm flesh that springs back. A clean smell of the sea, never a stale one.\n\n## Cooking\n\nHarsh heat dries the fish and muddies the flavour. Gentlest methods first:\n\n**Poaching.** 70–80°C in olive oil, wine or broth.\n\n**Baking.** 150–175°C, covered or *en papillote*. Even and forgiving.\n\n**Pan-searing.** Hot and fast: a crisp skin, a barely cooked centre. Do not leave it on the heat.\n\n**Grilling.** Great flavour. Avoid a heavy char.\n\n**What I avoid:** deep frying, cooking it past the point, and reheating it more than once.\n\n## Dishes I cook often\n\n**Salmon poached in olive oil.** Silky, with a Mediterranean edge.\n\n**Miso-glazed black cod.** Caramelised outside, almost custardy inside.\n\n**Sardines on toast.** Good bread, good fish, lemon, olive oil. Nothing to hide behind.\n\nIf you are pregnant, follow official advice on large predatory fish such as swordfish and tuna because of mercury.\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/seabass.jpeg",
+    "category": "The market",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 8,
-    publishedAt: '2024-01-28',
-    tags: ['omega-3', 'fish', 'cooking', 'technique', 'nutrition'],
+    "readTime": 3,
+    "publishedAt": "2024-01-28",
+    "tags": [
+      "sardines",
+      "mackerel",
+      "fish",
+      "riviera"
+    ]
   },
   {
-    id: '6',
-    slug: 'sulforaphane-superfood',
-    title: 'Sulforaphane: Why Broccoli Sprouts Are a Longevity Superfood',
-    excerpt: 'The science behind sulforaphane and how to maximize its benefits through proper preparation.',
-    content: `
-# Sulforaphane: Why Broccoli Sprouts Are a Longevity Superfood
-
-If I could recommend just one food for longevity, it would be broccoli sprouts. These tiny powerhouses contain sulforaphane, arguably the most potent natural compound for activating your body's defense systems.
-
-## The Science of Sulforaphane
-
-### What Is Sulforaphane?
-
-Sulforaphane is an isothiocyanate compound that forms when glucoraphanin (found in cruciferous vegetables) meets the enzyme myrosinase. This reaction happens when the plant tissue is damaged - like when you chew or chop it.
-
-### The NRF2 Pathway
-
-Sulforaphane's superpower is activating NRF2, your body's master switch for antioxidant production:
-
-**NRF2 Activation Effects:**
-- Produces glutathione (master antioxidant)
-- Activates phase 2 detoxification
-- Reduces oxidative stress
-- Protects DNA
-- Supports mitochondrial function
-
-### Research Highlights
-
-Studies show sulforaphane:
-
-- Reduces cancer risk by 40-50%
-- Improves autism symptoms
-- Protects against heart disease
-- Supports brain health
-- Enhances detoxification
-
-## Broccoli Sprouts vs. Mature Broccoli
-
-### Concentration Comparison
-
-**Broccoli Sprouts:** 50-100x more sulforaphane
-**Mature Broccoli:** Good, but far less concentrated
-
-### Why Such a Difference?
-
-Sprouts contain concentrated glucoraphanin as a defense mechanism during their vulnerable growth phase. As the plant matures, this concentration dilutes.
-
-## How to Maximize Sulforaphane
-
-### The Mustard Seed Trick
-
-When broccoli is cooked, myrosinase is destroyed. Solution:
-
-1. Cook your broccoli
-2. Let it cool slightly
-3. Sprinkle with mustard seed powder
-4. Wait 5 minutes before eating
-
-Mustard seeds provide external myrosinase to create sulforaphane from the cooked glucoraphanin.
-
-### Optimal Raw Preparation
-
-For broccoli sprouts (always eat raw):
-
-1. Chew thoroughly (activates myrosinase)
-2. Or chop and wait 40 minutes before eating
-3. Add to salads, sandwiches, smoothies
-
-### Growing Your Own
-
-Broccoli sprouts are easy to grow:
-
-**Supplies:**
-- Organic broccoli seeds
-- Mason jar with mesh lid
-- Fresh water
-
-**Process:**
-1. Soak seeds overnight
-2. Drain and rinse twice daily
-3. Harvest in 3-5 days
-4. Store in refrigerator
-
-### Storage Tips
-
-- Refrigerate immediately after harvest
-- Use within 5-7 days
-- Don't wash until ready to use
-- Keep in breathable container
-
-## Incorporating Sulforaphane Daily
-
-### My Daily Protocol
-
-**Morning smoothie:** 30g broccoli sprouts blended with berries
-
-**Lunch:** Top salads with fresh sprouts
-
-**Dinner:** Roasted broccoli with mustard seed powder
-
-### Recipe Ideas
-
-**Sulforaphane Smoothie:**
-- 30g broccoli sprouts
-- 1 cup frozen blueberries
-- 1 banana
-- Almond milk
-- Touch of honey
-
-**Power Salad Topping:**
-- Fresh broccoli sprouts
-- Shaved raw broccoli
-- Pumpkin seeds
-- Olive oil dressing
-
-*Chef Adrian*
-    `,
-    image: '/gallery/zucchini-carpaccio.jpeg',
-    category: 'Longevity Science',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "6",
+    "slug": "sulforaphane-superfood",
+    "title": "Broccoli, sprouts, and a hot pan",
+    "excerpt": "Broccoli sprouts on the windowsill, and the mustard trick for cooked broccoli.",
+    "content": "Broccoli sprouts are small, peppery and easy to grow on a kitchen windowsill. The compound cooks talk about is sulforaphane, and the interesting part is how you cut and heat the plant.\n\n## What happens when you cut it\n\nBroccoli and its relatives contain glucoraphanin. When the plant is cut or chewed, an enzyme called myrosinase turns that into sulforaphane. No cut, no reaction, which is why the prep matters.\n\n## Sprouts versus a head of broccoli\n\nThree-day-old sprouts can contain 10 to 100 times more glucoraphanin than mature broccoli, according to the Johns Hopkins team that first measured it. Young plants concentrate it while they are small. As they grow, it thins out.\n\n## In the kitchen\n\n### Cooked broccoli: the mustard trick\nCooking stops myrosinase. To bring the reaction back: cook the broccoli, let it cool a little, sprinkle a pinch of mustard powder, and wait a few minutes before serving. Mustard seed has its own myrosinase, so the reaction happens on the plate. It also tastes good.\n\n### Chop first, cook later\nChop broccoli and leave it for around 40 minutes before cooking, so the reaction can start while the enzyme is still active.\n\n### Sprouts\nEat them raw and chew them. Scatter them over salads and sandwiches, or blend them into a drink.\n\n## Growing your own\n\n**You need:** broccoli seeds sold for sprouting, a jar with a mesh lid, fresh water.\n\n1. Soak the seeds overnight.\n2. Drain and rinse twice a day.\n3. Harvest after 3 to 5 days.\n4. Refrigerate straight away and eat within 5 to 7 days.\n\nKeep everything very clean. Raw sprouts can carry bacteria, so they are not advised for pregnant women, young children, older people or anyone with a weakened immune system.\n\n## How I use them\n\n- **Morning:** a small handful of sprouts blended with berries\n- **Lunch:** a handful on a salad\n- **Dinner:** roasted broccoli with mustard powder\n\n### Two ideas\n\n**A green blend:** broccoli sprouts, a cup of frozen blueberries, a banana, almond milk, a little honey.\n\n**Salad topping:** fresh sprouts, shaved raw broccoli, toasted pumpkin seeds, an olive oil dressing.\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/zucchini-carpaccio.jpeg",
+    "category": "The kitchen",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 6,
-    publishedAt: '2024-02-01',
-    tags: ['sulforaphane', 'broccoli', 'sprouts', 'longevity', 'superfood'],
+    "readTime": 3,
+    "publishedAt": "2024-02-01",
+    "tags": [
+      "broccoli",
+      "sprouts",
+      "technique"
+    ]
   },
   {
-    id: '7',
-    slug: 'gut-brain-connection',
-    title: 'Gut-Brain Connection: Fermented Foods for Cognitive Health',
-    excerpt: 'How fermented foods support your gut microbiome and enhance brain function through the gut-brain axis.',
-    content: `
-# Gut-Brain Connection: Fermented Foods for Cognitive Health
-
-The gut-brain axis is one of the most exciting frontiers in health science. As a chef, I've embraced fermentation not just for its complex flavors, but for its profound impact on cognitive function and mental well-being.
-
-## The Gut-Brain Axis
-
-### Bidirectional Communication
-
-Your gut and brain communicate constantly through:
-
-**The Vagus Nerve** - Direct neural highway
-**Neurotransmitters** - 95% of serotonin made in gut
-**Immune Signals** - Inflammation affects mood
-**Metabolites** - Short-chain fatty acids influence brain
-
-### The Microbiome's Role
-
-Your gut contains trillions of bacteria that:
-
-- Produce neurotransmitters
-- Regulate inflammation
-- Influence stress response
-- Affect memory and learning
-
-## Fermented Foods and Brain Health
-
-### Research Findings
-
-Studies show fermented food consumption correlates with:
-
-- Reduced anxiety and depression
-- Better stress resilience
-- Improved memory
-- Lower neuroinflammation
-
-### Key Mechanisms
-
-**Probiotic Effects:**
-- Diverse beneficial bacteria
-- Crowd out harmful strains
-- Strengthen gut barrier
-
-**Postbiotic Effects:**
-- Metabolites from fermentation
-- Short-chain fatty acids
-- Vitamins (especially K2 and B12)
-
-## Top Fermented Foods for Brain Health
-
-### Kimchi
-
-**Benefits:**
-- Diverse probiotic strains
-- High in vitamin K2
-- Anti-inflammatory compounds
-- Supports BDNF production
-
-**How I Use It:**
-- Alongside protein at lunch
-- In grain bowls
-- As a condiment for eggs
-
-### Sauerkraut
-
-**Benefits:**
-- Simple, powerful probiotics
-- High in vitamin C
-- Prebiotic fiber
-- Supports mood regulation
-
-**How I Use It:**
-- With fatty fish
-- In salads
-- As a digestive aid with meals
-
-### Kefir
-
-**Benefits:**
-- More diverse than yogurt (30+ strains)
-- Contains beneficial yeasts
-- High in tryptophan
-- Supports sleep quality
-
-**How I Use It:**
-- Morning smoothie base
-- Salad dressings
-- Overnight oats
-
-### Miso
-
-**Benefits:**
-- Rich in B vitamins
-- Contains unique probiotics
-- Supports gut-brain signaling
-- Traditional longevity food
-
-**How I Use It:**
-- Soup base
-- Glazes for fish
-- Salad dressings
-- Marinades
-
-### Natto
-
-**Benefits:**
-- Highest vitamin K2 source
-- Nattokinase for circulation
-- Supports brain blood flow
-- Traditional Okinawan staple
-
-**How I Use It:**
-- Breakfast over rice
-- Acquired taste - start small
-
-## Making Fermentation Accessible
-
-### Easy Homemade Ferments
-
-**Quick Pickled Vegetables:**
-Not technically fermented, but a gateway
-
-**Lacto-Fermented Vegetables:**
-Salt + vegetables + time = probiotics
-
-**Milk Kefir:**
-Just add grains to milk
-
-### Buying Quality Fermented Foods
-
-Look for:
-- "Live cultures" on label
-- Refrigerated section
-- Short ingredient list
-- No pasteurization after fermentation
-
-Avoid:
-- Shelf-stable "fermented" products
-- Added sugars
-- Artificial preservatives
-
-## Daily Fermented Food Protocol
-
-**Morning:**
-Kefir smoothie or miso soup
-
-**Lunch:**
-Fermented vegetable side (2-3 tbsp)
-
-**Dinner:**
-Another fermented food serving
-
-**Target:**
-3 different fermented foods daily
-
-*Chef Adrian*
-    `,
-    image: '/gallery/roasted-roots.jpeg',
-    category: 'Nutrition & Health',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "7",
+    "slug": "gut-brain-connection",
+    "title": "Ferments for the table",
+    "excerpt": "Kraut, miso, kefir and kimchi: what I keep in jars, and where they go on the plate.",
+    "content": "I first kept fermentation in the kitchen because of flavour: the sourness of good kraut, the depth of miso. The jars stayed for that reason.\n\n## The ferments I cook with\n\n**Kimchi.** Alongside protein at lunch, folded into grain bowls, spooned over eggs.\n\n**Sauerkraut.** Its acidity cuts through oily fish. I also toss it through salads.\n\n**Kefir.** Tangier and more varied than yogurt. A base for a blended drink, a dressing or overnight oats.\n\n**Miso.** Soup, glazes for fish, dressings, marinades. White miso on black cod is a dish guests ask for again.\n\n**Natto.** Fermented soybeans from Japan, eaten over rice at breakfast. An acquired taste: start small. It is very high in vitamin K, so check with your doctor if you take blood thinners.\n\n## Fermenting at home\n\nQuick pickles are not fermented, but they get you used to the flavours. Lacto-fermented vegetables need salt, vegetables and time. Milk kefir: add kefir grains to milk and wait.\n\n### Buying ferments\nLook for \"live cultures\" on the label, the refrigerated aisle and a short ingredient list. Skip shelf-stable versions (usually pasteurised) and anything with added sugar.\n\n## Making it a habit\n\nA spoonful of kraut at lunch, miso soup in the morning, kefir in a dressing. Small, regular amounts are easier to keep up than a strict plan.\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/roasted-roots.jpeg",
+    "category": "The kitchen",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 7,
-    publishedAt: '2024-02-05',
-    tags: ['gut-health', 'fermentation', 'brain', 'probiotics', 'microbiome'],
+    "readTime": 3,
+    "publishedAt": "2024-02-05",
+    "tags": [
+      "ferments",
+      "miso",
+      "kraut"
+    ]
   },
   {
-    id: '8',
-    slug: 'circadian-nutrition',
-    title: 'Circadian Nutrition: When You Eat Matters as Much as What',
-    excerpt: 'Optimize your health by aligning your eating patterns with your body\'s natural rhythms.',
-    content: `
-# Circadian Nutrition: When You Eat Matters as Much as What
-
-Your body runs on an internal clock that affects everything from hormone production to digestion. As a chef focused on longevity, I've learned that meal timing can be as important as food choices.
-
-## Understanding Circadian Rhythms
-
-### The Master Clock
-
-Your suprachiasmatic nucleus (SCN) in the brain coordinates all bodily rhythms based on light exposure. But your organs also have their own clocks:
-
-**Liver Clock** - Peaks in afternoon
-**Pancreas Clock** - Most insulin-sensitive in morning
-**Gut Clock** - Best digestion earlier in day
-**Muscle Clock** - Protein synthesis highest in morning
-
-### Metabolic Timing
-
-**Morning (6 AM - 12 PM):**
-- Peak insulin sensitivity
-- Best carbohydrate tolerance
-- Highest metabolic rate
-- Optimal for larger meals
-
-**Afternoon (12 PM - 6 PM):**
-- Good digestion
-- Stable blood sugar
-- Moderate metabolism
-- Balanced meal timing
-
-**Evening (6 PM - 10 PM):**
-- Declining insulin sensitivity
-- Reduced digestive capacity
-- Lower metabolic rate
-- Light meals preferred
-
-**Night (10 PM - 6 AM):**
-- Fasting and repair mode
-- Growth hormone release
-- Cellular cleanup (autophagy)
-- No eating ideal
-
-## Practical Circadian Eating
-
-### The Time-Shifted Diet
-
-Most people eat the opposite of what's optimal:
-
-**Typical Pattern:**
-- Small or skipped breakfast
-- Moderate lunch
-- Large dinner late evening
-
-**Optimal Pattern:**
-- Substantial breakfast
-- Largest meal at lunch
-- Light, early dinner
-
-### The 3-3-10 Rule
-
-- **3 meals** in daylight hours
-- **3 hours** between last meal and sleep
-- **10+ hours** of overnight fasting
-
-### Meal Composition by Time
-
-**Breakfast (7-9 AM):**
-- Protein-rich (eggs, fish, Greek yogurt)
-- Complex carbs (oats, sweet potato)
-- Healthy fats (avocado, olive oil)
-- Larger portion acceptable
-
-**Lunch (12-2 PM):**
-- Balanced macros
-- Largest meal if desired
-- Include vegetables
-- Good for carbohydrates
-
-**Dinner (5-7 PM):**
-- Protein and vegetables focused
-- Lower carbohydrate
-- Smaller portion
-- Easy to digest
-
-## Circadian Disruption Effects
-
-### What Happens When You Eat Late
-
-- **Blood sugar** stays elevated longer
-- **Fat storage** increases
-- **Sleep quality** decreases
-- **Inflammation** rises
-- **Weight gain** more likely from same calories
-
-### Research Findings
-
-Studies show that eating the same foods but at different times produces different results:
-
-- Morning eaters lose more weight
-- Evening eaters have higher inflammation
-- Late meals disrupt sleep hormones
-- Shift workers have higher disease risk
-
-## Special Considerations
-
-### Social Dining
-
-As a private chef, I understand dinner is often social:
-
-**Strategies:**
-- Make lunch your main meal
-- Keep dinner earlier when possible
-- Choose lighter options at evening events
-- Don't stress occasionally
-
-### Exercise Timing
-
-**Morning exercise:** 
-- Fasted or light snack
-- Full breakfast after
-
-**Evening exercise:**
-- Light meal before
-- Protein-focused recovery
-- Don't eat too late after
-
-### Shift Work
-
-If you can't follow normal patterns:
-
-- Keep consistent eating times
-- Prioritize sleep
-- Focus on food quality
-- Avoid eating in biological night when possible
-
-## My Approach as a Chef
-
-I structure my days around circadian principles:
-
-**Morning:** Protein-rich breakfast after workout
-**Midday:** Main meal during peak metabolism
-**Evening:** Light dinner, finished by 7 PM
-**Night:** Fasting, allowing repair and recovery
-
-*Chef Adrian*
-    `,
-    image: '/gallery/pea-risotto.jpeg',
-    category: 'Longevity Science',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "8",
+    "slug": "circadian-nutrition",
+    "title": "When the table is set",
+    "excerpt": "Breakfast, a real lunch, and a lighter dinner. How the day is arranged around the table.",
+    "content": "I plan the day as meals. The larger plate sits in the middle of the day when I can manage it. Dinner is lighter, and earlier, unless the table is the reason for the evening.\n\n## What goes on the plate, and when\n\n- **Breakfast (7:00–9:00):** eggs, fish or yogurt, something slow such as oats or sweet potato, olive oil or avocado.\n- **Lunch (12:00–14:00):** the main meal. Vegetables included, and most of the day's starch.\n- **Dinner (17:00–19:00):** protein and vegetables, less starch, a smaller plate, finished early when the diary allows.\n\nI leave about three hours between the last meal and bed when I can, and a long stretch overnight with nothing to eat.\n\n## Real life\n\n### Dinner is social\nI cook private dinners for a living, so I know the evening meal is often the point. Make lunch the main meal on days with a dinner out. Start earlier when you can. Choose the lighter dishes when the night runs long. Do not worry about the occasional late table.\n\n### Exercise\n- **Morning training:** a light snack or nothing beforehand, a full breakfast after.\n- **Evening training:** a light meal before, protein afterwards, not too late.\n\n### Hours that move\nIf your hours are irregular, keep meal times as consistent as you can and protect your sleep. Talk to your doctor about what works for you.\n\n## How I eat\n\n- **Morning:** a protein-rich breakfast after training\n- **Midday:** my main meal\n- **Evening:** a light dinner, finished by 19:00\n- **Night:** nothing until morning\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/pea-risotto.jpeg",
+    "category": "The table",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 7,
-    publishedAt: '2024-02-10',
-    tags: ['circadian', 'timing', 'metabolism', 'longevity', 'biohacking'],
+    "readTime": 3,
+    "publishedAt": "2024-02-10",
+    "tags": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ]
   },
   {
-    id: '9',
-    slug: 'art-of-plating',
-    title: 'The Art of Plating: Creating Visual Masterpieces',
-    excerpt: 'Discover how professional chefs transform simple ingredients into stunning visual presentations that elevate the dining experience.',
-    content: `
-# The Art of Plating: Creating Visual Masterpieces
-
-Plating is more than just arranging food on a plate - it's an art form that engages all the senses. As a private chef, I've learned that presentation can make or break a dining experience.
-
-## The Foundation: Color and Contrast
-
-The first rule of plating is understanding color theory. A well-plated dish should have a harmonious color palette that creates visual interest. Think of your plate as a canvas, and each ingredient as a brushstroke.
-
-### Key Principles:
-
-1. **Odd Numbers**: Grouping elements in odd numbers (3, 5, 7) creates visual balance
-2. **Height and Depth**: Build upward, not just flat
-3. **Negative Space**: Let the plate breathe - don't overcrowd
-4. **Sauce as Art**: Use squeeze bottles and spoons to create elegant sauce designs
-
-## Modern Techniques
-
-Contemporary plating often incorporates:
-- **Deconstructed presentations** that tell a story
-- **Molecular gastronomy** elements for texture contrast
-- **Garden-to-plate** aesthetics with edible flowers and microgreens
-
-Remember, the goal is to create anticipation before the first bite. When guests see a beautifully plated dish, their expectations rise, and the flavors seem to taste even better.
-
-*Chef Adrian*
-    `,
-    image: '/gallery/wellington.jpeg',
-    category: 'Cooking Techniques',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "9",
+    "slug": "art-of-plating",
+    "title": "The art of plating",
+    "excerpt": "Colour, empty space, and a plate of seared sea bass with herb oil.",
+    "content": "Before anyone picks up a fork, the plate has already said what kind of dinner this is. Here is how I think about it.\n\n## Colour and contrast\n\nStart with colour. A plate of beige can taste wonderful and still look tired. Put a bright element against a darker one: green herb oil beside seared sea bass, a few red radish slices on white burrata.\n\n## Four principles\n\n1. **Odd numbers.** Three or five pieces look more natural than two or four.\n2. **Height.** Build up, not only across. A little height gives the eye somewhere to go.\n3. **Empty space.** Leave part of the plate bare. Crowding makes even good food look careless.\n4. **Sauce with intent.** A squeeze bottle or the back of a spoon gives you control: a clean swipe, a few dots, a pool under the protein.\n\n## Modern touches\n\nDeconstruction only when taking a classic apart helps you taste each part. Texture contrast: something crisp next to something soft. Garden elements (edible flowers, young herbs) used sparingly.\n\nWhen the plate arrives looking cared for, guests slow down. That first bite is where a dinner really starts.\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/wellington.jpeg",
+    "category": "The plate",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 5,
-    publishedAt: '2024-02-15',
-    tags: ['plating', 'technique', 'presentation', 'fine-dining'],
+    "readTime": 3,
+    "publishedAt": "2024-02-15",
+    "tags": [
+      "plating",
+      "sea-bass",
+      "service"
+    ]
   },
   {
-    id: '10',
-    slug: 'nutrition-wellness-chef',
-    title: "Nutrition and Wellness: A Chef's Perspective",
-    excerpt: 'How fine dining can be both indulgent and nourishing, balancing flavor with health.',
-    content: `
-# Nutrition and Wellness: A Chef's Perspective
-
-As a chef trained in both culinary arts and nutrition, I believe that exceptional dining should never compromise on health. Every dish I create considers both flavor and nutritional value.
-
-## The Balance
-
-Fine dining doesn't have to mean heavy, calorie-laden meals. Modern techniques allow us to create dishes that are:
-- **Nutrient-dense** without sacrificing taste
-- **Lower in processed ingredients** while maintaining complexity
-- **Mindful of dietary needs** without compromising the experience
-
-## Key Strategies
-
-1. **Whole Ingredients**: Start with the best quality, unprocessed ingredients
-2. **Cooking Methods**: Steaming, roasting, and sous-vide preserve nutrients
-3. **Portion Control**: Elegant presentation with appropriate serving sizes
-4. **Plant-Forward**: Incorporate more vegetables as the star, not just sides
-
-## The Result
-
-When done right, guests leave feeling satisfied, energized, and nourished - not heavy or sluggish. That's the true mark of exceptional private chef service.
-
-*Chef Adrian*
-    `,
-    image: '/gallery/lobster-claw.jpeg',
-    category: 'Nutrition & Health',
-    author: {
-      name: 'Chef Adrian',
-      avatar: '/images/chef-avatar.jpg',
-      bio: '10+ years of culinary excellence, EHL Swiss trained, Nutrition certificate, Stanford.',
+    "id": "10",
+    "slug": "nutrition-wellness-chef",
+    "title": "A chef's notes on the plate",
+    "excerpt": "Seasonal produce from Riviera markets, a method that fits the ingredient, and a table that does not feel heavy.",
+    "content": "I am Swiss-trained (EHL), with 10+ years in professional kitchens and a Nutrition certificate, Stanford. Both shape every menu I write. A dinner should be a pleasure.\n\nRich food is not the same as good food. A menu can be built on whole ingredients and still feel complex. Dietary preferences and allergies are accommodated on request, without anyone at the table feeling singled out.\n\n## How I do it\n\n1. **Start with the produce.** Whole, seasonal ingredients from Riviera markets.\n2. **Choose the method.** Steaming, roasting and sous vide, so the ingredient keeps its texture.\n3. **Portion with care.** Several smaller courses rather than a few heavy ones.\n4. **Let vegetables lead.** A roasted carrot or a tomato in August can be the main event, not a garnish.\n\n## What I aim for\n\nGuests leaving the table satisfied, ready for a walk along the sea. That is the aim, not a promise.\n\n---\n\n**Cook with me on the Côte d'Azur.** I plan menus like this for private dinners and stays across the Riviera. Send an enquiry through the [form on tabledadrian.com](/contact), DM [@tabledadrian on Instagram](https://www.instagram.com/tabledadrian/), or email adrian@tabledadrian.com. More on [private chef services on the Côte d'Azur](/private-chef-cote-d-azur).\n\n*Adrian Stefan, Table d'Adrian. Swiss-trained (EHL), 10+ years in professional kitchens, Nutrition certificate, Stanford.*\n\n> This is about food and cooking, not medical advice.\n",
+    "image": "/gallery/lobster-claw.jpeg",
+    "category": "The table",
+    "author": {
+      "name": "Adrian Stefan",
+      "avatar": "/images/chef-avatar.jpg",
+      "bio": "Swiss-trained (EHL). 10+ years. Nutrition certificate, Stanford."
     },
-    readTime: 4,
-    publishedAt: '2024-02-20',
-    tags: ['nutrition', 'wellness', 'health', 'fine-dining'],
-  },
+    "readTime": 3,
+    "publishedAt": "2024-02-20",
+    "tags": [
+      "riviera",
+      "markets",
+      "menus"
+    ]
+  }
 ]
