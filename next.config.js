@@ -13,6 +13,11 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    serverComponentsExternalPackages: ['stripe'],
+    outputFileTracingIncludes: {
+      '/api/ebook': ['./private/ebooks/**/*'],
+      '/shop/thank-you': ['./private/ebooks/**/*'],
+    },
   },
   webpack: (config, { isServer, dev }) => {
     if (dev) {

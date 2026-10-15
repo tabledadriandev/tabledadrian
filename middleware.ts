@@ -27,6 +27,7 @@ export async function middleware(request: NextRequest) {
   if (path === '/fr/nutrition') return redirectTo(request, '/nutrition')
   if (path === '/fr/bmi') return redirectTo(request, '/bmi')
   if (path === '/fr/recipes') return redirectTo(request, '/fr/recettes')
+  if (path === '/journal' || path === '/fr/journal') return redirectTo(request, '/articles')
   if (path === '/plans/blood-sugar') return redirectTo(request, '/plans/steady-energy-menu')
   if (path === '/plans/hormones') return redirectTo(request, '/plans/hormone-aware-kitchen')
   if (path === '/plans/heart') return redirectTo(request, '/plans/heart-smart-riviera-table')

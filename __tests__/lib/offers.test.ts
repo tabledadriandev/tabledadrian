@@ -20,8 +20,8 @@ describe('offer placeholders', () => {
     ]))
   })
 
-  it('stores book and plan prices and Stripe links, and keeps the PDF sale off', () => {
-    expect(PRODUCTS_LIVE).toBe(false)
+  it('stores book and plan prices and Stripe links, and keeps the PDF sale on', () => {
+    expect(PRODUCTS_LIVE).toBe(true)
     expect(BOOK_PRICE).toEqual({ en: '€14.90', fr: '€14,90' })
     expect(PLAN_PRICE).toEqual({ en: '€29.90', fr: '€29,90' })
     expect(GIFT_CARDS.map((card) => card.eur)).toEqual([150, 300, 500])

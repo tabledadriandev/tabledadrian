@@ -1,7 +1,7 @@
 import { BrandCover } from '@/components/brand/BrandCover'
 import { splitCover } from '@/lib/cover'
 import { bookCoverId, coverPhoto } from '@/lib/cover-photos'
-import { BOOKS_COPY, bookCredit, bookList } from '@/lib/view-copy'
+import { BOOKS_COPY, bookCredit, bookList, bundleOffer } from '@/lib/view-copy'
 import { Band, Opt } from '@/components/b2/Tiles'
 import { Buy } from './Buy'
 
@@ -9,6 +9,7 @@ import { Buy } from './Buy'
 export function RecipeBooksView({ locale }: { locale: 'en' | 'fr' }) {
   const c = BOOKS_COPY[locale]
   const credit = bookCredit(locale)
+  const bundle = bundleOffer(locale)
   return (
     <div className="wrap b2-page">
       <Band kicker={c.kicker} title={c.h1} text={c.lede} />
@@ -41,6 +42,20 @@ export function RecipeBooksView({ locale }: { locale: 'en' | 'fr' }) {
           </section>
         )
       })}
+      <section id="book-bundle" className="about b2-book">
+        <div className="ab">
+          <span className="tagr">{bundle.price}</span>
+          <h2 className="disp">{bundle.title}</h2>
+          <p>{bundle.intro}</p>
+          <div className="btns">
+            <Buy href={bundle.stripe} label={bundle.buy} locale={locale} className="btn ink" />
+            <span className="m">{credit}</span>
+          </div>
+        </div>
+        <div className="bc b2-cover">
+          <BrandCover word={bundle.word} italic={bundle.italic} meta={bundle.meta} fill />
+        </div>
+      </section>
     </div>
   )
 }
