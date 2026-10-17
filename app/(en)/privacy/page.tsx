@@ -29,7 +29,7 @@ export default function PrivacyPage() {
 
       <h2>What we collect</h2>
       <ul>
-        <li>Enquiry details you send us: name, email, phone, occasion, guest numbers, dietary notes.</li>
+        <li>Enquiry details you send us: name, email, phone, event date, location, occasion, guest numbers, dietary notes.</li>
         <li>Technical data: IP address, browser type, pages viewed, and a coarse location from your IP.</li>
         <li>Consent choices for cookies and analytics.</li>
         <li>
@@ -41,15 +41,15 @@ export default function PrivacyPage() {
       <h2>Why we use it</h2>
       <ul>
         <li>To reply to bookings and write a menu for your table.</li>
-        <li>To keep the site secure and understand which pages are useful, if you accept analytics.</li>
+        <li>To keep the site secure and see which pages are used. Google Analytics loads with the site. Other analytics load only if you accept.</li>
         <li>To meet legal duties (invoices, and dietary preferences or allergies you have told us about).</li>
       </ul>
       <p>We do not sell your data. We do not use it for advertising networks.</p>
 
       <h2>Cookies</h2>
       <p>
-        Essential cookies remember your cookie choice. Analytics cookies load only after you accept.
-        You can change your mind at any time by clearing the site data in your browser.
+        Essential cookies remember your cookie choice. Google Analytics (G-NH43C2N8ND) loads with each page as audience measurement, not advertising. Any other analytics on this site load only after you accept.
+        You can change that choice by clearing the site data in your browser.
       </p>
 
       <h2>How long we keep it</h2>

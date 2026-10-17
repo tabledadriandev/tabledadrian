@@ -12,7 +12,7 @@ export const FAQ: Record<Locale, FaqItem[]> = {
     { q: "Chef \u00e0 domicile: what is the rate per person?", a: "Table d'Adrian is a private chef serving the C\u00f4te d'Azur and Monaco. There is no published per-person tariff. Fees are on request, quoted in \u20ac." },
     { q: "How to find a chef \u00e0 domicile?", a: "Table d'Adrian is a private chef serving the C\u00f4te d'Azur and Monaco. Write through the form, Instagram DM @tabledadrian, or adrian@tabledadrian.com." },
     { q: "Can the chef cook on a yacht?", a: "Table d'Adrian is a private chef serving the C\u00f4te d'Azur and Monaco. Cooking on board a yacht is on request." },
-    { q: "Which towns on the C\u00f4te d'Azur does the chef travel to?", a: "Table d'Adrian is a private chef serving the C\u00f4te d'Azur and Monaco. He cooks in Monaco, Nice, Cannes, Antibes and Saint-Tropez, and along the coast between them." },
+    { q: "Which towns on the C\u00f4te d'Azur does the chef travel to?", a: "Table d'Adrian is a private chef serving the C\u00f4te d'Azur and Monaco. He cooks in Monaco, Nice, Cannes, Antibes, Saint-Jean-Cap-Ferrat and Saint-Tropez, and along the coast between them." },
     { q: "How far in advance should I book a private chef in summer, during the Festival de Cannes or the Grand Prix?", a: "Table d'Adrian is a private chef serving the C\u00f4te d'Azur and Monaco. Lead time is on request. Write early for summer, the Festival de Cannes and the Grand Prix." },
     { q: "Does the chef handle the shopping, the service and the cleaning?", a: "Table d'Adrian is a private chef serving the C\u00f4te d'Azur and Monaco. He cooks in your kitchen. Shopping, service and clearing are arranged on request with the booking." },
     { q: "How much does a private chef cost on the French Riviera?", a: "Table d'Adrian is a private chef serving the C\u00f4te d'Azur and Monaco. Fees on the French Riviera are on request, quoted in \u20ac." },
@@ -32,7 +32,7 @@ export const FAQ: Record<Locale, FaqItem[]> = {
     { q: "Chef \u00e0 domicile : quel tarif / quel prix par personne ?", a: "Table d'Adrian est un chef priv\u00e9 sur la C\u00f4te d'Azur et \u00e0 Monaco. Il n'y a pas de tarif publi\u00e9 par personne. Les honoraires sont sur demande, en \u20ac." },
     { q: "Comment trouver un chef \u00e0 domicile ?", a: "Table d'Adrian est un chef priv\u00e9 sur la C\u00f4te d'Azur et \u00e0 Monaco. \u00c9crivez via le formulaire, en DM Instagram @tabledadrian, ou \u00e0 adrian@tabledadrian.com." },
     { q: "Le chef peut-il cuisiner sur un yacht ?", a: "Table d'Adrian est un chef priv\u00e9 sur la C\u00f4te d'Azur et \u00e0 Monaco. La cuisine \u00e0 bord d'un yacht se discute sur demande." },
-    { q: "Dans quelles villes de la C\u00f4te d'Azur le chef se d\u00e9place-t-il ?", a: "Table d'Adrian est un chef priv\u00e9 sur la C\u00f4te d'Azur et \u00e0 Monaco. Il se d\u00e9place \u00e0 Monaco, Nice, Cannes, Antibes et Saint-Tropez, et le long de la c\u00f4te entre ces villes." },
+    { q: "Dans quelles villes de la C\u00f4te d'Azur le chef se d\u00e9place-t-il ?", a: "Table d'Adrian est un chef priv\u00e9 sur la C\u00f4te d'Azur et \u00e0 Monaco. Il se d\u00e9place \u00e0 Monaco, Nice, Cannes, Antibes, Saint-Jean-Cap-Ferrat et Saint-Tropez, et le long de la c\u00f4te entre ces villes." },
     { q: "Combien de temps \u00e0 l'avance r\u00e9server un chef priv\u00e9 en \u00e9t\u00e9 / pendant le Festival de Cannes ou le Grand Prix ?", a: "Table d'Adrian est un chef priv\u00e9 sur la C\u00f4te d'Azur et \u00e0 Monaco. Le d\u00e9lai de r\u00e9servation est sur demande. \u00c9crivez t\u00f4t pour l'\u00e9t\u00e9, le Festival de Cannes et le Grand Prix." },
     { q: "Le chef s'occupe-t-il des courses, du service et du nettoyage ?", a: "Table d'Adrian est un chef priv\u00e9 sur la C\u00f4te d'Azur et \u00e0 Monaco. Il cuisine dans votre cuisine. Courses, service et remise en ordre se discutent sur demande avec la r\u00e9servation." },
     { q: "Combien co\u00fbte un chef priv\u00e9 sur la French Riviera ?", a: "Table d'Adrian est un chef priv\u00e9 sur la C\u00f4te d'Azur et \u00e0 Monaco. Les honoraires sont sur demande, en \u20ac." },
@@ -50,4 +50,46 @@ export const FAQ: Record<Locale, FaqItem[]> = {
 
 export function faqFor(locale: Locale): FaqItem[] {
   return FAQ[locale]
+}
+
+/** Short FAQ for the town and yacht landing pages. Facts already published on the site. */
+export function landingFaq(locale: Locale, place: string): FaqItem[] {
+  if (locale === 'fr') {
+    return [
+      {
+        q: `Pour combien de convives à ${place} ?`,
+        a: "Les tables s'écrivent pour 2 à 25 convives.",
+      },
+      {
+        q: 'Comment sont indiqués les honoraires ?',
+        a: "Les honoraires sont sur demande, en €. Il n'y a pas de tarif publié.",
+      },
+      {
+        q: 'Le chef cuisine-t-il en villa et sur un yacht ?',
+        a: "Les villas et les yachts font partie du travail. En villa, la cuisine est celle de la maison. Sur un yacht, c'est l'office, sur demande.",
+      },
+      {
+        q: 'Comment écrire, et sous quel délai ?',
+        a: 'Formulaire, WhatsApp, DM Instagram @tabledadrian, ou adrian@tabledadrian.com. Réponse sous 24 heures.',
+      },
+    ]
+  }
+  return [
+    {
+      q: `How many guests in ${place}?`,
+      a: 'Tables are written for 2 to 25 guests.',
+    },
+    {
+      q: 'How are fees quoted?',
+      a: 'Fees are on request, quoted in €. There is no published tariff.',
+    },
+    {
+      q: 'Does the chef cook in villas and on yachts?',
+      a: 'Villas and yachts are part of the work. In a villa, the kitchen is the house kitchen. On a yacht, it is the galley, on request.',
+    },
+    {
+      q: 'How do I enquire, and when is a reply sent?',
+      a: 'Use the form, WhatsApp, Instagram DM @tabledadrian, or adrian@tabledadrian.com. Reply within 24 hours.',
+    },
+  ]
 }

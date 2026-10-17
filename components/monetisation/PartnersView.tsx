@@ -2,6 +2,7 @@ import { CONTACT_INFO } from '@/lib/constants'
 import { PARTNER_STATS, PARTNERS_COPY } from '@/lib/view-copy'
 import { Arrow, Lemon } from '@/components/b2/ui'
 import { Band } from '@/components/b2/Tiles'
+import { WorkedWith } from '@/components/seo/WorkedWith'
 
 /* Media kit: band, about row (audience + lemon card), three-up option cards, gold contact block. */
 export function PartnersView({ locale }: { locale: 'en' | 'fr' }) {
@@ -10,6 +11,7 @@ export function PartnersView({ locale }: { locale: 'en' | 'fr' }) {
   return (
     <div className="wrap b2-page">
       <Band kicker={t.kicker} title={t.h1} text={t.lede} />
+      <WorkedWith locale={locale} />
       <section className="about">
         <div className="ab">
           <span className="tagr">Table d&apos;Adrian</span>

@@ -3,11 +3,12 @@ type Enquiry = {
   email: string
   phone?: string
   eventDate?: string
+  location?: string
   serviceType?: string
   guests?: number
   budget?: string
   dietaryRequirements?: string
-  message: string
+  message?: string
 }
 
 const TO = process.env.CONTACT_TO_EMAIL || 'adrian@tabledadrian.com'
@@ -20,6 +21,7 @@ function lines(data: Enquiry) {
     `Email: ${data.email}`,
     data.phone && `Phone: ${data.phone}`,
     data.eventDate && `Date: ${data.eventDate}`,
+    data.location && `Location: ${data.location}`,
     data.serviceType && `Service: ${data.serviceType}`,
     data.guests && `Guests: ${data.guests}`,
     data.budget && `Budget: ${data.budget}`,

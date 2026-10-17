@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next"
+import Script from "next/script"
 import { Source_Serif_4 } from "next/font/google"
 import localFont from "next/font/local"
 import "./globals.css"
@@ -20,6 +21,9 @@ import { OG_EN, OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL, THEME_COLOR } f
 import { localeAlternates } from "@/lib/routes"
 import { localBusinessJsonLd, siteJsonLd } from "@/lib/schema"
 import { SolaBanner } from "@/components/layout/SolaBanner"
+import { WhatsAppFloat } from "@/components/contact/WhatsAppLink"
+
+const GA_ID = "G-NH43C2N8ND"
 
 const display = localFont({
   src: './fonts/Jost-Variable.woff',
@@ -131,6 +135,10 @@ export function RootShell({ children, lang }: { children: React.ReactNode; lang:
         ) : null}
       </head>
       <body className="tda antialiased font-body bg-background text-foreground">
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga4" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+        </Script>
         <SolaBanner />
         <a
           href="#main"
@@ -155,6 +163,7 @@ export function RootShell({ children, lang }: { children: React.ReactNode; lang:
           </SmoothScroll>
           <CookieBanner />
           <AnalyticsGate />
+          <WhatsAppFloat />
         </ConsentProvider>
       </body>
     </html>

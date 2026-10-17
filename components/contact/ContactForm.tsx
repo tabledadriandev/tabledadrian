@@ -7,27 +7,46 @@ import { z } from 'zod'
 import { motion } from 'framer-motion'
 import { Loader2, CheckCircle } from 'lucide-react'
 import { fadeInUp } from '@/lib/animations'
+import { WhatsAppEnquiry } from '@/components/contact/WhatsAppLink'
 import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
 import { copy } from '@/lib/copy'
 import { useLocale } from '@/lib/i18n'
 
-const contactSchema = z.object({
-  name: z.string().min(2, 'Please enter your name'),
-  email: z.string().email('Please enter a valid email'),
-  phone: z.string().optional(),
-  eventDate: z.string().optional(),
-  serviceType: z.string().optional(),
-  guests: z.preprocess(
-    (value) => (value === '' || value === undefined || Number.isNaN(value) ? undefined : Number(value)),
-    z.number().min(1, 'At least one guest').max(200).optional()
-  ),
-  budget: z.string().optional(),
-  dietaryRequirements: z.string().optional(),
-  message: z.string().min(10, 'Please add a few more details'),
-  website: z.string().optional(),
-})
+function contactSchema(locale: 'en' | 'fr') {
+  const copy = locale === 'fr'
+    ? {
+        name: 'Indiquez votre nom',
+        email: 'Indiquez un e-mail valide',
+        date: 'Indiquez la date',
+        guests: 'Indiquez le nombre de convives',
+        location: 'Indiquez le lieu',
+      }
+    : {
+        name: 'Please enter your name',
+        email: 'Please enter a valid email',
+        date: 'Please enter the event date',
+        guests: 'Please enter the number of guests',
+        location: 'Please enter the location',
+      }
+  return z.object({
+    name: z.string().min(2, copy.name),
+    email: z.string().email(copy.email),
+    phone: z.string().optional(),
+    eventDate: z.string().trim().min(1, copy.date),
+    location: z.string().trim().min(2, copy.location),
+    serviceType: z.string().optional(),
+    guests: z.preprocess(
+      (value) => (value === '' || value === undefined || value === null || Number.isNaN(value) ? undefined : Number(value)),
+      z.number({ required_error: copy.guests, invalid_type_error: copy.guests }).int().min(1, copy.guests).max(200)
+    ),
+    budget: z.string().optional(),
+    dietaryRequirements: z.string().optional(),
+    message: z.string().max(4000).optional(),
+    website: z.string().optional(),
+  })
+}
 
-type ContactFormData = z.infer<typeof contactSchema>
+type ContactFormData = z.infer<ReturnType<typeof contactSchema>>
 
 const ENQUIRY_PRESET = {
   en: {
@@ -95,6 +114,40 @@ export function ContactForm() {
   const [intentNote, setIntentNote] = useState<string | null>(null)
   const startedAt = useRef(Date.now())
 
+  const labels = locale === 'fr'
+    ? {
+        name: 'Nom',
+        email: 'E-mail',
+        phone: 'Téléphone',
+        date: 'Date de l’événement',
+        guests: 'Convives',
+        location: 'Lieu',
+        service: 'Type de service',
+        serviceEmpty: 'Choisir un service',
+        dietary: 'Régime et allergies',
+        details: 'Précisions',
+        detailsPlaceholder: 'Ce que vous voulez ajouter',
+        reply: 'Réponse sous 24 heures',
+        sending: 'Envoi',
+        sent: 'Message envoyé',
+      }
+    : {
+        name: 'Name',
+        email: 'Email',
+        phone: 'Phone',
+        date: 'Event date',
+        guests: 'Guests',
+        location: 'Location',
+        service: 'Service type',
+        serviceEmpty: 'Select a service',
+        dietary: 'Dietary requirements',
+        details: 'Additional details',
+        detailsPlaceholder: 'Tell us about your table',
+        reply: 'Reply within 24 hours',
+        sending: 'Sending',
+        sent: 'Message sent',
+      }
+
   const {
     register,
     handleSubmit,
@@ -102,7 +155,7 @@ export function ContactForm() {
     reset,
     setValue,
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(contactSchema(locale)),
   })
 
   useEffect(() => {
@@ -155,7 +208,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="name" className="mb-2 block text-sm font-medium">
-          Name <span className="text-primary">*</span>
+          {labels.name} <span className="text-primary">*</span>
         </label>
         <input
           id="name"
@@ -171,7 +224,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="email" className="mb-2 block text-sm font-medium">
-          Email <span className="text-primary">*</span>
+          {labels.email} <span className="text-primary">*</span>
         </label>
         <input
           id="email"
@@ -187,7 +240,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="phone" className="mb-2 block text-sm font-medium">
-          Phone
+          {labels.phone}
         </label>
         <input
           id="phone"
@@ -195,32 +248,48 @@ export function ContactForm() {
           type="tel"
           autoComplete="tel"
           className="field"
-          placeholder="+33 6 12 34 56 78"
         />
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
           <label htmlFor="eventDate" className="mb-2 block text-sm font-medium">
-            Event date
+            {labels.date} <span className="text-primary">*</span>
           </label>
-          <input id="eventDate" {...register('eventDate')} type="text" placeholder="08/08/2008" className="field" />
+          <input id="eventDate" {...register('eventDate')} type="text" placeholder="08/08/2008" className="field" aria-invalid={!!errors.eventDate} />
+          {errors.eventDate && <p className="mt-1 text-sm text-destructive">{errors.eventDate.message}</p>}
         </div>
         <div>
           <label htmlFor="guests" className="mb-2 block text-sm font-medium">
-            Number of guests
+            {labels.guests} <span className="text-primary">*</span>
           </label>
-          <input id="guests" {...register('guests')} type="number" min="1" max="200" className="field" placeholder="6" />
+          <input id="guests" {...register('guests')} type="number" min="1" max="200" className="field" placeholder="6" aria-invalid={!!errors.guests} />
           {errors.guests && <p className="mt-1 text-sm text-destructive">{errors.guests.message}</p>}
         </div>
       </div>
 
       <div>
+        <label htmlFor="location" className="mb-2 block text-sm font-medium">
+          {labels.location} <span className="text-primary">*</span>
+        </label>
+        <input
+          id="location"
+          {...register('location')}
+          type="text"
+          autoComplete="address-level2"
+          className="field"
+          placeholder={locale === 'fr' ? 'Antibes, une villa, un yacht' : 'Antibes, a villa, a yacht'}
+          aria-invalid={!!errors.location}
+        />
+        {errors.location && <p className="mt-1 text-sm text-destructive">{errors.location.message}</p>}
+      </div>
+
+      <div>
         <label htmlFor="serviceType" className="mb-2 block text-sm font-medium">
-          Service type
+          {labels.service}
         </label>
         <select id="serviceType" {...register('serviceType')} className="field">
-          <option value="">Select a service</option>
+          <option value="">{labels.serviceEmpty}</option>
           <option value="dinner-party">Private dinner party</option>
           <option value="gift">Gift voucher</option>
           <option value="masterclass">Cooking class</option>
@@ -238,7 +307,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="dietaryRequirements" className="mb-2 block text-sm font-medium">
-          Dietary requirements
+          {labels.dietary}
         </label>
         <textarea
           id="dietaryRequirements"
@@ -251,17 +320,15 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="message" className="mb-2 block text-sm font-medium">
-          Additional details <span className="text-primary">*</span>
+          {labels.details}
         </label>
         <textarea
           id="message"
           {...register('message')}
           rows={4}
           className="field"
-          placeholder="Tell us about your table"
-          aria-invalid={!!errors.message}
+          placeholder={labels.detailsPlaceholder}
         />
-        {errors.message && <p className="mt-1 text-sm text-destructive">{errors.message.message}</p>}
       </div>
 
       {serverError && <p className="text-sm text-destructive">{serverError}</p>}
@@ -285,6 +352,8 @@ export function ContactForm() {
           <span>{t.bookCta}</span>
         )}
       </button>
+      <p className="text-center text-sm text-foreground-muted">{labels.reply}</p>
+      <WhatsAppEnquiry />
       <p className="text-center text-sm text-foreground-muted">
         {t.bookingIntro}{' '}
         <a href={`mailto:${CONTACT_INFO.email}`} className="text-foreground underline underline-offset-4">

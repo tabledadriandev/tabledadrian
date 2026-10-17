@@ -23,7 +23,7 @@ export default function FrenchPrivacyPage() {
       </p>
       <h2>Ce que nous collectons</h2>
       <ul>
-        <li>Les éléments de votre message : nom, e-mail, téléphone, occasion, nombre de convives, notes alimentaires.</li>
+        <li>Les éléments de votre message : nom, e-mail, téléphone, date, lieu, occasion, nombre de convives, notes alimentaires.</li>
         <li>Des données techniques : adresse IP, type de navigateur, pages vues, et une localisation approximative.</li>
         <li>Vos choix pour les cookies et la mesure d&apos;audience.</li>
         <li>
@@ -34,13 +34,13 @@ export default function FrenchPrivacyPage() {
       <h2>Pourquoi</h2>
       <ul>
         <li>Pour répondre à une demande et écrire un menu.</li>
-        <li>Pour garder le site sûr, et comprendre quelles pages sont utiles si vous acceptez la mesure d&apos;audience.</li>
+        <li>Pour garder le site sûr et voir quelles pages sont utilisées. Google Analytics se charge avec le site. Le reste de la mesure d&apos;audience ne se charge que si vous l&apos;acceptez.</li>
         <li>Pour les obligations légales (factures, préférences alimentaires ou allergies que vous nous avez indiquées).</li>
       </ul>
       <p>Nous ne vendons pas vos données. Nous ne les utilisons pas pour des régies publicitaires.</p>
       <h2>Cookies</h2>
       <p>
-        Les cookies essentiels retiennent votre choix. La mesure d&apos;audience ne se charge qu&apos;après votre accord.
+        Les cookies essentiels retiennent votre choix. Google Analytics (G-NH43C2N8ND) se charge avec chaque page, comme mesure d&apos;audience et non comme publicité. Toute autre mesure sur ce site ne se charge qu&apos;après votre accord.
         Vous pouvez changer d&apos;avis en effaçant les données du site dans votre navigateur.
       </p>
       <h2>Durée</h2>
