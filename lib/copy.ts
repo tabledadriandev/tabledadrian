@@ -38,7 +38,7 @@ export const copy = {
     contactEyebrow: 'Enquire',
     contactTitle: 'Tell us about the table',
     contactDescription:
-      'Write through the form, Instagram DM @tabledadrian, or adrian@tabledadrian.com. Occasion, guests, dietary notes, a date if you have one.',
+      'Write through the form, WhatsApp, Instagram DM @tabledadrian, or adrian@tabledadrian.com. Name, email, event date, guests and location. Reply within 24 hours.',
     contactMeta:
       'Enquire for a private dinner, weekly meals or a celebration on the Côte d’Azur and in Monaco. Form, Instagram DM @tabledadrian, or adrian@tabledadrian.com.',
     bookCta: 'Book your experience',
@@ -46,7 +46,7 @@ export const copy = {
     instagramLabel: 'Instagram DM',
     instagramHandle: '@tabledadrian',
     footerBlurb: `Swiss-trained (EHL) private chef, ${STANFORD_CREDENTIAL}. Private dinners, weekly meal preparation and longevity menus on the Côte d'Azur and in Monaco.`,
-    bookingIntro: 'Book by enquiry form, Instagram DM or email.',
+    bookingIntro: 'Book by enquiry form, WhatsApp, Instagram DM or email.',
     perEvent: 'Per event',
     monthly: 'Monthly',
     hybrid: {
@@ -128,7 +128,7 @@ export const copy = {
     contactEyebrow: 'Demande',
     contactTitle: 'Parlez-nous de la table',
     contactDescription:
-      "Écrivez via le formulaire, en DM Instagram @tabledadrian, ou à adrian@tabledadrian.com. Occasion, convives, notes diététiques, une date si vous en avez une.",
+      "Écrivez via le formulaire, WhatsApp, en DM Instagram @tabledadrian, ou à adrian@tabledadrian.com. Nom, e-mail, date, convives et lieu. Réponse sous 24 heures.",
     contactMeta:
       "Demande pour un dîner privé, une semaine en cuisine ou une célébration sur la Côte d'Azur et à Monaco. Formulaire, DM Instagram @tabledadrian, ou adrian@tabledadrian.com.",
     bookCta: 'Réserver',
@@ -136,7 +136,7 @@ export const copy = {
     instagramLabel: 'DM Instagram',
     instagramHandle: '@tabledadrian',
     footerBlurb: `Chef privé de haute gastronomie, formation suisse (EHL), ${STANFORD_CREDENTIAL}. Dîners privés, semaine en cuisine et menus longévité sur la Côte d'Azur et à Monaco.`,
-    bookingIntro: 'Réservation par formulaire, DM Instagram ou e-mail.',
+    bookingIntro: 'Réservation par formulaire, WhatsApp, DM Instagram ou e-mail.',
     perEvent: 'Par événement',
     monthly: 'Mensuel',
     hybrid: {

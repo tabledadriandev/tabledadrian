@@ -1,7 +1,7 @@
 'use client'
 
-import { Mail, Phone, MapPin, Clock, Instagram } from 'lucide-react'
-import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
+import { Mail, Phone, MapPin, Clock, Instagram, MessageCircle } from 'lucide-react'
+import { CONTACT_INFO, INSTAGRAM_URL, WHATSAPP_URL } from '@/lib/constants'
 import { copy, MARKET } from '@/lib/copy'
 import { useLocale } from '@/lib/i18n'
 
@@ -11,9 +11,10 @@ export function ContactInfo() {
   const details = [
     { icon: Mail, label: 'Email', href: `mailto:${CONTACT_INFO.email}`, value: CONTACT_INFO.email },
     { icon: Instagram, label: t.instagramLabel, href: INSTAGRAM_URL, value: t.instagramHandle },
-    { icon: Phone, label: 'Phone', href: `tel:${CONTACT_INFO.phone}`, value: CONTACT_INFO.phone },
+    { icon: Phone, label: locale === 'fr' ? 'Téléphone' : 'Phone', href: `tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`, value: CONTACT_INFO.phone },
+    { icon: MessageCircle, label: 'WhatsApp', href: WHATSAPP_URL, value: CONTACT_INFO.phone },
     { icon: MapPin, label: locale === 'fr' ? 'Zones' : 'Service areas', value: MARKET[locale] },
-    { icon: Clock, label: locale === 'fr' ? 'Réponse' : 'Response', value: CONTACT_INFO.responseTime },
+    { icon: Clock, label: locale === 'fr' ? 'Réponse' : 'Response', value: locale === 'fr' ? 'Réponse sous 24 heures' : 'Reply within 24 hours' },
   ]
   return (
     <div className="space-y-6">

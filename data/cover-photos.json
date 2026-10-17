@@ -538,6 +538,17 @@
     "crop": "24% 16%",
     "tint": "rgba(179,150,96,0.12)"
   },
+  "location-saint-jean-cap-ferrat": {
+    "id": "location-saint-jean-cap-ferrat",
+    "src": "/media/covers/location-saint-jean-cap-ferrat.webp",
+    "page": "https://www.pexels.com/photo/vibrant-marina-in-saint-jean-cap-ferrat-france-30562413/",
+    "photographer": "Jean-Paul Wettstein",
+    "ink": "dark",
+    "variant": 1,
+    "accent": "#2F3529",
+    "crop": "50% 40%",
+    "tint": "rgba(47,53,41,0.14)"
+  },
   "location-yacht": {
     "id": "location-yacht",
     "src": "/media/covers/location-yacht.webp",

@@ -1,8 +1,11 @@
 export const CONTACT_INFO = {
   phone: "+33 6 15 96 30 46",
   email: "adrian@tabledadrian.com",
-  responseTime: "Typically responds within 24 hours",
+  responseTime: "Reply within 24 hours",
 }
+
+/** Adrian's official WhatsApp link for +33 6 15 96 30 46. */
+export const WHATSAPP_URL = "https://w.app/tabledadrian"
 
 export const INSTAGRAM_URL = 'https://www.instagram.com/tabledadrian/'
 

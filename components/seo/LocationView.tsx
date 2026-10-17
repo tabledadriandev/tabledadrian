@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { BrandCover } from '@/components/brand/BrandCover'
 import { splitCover } from '@/lib/cover'
@@ -6,10 +7,11 @@ import { coverPhoto } from '@/lib/cover-photos'
 import { Button } from '@/components/ui/Button'
 import { EventPackages } from '@/components/monetisation/EventPackages'
 import { FaqSection } from '@/components/seo/FaqSection'
+import { GALLERY } from '@/data/gallery'
 import { credentials } from '@/lib/credentials'
 import type { Locale } from '@/lib/copy'
 import { copy } from '@/lib/copy'
-import { FAQ } from '@/lib/faq'
+import { FAQ, landingFaq } from '@/lib/faq'
 import {
   getLocation,
   locationIdFromSlug,
@@ -33,6 +35,15 @@ const UI = {
     contact: '/fr/contact',
   },
 } as const
+
+const LANDING_PLATES: Partial<Record<LocationId, string[]>> = {
+  antibes: ['duck-breast', 'langoustine', 'leek-salad'],
+  cannes: ['rose-tartlets', 'burrata-peach', 'lobster-claw'],
+  monaco: ['lobster-claw', 'seabass', 'wellington'],
+  'saint-tropez': ['honeycomb-dessert', 'tuna-sushi', 'salmon-tartare'],
+  'saint-jean-cap-ferrat': ['langoustine', 'seabass', 'pea-risotto'],
+  yacht: ['seabass', 'salmon-tartare', 'squid-ink-pasta'],
+}
 
 export function locationMetadata(id: LocationId, locale: Locale): Metadata {
   const page = getLocation(id, locale)
@@ -70,7 +81,10 @@ export function LocationScreen({ id, locale }: { id: LocationId; locale: Locale 
   const chef = credentials[locale]
   const ui = UI[locale]
   const others = siblingLocations(id, locale)
-  const faq = FAQ[locale]
+  const plates = (LANDING_PLATES[id] || [])
+    .map((plateId) => GALLERY.find((item) => item.id === plateId))
+    .filter((item): item is (typeof GALLERY)[number] => Boolean(item))
+  const faq = LANDING_PLATES[id] ? landingFaq(locale, page.name) : FAQ[locale]
 
   return (
     <article>
@@ -116,6 +130,25 @@ export function LocationScreen({ id, locale }: { id: LocationId; locale: Locale 
           </div>
 
           {id === 'events' ? <EventPackages locale={locale} /> : null}
+
+          {plates.length ? (
+            <section className="mt-20 border-t border-border pt-12" aria-labelledby="location-plates">
+              <h2 id="location-plates" className="display text-3xl sm:text-4xl">
+                {locale === 'fr' ? 'Assiettes' : 'Plates'}
+              </h2>
+              <ul className="mt-8 grid gap-6 sm:grid-cols-3">
+                {plates.map((plate) => (
+                  <li key={plate.id}>
+                    <div className="relative aspect-[4/5] overflow-hidden bg-ink">
+                      <Image src={plate.src} alt={plate.caption} fill sizes="(max-width: 640px) 100vw, 30vw" />
+                    </div>
+                    <p className="mt-3 font-display text-lg text-foreground">{plate.title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-foreground-muted">{plate.caption}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           <section className="mt-20 border-t border-border pt-12 sm:mt-24" aria-labelledby="location-nearby">
             <h2 id="location-nearby" className="display text-3xl sm:text-4xl">

@@ -19,6 +19,7 @@ const COPY = {
       { href: '/private-chef-antibes', title: 'Antibes', text: 'Cap d’Antibes and the port, cooked in the house kitchen.' },
       { href: '/private-chef-monaco', title: 'Monaco', text: 'Compact apartment kitchens in Monte-Carlo.' },
       { href: '/private-chef-saint-tropez', title: 'Saint-Tropez', text: 'Villa weeks on the peninsula and in Ramatuelle.' },
+      { href: '/private-chef-saint-jean-cap-ferrat', title: 'Saint-Jean-Cap-Ferrat', text: 'Villa kitchens on the peninsula between Nice and Monaco.' },
     ],
   },
   fr: {
@@ -37,6 +38,7 @@ const COPY = {
       { href: '/fr/chef-prive-antibes', title: 'Antibes', text: 'Le Cap d’Antibes et le port, dans la cuisine de la maison.' },
       { href: '/fr/chef-prive-monaco', title: 'Monaco', text: 'Cuisines d’appartement à Monte-Carlo.' },
       { href: '/fr/chef-prive-saint-tropez', title: 'Saint-Tropez', text: 'Semaines en villa sur la presqu’île et à Ramatuelle.' },
+      { href: '/fr/chef-prive-saint-jean-cap-ferrat', title: 'Saint-Jean-Cap-Ferrat', text: 'Cuisines de villa sur la presqu’île entre Nice et Monaco.' },
     ],
   },
 } as const

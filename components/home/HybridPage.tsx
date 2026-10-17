@@ -12,6 +12,7 @@ import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
 import { Arrow, Lemon } from '@/components/b2/ui'
 import { SeasonPush } from '@/components/season/SeasonPush'
+import { WorkedWith } from '@/components/seo/WorkedWith'
 
 const BENTO = [
   ['duck-breast', 'b0 gold'],
@@ -84,6 +85,7 @@ export function HybridPage() {
         </div>
       </section>
 
+      <WorkedWith locale={locale} />
       <SeasonPush locale={locale} />
 
       <section id="experiences" className="sec row3" aria-label={h.offersTitle}>

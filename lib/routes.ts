@@ -23,6 +23,7 @@ export const LOCALE_PAIRS = [
   ['/private-chef-cannes', '/fr/chef-prive-cannes'],
   ['/private-chef-antibes', '/fr/chef-prive-antibes'],
   ['/private-chef-saint-tropez', '/fr/chef-prive-saint-tropez'],
+  ['/private-chef-saint-jean-cap-ferrat', '/fr/chef-prive-saint-jean-cap-ferrat'],
   ['/yacht-chef', '/fr/chef-de-yacht'],
   ['/villa-chef', '/fr/chef-en-villa'],
   ['/events-and-weddings', '/fr/evenements-et-mariages'],

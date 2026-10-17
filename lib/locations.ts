@@ -2,7 +2,7 @@ import type { Locale } from '@/lib/copy'
 import type { FaqItem } from '@/lib/faq'
 import { FAQ } from '@/lib/faq'
 
-export type LocationId = 'hub' | 'monaco' | 'nice' | 'cannes' | 'antibes' | 'saint-tropez' | 'yacht' | 'villa' | 'events'
+export type LocationId = 'hub' | 'monaco' | 'nice' | 'cannes' | 'antibes' | 'saint-tropez' | 'saint-jean-cap-ferrat' | 'yacht' | 'villa' | 'events'
 
 export type LocationRecord = {
   id: LocationId
@@ -24,7 +24,7 @@ export type LocationRecord = {
   showFaq: boolean
 }
 
-export const LOCATIONS: LocationRecord[] = [
+const LOCATION_RECORDS: LocationRecord[] = [
   {
     id: "hub",
     locale: "en",
@@ -40,7 +40,7 @@ export const LOCATIONS: LocationRecord[] = [
       "Table d'Adrian is Adrian Stefan's private chef service on the C\u00f4te d'Azur and in Monaco. That is the French Riviera, the south of France coast that runs from the Italian border through Nice and Cannes to the Gulf of Saint-Tropez. He cooks in your kitchen, not in a restaurant dining room.",
       "The work is a private dinner, a week of meals in a villa, or a celebration. Each menu is written from scratch around the people at the table, the season's market, and any dietary notes you send. Longevity cuisine here is a style of cooking, Mediterranean and seasonal, held to fine-dining precision. It is not a health claim.",
       "Adrian is Swiss-trained (EHL), with 10+ years in demanding kitchens and a Nutrition certificate, Stanford. Fees are on request, quoted in \u20ac. Write through the form, Instagram DM @tabledadrian, or adrian@tabledadrian.com.",
-      "Dedicated pages cover Monaco, Nice, Cannes, Antibes and Saint-Tropez. Secondary places along the coast, from Saint-Jean-Cap-Ferrat and \u00c8ze to Ramatuelle and Menton, are listed on those town pages under where we cook.",
+      "Dedicated pages cover Monaco, Nice, Cannes, Antibes, Saint-Jean-Cap-Ferrat and Saint-Tropez. Secondary places along the coast, from \u00c8ze to Ramatuelle and Menton, are listed on those town pages under where we cook.",
     ],
     nearbyTitle: "Where we cook",
     nearby: ["Monaco", "Nice", "Cannes", "Antibes", "Saint-Tropez", "Saint-Jean-Cap-Ferrat", "Cap d'Antibes", "Mougins", "\u00c8ze", "Villefranche-sur-Mer", "Beaulieu-sur-Mer", "Cap-d'Ail", "Menton", "Ramatuelle", "Roquebrune-Cap-Martin"],
@@ -64,7 +64,7 @@ export const LOCATIONS: LocationRecord[] = [
       "Table d'Adrian est le service de chef priv\u00e9 d'Adrian Stefan sur la C\u00f4te d'Azur et \u00e0 Monaco. C'est la French Riviera, la c\u00f4te du sud de la France qui va de la fronti\u00e8re italienne \u00e0 Nice et Cannes jusqu'au golfe de Saint-Tropez. Il cuisine dans votre cuisine, pas en salle de restaurant.",
       "Le travail est un d\u00eener priv\u00e9, une semaine de repas en villa, ou une c\u00e9l\u00e9bration. Chaque menu s'\u00e9crit autour des convives, du march\u00e9 de saison et des notes di\u00e9t\u00e9tiques que vous envoyez. La cuisine long\u00e9vit\u00e9 est ici un style, m\u00e9diterran\u00e9enne et de saison, tenu \u00e0 la pr\u00e9cision d'un passage gastronomique. Ce n'est pas une promesse de sant\u00e9.",
       "Adrian est de formation suisse (EHL), avec 10+ ans dans des cuisines exigeantes et un Nutrition certificate, Stanford. Les honoraires sont sur demande, en \u20ac. \u00c9crivez via le formulaire, en DM Instagram @tabledadrian, ou \u00e0 adrian@tabledadrian.com.",
-      "Des pages d\u00e9di\u00e9es couvrent Monaco, Nice, Cannes, Antibes et Saint-Tropez. Les lieux secondaires le long de la c\u00f4te, de Saint-Jean-Cap-Ferrat et \u00c8ze \u00e0 Ramatuelle et Menton, figurent sur ces pages, sous o\u00f9 nous cuisinons.",
+      "Des pages d\u00e9di\u00e9es couvrent Monaco, Nice, Cannes, Antibes, Saint-Jean-Cap-Ferrat et Saint-Tropez. Les lieux secondaires le long de la c\u00f4te, d'\u00c8ze \u00e0 Ramatuelle et Menton, figurent sur ces pages, sous o\u00f9 nous cuisinons.",
     ],
     nearbyTitle: "O\u00f9 nous cuisinons",
     nearby: ["Monaco", "Nice", "Cannes", "Antibes", "Saint-Tropez", "Saint-Jean-Cap-Ferrat", "Cap d'Antibes", "Mougins", "\u00c8ze", "Villefranche-sur-Mer", "Beaulieu-sur-Mer", "Cap-d'Ail", "Menton", "Ramatuelle", "Roquebrune-Cap-Martin"],
@@ -314,6 +314,54 @@ export const LOCATIONS: LocationRecord[] = [
     showFaq: false,
   },
   {
+    id: "saint-jean-cap-ferrat",
+    locale: "en",
+    slug: "saint-jean-cap-ferrat",
+    path: "/private-chef-saint-jean-cap-ferrat",
+    pairPath: "/fr/chef-prive-saint-jean-cap-ferrat",
+    name: "Saint-Jean-Cap-Ferrat",
+    h1: "Private chef Saint-Jean-Cap-Ferrat",
+    title: "Private Chef Saint-Jean-Cap-Ferrat",
+    description: "Private chef on Saint-Jean-Cap-Ferrat for villa kitchens between Nice and Monaco, and for a yacht when the boat is the address. Fees on request, in €.",
+    lede: "A private chef on Saint-Jean-Cap-Ferrat for villa kitchens on the peninsula between Nice and Monaco, and for a yacht when the boat is the address.",
+    body: [
+      "Saint-Jean-Cap-Ferrat is a peninsula commune, pinched between Villefranche-sur-Mer and Beaulieu-sur-Mer. A private chef here is usually a villa: a house above the port, a garden table, or a week where breakfast and dinner are cooked in the kitchen the house already has. The village itself is small. The work is the house, not a restaurant dining room.",
+      "This page does not claim that Table d'Adrian is based on the cap. It is a place we cook, on the same coast as the Nice and Monaco pages. Shopping is agreed with the booking. When the week is based on the peninsula, the morning market is often the one in Nice, then the drive back along the coast. Dietary preferences and allergies are written into that list.",
+      "The peninsula sits a short run east of Nice and west of Monaco. A booking on the cap can include a dinner in Villefranche-sur-Mer, Beaulieu-sur-Mer or \u00c8ze when the stay is here. \u00c8ze is the hill village above the corniche; Beaulieu is the next bay east. They are neighbours, not separate businesses.",
+      "Tables are written for 2 to 25 guests, in the villa or on a yacht alongside. The same week can hold breakfast, a late lunch and dinner, or the booking can be one evening. Longevity cuisine is the style of the cooking, Mediterranean and seasonal, held to fine-dining precision. It is not a health claim and not medical advice. Adrian is Swiss-trained (EHL), with 10+ years in demanding kitchens and a Nutrition certificate, Stanford. Elsewhere on this coast the same kitchen has cooked events for Eden-Roc, amfAR and Dior. Fees are on request, quoted in \u20ac. A reply is sent within 24 hours. Write through the form, WhatsApp, Instagram DM @tabledadrian, or adrian@tabledadrian.com.",
+    ],
+    nearbyTitle: "Where we cook near Saint-Jean-Cap-Ferrat",
+    nearby: ["Saint-Jean-Cap-Ferrat", "Villefranche-sur-Mer", "Beaulieu-sur-Mer", "\u00c8ze", "Nice", "Monaco"],
+    nearbyNote: "Saint-Jean-Cap-Ferrat is the booking. The neighbouring communes are listed because the peninsula is short and the same kitchen can travel.",
+    imageSrc: "/gallery/langoustine.jpeg",
+    imageAlt: "Seared langoustine with broad beans, a plate for a Saint-Jean-Cap-Ferrat table.",
+    showFaq: true,
+  },
+  {
+    id: "saint-jean-cap-ferrat",
+    locale: "fr",
+    slug: "saint-jean-cap-ferrat",
+    path: "/fr/chef-prive-saint-jean-cap-ferrat",
+    pairPath: "/private-chef-saint-jean-cap-ferrat",
+    name: "Saint-Jean-Cap-Ferrat",
+    h1: "Chef priv\u00e9 Saint-Jean-Cap-Ferrat",
+    title: "Chef priv\u00e9 Saint-Jean-Cap-Ferrat",
+    description: "Chef priv\u00e9 \u00e0 Saint-Jean-Cap-Ferrat pour les cuisines de villa entre Nice et Monaco, et pour un yacht lorsque le bateau est l'adresse. Honoraires sur demande, en \u20ac.",
+    lede: "Un chef priv\u00e9 \u00e0 Saint-Jean-Cap-Ferrat pour les cuisines de villa sur la presqu'\u00eele entre Nice et Monaco, et pour un yacht lorsque le bateau est l'adresse.",
+    body: [
+      "Saint-Jean-Cap-Ferrat est une commune-presqu'\u00eele, prise entre Villefranche-sur-Mer et Beaulieu-sur-Mer. Un chef priv\u00e9 y est le plus souvent une villa : une maison au-dessus du port, une table de jardin, ou une semaine o\u00f9 le petit d\u00e9jeuner et le d\u00eener se cuisinent dans la cuisine que la maison a d\u00e9j\u00e0. Le village lui-m\u00eame est petit. Le travail est la maison, pas une salle de restaurant.",
+      "Cette page n'affirme pas que Table d'Adrian est install\u00e9e sur le cap. C'est un lieu o\u00f9 nous cuisinons, sur la m\u00eame c\u00f4te que les pages Nice et Monaco. Les courses se d\u00e9cident avec la r\u00e9servation. Lorsque la semaine est sur la presqu'\u00eele, le march\u00e9 du matin est souvent celui de Nice, puis la route du retour le long de la c\u00f4te. Les pr\u00e9f\u00e9rences alimentaires et les allergies sont inscrites sur cette liste.",
+      "La presqu'\u00eele est \u00e0 quelques minutes \u00e0 l'est de Nice et \u00e0 l'ouest de Monaco. Une r\u00e9servation sur le cap peut inclure un d\u00eener \u00e0 Villefranche-sur-Mer, \u00e0 Beaulieu-sur-Mer ou \u00e0 \u00c8ze lorsque le s\u00e9jour est ici. \u00c8ze est le village perch\u00e9 au-dessus de la corniche ; Beaulieu est la baie suivante vers l'est. Ce sont des voisins, pas des maisons s\u00e9par\u00e9es.",
+      "Les tables s'\u00e9crivent pour 2 \u00e0 25 convives, en villa ou sur un yacht \u00e0 quai. La m\u00eame semaine peut tenir le petit d\u00e9jeuner, un d\u00e9jeuner tardif et le d\u00eener, ou la r\u00e9servation peut \u00eatre une seule soir\u00e9e. La cuisine long\u00e9vit\u00e9 est le style du travail, m\u00e9diterran\u00e9enne et de saison, tenue \u00e0 la pr\u00e9cision d'un passage gastronomique. Ce n'est pas une affirmation de sant\u00e9, ni un avis m\u00e9dical. Adrian est de formation suisse (EHL), avec 10+ ans dans des cuisines exigeantes et un Nutrition certificate, Stanford. Ailleurs sur cette c\u00f4te, la m\u00eame cuisine a assur\u00e9 des \u00e9v\u00e9nements pour Eden-Roc, amfAR et Dior. Les honoraires sont sur demande, en \u20ac. Une r\u00e9ponse part sous 24 heures. \u00c9crivez via le formulaire, WhatsApp, le DM Instagram @tabledadrian, ou adrian@tabledadrian.com.",
+    ],
+    nearbyTitle: "O\u00f9 nous cuisinons pr\u00e8s de Saint-Jean-Cap-Ferrat",
+    nearby: ["Saint-Jean-Cap-Ferrat", "Villefranche-sur-Mer", "Beaulieu-sur-Mer", "\u00c8ze", "Nice", "Monaco"],
+    nearbyNote: "Saint-Jean-Cap-Ferrat est la r\u00e9servation. Les communes voisines figurent parce que la presqu'\u00eele est courte et que la m\u00eame cuisine peut s'y d\u00e9placer.",
+    imageSrc: "/gallery/langoustine.jpeg",
+    imageAlt: "Langoustine po\u00eal\u00e9e et f\u00e8ves, une assiette pour une table \u00e0 Saint-Jean-Cap-Ferrat.",
+    showFaq: true,
+  },
+  {
     id: "yacht",
     locale: "en",
     slug: "yacht-chef",
@@ -453,7 +501,7 @@ export const LOCATIONS: LocationRecord[] = [
   },
 ]
 
-export const EN_PLACE_SLUGS = ['cote-d-azur', 'monaco', 'nice', 'cannes', 'antibes', 'saint-tropez'] as const
+export const EN_PLACE_SLUGS = ['cote-d-azur', 'monaco', 'nice', 'cannes', 'antibes', 'saint-tropez', 'saint-jean-cap-ferrat'] as const
 export const FR_PLACE_SLUGS = EN_PLACE_SLUGS
 
 const SLUG_TO_ID: Record<string, LocationId> = {
@@ -463,7 +511,49 @@ const SLUG_TO_ID: Record<string, LocationId> = {
   cannes: 'cannes',
   antibes: 'antibes',
   'saint-tropez': 'saint-tropez',
+  'saint-jean-cap-ferrat': 'saint-jean-cap-ferrat',
 }
+
+const LANDING_FACT_IDS = new Set<LocationId>(['monaco', 'cannes', 'antibes', 'saint-tropez', 'yacht'])
+
+const FACTS_REST = {
+  en: "Tables are written for 2 to 25 guests. Breakfast, a late lunch and dinner can sit in the same week, or the work can be a single evening. Dietary preferences and allergies are taken when you write and put on the shopping list. The menu is still a matter of taste and the season's market. Longevity cuisine names that style, Mediterranean and seasonal, held to fine-dining precision. It is not a health claim and not medical advice. Adrian is Swiss-trained (EHL), with 10+ years in demanding kitchens and a Nutrition certificate, Stanford. Events for Eden-Roc, amfAR and Dior are part of that same practice. Fees are on request, quoted in \u20ac. A reply is sent within 24 hours. Use the form, WhatsApp, Instagram DM @tabledadrian, or adrian@tabledadrian.com.",
+  fr: "Les tables s'\u00e9crivent pour 2 \u00e0 25 convives. Le petit d\u00e9jeuner, un d\u00e9jeuner tardif et le d\u00eener peuvent tenir dans la m\u00eame semaine, ou le travail peut \u00eatre une seule soir\u00e9e. Les pr\u00e9f\u00e9rences alimentaires et les allergies sont not\u00e9es lorsque vous \u00e9crivez, et port\u00e9es sur la liste de courses. Le menu reste une affaire de go\u00fbt et de march\u00e9 de saison. La cuisine long\u00e9vit\u00e9 nomme ce style, m\u00e9diterran\u00e9en et de saison, tenu \u00e0 la pr\u00e9cision d'un passage gastronomique. Ce n'est pas une affirmation de sant\u00e9, ni un avis m\u00e9dical. Adrian est de formation suisse (EHL), avec 10+ ans dans des cuisines exigeantes et un Nutrition certificate, Stanford. Les \u00e9v\u00e9nements pour Eden-Roc, amfAR et Dior rel\u00e8vent de la m\u00eame pratique. Les honoraires sont sur demande, en \u20ac. Une r\u00e9ponse part sous 24 heures. Utilisez le formulaire, WhatsApp, le DM Instagram @tabledadrian, ou adrian@tabledadrian.com.",
+} as const
+
+const FACTS_OPEN: Record<string, { en: string; fr: string }> = {
+  monaco: {
+    en: 'In Monaco the booking is often an apartment kitchen or a yacht alongside, not a restaurant table.',
+    fr: "\u00c0 Monaco, la r\u00e9servation est souvent une cuisine d'appartement ou un yacht \u00e0 quai, pas une table de restaurant.",
+  },
+  cannes: {
+    en: 'In Cannes the booking is the villa weekend or the Festival date, cooked in the house rather than in a restaurant dining room.',
+    fr: "\u00c0 Cannes, la r\u00e9servation est le week-end en villa ou la date du Festival, cuisin\u00e9e dans la maison plut\u00f4t qu'en salle de restaurant.",
+  },
+  antibes: {
+    en: "On Cap d'Antibes the booking is the villa kitchen, or a yacht when the boat is in port, not a restaurant reservation.",
+    fr: "Au Cap d'Antibes, la r\u00e9servation est la cuisine de la villa, ou un yacht lorsque le bateau est au port, pas une r\u00e9servation de restaurant.",
+  },
+  'saint-tropez': {
+    en: 'In Saint-Tropez the booking is the peninsula villa or a boat in the gulf, not a table booked in the village.',
+    fr: "\u00c0 Saint-Tropez, la r\u00e9servation est la villa de la presqu'\u00eele ou un bateau dans le golfe, pas une table retenue dans le village.",
+  },
+  yacht: {
+    en: 'On a yacht the booking is the galley and the people on board. The harbours most often used on this coast are Antibes, Monaco, Cannes, Villefranche-sur-Mer and Saint-Tropez. Provisioning, the menu and any dietary notes are agreed in writing before the boat leaves the quay.',
+    fr: "Sur un yacht, la r\u00e9servation est l'office et les personnes \u00e0 bord. Les ports les plus souvent utilis\u00e9s sur cette c\u00f4te sont Antibes, Monaco, Cannes, Villefranche-sur-Mer et Saint-Tropez. L'avitaillement, le menu et les notes alimentaires sont accord\u00e9s avant que le bateau ne quitte le quai.",
+  },
+}
+
+function landingFacts(id: LocationId, locale: Locale) {
+  const open = FACTS_OPEN[id]?.[locale]
+  if (!open) return ''
+  return `${open} ${FACTS_REST[locale]}`
+}
+
+export const LOCATIONS: LocationRecord[] = LOCATION_RECORDS.map((record) => {
+  if (!LANDING_FACT_IDS.has(record.id)) return record
+  return { ...record, body: [...record.body, landingFacts(record.id, record.locale)] }
+})
 
 export function locationIdFromSlug(slug: string): LocationId | undefined {
   return SLUG_TO_ID[slug]

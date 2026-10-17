@@ -1,8 +1,10 @@
+import sitemap from '@/app/sitemap'
+import robots from '@/app/robots'
 import { FAQ } from '@/lib/faq'
 import { LOCATIONS, getLocation, locationIdFromSlug } from '@/lib/locations'
 import { LOCALE_PAIRS, localeAlternates, toLocalePath } from '@/lib/routes'
 import { siteJsonLd } from '@/lib/schema'
-import { FOOTER_LINKS, NAVIGATION, SOCIAL_LINKS } from '@/lib/constants'
+import { FOOTER_LINKS, NAVIGATION, SOCIAL_LINKS, WHATSAPP_URL } from '@/lib/constants'
 import { OG_EN, OG_FR, OG_IMAGE_EN, OG_IMAGE_FR, SITE_DESCRIPTION, ogImageForLocale } from '@/lib/site'
 import { copy } from '@/lib/copy'
 
@@ -28,7 +30,7 @@ describe('locale pairs', () => {
     })
   })
 
-  it('covers the hub and five towns', () => {
+  it('covers the hub and the town pages', () => {
     const en = LOCALE_PAIRS.map(([path]) => path)
     expect(en).toEqual(expect.arrayContaining([
       '/private-chef-cote-d-azur',
@@ -37,7 +39,11 @@ describe('locale pairs', () => {
       '/private-chef-cannes',
       '/private-chef-antibes',
       '/private-chef-saint-tropez',
+      '/private-chef-saint-jean-cap-ferrat',
+      '/yacht-chef',
     ]))
+    expect(toLocalePath('/private-chef-saint-jean-cap-ferrat', 'fr')).toBe('/fr/chef-prive-saint-jean-cap-ferrat')
+    expect(toLocalePath('/yacht-chef', 'fr')).toBe('/fr/chef-de-yacht')
   })
 
   it('maps hyphenated location URLs onto the known slugs', () => {
@@ -49,8 +55,8 @@ describe('locale pairs', () => {
 })
 
 describe('location copy', () => {
-  it('has eighteen distinct records', () => {
-    expect(LOCATIONS).toHaveLength(18)
+  it('has a record for each place in both languages', () => {
+    expect(LOCATIONS).toHaveLength(20)
     expect(locationIdFromSlug('cote-d-azur')).toBe('hub')
     expect(getLocation('monaco', 'en').h1).toBe('Private chef Monaco')
     expect(getLocation('monaco', 'fr').h1).toMatch(/Chef priv/)
@@ -101,6 +107,50 @@ describe('FAQ', () => {
   })
 })
 
+describe('landing pages', () => {
+  const ids = ['antibes', 'cannes', 'monaco', 'saint-tropez', 'saint-jean-cap-ferrat', 'yacht'] as const
+
+  it('keeps each landing page between 300 and 500 words', () => {
+    for (const id of ids) {
+      for (const locale of ['en', 'fr'] as const) {
+        const page = getLocation(id, locale)
+        const words = [page.h1, page.lede, ...page.body].join(' ').split(/\s+/).filter(Boolean)
+        expect({ id, locale, words: words.length }).toEqual({ id, locale, words: expect.any(Number) })
+        expect(words.length).toBeGreaterThanOrEqual(300)
+        expect(words.length).toBeLessThanOrEqual(500)
+        expect(page.h1.length).toBeGreaterThan(0)
+      }
+    }
+  })
+
+  it('names the real service facts and skips invented claims', () => {
+    for (const id of ids) {
+      const page = getLocation(id, 'en')
+      const blob = [page.lede, ...page.body].join(' ')
+      expect(blob).toMatch(/Swiss-trained \(EHL\)/)
+      expect(blob).toMatch(/10\+ years/)
+      expect(blob).toMatch(/2 to 25 guests/)
+      expect(blob).toMatch(/Eden-Roc/)
+      expect(blob).toMatch(/amfAR/)
+      expect(blob).toMatch(/Dior/)
+      expect(blob).toMatch(/on request/)
+      expect(blob).toMatch(/\u20ac/)
+    }
+  })
+})
+
+describe('sitemap', () => {
+  it('lists every locale pair, including the new pages, at /sitemap.xml', () => {
+    const urls = sitemap().map((item) => item.url)
+    for (const [en, fr] of LOCALE_PAIRS) {
+      expect(urls).toContain(`https://www.tabledadrian.com${en === '/' ? '/' : en}`)
+      expect(urls).toContain(`https://www.tabledadrian.com${fr}`)
+    }
+    expect(robots().sitemap).toBe('https://www.tabledadrian.com/sitemap.xml')
+    expect(WHATSAPP_URL).toBe('https://w.app/tabledadrian')
+  })
+})
+
 describe('JSON-LD', () => {
   it('describes a Riviera FoodService with Instagram and the locked credentials', () => {
     const graph = siteJsonLd()['@graph'] as Array<Record<string, unknown>>
@@ -115,6 +165,10 @@ describe('JSON-LD', () => {
     expect(JSON.stringify(business.areaServed)).toMatch(/C\u00f4te d'Azur/)
     expect(JSON.stringify(business.areaServed)).toMatch(/Monaco/)
     expect(JSON.stringify(business.areaServed)).toMatch(/Saint-Tropez/)
+    expect(JSON.stringify(business.areaServed)).toMatch(/Antibes/)
+    expect(JSON.stringify(business.areaServed)).toMatch(/Cap d'Antibes/)
+    expect(JSON.stringify(business.areaServed)).toMatch(/Cannes/)
+    expect(JSON.stringify(business.areaServed)).toMatch(/Saint-Jean-Cap-Ferrat/)
     expect(business.sameAs).toEqual(['https://www.instagram.com/tabledadrian/'])
     expect(business).not.toHaveProperty('priceRange')
     expect(JSON.stringify(graph)).not.toMatch(/linkedin/i)
