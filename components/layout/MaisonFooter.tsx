@@ -9,6 +9,7 @@ import { offerNavLabel } from '@/lib/monetisation'
 import { toLocalePath } from '@/lib/routes'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { LemonBox } from '@/components/b2/ui'
+import { GoogleReviewFooter } from '@/components/layout/GoogleReview'
 import { B2_NAV } from './MaisonNav'
 
 /* Mockup B footer card: brand · four links · place line. A quiet second row keeps every route, theme and language reachable. */
@@ -33,6 +34,7 @@ export function MaisonFooter() {
           </div>
           <span className="m">Antibes · Côte d&apos;Azur &amp; Monaco · © {year}</span>
         </div>
+        <GoogleReviewFooter />
         <div className="b2-foot-sub">
           <div className="sublinks">
             {extra.map((item) => (
