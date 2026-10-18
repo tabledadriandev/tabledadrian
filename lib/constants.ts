@@ -9,6 +9,9 @@ export const WHATSAPP_URL = "https://w.app/tabledadrian"
 
 export const INSTAGRAM_URL = 'https://www.instagram.com/tabledadrian/'
 
+/** Google review form. Opens in a new tab. No rating or review count is shown on the site. */
+export const GOOGLE_REVIEW_URL = 'https://g.page/r/CcRE_phuKoMYEBM/review'
+
 export const SOCIAL_LINKS = {
   instagram: INSTAGRAM_URL,
 }

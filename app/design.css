@@ -787,3 +787,36 @@ html[data-resolved='dark'] .tda .brand-cover.tone-ink { background: #14170F; }
   .tda .xmas, .tda .ebook-card { transition: none; }
   .tda a.xmas:hover, .tda a.ebook-card:hover { transform: none; }
 }
+
+/* Google review. Olive note on the home page; quiet row in the ivory footer. No stars. */
+.tda .review-note {
+  margin-top: 16px;
+  background: #2F3529;
+  color: #F6F1E6;
+  border-radius: 40px;
+  padding: 40px 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px 40px;
+}
+.tda .review-note h2 { font-size: 36px; max-width: 16ch; }
+.tda .review-note p { margin-top: 12px; max-width: 34rem; font-size: 17px; color: #D9C79F; }
+.tda .review-note .btn { background: #F6F1E6; color: #2F3529; flex: none; }
+.tda .b2-foot-review {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px 24px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 2px dotted #8C837166;
+}
+.tda .b2-foot-review p { margin: 0; flex: 1 1 220px; font-size: 15px; color: var(--m-mut); }
+.tda .b2-foot-review .btn { flex: none; }
+@media (max-width: 600px) {
+  .tda .review-note { flex-direction: column; align-items: flex-start; padding: 36px 26px; border-radius: 32px; }
+  .tda .review-note h2 { font-size: 32px; max-width: none; }
+  .tda .review-note .btn, .tda .b2-foot-review .btn { width: 100%; justify-content: center; }
+}

@@ -46,6 +46,11 @@ export const copy = {
     instagramLabel: 'Instagram DM',
     instagramHandle: '@tabledadrian',
     footerBlurb: `Swiss-trained (EHL) private chef, ${STANFORD_CREDENTIAL}. Private dinners, weekly meal preparation and longevity menus on the Côte d'Azur and in Monaco.`,
+    googleReview: {
+      title: 'Leave us a Google review',
+      body: 'If you have sat at the table, a few words there help the next guest find us.',
+      footer: 'A few words on Google help the next guest.',
+    },
     bookingIntro: 'Book by enquiry form, WhatsApp, Instagram DM or email.',
     perEvent: 'Per event',
     monthly: 'Monthly',
@@ -136,6 +141,11 @@ export const copy = {
     instagramLabel: 'DM Instagram',
     instagramHandle: '@tabledadrian',
     footerBlurb: `Chef privé de haute gastronomie, formation suisse (EHL), ${STANFORD_CREDENTIAL}. Dîners privés, semaine en cuisine et menus longévité sur la Côte d'Azur et à Monaco.`,
+    googleReview: {
+      title: 'Laissez-nous un avis Google',
+      body: 'Si vous avez été à table, quelques mots là-bas aident le prochain convive à nous trouver.',
+      footer: 'Quelques mots sur Google aident le prochain convive.',
+    },
     bookingIntro: 'Réservation par formulaire, WhatsApp, DM Instagram ou e-mail.',
     perEvent: 'Par événement',
     monthly: 'Mensuel',

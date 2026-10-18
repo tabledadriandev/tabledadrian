@@ -11,6 +11,7 @@ import { faqJsonLd } from '@/lib/schema'
 import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
 import { Arrow, Lemon } from '@/components/b2/ui'
+import { GoogleReviewNote } from '@/components/layout/GoogleReview'
 import { SeasonPush } from '@/components/season/SeasonPush'
 import { WorkedWith } from '@/components/seo/WorkedWith'
 
@@ -126,6 +127,8 @@ export function HybridPage() {
         </div>
         <div className="lemoncard" aria-hidden="true"><Lemon /></div>
       </section>
+
+      <GoogleReviewNote />
 
       <section id="enquire" className="enq" aria-labelledby="enq-title">
         <div>
