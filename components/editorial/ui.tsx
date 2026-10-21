@@ -99,6 +99,17 @@ export function CapsLink({
   )
 }
 
+export function EmLast({ text }: { text: string }) {
+  const words = text.trim().split(/\s+/)
+  if (words.length < 2) return <>{text}</>
+  const last = words.pop()
+  return (
+    <>
+      {words.join(' ')} <em>{last}</em>
+    </>
+  )
+}
+
 export function SectionLabel({ index, children }: { index: string; children: React.ReactNode }) {
   return (
     <p className="ed-kicker">

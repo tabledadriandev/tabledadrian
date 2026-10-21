@@ -1,94 +1,186 @@
+import Image from 'next/image'
 import Link from 'next/link'
+import { CapsLink, EmLast, LemonSymbol } from '@/components/editorial/ui'
 import type { OfferPlan } from '@/lib/offer-copy'
-import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover } from '@/lib/cover'
-import { coverPhoto } from '@/lib/cover-photos'
 import { DISCLAIMER, PLAN_CREDENTIAL, PLANS_COPY, planDetail, planList, plansPath } from '@/lib/view-copy'
-import { Arrow } from '@/components/b2/ui'
-import { Band, Opt } from '@/components/b2/Tiles'
-import { Buy } from './Buy'
 
-/* Plans: band, then the mockup's three-up experience cards (gold · card · olive), repeating. */
+const ROMAN = ['I', 'II', 'III', 'IV', 'V']
+
 export function PlansIndex({ locale }: { locale: 'en' | 'fr' }) {
   const c = PLANS_COPY[locale]
+  const plans = planList(locale)
   return (
-    <div className="wrap b2-page">
-      <Band kicker={c.kicker} title={c.h1} text={c.lede} />
-      <section className="sec row3 b2-plans">
-        {planList(locale).map((p, i) => {
-          const cover = splitCover(p.title)
-          return (
-            <Link key={p.id} href={p.href} className={`xc plan-tile ${['e', '', 'o'][i % 3]}`}>
-              <BrandCover
-                word={cover.word}
-                italic={cover.italic}
-                meta={locale === 'fr' ? 'PROGRAMME' : 'MENU PLAN'}
-                cover={coverPhoto(`plan-${p.id}`)}
-                sizes="(max-width: 600px) 100vw, 400px"
-                className="plan-tile-cover"
-              />
-              <div className="n"><span>{String(i + 1).padStart(2, '0')}</span><span className="c"><Arrow /></span></div>
-              <div><h2 className="sr-only">{p.title}</h2><p>{p.lede}</p></div>
-            </Link>
-          )
-        })}
+    <article className="ed-plans">
+      <header>
+        <LemonSymbol />
+        <p>{c.kicker}</p>
+        <h1>
+          <EmLast text={c.h1} />
+        </h1>
+        <p>{c.lede}</p>
+      </header>
+      <figure className="ed-photo">
+        <Image
+          src="/editorial/plans-terrace.webp"
+          alt="Mediterranean lunch of grilled fish, vegetables and olive oil on a shaded terrace"
+          fill
+          priority
+          sizes="(max-width: 1100px) 100vw, 1312px"
+        />
+        <figcaption>
+          <span>{locale === 'fr' ? 'Poisson, légumes, huile d’olive, et la forme de la journée' : 'Fish, vegetables, olive oil, and the shape of the day'}</span>
+          <span>{PLAN_CREDENTIAL}</span>
+        </figcaption>
+      </figure>
+      <section className="ed-menu-card">
+        <div>
+          <p>{locale === 'fr' ? 'Cinq guides' : 'Five guides'}</p>
+          <h2>
+            {locale === 'fr' ? 'Guides d’assiette et de' : 'Eating and'} <em>{locale === 'fr' ? 'mode de vie' : 'lifestyle guides'}</em>
+          </h2>
+        </div>
+        <ol>
+          {plans.map((item, index) => {
+            const detail = planDetail(item.plan, locale)
+            return (
+              <li key={item.id}>
+                <Link href={item.href}>
+                  <span>{ROMAN[index]}</span>
+                  <strong>{item.title}</strong>
+                  <i aria-hidden="true" />
+                  <em>{detail.price}</em>
+                </Link>
+                <p>{item.lede}</p>
+              </li>
+            )
+          })}
+        </ol>
+        <div>
+          <p>{PLAN_CREDENTIAL}</p>
+          <CapsLink href={plans[0]?.href || plansPath(locale)}>{locale === 'fr' ? 'Lire un programme' : 'Read a plan'} →</CapsLink>
+        </div>
       </section>
-      <div className="b2-note" role="note"><p>{DISCLAIMER[locale]}</p><p className="m">{PLAN_CREDENTIAL}</p></div>
-    </div>
+      <p className="ed-disclaimer">
+        <strong>{locale === 'fr' ? 'Pas un avis médical.' : 'Not medical advice.'}</strong>
+        <span>{DISCLAIMER[locale]}</span>
+      </p>
+    </article>
   )
 }
 
-/* Plan: hero split — copy card left, gold buy card with sample-day options right; then four list cards. */
 export function PlanArticle({ plan, locale }: { plan: OfferPlan; locale: 'en' | 'fr' }) {
   const d = planDetail(plan, locale)
-  const lists: [string, string, string[]][] = [
-    ['eat-more', d.labels.more, d.more],
-    ['eat-less', d.labels.limit, d.limit],
-    ['habits', d.labels.habits, d.habits],
+  const plans = planList(locale)
+  const index = plans.findIndex((item) => item.id === plan.id)
+  const lists = [
+    { numeral: 'I.', title: d.labels.more, items: d.more },
+    { numeral: 'II.', title: d.labels.limit, items: d.limit },
+    { numeral: 'III.', title: d.labels.habits, items: d.habits },
   ]
   return (
-    <article className="wrap b2-page">
-      <BrandCover
-        {...splitCover(d.title)}
-        meta={locale === 'fr' ? 'PROGRAMME' : 'MENU PLAN'}
-        cover={coverPhoto(`plan-${plan.id}`)}
-        seed={plan.id}
-        entrance
-        priority
-        sizes="(max-width: 600px) 100vw, 1200px"
-        className="plan-hero-cover"
-      />
-      <section className="hero b2-split">
-        <div className="hl">
-          <div>
-            <Link href={plansPath(locale)} className="tagr">← {d.labels.back}</Link>
-            <h1 className="disp">{d.title}</h1>
-            <p>{d.lede}</p>
-            <p className="b2-sola">{d.labels.solaNote}</p>
-            <div className="cta">
-              <Buy href={d.stripe} label={d.labels.buy} locale={locale} className="btn ink" />
-              <Link href="/sola" className="btn ghost">{d.labels.sola}</Link>
+    <article className="ed-plan">
+      <header>
+        <div>
+          <CapsLink href={plansPath(locale)}>{d.labels.back}</CapsLink>
+          <p>
+            <span>{locale === 'fr' ? 'Programme' : 'Menu plan'}</span>
+            <i aria-hidden="true" />
+            <span>
+              {ROMAN[index] || 'I'} {locale === 'fr' ? 'sur' : 'of'} V
+            </span>
+          </p>
+          <h1>
+            <EmLast text={d.title} />
+          </h1>
+          <p>{d.lede}</p>
+          <div className="ed-plan-buy">
+            <p>
+              <span>{d.title}</span>
+              <i aria-hidden="true" />
+              <strong>{d.price}</strong>
+            </p>
+            <div>
+              {d.stripe ? (
+                <a className="ed-pill ed-pill-filled" href={d.stripe} target="_blank" rel="nofollow noopener noreferrer">
+                  <span>{d.labels.buy}</span>
+                  <span className="ed-arrow" aria-hidden="true">→</span>
+                </a>
+              ) : (
+                <span className="ed-pill ed-pill-outline">{d.labels.soon}</span>
+              )}
+              <span>{PLAN_CREDENTIAL}</span>
             </div>
           </div>
-          <div className="credrow"><span>{PLAN_CREDENTIAL}</span>{d.note ? <span>{d.note}</span> : null}</div>
         </div>
-        <aside id="buy-plan" className="enq b2-buy">
-          <div>
-            {d.price ? <span className="tagr ink">{d.price}</span> : null}
-            <h2 className="disp" id="sample-day">{d.labels.day}</h2>
-          </div>
-          <div className="opts">{d.meals.map((m) => <Opt key={m.key} href={m.href} title={m.name} sub={m.slot} />)}</div>
-        </aside>
+        <div className="ed-photo">
+          <Image
+            src="/editorial/plans-tian.webp"
+            alt="Vegetable tian of courgette and tomato in a terracotta dish"
+            fill
+            priority
+            sizes="(max-width: 1100px) 100vw, 640px"
+          />
+        </div>
+      </header>
+      <section className="ed-plan-day">
+        <div className="ed-photo">
+          <Image src="/editorial/plans-pistou.webp" alt="Bowl of soupe au pistou with basil on a stone table" fill sizes="(max-width: 1100px) 100vw, 496px" />
+        </div>
+        <div>
+          <p className="ed-band-kicker">{d.labels.day}</p>
+          <h2>
+            {locale === 'fr' ? 'Une' : 'A'} <em>{locale === 'fr' ? 'journée' : 'sample day'}</em>
+          </h2>
+          <ol>
+            {d.meals.map((meal) => (
+              <li key={meal.key}>
+                <span>{meal.slot}</span>
+                <strong>{meal.name}</strong>
+                <i aria-hidden="true" />
+                <Link href={meal.href}>{locale === 'fr' ? 'Recette' : 'Recipe'} →</Link>
+              </li>
+            ))}
+          </ol>
+        </div>
       </section>
-      <section className="sec row3 b2-lists">
-        {lists.map(([id, title, items], i) => (
-          <section key={id} className={`xc list ${['', 'o', ''][i]}`} aria-labelledby={id}>
-            <h2 id={id} className="disp h3">{title}</h2>
-            <ul>{items.map((x) => <li key={x}>{x}</li>)}</ul>
-          </section>
-        ))}
+      <section className="ed-plan-lists">
+        <p className="ed-band-kicker">02 — {locale === 'fr' ? 'L’assiette' : 'The plate'}</p>
+        <div>
+          {lists.map((list) => (
+            <div key={list.numeral}>
+              <p>{list.numeral}</p>
+              <h3>
+                <EmLast text={list.title} />
+              </h3>
+              <ul>
+                {list.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
-      <div className="b2-note" role="note"><p>{DISCLAIMER[locale]}</p></div>
+      <footer>
+        <p>
+          <strong>{locale === 'fr' ? 'Pas un avis médical.' : 'Not medical advice.'}</strong>
+          <span>{DISCLAIMER[locale]}</span>
+        </p>
+        <div>
+          <CapsLink href={plansPath(locale)}>{d.labels.back}</CapsLink>
+          {d.stripe ? (
+            <a className="ed-pill ed-pill-filled" href={d.stripe} target="_blank" rel="nofollow noopener noreferrer">
+              <span>
+                {d.labels.buy}
+                {d.price ? ` · ${d.price}` : ''}
+              </span>
+              <span className="ed-arrow" aria-hidden="true">→</span>
+            </a>
+          ) : (
+            <CapsLink href={plansPath(locale)}>{d.labels.back}</CapsLink>
+          )}
+        </div>
+      </footer>
     </article>
   )
 }

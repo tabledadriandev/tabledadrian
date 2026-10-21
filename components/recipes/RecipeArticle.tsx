@@ -1,155 +1,168 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { CapsLink, EmLast, Pill } from '@/components/editorial/ui'
 import { stockSrc } from '@/lib/cover'
-import { BookChefCta } from '@/components/monetisation/BookChefCta'
-import { NewsletterForm } from '@/components/monetisation/NewsletterForm'
-import { CREDIT, CREDIT_FR, type LibraryRecipe } from '@/lib/library'
+import { libraryRecipePath, libraryRecipes, type LibraryRecipe } from '@/lib/library'
+import { RecipeScale } from './RecipeScale'
 
 const UI = {
   en: {
+    recipes: 'Recipes',
+    full: 'Written in full',
+    book: 'Book a private chef',
+    sola: 'Cook it with Sola',
+    solaHref: '/sola',
+    contact: '/contact',
     ingredients: 'Ingredients',
     method: 'Method',
+    steps: 'steps',
     prep: 'Prep',
     cook: 'Cook',
-    serves: 'Serves',
-    credit: CREDIT,
     lockTitle: 'The method is in Sola',
     lockBody: 'The ingredients stay on the page. The method is in the Sola app.',
-    cta: 'Download Sola',
-    also: 'Also',
-    photo: 'Photograph',
+    also: 'Also written',
+    fullWord: 'in full',
+    all: 'recipes',
+    bandA: 'Longevity',
+    bandB: 'cuisine, cooked with fine-dining',
+    bandC: 'precision.',
+    bandLede: 'At your villa, on your yacht, for your private events.',
   },
   fr: {
+    recipes: 'Recettes',
+    full: 'Recette entière',
+    book: 'Réserver un chef privé',
+    sola: 'La cuisiner avec Sola',
+    solaHref: '/fr/sola',
+    contact: '/fr/contact',
     ingredients: 'Ingrédients',
     method: 'Méthode',
+    steps: 'étapes',
     prep: 'Préparation',
     cook: 'Cuisson',
-    serves: 'Pour',
-    credit: CREDIT_FR,
     lockTitle: 'La méthode est dans Sola',
     lockBody: 'Les ingrédients restent sur la page. La méthode est dans l’application Sola.',
-    cta: 'Télécharger Sola',
-    also: 'Aussi',
-    photo: 'Photographie',
+    also: 'Également',
+    fullWord: 'entières',
+    all: 'recettes',
+    bandA: 'Cuisine',
+    bandB: 'longévité, tenue avec une précision',
+    bandC: 'gastronomique.',
+    bandLede: 'Dans votre villa, sur votre yacht, pour vos réceptions privées.',
   },
 } as const
 
-
 export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; locale: 'en' | 'fr' }) {
-  const ui = UI[locale]
+  const t = UI[locale]
   const title = locale === 'fr' ? recipe.titleFr : recipe.title
   const intro = locale === 'fr' ? recipe.introFr : recipe.intro
-  const minutes = locale === 'fr' ? 'min' : 'min'
+  const lines = locale === 'fr' ? recipe.ingredientsFr ?? recipe.ingredients : recipe.ingredients
+  const steps = locale === 'fr' ? recipe.instructionsFr ?? recipe.instructions : recipe.instructions
   const photo = stockSrc(recipe.image.src)
   const alt = locale === 'fr' ? recipe.image.altFr || recipe.image.alt : recipe.image.alt
-  const category = [recipe.cuisine, recipe.course].filter(Boolean).join(' · ')
+  const index = libraryRecipes.filter((item) => item.free).findIndex((item) => item.slug === recipe.slug)
+  const number = String((index >= 0 ? index : libraryRecipes.findIndex((item) => item.slug === recipe.slug)) + 1).padStart(2, '0')
+  const related = libraryRecipes.filter((item) => item.free && item.slug !== recipe.slug).slice(0, 3)
+  const indexHref = locale === 'fr' ? '/fr/recettes' : '/recipes'
 
   return (
-    <article className="recipe-article bg-background pb-20 pt-28 text-foreground sm:pt-32">
-      <div className="ra-wrap container max-w-3xl">
-        <header className={photo ? 'ra-hero is-photo' : 'ra-hero is-cream'}>
-          {photo ? (
-            <Image
-              className="ra-hero-photo"
-              src={photo}
-              alt={alt}
-              fill
-              priority
-              sizes="(max-width: 800px) 100vw, 1280px"
-              quality={75}
-            />
-          ) : null}
-          <div className="ra-hero-copy">
-            {category ? <p className="ra-hero-cat">{category}</p> : null}
-            <h1 className="ra-hero-title">{title}</h1>
-            <span className="ra-hero-rule" aria-hidden="true" />
-            <p className="ra-hero-intro">{intro}</p>
-          </div>
-        </header>
-        <p className="ra-byline">
-          {photo && recipe.image.credit ? (
-            recipe.image.creditUrl ? (
-              <a href={recipe.image.creditUrl} rel="noreferrer">
-                {recipe.image.credit}
-              </a>
-            ) : (
-              <span>{recipe.image.credit}</span>
-            )
-          ) : null}
-          {photo && recipe.image.credit ? <span aria-hidden="true"> · </span> : null}
-          <span>{ui.credit}</span>
+    <article className="ed-recipe">
+      <header className="ed-recipe-head">
+        <p>
+          <Link href={indexHref}>{t.recipes}</Link>
+          <span>
+            {' / '}
+            {recipe.cuisine} · {recipe.course}
+          </span>
+          <span>{recipe.free ? `No. ${number} · ${t.full}` : `No. ${number}`}</span>
         </p>
-
-        <dl className="ra-facts mt-8 grid grid-cols-3 gap-3 border-y border-border py-4 text-sm">
-          <div>
-            <dt className="text-[11px] uppercase tracking-caps text-foreground-subtle">{ui.prep}</dt>
-            <dd className="mt-1">
-              {recipe.prepMin} {minutes}
-            </dd>
+        <h1 className="ed-recipe-title">
+          <EmLast text={title} />
+        </h1>
+      </header>
+      <RecipeScale
+        lines={lines}
+        base={recipe.servings}
+        locale={locale}
+        prep={recipe.prepMin}
+        cook={recipe.cookMin}
+        intro={intro}
+        actions={
+          <div className="ed-recipe-actions">
+            <Pill href={t.contact} tone="filled">{t.book}</Pill>
+            <CapsLink href={t.solaHref}>{t.sola}</CapsLink>
           </div>
-          <div>
-            <dt className="text-[11px] uppercase tracking-caps text-foreground-subtle">{ui.cook}</dt>
-            <dd className="mt-1">
-              {recipe.cookMin} {minutes}
-            </dd>
+        }
+        photo={
+          photo ? (
+            <figure className="ed-photo">
+              <Image className="ra-hero-photo" src={photo} alt={alt || title} fill priority sizes="(max-width: 1100px) 100vw, 860px" />
+              {recipe.image.credit ? <figcaption>{recipe.image.credit}</figcaption> : null}
+            </figure>
+          ) : null
+        }
+        method={
+        <div className="ed-recipe-method">
+          <div className="ed-split-head">
+            <h2>{t.method}</h2>
+            <p>
+              {steps.length} {t.steps} · {t.prep} {recipe.prepMin} min · {t.cook} {recipe.cookMin} min
+            </p>
           </div>
-          <div>
-            <dt className="text-[11px] uppercase tracking-caps text-foreground-subtle">{ui.serves}</dt>
-            <dd className="mt-1">{recipe.servings}</dd>
+          <div className={recipe.free ? 'ed-steps' : 'ed-steps is-locked'}>
+            <ol>
+              {steps.map((step, stepIndex) => (
+                <li key={step}>
+                  <span>{stepIndex + 1}</span>
+                  <p>{step}</p>
+                </li>
+              ))}
+            </ol>
+            {recipe.free ? null : (
+              <div className="ed-lock">
+                <p>{t.lockTitle}</p>
+                <p>{t.lockBody}</p>
+                <Pill href={t.solaHref} tone="filled">{t.sola}</Pill>
+              </div>
+            )}
           </div>
-        </dl>
-
-        <section className="ra-ingredients mt-10" aria-labelledby="ingredients-heading">
-          <h2 id="ingredients-heading" className="font-display text-3xl tracking-tight">
-            {ui.ingredients}
+        </div>
+        }
+      />
+      <section className="ed-forest">
+        <div>
+          <p className="ed-band-kicker">{t.book}</p>
+          <h2>
+            <em>{t.bandA}</em> {t.bandB} <em>{t.bandC}</em>
           </h2>
-          <ul className="mt-4 space-y-2 text-foreground-muted">
-            {(locale === 'fr' ? recipe.ingredientsFr ?? recipe.ingredients : recipe.ingredients).map((item) => (
-              <li key={item} className="border-b border-border/70 pb-2">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className={recipe.free ? 'ra-method mt-10' : 'ra-method paywall mt-10'} aria-labelledby="method-heading">
-          <h2 id="method-heading" className="font-display text-3xl tracking-tight">
-            {ui.method}
-          </h2>
-          <ol className="paywall-steps mt-4 list-decimal space-y-4 pl-5 text-foreground-muted">
-            {(locale === 'fr' ? recipe.instructionsFr ?? recipe.instructions : recipe.instructions).map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-          {recipe.free ? null : (
-            <div className="paywall-lock">
-              <p className="font-display text-3xl tracking-tight">{ui.lockTitle}</p>
-              <p className="mt-2 max-w-sm text-sm text-foreground-muted">{ui.lockBody}</p>
-              <Link href="/sola" className="paywall-cta">
-                {ui.cta}
+          <p>{t.bandLede}</p>
+        </div>
+        <Pill href={t.contact} tone="light">{t.book}</Pill>
+      </section>
+      {related.length ? (
+        <section className="ed-related">
+          <div className="ed-split-head">
+            <h2>
+              {t.also} <em>{t.fullWord}</em>
+            </h2>
+            <CapsLink href={indexHref}>
+              {libraryRecipes.length} {t.all}
+            </CapsLink>
+          </div>
+          <div className="ed-cards">
+            {related.map((item, itemIndex) => (
+              <Link key={item.slug} href={libraryRecipePath(item, locale)} className="ed-typecard">
+                <span>
+                  <span>{item.cuisine}</span>
+                  <span>{locale === 'fr' ? 'Entière' : 'Full recipe'}</span>
+                </span>
+                <strong>{String(itemIndex + 2).padStart(2, '0')}</strong>
+                <em>{locale === 'fr' ? item.titleFr : item.title}</em>
               </Link>
-            </div>
-          )}
-        </section>
-
-        <BookChefCta locale={locale} />
-        <NewsletterForm locale={locale} id="journal-email-recipe" />
-
-        <aside className="b2-also">
-          <p className="k">{ui.also}</p>
-          <div className="links">
-            <Link href={locale === 'fr' ? '/fr/chef-de-yacht' : '/yacht-chef'} className="underline-offset-4 hover:underline">
-              {locale === 'fr' ? 'Chef de yacht' : 'Yacht chef'}
-            </Link>
-            <Link href={locale === 'fr' ? '/fr/chef-en-villa' : '/villa-chef'} className="underline-offset-4 hover:underline">
-              {locale === 'fr' ? 'Chef en villa' : 'Villa chef'}
-            </Link>
-            <Link href={locale === 'fr' ? '/fr/chef-prive-nice' : '/private-chef-nice'} className="underline-offset-4 hover:underline">
-              {locale === 'fr' ? 'Chef privé Nice' : 'Private chef Nice'}
-            </Link>
+            ))}
           </div>
-        </aside>
-      </div>
+        </section>
+      ) : null}
     </article>
   )
 }
