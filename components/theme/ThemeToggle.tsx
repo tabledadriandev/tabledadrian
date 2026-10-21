@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { Monitor, Moon, Sun } from 'lucide-react'
 import { copy } from '@/lib/copy'
 import { useLocale } from '@/lib/i18n'
@@ -12,10 +12,11 @@ const OPTIONS: { value: ThemeChoice; icon: typeof Sun }[] = [
   { value: 'system', icon: Monitor },
 ]
 
-export function ThemeToggle() {
+export function ThemeToggle({ variant = 'legacy' }: { variant?: 'legacy' | 'editorial' }) {
   const locale = useLocale()
   const labels = copy[locale].hybrid
   const [choice, setChoice] = useState<ThemeChoice | null>(null)
+  const radioName = useId()
 
   useEffect(() => {
     setChoice(readThemeChoice())
@@ -25,6 +26,33 @@ export function ThemeToggle() {
     light: labels.themeLight,
     dark: labels.themeDark,
     system: labels.themeSystem,
+  }
+
+  if (variant === 'editorial') {
+    return (
+      <fieldset className="ed-theme">
+        <legend className="sr-only">{labels.themeLegend}</legend>
+        {OPTIONS.map(({ value, icon: Icon }) => {
+          const selected = (choice ?? 'system') === value
+          return (
+            <label key={value} className={selected ? 'is-on' : undefined}>
+              <input
+                type="radio"
+                name={radioName}
+                value={value}
+                checked={selected}
+                onChange={() => {
+                  setChoice(value)
+                  applyTheme(value)
+                }}
+              />
+              <Icon size={16} strokeWidth={1.25} aria-hidden="true" />
+              <span>{names[value]}</span>
+            </label>
+          )
+        })}
+      </fieldset>
+    )
   }
 
   return (

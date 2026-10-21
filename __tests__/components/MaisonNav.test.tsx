@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MaisonNav, navLinks } from '@/components/layout/MaisonNav'
 
@@ -104,88 +104,46 @@ describe('navLinks', () => {
 })
 
 describe('MaisonNav', () => {
-  it('keeps Enquire and opens the extra pages from Explore', async () => {
+  it('keeps Enquire and opens every page from the menu', async () => {
     const user = userEvent.setup()
     render(<MaisonNav />)
 
     expect(screen.getByRole('link', { name: 'Enquire' })).toHaveAttribute('href', '/contact')
-    const explore = screen.getByRole('button', { name: 'Explore' })
-    expect(explore).toHaveAttribute('aria-expanded', 'false')
-    expect(explore).toHaveAttribute('aria-haspopup', 'true')
-    expect(screen.queryByRole('link', { name: 'Recipe books' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Sola' })).not.toBeInTheDocument()
+    const menu = screen.getByRole('button', { name: 'Open menu' })
+    expect(menu).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.queryByRole('link', { name: 'Kitchen' })).not.toBeInTheDocument()
 
-    explore.focus()
-    await user.keyboard('{ArrowDown}')
-    expect(explore).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByRole('link', { name: 'Menus' })).toHaveFocus()
-    expect(screen.getByRole('link', { name: 'Recipe books' })).toHaveAttribute('href', '/shop/recipe-books')
-    expect(screen.getByRole('link', { name: 'Plans' })).toHaveAttribute('href', '/plans')
-    expect(screen.getByRole('link', { name: 'Journal' })).toHaveAttribute('href', '/articles')
-    expect(screen.getByRole('link', { name: 'Gift' })).toHaveAttribute('href', '/gift')
-    expect(screen.getByRole('link', { name: 'Partners' })).toHaveAttribute('href', '/partners')
-    expect(screen.getByRole('link', { name: 'Sola' })).toHaveAttribute('href', '/sola')
-    expect(screen.getByRole('link', { name: 'Classes' })).toHaveAttribute('href', '/masterclass')
-    expect(screen.getByRole('link', { name: 'Kitchen' })).toHaveAttribute('href', '/chefs-kitchen')
+    await user.click(menu)
+    expect(menu).toHaveAttribute('aria-expanded', 'true')
+    const dialog = screen.getByRole('dialog')
+    expect(within(dialog).getByRole('link', { name: /Experiences/ })).toHaveAttribute('href', '/services')
+    expect(within(dialog).getByRole('link', { name: /Kitchen/ })).toHaveAttribute('href', '/chefs-kitchen')
+    expect(within(dialog).getByRole('link', { name: /Sola/ })).toHaveAttribute('href', '/sola')
+    expect(within(dialog).getByRole('link', { name: /Books/ })).toHaveAttribute('href', '/shop/recipe-books')
+    const overlayHrefs = hrefsIn(dialog).filter((href) => href && !href.startsWith('/fr') && href !== '/')
+    for (const href of HREFS) {
+      expect(overlayHrefs).toContain(href)
+    }
 
     await user.keyboard('{Escape}')
-    expect(explore).toHaveAttribute('aria-expanded', 'false')
-    expect(explore).toHaveFocus()
-    expect(screen.queryByRole('link', { name: 'Sola' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
-  it('opens on hover and closes on click while the pointer stays inside', async () => {
-    const user = userEvent.setup()
-    render(<MaisonNav />)
-    const explore = screen.getByRole('button', { name: 'Explore' })
-    fireEvent.mouseEnter(explore.parentElement as HTMLElement)
-    expect(explore).toHaveAttribute('aria-expanded', 'true')
-    await user.click(explore)
-    expect(explore).toHaveAttribute('aria-expanded', 'false')
-    fireEvent.mouseEnter(explore.parentElement as HTMLElement)
-    expect(explore).toHaveAttribute('aria-expanded', 'false')
-    fireEvent.mouseLeave(explore.parentElement as HTMLElement)
-    fireEvent.mouseEnter(explore.parentElement as HTMLElement)
-    expect(explore).toHaveAttribute('aria-expanded', 'true')
-    fireEvent.pointerDown(document.body)
-    expect(explore).toHaveAttribute('aria-expanded', 'false')
-  })
-
-  it('lists the same pages in the mobile sheet as in the desktop nav', async () => {
-    const user = userEvent.setup()
-    render(<MaisonNav />)
-    const explore = screen.getByRole('button', { name: 'Explore' })
-    explore.focus()
-    await user.keyboard('{ArrowDown}')
-    const desktop = document.querySelector('nav.b2-nav') as HTMLElement
-    const desktopHrefs = hrefsIn(desktop)
-    await user.click(screen.getByRole('button', { name: 'Open menu' }))
-
-    const sheet = document.getElementById('b2-menu') as HTMLElement
-    const sheetHrefs = hrefsIn(sheet)
-    expect(sheetHrefs).toEqual(HREFS)
-    expect([...desktopHrefs].sort()).toEqual([...sheetHrefs].sort())
-    expect(within(sheet).getAllByRole('link').map((link) => link.textContent?.trim())).toEqual(EN)
-  })
-
-  it('uses the French labels and paths on both navs', async () => {
+  it('uses the French labels and paths in the menu', async () => {
     mockNav.path = '/fr'
     const user = userEvent.setup()
     render(<MaisonNav />)
 
     expect(screen.getByRole('link', { name: 'Demande' })).toHaveAttribute('href', '/fr/contact')
-    const explore = screen.getByRole('button', { name: 'Explorer' })
-    explore.focus()
-    await user.keyboard('{ArrowDown}')
-    const desktop = document.querySelector('nav.b2-nav') as HTMLElement
-    expect(hrefsIn(desktop).sort()).toEqual([...FR_HREFS].sort())
-    expect(within(desktop).getByRole('link', { name: 'Programmes' })).toHaveAttribute('href', '/fr/programmes')
-    expect(within(desktop).getByRole('link', { name: 'Livres de recettes' })).toHaveAttribute('href', '/fr/livres-de-recettes')
-
-    await user.click(screen.getByRole('button', { name: 'Open menu' }))
-    const sheet = document.getElementById('b2-menu') as HTMLElement
-    expect(hrefsIn(sheet)).toEqual(FR_HREFS)
-    expect(within(sheet).getAllByRole('link').map((link) => link.textContent?.trim())).toEqual(FR)
+    await user.click(screen.getByRole('button', { name: 'Ouvrir le menu' }))
+    const dialog = screen.getByRole('dialog')
+    const overlayHrefs = hrefsIn(dialog)
+    for (const href of FR_HREFS) {
+      expect(overlayHrefs).toContain(href)
+    }
+    expect(within(dialog).getByRole('link', { name: /Programmes/ })).toHaveAttribute('href', '/fr/programmes')
+    expect(within(dialog).getByRole('link', { name: /Livres/ })).toHaveAttribute('href', '/fr/livres-de-recettes')
+    expect(within(dialog).getByRole('link', { name: /Cuisine/ })).toHaveAttribute('href', '/fr/cuisine-du-chef')
   })
 })
 

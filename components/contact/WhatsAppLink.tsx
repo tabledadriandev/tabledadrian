@@ -9,7 +9,7 @@ export function WhatsAppFloat() {
   return (
     <a
       href={WHATSAPP_URL}
-      className="fixed bottom-5 right-4 z-[70] inline-flex h-12 items-center rounded-full bg-ink px-4 text-sm font-medium text-ink-foreground shadow-lift sm:right-6"
+      className="ed-wa-float"
       target="_blank"
       rel="noopener noreferrer"
     >
