@@ -65,15 +65,15 @@ export function RecipeScale({
               {labels.for} {serves}
             </p>
           </div>
-          {groups.map((group) => (
-            <div key={group.label || group.rows[0]?.name}>
+          {groups.map((group, groupIndex) => (
+            <div key={`${group.label || 'group'}-${groupIndex}`}>
               {group.label ? <h3>{group.label}</h3> : <span className="ed-rule" />}
               <ul>
-                {group.rows.map((row) => {
+                {group.rows.map((row, index) => {
                   const qty = row.qty ? scaleQuantity(row.qty, ratio) : ''
                   const name = row.qty ? row.name : scaleQuantity(row.name, ratio)
                   return (
-                    <li key={`${group.label}-${row.name}`}>
+                    <li key={`${groupIndex}-${index}`}>
                       <span>{name}</span>
                       <i aria-hidden="true" />
                       {qty ? <span>{qty}</span> : null}
