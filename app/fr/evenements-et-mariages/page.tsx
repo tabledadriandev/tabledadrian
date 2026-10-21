@@ -1,9 +1,10 @@
-import { LocationScreen, locationMetadata } from '@/components/seo/LocationView'
+import { PlaceExperience } from '@/components/experiences/PlaceExperience'
+import { locationMetadata } from '@/components/seo/LocationView'
 
 export function generateMetadata() {
   return locationMetadata('events', 'fr')
 }
 
 export default function FrenchEventsPage() {
-  return <LocationScreen id="events" locale="fr" />
+  return <PlaceExperience id="events" locale="fr" />
 }

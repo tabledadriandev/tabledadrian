@@ -17,9 +17,11 @@ describe('Christmas gift push', () => {
     expect(screen.getByRole('link', { name: 'Livres de recettes — dès 14,90 €' })).toHaveAttribute('href', '/fr/livres-de-recettes')
   })
 
-  it('places the strip on the services page', () => {
+  it('builds the services page from the experiences frame, without the Christmas strip', () => {
     render(<ServicesView locale="en" />)
-    expect(screen.getByRole('link', { name: /Christmas gift cards/ })).toHaveAttribute('href', '/gift')
-    expect(screen.getByRole('link', { name: /Gift a dinner/ })).toHaveTextContent('Choose a €150, €300 or €500 card and pay online.')
+    expect(screen.getByRole('heading', { level: 1, name: /Private chef/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Villa chef/ })).toHaveAttribute('href', '/villa-chef')
+    expect(screen.getAllByText('Free travel within 30 km of Antibes').length).toBeGreaterThan(0)
+    expect(screen.queryByRole('link', { name: /Christmas gift cards/ })).not.toBeInTheDocument()
   })
 })
