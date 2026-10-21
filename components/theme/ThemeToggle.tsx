@@ -2,14 +2,15 @@
 
 import { useEffect, useId, useState } from 'react'
 import { Monitor, Moon, Sun } from 'lucide-react'
+import { LineIcon } from '@/components/editorial/ui'
 import { copy } from '@/lib/copy'
 import { useLocale } from '@/lib/i18n'
 import { applyTheme, readThemeChoice, type ThemeChoice } from './theme'
 
-const OPTIONS: { value: ThemeChoice; icon: typeof Sun }[] = [
-  { value: 'light', icon: Sun },
-  { value: 'dark', icon: Moon },
-  { value: 'system', icon: Monitor },
+const OPTIONS: { value: ThemeChoice; icon: typeof Sun; mark: 'sun' | 'moon' | 'system' }[] = [
+  { value: 'light', icon: Sun, mark: 'sun' },
+  { value: 'dark', icon: Moon, mark: 'moon' },
+  { value: 'system', icon: Monitor, mark: 'system' },
 ]
 
 export function ThemeToggle({ variant = 'legacy' }: { variant?: 'legacy' | 'editorial' }) {
@@ -32,7 +33,7 @@ export function ThemeToggle({ variant = 'legacy' }: { variant?: 'legacy' | 'edit
     return (
       <fieldset className="ed-theme">
         <legend className="sr-only">{labels.themeLegend}</legend>
-        {OPTIONS.map(({ value, icon: Icon }) => {
+        {OPTIONS.map(({ value, mark }) => {
           const selected = (choice ?? 'system') === value
           return (
             <label key={value} className={selected ? 'is-on' : undefined}>
@@ -46,7 +47,7 @@ export function ThemeToggle({ variant = 'legacy' }: { variant?: 'legacy' | 'edit
                   applyTheme(value)
                 }}
               />
-              <Icon size={16} strokeWidth={1.25} aria-hidden="true" />
+              <LineIcon name={mark} size={16} />
               <span>{names[value]}</span>
             </label>
           )

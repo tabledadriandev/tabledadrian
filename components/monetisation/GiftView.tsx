@@ -64,6 +64,7 @@ export function GiftView({ locale }: { locale: 'en' | 'fr' }) {
           </Link>
         </div>
         <div className="ed-gift-stage">
+          <img src="/editorial/gift-linen.webp" alt="" />
           <BrandLockup className="ed-lockup-gift" />
           <p>{fr ? 'Un dîner, offert' : 'A dinner, given'}</p>
         </div>

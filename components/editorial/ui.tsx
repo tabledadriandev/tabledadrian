@@ -16,6 +16,32 @@ export function LemonSymbol({ className = '' }: { className?: string }) {
   return <span className={`ed-symbol ${className}`.trim()} aria-hidden="true" />
 }
 
+const LINE_ICONS = {
+  mail: '/editorial/icons/mail.svg',
+  instagram: '/editorial/icons/instagram.svg',
+  whatsapp: '/editorial/icons/whatsapp.svg',
+  calendar: '/editorial/icons/calendar.svg',
+  close: '/editorial/icons/close.svg',
+  sun: '/editorial/icons/sun.svg',
+  moon: '/editorial/icons/moon.svg',
+  system: '/editorial/icons/system.svg',
+  minus: '/editorial/icons/minus.svg',
+  plus: '/editorial/icons/plus.svg',
+  coastline: '/editorial/icons/coastline.svg',
+  north: '/editorial/icons/north.svg',
+} as const
+
+export function LineIcon({ name, size = 16 }: { name: keyof typeof LINE_ICONS; size?: number }) {
+  const url = `url(${LINE_ICONS[name]})`
+  return (
+    <span
+      className="ed-ico"
+      style={{ width: size, height: size, WebkitMaskImage: url, maskImage: url }}
+      aria-hidden="true"
+    />
+  )
+}
+
 type PillTone = 'outline' | 'filled' | 'light' | 'brass'
 
 export function Pill({

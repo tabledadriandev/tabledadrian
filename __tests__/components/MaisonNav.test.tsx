@@ -67,23 +67,6 @@ const FR = [
   'Cuisine',
 ]
 
-const FR_HREFS = [
-  '/fr/services',
-  '/fr/gallery',
-  '/fr#about',
-  '/fr/contact',
-  '/fr/menus',
-  '/fr/livres-de-recettes',
-  '/fr/recettes',
-  '/fr/programmes',
-  '/fr/articles',
-  '/fr/cadeau',
-  '/fr/partenaires',
-  '/fr/sola',
-  '/fr/cours-de-cuisine',
-  '/fr/cuisine-du-chef',
-]
-
 function hrefsIn(root: HTMLElement) {
   return within(root).getAllByRole('link').map((link) => link.getAttribute('href'))
 }
@@ -117,11 +100,11 @@ describe('MaisonNav', () => {
     expect(menu).toHaveAttribute('aria-expanded', 'true')
     const dialog = screen.getByRole('dialog')
     expect(within(dialog).getByRole('link', { name: /Experiences/ })).toHaveAttribute('href', '/services')
-    expect(within(dialog).getByRole('link', { name: /Kitchen/ })).toHaveAttribute('href', '/chefs-kitchen')
-    expect(within(dialog).getByRole('link', { name: /Sola/ })).toHaveAttribute('href', '/sola')
     expect(within(dialog).getByRole('link', { name: /Books/ })).toHaveAttribute('href', '/shop/recipe-books')
+    expect(within(dialog).queryByRole('link', { name: /Kitchen/ })).not.toBeInTheDocument()
+    expect(within(dialog).queryByRole('link', { name: /Sola/ })).not.toBeInTheDocument()
     const overlayHrefs = hrefsIn(dialog).filter((href) => href && !href.startsWith('/fr') && href !== '/')
-    for (const href of HREFS) {
+    for (const href of ['/services', '/gallery', '/menus', '/articles', '/recipes', '/shop/recipe-books', '/gift', '/masterclass', '/plans', '/partners', '/contact']) {
       expect(overlayHrefs).toContain(href)
     }
 
@@ -138,12 +121,12 @@ describe('MaisonNav', () => {
     await user.click(screen.getByRole('button', { name: 'Ouvrir le menu' }))
     const dialog = screen.getByRole('dialog')
     const overlayHrefs = hrefsIn(dialog)
-    for (const href of FR_HREFS) {
+    for (const href of ['/fr/services', '/fr/gallery', '/fr/menus', '/fr/articles', '/fr/recettes', '/fr/livres-de-recettes', '/fr/cadeau', '/fr/cours-de-cuisine', '/fr/programmes', '/fr/partenaires', '/fr/contact']) {
       expect(overlayHrefs).toContain(href)
     }
     expect(within(dialog).getByRole('link', { name: /Programmes/ })).toHaveAttribute('href', '/fr/programmes')
     expect(within(dialog).getByRole('link', { name: /Livres/ })).toHaveAttribute('href', '/fr/livres-de-recettes')
-    expect(within(dialog).getByRole('link', { name: /Cuisine/ })).toHaveAttribute('href', '/fr/cuisine-du-chef')
+    expect(within(dialog).queryByRole('link', { name: /Cuisine/ })).not.toBeInTheDocument()
   })
 })
 

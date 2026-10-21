@@ -8,7 +8,7 @@ import { copy } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
 import { toLocalePath } from '@/lib/routes'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
-import { BrandLockup } from './ui'
+import { BrandLockup, LineIcon } from './ui'
 
 type Item = { href: string; en: string; fr: string }
 
@@ -51,18 +51,23 @@ export function menuItems() {
   return GROUPS.flatMap((group) => group.items)
 }
 
+const OVERLAY: Item[] = [
+  { href: '/services', en: 'Experiences', fr: 'Expériences' },
+  { href: '/gallery', en: 'Gallery', fr: 'Galerie' },
+  { href: '/menus', en: 'Menus', fr: 'Menus' },
+  { href: '/articles', en: 'Journal', fr: 'Journal' },
+  { href: '/recipes', en: 'Recipes', fr: 'Recettes' },
+  { href: '/shop/recipe-books', en: 'Books', fr: 'Livres' },
+  { href: '/gift', en: 'Gift', fr: 'Cadeau' },
+  { href: '/masterclass', en: 'Classes', fr: 'Cours' },
+  { href: '/plans', en: 'Plans', fr: 'Programmes' },
+  { href: '/partners', en: 'Partners', fr: 'Partenaires' },
+  { href: '/contact', en: 'Contact', fr: 'Contact' },
+]
+
 function MenuIcon() {
   return (
     <span className="ed-menu-icon" aria-hidden="true">
-      <i />
-      <i />
-    </span>
-  )
-}
-
-function CloseIcon() {
-  return (
-    <span className="ed-close-icon" aria-hidden="true">
       <i />
       <i />
     </span>
@@ -73,6 +78,7 @@ export function EditorialNav() {
   const pathname = usePathname()
   const locale = useLocale()
   const t = copy[locale].hybrid
+  const handle = copy[locale].instagramHandle
   const [open, setOpen] = useState(false)
   const titleId = useId()
   const menuLabel = locale === 'fr' ? 'Menu' : 'Menu'
@@ -96,8 +102,6 @@ export function EditorialNav() {
       window.removeEventListener('keydown', onKey)
     }
   }, [open])
-
-  const flat = menuItems()
 
   return (
     <>
@@ -134,51 +138,60 @@ export function EditorialNav() {
       </header>
       {open ? (
         <div className="ed-overlay ed-on-dark" id="site-menu" role="dialog" aria-modal="true" aria-labelledby={titleId}>
-          <div className="ed-overlay-bar">
-            <button type="button" className="ed-menu-btn" onClick={() => setOpen(false)} aria-label={closeLabel}>
-              <CloseIcon />
-              <span className="ed-menu-word">{locale === 'fr' ? 'Fermer' : 'Close'}</span>
-            </button>
-            <p id={titleId} className="sr-only">
-              {menuLabel}
-            </p>
-            <p className="ed-lang">
-              <Link href={toLocalePath(pathname || '/', 'en')} hrefLang="en" lang="en" aria-current={locale === 'en' ? 'true' : undefined}>
-                EN
+          <div className="ed-overlay-main">
+            <div className="ed-overlay-bar">
+              <Link href={withLocale('/', locale)} className="ed-header-logo" aria-label="Table d'Adrian" onClick={() => setOpen(false)}>
+                <BrandLockup label="" />
               </Link>
-              <span aria-hidden="true"> / </span>
-              <Link href={toLocalePath(pathname || '/', 'fr')} hrefLang="fr" lang="fr" aria-current={locale === 'fr' ? 'true' : undefined}>
-                FR
-              </Link>
-            </p>
-          </div>
-          <nav className="ed-overlay-nav" aria-label={menuLabel}>
-            {GROUPS.map((group) => (
-              <div key={group.en} className="ed-overlay-col">
-                <p className="ed-overlay-label">{locale === 'fr' ? group.fr : group.en}</p>
-                <ol>
-                  {group.items.map((item) => {
-                    const number = String(flat.findIndex((entry) => entry.href === item.href) + 1).padStart(2, '0')
-                    return (
-                      <li key={item.href}>
-                        <Link href={withLocale(item.href, locale)}>
-                          <span className="ed-overlay-index">{number}</span>
-                          <span className="ed-overlay-name">{locale === 'fr' ? item.fr : item.en}</span>
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ol>
+              <p id={titleId} className="sr-only">
+                {menuLabel}
+              </p>
+              <button type="button" className="ed-overlay-close" onClick={() => setOpen(false)} aria-label={closeLabel}>
+                <span>{locale === 'fr' ? 'Fermer' : 'Close'}</span>
+                <span className="ed-overlay-x">
+                  <LineIcon name="close" size={18} />
+                </span>
+              </button>
+            </div>
+            <nav className="ed-overlay-nav" aria-label={menuLabel}>
+              <ol>
+                {OVERLAY.map((item, index) => (
+                  <li key={item.href}>
+                    <Link href={withLocale(item.href, locale)} onClick={() => setOpen(false)}>
+                      <span className="ed-overlay-name">{locale === 'fr' ? item.fr : item.en}</span>
+                      <span className="ed-overlay-index">{String(index + 1).padStart(2, '0')}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+            <div className="ed-overlay-foot">
+              <div className="ed-overlay-settings">
+                <p className="ed-lang">
+                  <Link href={toLocalePath(pathname || '/', 'en')} hrefLang="en" lang="en" aria-current={locale === 'en' ? 'true' : undefined}>
+                    EN
+                  </Link>
+                  <span aria-hidden="true"> · </span>
+                  <Link href={toLocalePath(pathname || '/', 'fr')} hrefLang="fr" lang="fr" aria-current={locale === 'fr' ? 'true' : undefined}>
+                    FR
+                  </Link>
+                </p>
+                <ThemeToggle variant="editorial" />
               </div>
-            ))}
-          </nav>
-          <div className="ed-overlay-foot">
-            <ThemeToggle variant="editorial" />
-            <Link className="ed-pill ed-pill-brass" href={withLocale('/contact', locale)} onClick={() => setOpen(false)}>
-              <span>{t.navEnquire}</span>
-              <span className="ed-arrow" aria-hidden="true">→</span>
-            </Link>
+              <Link className="ed-pill ed-pill-outline ed-overlay-enquire" href={withLocale('/contact', locale)} onClick={() => setOpen(false)}>
+                <span>{t.navEnquire}</span>
+                <span className="ed-arrow" aria-hidden="true">→</span>
+              </Link>
+              <p className="ed-overlay-mail">
+                <a href={`mailto:${CONTACT_INFO.email}`}>{CONTACT_INFO.email}</a>
+                <span className="ed-overlay-mail-extra" aria-hidden="true"> · {handle}</span>
+              </p>
+            </div>
           </div>
+          <figure className="ed-overlay-photo">
+            <img src="/editorial/menu-lemon-branch.webp" alt="" />
+            <figcaption>Private chef · Côte d&apos;Azur &amp; Monaco</figcaption>
+          </figure>
         </div>
       ) : null}
     </>
