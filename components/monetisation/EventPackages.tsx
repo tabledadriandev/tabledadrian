@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button'
+import { Pill } from '@/components/editorial/ui'
 
 const COPY = {
   en: {
@@ -54,9 +54,9 @@ const COPY = {
 export function EventPackages({ locale }: { locale: 'en' | 'fr' }) {
   const t = COPY[locale]
   return (
-    <section className="mt-20 border-t border-border pt-12 sm:mt-24" aria-labelledby="event-packages" id="packages">
-      <h2 id="event-packages" className="display text-3xl sm:text-4xl">
-        {t.title}
+    <section className="ed-page-section" aria-labelledby="event-packages" id="packages">
+      <h2 id="event-packages">
+        <span>{t.title}</span>
       </h2>
       <p className="mt-4 max-w-[62ch] text-foreground-muted">{t.lede}</p>
       <ul className="mt-8 grid gap-8 sm:grid-cols-2">
@@ -68,9 +68,7 @@ export function EventPackages({ locale }: { locale: 'en' | 'fr' }) {
         ))}
       </ul>
       <div className="mt-8">
-        <Button href={t.href} variant="ink">
-          {t.cta}
-        </Button>
+        <Pill href={t.href} tone="filled">{t.cta}</Pill>
       </div>
     </section>
   )

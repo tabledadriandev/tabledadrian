@@ -20,7 +20,7 @@ import { FoodLogger } from '@/components/nutrition/FoodLogger'
 import { DemoBanner } from '@/components/app/DemoBanner'
 import { DemoLock } from '@/components/app/DemoLock'
 import { AppDownloadSection } from '@/components/app/AppDownloadSection'
-import { SectionHeading } from '@/components/ui/SectionHeading'
+import { EdHero, EdPage } from '@/components/editorial/Page'
 import { useNutritionStore } from '@/lib/stores/nutrition-store'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 import { formatDate } from '@/lib/utils'
@@ -64,23 +64,15 @@ export default function NutritionCoachPage() {
   ]
 
   return (
-    <>
-      <div className="bg-background pb-8 pt-28 sm:pt-32">
-        <div className="container max-w-6xl">
+    <EdPage className="ed-tool">
+      <EdHero
+        kicker="Wellness · Demo"
+        title="Longevity"
+        italic="Coach"
+        lede="Log a meal, see your macros, get a feel for the product. Photo logging, a personal longevity score and chef-matched recipes live in the app."
+      />
+      <div className="ed-page-section">
           <DemoBanner label="This is a preview of the Longevity Coach" />
-
-          <SectionHeading
-            as="h1"
-            eyebrow="Wellness · Demo"
-            title={
-              <>
-                Longevity Coach
-              </>
-            }
-            description="Log a meal, see your macros, get a feel for the product. Photo logging, a personal longevity score and chef-matched recipes live in the app."
-            className="mt-10"
-            animate={false}
-          />
 
           <motion.div
             variants={staggerContainer}
@@ -263,11 +255,10 @@ export default function NutritionCoachPage() {
               </DemoLock>
             </motion.div>
           </motion.div>
-        </div>
       </div>
 
       <FoodLogger demo open={loggerOpen} onOpenChange={setLoggerOpen} />
       <AppDownloadSection />
-    </>
+    </EdPage>
   )
 }

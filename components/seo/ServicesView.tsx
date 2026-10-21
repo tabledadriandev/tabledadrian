@@ -1,10 +1,11 @@
-import Link from 'next/link'
-import type { Locale } from '@/lib/copy'
 import { SeasonPush } from '@/components/season/SeasonPush'
+import { EdHero, EdList, EdPage } from '@/components/editorial/Page'
+import type { Locale } from '@/lib/copy'
 
 const COPY = {
   en: {
-    h1: 'Private chef services',
+    h1: 'Private chef',
+    italic: 'services',
     lede: 'Private dinners, a week in a villa, a yacht galley, and celebrations. Cooked in your kitchen on the Côte d’Azur and in Monaco.',
     items: [
       { href: '/private-chef-cote-d-azur', title: 'Private dinners', text: 'A table written for the people eating it, from Monaco to Saint-Tropez.' },
@@ -23,7 +24,8 @@ const COPY = {
     ],
   },
   fr: {
-    h1: 'Services de chef privé',
+    h1: 'Services de',
+    italic: 'chef privé',
     lede: 'Dîners privés, une semaine en villa, l’office d’un yacht, et les célébrations. Cuisinés dans votre cuisine, sur la Côte d’Azur et à Monaco.',
     items: [
       { href: '/fr/chef-prive-cote-d-azur', title: 'Dîners privés', text: 'Une table écrite pour ceux qui mangent, de Monaco à Saint-Tropez.' },
@@ -46,22 +48,19 @@ const COPY = {
 export function ServicesView({ locale }: { locale: Locale }) {
   const copy = COPY[locale]
   return (
-    <article className="bg-background pb-20 pt-28 text-foreground sm:pt-32">
-      <div className="container max-w-3xl">
-        <h1 className="font-display text-5xl tracking-tight sm:text-6xl">{copy.h1}</h1>
-        <p className="mt-5 text-lg leading-relaxed text-foreground-muted">{copy.lede}</p>
+    <EdPage>
+      <EdHero
+        kicker={locale === 'fr' ? 'Expériences' : 'Experiences'}
+        title={copy.h1}
+        italic={copy.italic}
+        lede={copy.lede}
+        action={{ href: locale === 'fr' ? '/fr/contact' : '/contact', label: locale === 'fr' ? 'Demander' : 'Enquire' }}
+        figure={{ id: 'services-hero', label: locale === 'fr' ? 'Services' : 'Services' }}
+      />
+      <section className="ed-page-section">
         <SeasonPush locale={locale} place="page" />
-        <ul className="mt-8 divide-y divide-border border-y border-border">
-          {copy.items.map((item) => (
-            <li key={item.href}>
-              <Link href={item.href} className="block py-6">
-                <h2 className="font-display text-3xl tracking-tight">{item.title}</h2>
-                <p className="mt-2 text-foreground-muted">{item.text}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </article>
+        <EdList items={copy.items.map((item) => ({ ...item }))} />
+      </section>
+    </EdPage>
   )
 }

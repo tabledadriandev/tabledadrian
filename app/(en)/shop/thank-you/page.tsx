@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { OFFER_BOOKS } from '@/lib/offer-copy'
 import { thankYouState, type EbookSlug } from '@/lib/ebooks'
 import { CONTACT_INFO } from '@/lib/constants'
+import { EdPage } from '@/components/editorial/Page'
 
 export const dynamic = 'force-dynamic'
 
@@ -27,10 +28,9 @@ export default async function ThankYouPage({
   const sessionId = one(searchParams.session_id)
 
   return (
-    <article className="wrap b2-page">
-      <section className="about">
-        <div className="ab">
-          <h1 className="disp">Your books</h1>
+    <EdPage>
+      <article className="ed-page-prose">
+          <h1><span>Your books</span></h1>
           {state.kind === 'fallback' ? (
             <>
               <p>Check your email receipt, or contact us.</p>
@@ -56,7 +56,7 @@ export default async function ThankYouPage({
                   .map((book) => (
                     <a
                       key={book.slug}
-                      className="btn ink"
+                      className="ed-pill ed-pill-filled"
                       href={`/api/ebook?session_id=${encodeURIComponent(sessionId)}&b=${book.slug}`}
                     >
                       Download {titleFor(book.slug)}
@@ -73,8 +73,7 @@ export default async function ThankYouPage({
               ) : null}
             </>
           ) : null}
-        </div>
-      </section>
-    </article>
+      </article>
+    </EdPage>
   )
 }

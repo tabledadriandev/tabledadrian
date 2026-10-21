@@ -139,7 +139,7 @@ export function MasterclassView({ locale }: { locale: 'en' | 'fr' }) {
             </Link>
           </div>
         </div>
-        <div className="ed-class-photo" />
+        <div className="ed-class-photo" data-placeholder="class-hero" />
         <p className="ed-class-caption">
           <span>{locale === 'fr' ? 'Fig. 01 · Cours de cuisine à domicile' : 'Fig. 01 · At-home cooking class'}</span>
           <span>Côte d’Azur · Monaco</span>
@@ -200,7 +200,7 @@ export function MasterclassView({ locale }: { locale: 'en' | 'fr' }) {
         <div className="ed-class-cols">
           {t.formats.map((format, index) => (
             <article key={format.kicker} className={index === 1 ? 'ed-class-offset' : undefined}>
-              <div className="ed-class-photo" />
+              <div className="ed-class-photo" data-placeholder={index === 0 ? 'class-format-1' : 'class-format-2'} />
               <p className="ed-class-meta">
                 <span>{format.kicker}</span>
                 <span>{format.where}</span>
@@ -248,7 +248,7 @@ export function MasterclassView({ locale }: { locale: 'en' | 'fr' }) {
               <a href={`mailto:${CONTACT_INFO.email}`}>{CONTACT_INFO.email}</a>
             </div>
           </div>
-          <div className="ed-class-photo" />
+          <div className="ed-class-photo" data-placeholder="class-booking" />
         </div>
         <p className="ed-class-mega" aria-hidden="true">
           {t.megaA}<em>{t.megaB}</em>

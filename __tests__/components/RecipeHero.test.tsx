@@ -26,14 +26,9 @@ describe('recipe detail hero', () => {
         expect(container.querySelector('.brand-cover, .cover-word, .ra-kicker, .ra-title')).toBeNull()
         const hero = container.querySelector('.ra-hero')
         expect(hero).toBeTruthy()
-        if (recipe.image.src) {
-          expect(hero).toHaveClass('is-photo')
-          const src = hero?.querySelector('img.ra-hero-photo')?.getAttribute('src') || ''
-          expect(decodeURIComponent(src)).toContain(recipe.image.src)
-        } else {
-          expect(hero).toHaveClass('is-cream')
-          expect(hero?.querySelector('img')).toBeNull()
-        }
+        expect(hero).toHaveClass('is-cream')
+        expect(hero?.querySelector('img')).toBeNull()
+        expect(container.querySelector(`[data-placeholder="recipe/${recipe.slug}"]`)).toBeTruthy()
         unmount()
       }
     }

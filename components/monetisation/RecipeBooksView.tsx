@@ -1,61 +1,66 @@
-import { BrandCover } from '@/components/brand/BrandCover'
-import { splitCover } from '@/lib/cover'
-import { bookCoverId, coverPhoto } from '@/lib/cover-photos'
+import Link from 'next/link'
+import { EdFigure, EdHero, EdPage } from '@/components/editorial/Page'
 import { BOOKS_COPY, bookCredit, bookList, bundleOffer } from '@/lib/view-copy'
-import { Band, Opt } from '@/components/b2/Tiles'
 import { Buy } from './Buy'
 
-/* Books: band, then one about-style row per book — copy card with contents as options, plate card beside it. */
 export function RecipeBooksView({ locale }: { locale: 'en' | 'fr' }) {
   const c = BOOKS_COPY[locale]
   const credit = bookCredit(locale)
   const bundle = bundleOffer(locale)
   return (
-    <div className="wrap b2-page">
-      <Band kicker={c.kicker} title={c.h1} text={c.lede} />
-      {bookList(locale).map((b, i) => {
-        const cover = splitCover(b.title)
-        const n = String(i + 1).padStart(2, '0')
-        return (
-          <section key={b.id} id={`book-${b.id}`} className={`about b2-book ${i % 2 ? 'flip' : ''}`}>
-            <div className="ab">
-              <span className="tagr">{b.price}</span>
-              <h2 className="disp">{b.title}</h2>
-              <p>{b.intro}</p>
-              <div className="opts">{b.recipes.slice(0, 6).map((r) => <Opt key={r.slug} href={r.href} title={r.name} />)}</div>
-              <div className="btns">
-                <Buy href={b.stripe} label={c.buy} locale={locale} className="btn ink" />
-                <span className="m">{credit}</span>
+    <EdPage>
+      <EdHero
+        kicker={c.kicker}
+        title={locale === 'fr' ? 'Livres de' : 'Recipe'}
+        italic={locale === 'fr' ? 'recettes' : 'books'}
+        lede={c.lede}
+        figure={{ id: 'books-hero', label: c.h1, src: '/editorial/recipe-books.webp' }}
+      />
+      {bookList(locale).map((book, index) => (
+        <section key={book.id} id={`book-${book.id}`} className="ed-page-section">
+          <div className="ed-page-split">
+            <div>
+              <p className="ed-kicker">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <i aria-hidden="true" />
+                <span className="ed-kicker-name">{book.price}</span>
+              </p>
+              <h2>
+                <span>{book.title}</span>
+              </h2>
+              <p>{book.intro}</p>
+              <ul className="ed-links">
+                {book.recipes.slice(0, 6).map((recipe) => (
+                  <li key={recipe.slug}>
+                    <Link className="ed-caps" href={recipe.href}>{recipe.name}</Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="ed-page-intro" style={{ marginTop: 24 }}>
+                <Buy href={book.stripe} label={c.buy} locale={locale} className="ed-pill ed-pill-filled" />
+                <p>{credit}</p>
               </div>
             </div>
-            <div className="bc b2-cover">
-              <BrandCover
-                word={cover.word}
-                italic={cover.italic || (locale === 'fr' ? 'Menu' : 'Menu')}
-                meta={locale === 'fr' ? `N° ${n} · LIVRE DE RECETTES` : `N° ${n} · RECIPE BOOK`}
-                cover={coverPhoto(bookCoverId(b.id))}
-                fill
-                priority={i === 0}
-                sizes="(max-width: 600px) 100vw, 560px"
-              />
-            </div>
-          </section>
-        )
-      })}
-      <section id="book-bundle" className="about b2-book">
-        <div className="ab">
-          <span className="tagr">{bundle.price}</span>
-          <h2 className="disp">{bundle.title}</h2>
-          <p>{bundle.intro}</p>
-          <div className="btns">
-            <Buy href={bundle.stripe} label={bundle.buy} locale={locale} className="btn ink" />
-            <span className="m">{credit}</span>
+            <EdFigure id={`book/${book.id}`} label={book.title} />
           </div>
-        </div>
-        <div className="bc b2-cover">
-          <BrandCover word={bundle.word} italic={bundle.italic} meta={bundle.meta} fill />
+        </section>
+      ))}
+      <section id="book-bundle" className="ed-page-section">
+        <div className="ed-page-split">
+          <div>
+            <p className="ed-kicker">
+              <span className="ed-kicker-name">{bundle.price}</span>
+            </p>
+            <h2>
+              <span>{bundle.title}</span>
+            </h2>
+            <p>{bundle.intro}</p>
+            <Buy href={bundle.stripe} label={bundle.buy} locale={locale} className="ed-pill ed-pill-filled" />
+            <p className="ed-note">{credit}</p>
+          </div>
+          <EdFigure id="book/bundle" label={bundle.title} />
         </div>
       </section>
-    </div>
+    </EdPage>
   )
 }
