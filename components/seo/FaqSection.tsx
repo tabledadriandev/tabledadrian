@@ -11,9 +11,9 @@ export function FaqSection({
   if (items.length === 0) return null
 
   return (
-    <section className="ed-page-section ed-faq" aria-labelledby="location-faq">
-      <h2 id="location-faq">
-        <span>{title}</span>
+    <section className="border-t border-border py-20 sm:py-24" aria-labelledby="location-faq">
+      <h2 id="location-faq" className="display text-3xl sm:text-4xl md:text-5xl">
+        {title}
       </h2>
       <div className="mt-10 max-w-3xl">
         {items.map((item) => (

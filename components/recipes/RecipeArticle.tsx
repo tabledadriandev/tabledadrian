@@ -1,5 +1,6 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { EdFigure } from '@/components/editorial/Page'
+import { stockSrc } from '@/lib/cover'
 import { BookChefCta } from '@/components/monetisation/BookChefCta'
 import { NewsletterForm } from '@/components/monetisation/NewsletterForm'
 import { CREDIT, CREDIT_FR, type LibraryRecipe } from '@/lib/library'
@@ -39,12 +40,25 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
   const title = locale === 'fr' ? recipe.titleFr : recipe.title
   const intro = locale === 'fr' ? recipe.introFr : recipe.intro
   const minutes = locale === 'fr' ? 'min' : 'min'
+  const photo = stockSrc(recipe.image.src)
+  const alt = locale === 'fr' ? recipe.image.altFr || recipe.image.alt : recipe.image.alt
   const category = [recipe.cuisine, recipe.course].filter(Boolean).join(' · ')
 
   return (
-    <article className="recipe-article ed ed-page bg-background pb-20 text-foreground">
-      <div className="ra-wrap">
-        <header className="ra-hero is-cream">
+    <article className="recipe-article bg-background pb-20 pt-28 text-foreground sm:pt-32">
+      <div className="ra-wrap container max-w-3xl">
+        <header className={photo ? 'ra-hero is-photo' : 'ra-hero is-cream'}>
+          {photo ? (
+            <Image
+              className="ra-hero-photo"
+              src={photo}
+              alt={alt}
+              fill
+              priority
+              sizes="(max-width: 800px) 100vw, 1280px"
+              quality={75}
+            />
+          ) : null}
           <div className="ra-hero-copy">
             {category ? <p className="ra-hero-cat">{category}</p> : null}
             <h1 className="ra-hero-title">{title}</h1>
@@ -52,8 +66,17 @@ export function RecipeArticle({ recipe, locale }: { recipe: LibraryRecipe; local
             <p className="ra-hero-intro">{intro}</p>
           </div>
         </header>
-        <EdFigure id={`recipe/${recipe.slug}`} label={ui.photo} />
         <p className="ra-byline">
+          {photo && recipe.image.credit ? (
+            recipe.image.creditUrl ? (
+              <a href={recipe.image.creditUrl} rel="noreferrer">
+                {recipe.image.credit}
+              </a>
+            ) : (
+              <span>{recipe.image.credit}</span>
+            )
+          ) : null}
+          {photo && recipe.image.credit ? <span aria-hidden="true"> · </span> : null}
           <span>{ui.credit}</span>
         </p>
 

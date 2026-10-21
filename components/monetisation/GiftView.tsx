@@ -63,7 +63,7 @@ export function GiftView({ locale }: { locale: 'en' | 'fr' }) {
             <span className="ed-arrow" aria-hidden="true">→</span>
           </Link>
         </div>
-        <div className="ed-gift-stage" data-placeholder="gift-hero">
+        <div className="ed-gift-stage">
           <BrandLockup className="ed-lockup-gift" />
           <p>{fr ? 'Un dîner, offert' : 'A dinner, given'}</p>
         </div>

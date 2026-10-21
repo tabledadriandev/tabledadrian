@@ -1,46 +1,44 @@
 import Link from 'next/link'
 import type { OfferPlan } from '@/lib/offer-copy'
-import { EdFigure, EdHero, EdPage } from '@/components/editorial/Page'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { DISCLAIMER, PLAN_CREDENTIAL, PLANS_COPY, planDetail, planList, plansPath } from '@/lib/view-copy'
+import { Arrow } from '@/components/b2/ui'
+import { Band, Opt } from '@/components/b2/Tiles'
 import { Buy } from './Buy'
 
+/* Plans: band, then the mockup's three-up experience cards (gold · card · olive), repeating. */
 export function PlansIndex({ locale }: { locale: 'en' | 'fr' }) {
   const c = PLANS_COPY[locale]
   return (
-    <EdPage>
-      <EdHero
-        kicker={c.kicker}
-        title={locale === 'fr' ? 'Programmes' : 'Menu'}
-        italic={locale === 'fr' ? 'd’assiette' : 'plans'}
-        lede={c.lede}
-        figure={{ id: 'plans-index', label: c.h1 }}
-      />
-      <section className="ed-page-section">
-        <div className="ed-cards">
-          {planList(locale).map((plan, index) => (
-            <article key={plan.id}>
-              <Link href={plan.href}>
-                <EdFigure id={`plan/${plan.id}`} label={plan.title} />
-                <p className="ed-kicker">
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                </p>
-                <h2>
-                  <span>{plan.title}</span>
-                </h2>
-                <p>{plan.lede}</p>
-              </Link>
-            </article>
-          ))}
-        </div>
-        <div className="ed-note" role="note">
-          <p>{DISCLAIMER[locale]}</p>
-          <p>{PLAN_CREDENTIAL}</p>
-        </div>
+    <div className="wrap b2-page">
+      <Band kicker={c.kicker} title={c.h1} text={c.lede} />
+      <section className="sec row3 b2-plans">
+        {planList(locale).map((p, i) => {
+          const cover = splitCover(p.title)
+          return (
+            <Link key={p.id} href={p.href} className={`xc plan-tile ${['e', '', 'o'][i % 3]}`}>
+              <BrandCover
+                word={cover.word}
+                italic={cover.italic}
+                meta={locale === 'fr' ? 'PROGRAMME' : 'MENU PLAN'}
+                cover={coverPhoto(`plan-${p.id}`)}
+                sizes="(max-width: 600px) 100vw, 400px"
+                className="plan-tile-cover"
+              />
+              <div className="n"><span>{String(i + 1).padStart(2, '0')}</span><span className="c"><Arrow /></span></div>
+              <div><h2 className="sr-only">{p.title}</h2><p>{p.lede}</p></div>
+            </Link>
+          )
+        })}
       </section>
-    </EdPage>
+      <div className="b2-note" role="note"><p>{DISCLAIMER[locale]}</p><p className="m">{PLAN_CREDENTIAL}</p></div>
+    </div>
   )
 }
 
+/* Plan: hero split — copy card left, gold buy card with sample-day options right; then four list cards. */
 export function PlanArticle({ plan, locale }: { plan: OfferPlan; locale: 'en' | 'fr' }) {
   const d = planDetail(plan, locale)
   const lists: [string, string, string[]][] = [
@@ -49,63 +47,48 @@ export function PlanArticle({ plan, locale }: { plan: OfferPlan; locale: 'en' | 
     ['habits', d.labels.habits, d.habits],
   ]
   return (
-    <EdPage>
-      <header className="ed-page-hero">
-        <div className="ed-page-head">
+    <article className="wrap b2-page">
+      <BrandCover
+        {...splitCover(d.title)}
+        meta={locale === 'fr' ? 'PROGRAMME' : 'MENU PLAN'}
+        cover={coverPhoto(`plan-${plan.id}`)}
+        seed={plan.id}
+        entrance
+        priority
+        sizes="(max-width: 600px) 100vw, 1200px"
+        className="plan-hero-cover"
+      />
+      <section className="hero b2-split">
+        <div className="hl">
           <div>
-            <Link className="ed-caps" href={plansPath(locale)}>{d.labels.back}</Link>
-            <h1>
-              <span>{d.title}</span>
-            </h1>
+            <Link href={plansPath(locale)} className="tagr">← {d.labels.back}</Link>
+            <h1 className="disp">{d.title}</h1>
             <p>{d.lede}</p>
-            <p>{d.labels.solaNote}</p>
-          </div>
-          <aside id="buy-plan">
-            {d.price ? <p className="ed-kicker"><span className="ed-kicker-name">{d.price}</span></p> : null}
-            <h2 id="sample-day">
-              <span>{d.labels.day}</span>
-            </h2>
-            <ul className="ed-links">
-              {d.meals.map((meal) => (
-                <li key={meal.key}>
-                  <Link className="ed-caps" href={meal.href}>{meal.slot} · {meal.name}</Link>
-                </li>
-              ))}
-            </ul>
-            <div className="ed-page-intro" style={{ marginTop: 20 }}>
-              <Buy href={d.stripe} label={d.labels.buy} locale={locale} className="ed-pill ed-pill-filled" />
-              <Link className="ed-pill ed-pill-outline" href="/sola">
-                <span>{d.labels.sola}</span>
-                <span className="ed-arrow" aria-hidden="true">→</span>
-              </Link>
+            <p className="b2-sola">{d.labels.solaNote}</p>
+            <div className="cta">
+              <Buy href={d.stripe} label={d.labels.buy} locale={locale} className="btn ink" />
+              <Link href="/sola" className="btn ghost">{d.labels.sola}</Link>
             </div>
-          </aside>
+          </div>
+          <div className="credrow"><span>{PLAN_CREDENTIAL}</span>{d.note ? <span>{d.note}</span> : null}</div>
         </div>
-        <p className="ed-facts">
-          <span>{PLAN_CREDENTIAL}</span>
-          {d.note ? <span>{d.note}</span> : null}
-        </p>
-        <EdFigure id={`plan/${plan.id}`} label={d.title} />
-      </header>
-      <section className="ed-page-section">
-        <div className="ed-cards">
-          {lists.map(([id, title, items]) => (
-            <section key={id} aria-labelledby={id}>
-              <h2 id={id}>
-                <span>{title}</span>
-              </h2>
-              <ul className="ed-nearby">
-                {items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
-        <div className="ed-note" role="note">
-          <p>{DISCLAIMER[locale]}</p>
-        </div>
+        <aside id="buy-plan" className="enq b2-buy">
+          <div>
+            {d.price ? <span className="tagr ink">{d.price}</span> : null}
+            <h2 className="disp" id="sample-day">{d.labels.day}</h2>
+          </div>
+          <div className="opts">{d.meals.map((m) => <Opt key={m.key} href={m.href} title={m.name} sub={m.slot} />)}</div>
+        </aside>
       </section>
-    </EdPage>
+      <section className="sec row3 b2-lists">
+        {lists.map(([id, title, items], i) => (
+          <section key={id} className={`xc list ${['', 'o', ''][i]}`} aria-labelledby={id}>
+            <h2 id={id} className="disp h3">{title}</h2>
+            <ul>{items.map((x) => <li key={x}>{x}</li>)}</ul>
+          </section>
+        ))}
+      </section>
+      <div className="b2-note" role="note"><p>{DISCLAIMER[locale]}</p></div>
+    </article>
   )
 }

@@ -1,21 +1,25 @@
-import { EdHero, EdList, EdPage } from '@/components/editorial/Page'
+import { articles } from '@/data/articles'
 import { JOURNAL_COPY, journalItems } from '@/lib/view-copy'
+import { coverPhoto } from '@/lib/cover-photos'
+import { Band, Bento } from '@/components/b2/Tiles'
+
+const ARTICLE_SLUGS = new Set(articles.map((article) => article.slug))
 
 export function JournalIndex({ locale }: { locale: 'en' | 'fr' }) {
   const c = JOURNAL_COPY[locale]
-  const items = journalItems(locale)
+  const items = journalItems(locale).map((p) => ({
+    key: p.key,
+    href: p.href,
+    title: p.title,
+    text: p.excerpt,
+    cover: coverPhoto(ARTICLE_SLUGS.has(p.key) ? `article-${p.key}` : `journal-${p.key}`),
+    alt: p.alt,
+    meta: 'JOURNAL',
+  }))
   return (
-    <EdPage>
-      <EdHero
-        kicker={c.title}
-        title={locale === 'fr' ? 'Notes de' : 'Notes from'}
-        italic={locale === 'fr' ? 'table' : 'the table'}
-        lede={c.lede}
-        figure={{ id: 'journal-index', label: c.title }}
-      />
-      <section className="ed-page-section">
-        <EdList items={items.map((item) => ({ href: item.href, title: item.title, text: item.excerpt }))} />
-      </section>
-    </EdPage>
+    <div className="wrap b2-page">
+      <Band kicker="Table d'Adrian" title={c.title} text={c.lede} />
+      <Bento items={items} label={c.title} />
+    </div>
   )
 }

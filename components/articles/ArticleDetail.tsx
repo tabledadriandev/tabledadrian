@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { EdFigure } from '@/components/editorial/Page'
+import { Clock, User } from 'lucide-react'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import ReactMarkdown from 'react-markdown'
 import { Article } from '@/data/articles'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
@@ -43,17 +46,29 @@ export function ArticleDetail({ article }: ArticleDetailProps) {
         >
           {/* Hero Image */}
           <motion.div variants={fadeInUp} className="relative mb-8 overflow-hidden">
-            <EdFigure id={`article/${article.slug}`} label={article.title} />
+            <BrandCover
+              {...splitCover(article.title)}
+              meta={article.category}
+              cover={coverPhoto(`article-${article.slug}`)}
+              seed={article.slug}
+              priority
+              entrance
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="journal-cover"
+            />
           </motion.div>
 
           {/* Meta */}
           <motion.div variants={fadeInUp} className="space-y-4">
             <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-foreground-muted">
               <span className="text-primary font-medium">{article.category}</span>
-              <span aria-hidden="true"> · </span>
+              <span className="hidden sm:inline">•</span>
               <span>{formatDate(article.publishedAt)}</span>
-              <span aria-hidden="true"> · </span>
-              <span>{article.readTime} min read</span>
+              <span className="hidden sm:inline">•</span>
+              <div className="flex items-center space-x-1">
+                <Clock size={14} />
+                <span>{article.readTime} min read</span>
+              </div>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-tight">{article.title}</h1>
           </motion.div>
@@ -63,6 +78,9 @@ export function ArticleDetail({ article }: ArticleDetailProps) {
             variants={fadeInUp}
             className="flex items-center space-x-4 pb-8 border-b border-foreground/10"
           >
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <User size={24} className="text-primary" />
+            </div>
             <div>
               <p className="font-semibold">{article.author.name}</p>
               <p className="text-sm text-foreground-muted">{article.author.bio}</p>

@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
-import { EdPage } from '@/components/editorial/Page'
-import { SectionLabel } from '@/components/editorial/ui'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 
 export function LegalDoc({
   eyebrow,
@@ -14,15 +13,20 @@ export function LegalDoc({
   children: ReactNode
 }) {
   return (
-    <EdPage>
-      <article className="ed-page-prose ed-legal">
-        <SectionLabel index="01">{eyebrow}</SectionLabel>
-        <h1>
-          <span>{title}</span>
-        </h1>
-        <p className="ed-facts">Last updated {updated}</p>
-        <div className="ed-body legal">{children}</div>
-      </article>
-    </EdPage>
+    <div className="bg-background pb-20 pt-28 sm:pt-32">
+      <div className="container">
+        <SectionHeading
+          as="h1"
+          eyebrow={eyebrow}
+          title={title}
+          animate={false}
+          className="[&_h1]:text-4xl sm:[&_h1]:text-5xl"
+        />
+        <p className="mt-4 text-center text-xs text-foreground-muted">Last updated {updated}</p>
+        <article className="legal mx-auto mt-12 max-w-2xl space-y-5 text-base leading-relaxed text-foreground-muted">
+          {children}
+        </article>
+      </div>
+    </div>
   )
 }

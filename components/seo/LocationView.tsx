@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
-import { EdFigure, EdPage } from '@/components/editorial/Page'
-import { Pill, SectionLabel } from '@/components/editorial/ui'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
+import { Button } from '@/components/ui/Button'
 import { EventPackages } from '@/components/monetisation/EventPackages'
 import { FaqSection } from '@/components/seo/FaqSection'
 import { GALLERY } from '@/data/gallery'
@@ -24,16 +27,12 @@ const UI = {
     also: 'Also on this coast',
     book: copy.en.bookCta,
     contact: '/contact',
-    plates: 'Plates',
-    gallery: '/gallery',
   },
   fr: {
     faq: 'Questions',
-    also: 'Aussi sur cette côte',
+    also: 'Aussi sur cette c\u00f4te',
     book: copy.fr.bookCta,
     contact: '/fr/contact',
-    plates: 'Assiettes',
-    gallery: '/fr/gallery',
   },
 } as const
 
@@ -44,12 +43,6 @@ const LANDING_PLATES: Partial<Record<LocationId, string[]>> = {
   'saint-tropez': ['honeycomb-dessert', 'tuna-sushi', 'salmon-tartare'],
   'saint-jean-cap-ferrat': ['langoustine', 'seabass', 'pea-risotto'],
   yacht: ['seabass', 'salmon-tartare', 'squid-ink-pasta'],
-}
-
-const FIGURES: Partial<Record<LocationId, { src: string; label: string }>> = {
-  hub: { src: '/editorial/tile-private-dinner.webp', label: 'Private dinner' },
-  villa: { src: '/editorial/tile-weekly-meals.webp', label: 'Weekly meals' },
-  events: { src: '/editorial/tile-celebrations.webp', label: 'Celebrations' },
 }
 
 export function locationMetadata(id: LocationId, locale: Locale): Metadata {
@@ -92,99 +85,110 @@ export function LocationScreen({ id, locale }: { id: LocationId; locale: Locale 
     .map((plateId) => GALLERY.find((item) => item.id === plateId))
     .filter((item): item is (typeof GALLERY)[number] => Boolean(item))
   const faq = LANDING_PLATES[id] ? landingFaq(locale, page.name) : FAQ[locale]
-  const figure = FIGURES[id]
 
   return (
-    <EdPage>
-      <header className="ed-page-hero">
-        <div className="ed-page-head">
-          <div>
-            <SectionLabel index="01">{locale === 'fr' ? 'Chef privé' : 'Private chef'}</SectionLabel>
-            <h1>
-              <span>{page.h1}</span>
-            </h1>
-          </div>
-          <div className="ed-page-intro">
-            <p>{page.lede}</p>
-            <Pill href={ui.contact} tone="filled">{ui.book}</Pill>
-          </div>
+    <article>
+      <header className="bg-ink pb-16 pt-32 text-ink-foreground sm:pb-20 sm:pt-36">
+        <div className="container">
+          <h1 className="hero-display max-w-5xl">{page.h1}</h1>
+          <p className="hero-lede">{page.lede}</p>
+          <p className="hero-facts">
+            <span>{chef.ehl}</span>
+            <span>{chef.years}</span>
+            <span>{chef.stanford}</span>
+          </p>
         </div>
-        <p className="ed-facts">
-          <span>{chef.ehl}</span>
-          <span>{chef.years}</span>
-          <span>{chef.stanford}</span>
-        </p>
-        <EdFigure
-          id={`location/${id}`}
-          label={figure?.label || page.name}
-          src={figure?.src}
-        />
       </header>
 
-      <section className="ed-page-section">
-        <div className="ed-body">
-          {page.body.map((paragraph) => (
-            <p key={paragraph.slice(0, 40)}>{paragraph}</p>
-          ))}
+      <div className="bg-background pb-20 pt-16 sm:pt-20">
+        <div className="container">
+          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-7">
+              {page.body.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)} className="mt-6 max-w-[62ch] text-base leading-relaxed text-foreground-muted first:mt-0 sm:text-lg">
+                  {paragraph}
+                </p>
+              ))}
+              <div className="mt-10">
+                <Button href={ui.contact} variant="ink">
+                  {ui.book}
+                </Button>
+              </div>
+            </div>
+            <div className="lg:col-span-5">
+              <div className="relative aspect-[4/5] overflow-hidden bg-ink">
+                <BrandCover
+                  {...splitCover(page.name)}
+                  meta={locale === 'fr' ? 'CHEF PRIVÉ' : 'PRIVATE CHEF'}
+                  cover={coverPhoto(`location-${page.id}`)}
+                  seed={page.id}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
+              </div>
+            </div>
+          </div>
+
+          {id === 'events' ? <EventPackages locale={locale} /> : null}
+
+          {plates.length ? (
+            <section className="mt-20 border-t border-border pt-12" aria-labelledby="location-plates">
+              <h2 id="location-plates" className="display text-3xl sm:text-4xl">
+                {locale === 'fr' ? 'Assiettes' : 'Plates'}
+              </h2>
+              <ul className="mt-8 grid gap-6 sm:grid-cols-3">
+                {plates.map((plate) => (
+                  <li key={plate.id}>
+                    <div className="relative aspect-[4/5] overflow-hidden bg-ink">
+                      <Image src={plate.src} alt={plate.caption} fill sizes="(max-width: 640px) 100vw, 30vw" />
+                    </div>
+                    <p className="mt-3 font-display text-lg text-foreground">{plate.title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-foreground-muted">{plate.caption}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
+          <section className="mt-20 border-t border-border pt-12 sm:mt-24" aria-labelledby="location-nearby">
+            <h2 id="location-nearby" className="display text-3xl sm:text-4xl">
+              {page.nearbyTitle}
+            </h2>
+            <ul className="mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+              {page.nearby.map((place) => (
+                <li key={place} className="border-t border-border pt-3 text-sm text-foreground">
+                  {place}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 max-w-[62ch] text-sm leading-relaxed text-foreground-subtle">{page.nearbyNote}</p>
+          </section>
+
+          <nav className="mt-16 border-t border-border pt-12" aria-label={ui.also}>
+            <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{ui.also}</p>
+            <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+              {others.map((item) => (
+                <li key={item.path}>
+                  <Link href={item.path} className="text-sm text-foreground underline-offset-4 hover:underline">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <FaqSection title={ui.faq} items={faq} />
+        </div>
+      </div>
+
+      <section className="bg-ink py-16 text-ink-foreground sm:py-20">
+        <div className="container flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
+          <p className="max-w-xl font-display text-3xl italic leading-snug sm:text-4xl">{page.lede}</p>
+          <Button href={ui.contact} variant="light">
+            {ui.book}
+          </Button>
         </div>
       </section>
-
-      {id === 'events' ? <EventPackages locale={locale} /> : null}
-
-      {plates.length ? (
-        <section className="ed-page-section" aria-labelledby="location-plates">
-          <h2 id="location-plates">
-            <span>{ui.plates}</span>
-          </h2>
-          <ul className="ed-index">
-            {plates.map((plate, index) => (
-              <li key={plate.id}>
-                <Link href={ui.gallery}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <strong>{plate.title}</strong>
-                  <em>{plate.caption}</em>
-                  <span className="ed-arrow" aria-hidden="true">→</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      <section className="ed-page-section" aria-labelledby="location-nearby">
-        <h2 id="location-nearby">
-          <span>{page.nearbyTitle}</span>
-        </h2>
-        <ul className="ed-nearby">
-          {page.nearby.map((place) => (
-            <li key={place}>{place}</li>
-          ))}
-        </ul>
-        <p className="ed-note">{page.nearbyNote}</p>
-        <nav aria-label={ui.also}>
-          <p className="ed-kicker">
-            <span className="ed-kicker-name">{ui.also}</span>
-          </p>
-          <ul className="ed-links">
-            {others.map((item) => (
-              <li key={item.path}>
-                <Link className="ed-caps" href={item.path}>{item.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </section>
-
-      <FaqSection title={ui.faq} items={faq} />
-
-      <section className="ed-class-book ed-on-dark">
-        <div className="ed-page-head">
-          <h2>
-            <span className="ed-italic">{page.lede}</span>
-          </h2>
-          <Pill href={ui.contact} tone="light">{ui.book}</Pill>
-        </div>
-      </section>
-    </EdPage>
+    </article>
   )
 }

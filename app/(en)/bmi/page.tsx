@@ -9,7 +9,7 @@ import { DemoBanner } from '@/components/app/DemoBanner'
 import { DemoLock } from '@/components/app/DemoLock'
 import { AppDownloadSection } from '@/components/app/AppDownloadSection'
 import { AppDownloadModal } from '@/components/app/AppDownloadModal'
-import { EdHero, EdPage } from '@/components/editorial/Page'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { cn } from '@/lib/utils'
 
 interface BMIResult {
@@ -23,15 +23,19 @@ export default function BMIPage() {
   const [appOpen, setAppOpen] = useState(false)
 
   return (
-    <EdPage className="ed-tool">
-      <EdHero
-        kicker="Wellness · Demo"
-        title="A quick health"
-        italic="snapshot"
-        lede="Enter your height and weight for a BMI reading and a few notes from Adrian’s kitchen. Daily tracking, body composition and camera analysis live in the app."
-      />
-      <div className="ed-page-section">
+    <>
+      <div className="bg-background pb-8 pt-28 sm:pt-32">
+        <div className="container max-w-3xl">
           <DemoBanner label="This BMI calculator is a demo" />
+
+          <SectionHeading
+            as="h1"
+            eyebrow="Wellness · Demo"
+            title="A quick health snapshot"
+            description="Enter your height and weight for a BMI reading and a few notes from Adrian’s kitchen. Daily tracking, body composition and camera analysis live in the app."
+            className="mt-10"
+            animate={false}
+          />
 
           <div className="mt-10 flex items-center justify-center gap-2">
             <button
@@ -92,10 +96,11 @@ export default function BMIPage() {
               </p>
             </div>
           )}
+        </div>
       </div>
 
       <AppDownloadSection />
       <AppDownloadModal open={appOpen} onOpenChange={setAppOpen} feature="AI body scan" />
-    </EdPage>
+    </>
   )
 }

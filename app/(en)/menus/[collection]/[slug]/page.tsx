@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { BrandCover } from '@/components/brand/BrandCover'
+import { COVER_OG, splitCover } from '@/lib/cover'
+import { coverPhoto } from '@/lib/cover-photos'
 import { notFound } from 'next/navigation'
-import { COVER_OG } from '@/lib/cover'
 import { getMenu, MENUS } from '@/data/menus'
-import { EdFigure, EdPage } from '@/components/editorial/Page'
-import { Pill, SectionLabel } from '@/components/editorial/ui'
+import { Button } from '@/components/ui/Button'
 
 export function generateStaticParams() {
   return MENUS.flatMap((collection) =>
@@ -67,60 +68,112 @@ export default function MenuPage({ params }: { params: { collection: string; slu
   const heading = shortTitle(menu.title)
 
   return (
-    <EdPage>
-      <header className="ed-page-hero">
-        <div className="ed-page-head">
-          <div>
-            <SectionLabel index={String(menu.number).padStart(2, '0')}>{collection.region}</SectionLabel>
-            <h1>
-              <span>{heading}</span>
-            </h1>
-          </div>
-          <div className="ed-page-intro">
-            <p>A starting point. Adrian rewrites it for your guests, the season and the kitchen.</p>
-            <Pill href="/contact" tone="filled">Book your experience</Pill>
-          </div>
-        </div>
-        <p className="ed-facts">
-          <Link href="/menus">Menus</Link>
-          <Link href={`/menus/${collection.id}`}>{collection.title}</Link>
-          <span>Menu {menu.number} of {collection.menus.length}</span>
+    <div className="bg-background pb-20 pt-28 sm:pt-32">
+      <div className="container">
+        <p className="mb-8 text-sm text-foreground-muted">
+          <Link href="/menus" className="underline-offset-4 hover:text-foreground hover:underline">
+            Menus
+          </Link>
+          <span className="px-2">/</span>
+          <Link
+            href={`/menus/${collection.id}`}
+            className="underline-offset-4 hover:text-foreground hover:underline"
+          >
+            {collection.title}
+          </Link>
+          <span className="px-2">/</span>
+          <span>Menu {menu.number}</span>
         </p>
-        <EdFigure id={`menu/${collection.id}/${menu.slug}`} label={heading} />
-      </header>
-      <section className="ed-page-section">
-        {menu.courses.map((course) => {
-          const repeatTitle = titleCase(course.heading) === heading
-          return (
-            <section key={course.heading}>
-              {!repeatTitle ? (
-                <h2>
-                  <span>{isCourseLabel(course.heading) ? course.heading : titleCase(course.heading)}</span>
-                </h2>
-              ) : null}
-              <ul className="ed-index">
-                {course.dishes.map((dish, dishIndex) => {
-                  const parts = splitDish(dish)
-                  return (
-                    <li key={dish}>
-                      <div>
-                        <span>{String(dishIndex + 1).padStart(2, '0')}</span>
-                        <strong>{parts.name}</strong>
-                        {parts.note ? <em>{parts.note}</em> : null}
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-            </section>
-          )
-        })}
-        <nav className="ed-links">
-          {previous ? <Link className="ed-caps" href={`/menus/${collection.id}/${previous.slug}`}>Previous</Link> : null}
-          <Link className="ed-caps" href={`/menus/${collection.id}`}>All five</Link>
-          {next ? <Link className="ed-caps" href={`/menus/${collection.id}/${next.slug}`}>Next</Link> : null}
+
+        <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
+          <div className="relative aspect-[5/4] max-h-[42vh] overflow-hidden rounded-[1.5rem] bg-background-secondary sm:aspect-[4/5] sm:max-h-none lg:col-span-5 lg:max-h-none">
+            <BrandCover
+              {...splitCover(heading)}
+              meta={`${collection.region} · Menu ${menu.number}`}
+              cover={coverPhoto(`menu-${collection.id}-${menu.slug}`)}
+              seed={menu.slug}
+              fill
+              priority
+              entrance
+              sizes="(max-width: 1024px) 100vw, 40vw"
+            />
+          </div>
+
+          <article className="surface px-6 py-8 sm:px-10 sm:py-10 lg:col-span-7">
+            <p className="text-[11px] uppercase tracking-caps text-foreground-muted">
+              {collection.region} | Menu {menu.number} of {collection.menus.length}
+            </p>
+            <h1 className="mt-3 font-display text-3xl leading-tight sm:text-4xl">{heading}</h1>
+
+            <div className="mt-8 space-y-7">
+              {menu.courses.map((course) => {
+                const repeatTitle = titleCase(course.heading) === heading
+                return (
+                  <section key={course.heading}>
+                    {!repeatTitle && (
+                      <h2 className="text-[11px] font-medium uppercase tracking-[0.16em] text-olive">
+                        {isCourseLabel(course.heading) ? course.heading : titleCase(course.heading)}
+                      </h2>
+                    )}
+                    <ul className={repeatTitle ? 'space-y-3' : 'mt-3 space-y-3'}>
+                      {course.dishes.map((dish) => {
+                        const { name, note } = splitDish(dish)
+                        return (
+                          <li key={dish}>
+                            <p className="text-base leading-snug text-foreground">{name}</p>
+                            {note ? (
+                              <p className="mt-0.5 text-sm leading-snug text-foreground-muted">{note}</p>
+                            ) : null}
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </section>
+                )
+              })}
+            </div>
+
+            <p className="mt-8 text-sm leading-relaxed text-foreground-subtle">
+              A starting point. Adrian rewrites it for your guests, the season and the kitchen.
+            </p>
+
+            <div className="mt-6">
+              <Button href="/contact" variant="ink">
+                Book your experience
+              </Button>
+            </div>
+          </article>
+        </div>
+
+        <nav className="mt-10 flex items-center justify-between text-sm">
+          {previous ? (
+            <Link
+              href={`/menus/${collection.id}/${previous.slug}`}
+              className="text-foreground-muted underline-offset-4 hover:text-foreground hover:underline"
+            >
+              Previous
+            </Link>
+          ) : (
+            <span />
+          )}
+          <Link
+            href={`/menus/${collection.id}`}
+            className="text-foreground-muted underline-offset-4 hover:text-foreground hover:underline"
+          >
+            All five
+          </Link>
+          {next ? (
+            <Link
+              href={`/menus/${collection.id}/${next.slug}`}
+              className="text-foreground-muted underline-offset-4 hover:text-foreground hover:underline"
+            >
+              Next
+            </Link>
+          ) : (
+            <span />
+          )}
         </nav>
-      </section>
-    </EdPage>
+      </div>
+    </div>
   )
 }
