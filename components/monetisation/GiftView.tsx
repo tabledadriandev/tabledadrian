@@ -282,7 +282,9 @@ function GiftCard({
       </div>
       <div className="ed-card-bottom">
         <div className="ed-card-value">
-          <strong style={{ backgroundImage: FOIL }}>{value}</strong>
+          <span className="ed-card-amount">
+            <strong style={{ backgroundImage: FOIL }}>{value}</strong>
+          </span>
           <p>
             {message ? message : fr ? 'Un dîner privé,' : 'A private dinner,'}
             <br />
