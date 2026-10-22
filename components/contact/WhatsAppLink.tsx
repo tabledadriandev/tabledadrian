@@ -12,8 +12,9 @@ export function WhatsAppFloat() {
       className="ed-wa-float"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={label}
     >
-      {label}
+      <span className="ed-wa-ico" aria-hidden="true" />
     </a>
   )
 }

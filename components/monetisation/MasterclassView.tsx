@@ -1,5 +1,46 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { CONTACT_INFO } from '@/lib/constants'
+
+const CLASS_PHOTOS = {
+  hero: {
+    src: '/gallery/langoustine.jpeg',
+    alt: 'Seared langoustine with broad beans and a butter sauce',
+    altFr: 'Langoustine saisie, fèves et beurre',
+    caption: 'Fig. 01 · Langoustine',
+    captionFr: 'Fig. 01 · Langoustine',
+  },
+  home: {
+    src: '/gallery/seabass.jpeg',
+    alt: 'Crisp-skinned seabass with herb oil',
+    altFr: 'Bar à la peau croustillante et huile aux herbes',
+  },
+  table: {
+    src: '/gallery/duck-breast.jpeg',
+    alt: 'Rosy duck breast with shimeji and a reduced jus',
+    altFr: 'Magret rosé, shimeji et jus réduit',
+  },
+  book: {
+    src: '/gallery/burrata-peach.jpeg',
+    alt: 'Burrata with peach and tomato',
+    altFr: 'Burrata, pêche et tomate',
+  },
+} as const
+
+function ClassPhoto({ id, locale, priority = false }: { id: keyof typeof CLASS_PHOTOS; locale: 'en' | 'fr'; priority?: boolean }) {
+  const photo = CLASS_PHOTOS[id]
+  return (
+    <div className="ed-class-photo">
+      <Image
+        src={photo.src}
+        alt={locale === 'fr' ? photo.altFr : photo.alt}
+        fill
+        priority={priority}
+        sizes="(min-width: 1100px) 640px, 100vw"
+      />
+    </div>
+  )
+}
 
 const COPY = {
   en: {
@@ -139,9 +180,9 @@ export function MasterclassView({ locale }: { locale: 'en' | 'fr' }) {
             </Link>
           </div>
         </div>
-        <div className="ed-class-photo" />
+        <ClassPhoto id="hero" locale={locale} priority />
         <p className="ed-class-caption">
-          <span>{locale === 'fr' ? 'Fig. 01 · Cours de cuisine à domicile' : 'Fig. 01 · At-home cooking class'}</span>
+          <span>{locale === 'fr' ? CLASS_PHOTOS.hero.captionFr : CLASS_PHOTOS.hero.caption}</span>
           <span>Côte d’Azur · Monaco</span>
         </p>
       </section>
@@ -200,7 +241,7 @@ export function MasterclassView({ locale }: { locale: 'en' | 'fr' }) {
         <div className="ed-class-cols">
           {t.formats.map((format, index) => (
             <article key={format.kicker} className={index === 1 ? 'ed-class-offset' : undefined}>
-              <div className="ed-class-photo" />
+              <ClassPhoto id={index === 0 ? 'home' : 'table'} locale={locale} />
               <p className="ed-class-meta">
                 <span>{format.kicker}</span>
                 <span>{format.where}</span>
@@ -248,7 +289,7 @@ export function MasterclassView({ locale }: { locale: 'en' | 'fr' }) {
               <a href={`mailto:${CONTACT_INFO.email}`}>{CONTACT_INFO.email}</a>
             </div>
           </div>
-          <div className="ed-class-photo" />
+          <ClassPhoto id="book" locale={locale} />
         </div>
         <p className="ed-class-mega" aria-hidden="true">
           {t.megaA}<em>{t.megaB}</em>
