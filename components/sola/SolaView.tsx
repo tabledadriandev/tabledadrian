@@ -11,7 +11,7 @@ const COPY = {
       {
         n: '01',
         title: 'On the device',
-        body: 'The chef uses Apple Intelligence on the device. It needs a device that supports Apple Intelligence. Your conversations and profile are not sent to Sola or any third party.',
+        body: 'Ask the chef uses Apple Intelligence on the device first. It needs a device that supports Apple Intelligence. Only if you allow it, your question and the health and diet details you entered are sent to Google Gemini, via Firebase, to answer. Sola does not store them. You can turn this off in Me.',
       },
       {
         n: '02',
@@ -43,7 +43,7 @@ const COPY = {
       {
         n: '01',
         title: "Sur l'appareil",
-        body: "Le chef utilise Apple Intelligence sur l'appareil. Il faut un appareil compatible. Vos conversations et votre profil ne sont envoyés ni à Sola ni à un tiers.",
+        body: "Demander au chef utilise Apple Intelligence sur l'appareil d'abord. Il faut un appareil compatible. Seulement si vous l'autorisez, votre question et les détails de santé et de régime saisis sont envoyés à Google Gemini, via Firebase, pour répondre. Sola ne les conserve pas. Vous pouvez le désactiver dans Me.",
       },
       {
         n: '02',

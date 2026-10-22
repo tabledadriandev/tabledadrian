@@ -97,6 +97,9 @@ html[data-resolved='dark']{--m-bg:#14170F;--m-card:#1F241B;--m-ink:#F6F1E6;--m-m
 .tda .pill{height:58px;padding:0 8px 0 14px}
 .tda .b2-nav{display:none}
 .tda .pill .btn{height:42px;padding:0 18px}
+@media (max-width: 380px) {
+  .tda .pill .btn { padding: 0 12px; gap: 6px; }
+}
 .tda .hero{grid-template-columns:1fr}
 .tda .hl{padding:36px 26px 30px;min-height:0;border-radius:32px}
 .tda .hl h1{font-size:42px}
@@ -118,8 +121,10 @@ html[data-resolved='dark']{--m-bg:#14170F;--m-card:#1F241B;--m-ink:#F6F1E6;--m-m
 .tda .ab h2{font-size:40px}
 .tda .facts{grid-template-columns:1fr}
 .tda .lemoncard{height:240px;border-radius:32px}
-.tda .enq{grid-template-columns:1fr;padding:40px 24px;border-radius:32px}
-.tda .enq h2{font-size:42px}
+.tda .enq{grid-template-columns:1fr;padding:40px 24px;border-radius:32px;max-width:100%;box-sizing:border-box}
+.tda .enq h2{font-size:42px;overflow-wrap:anywhere}
+.tda .enq .opts,.tda .opt,.tda .opt div{min-width:0}
+.tda .opt div{overflow-wrap:anywhere}
 .tda .enq .btns{flex-direction:column}
 .tda .b2-foot{flex-direction:column;align-items:flex-start;gap:20px;padding:36px 26px;border-radius:32px}
 .tda .b2-foot .links{flex-wrap:wrap;gap:16px}

@@ -119,9 +119,9 @@ export function EditorialHome() {
               <CapsLink href={withLocale(places[0].href, locale)}>{fr ? places[0].fr : places[0].en}</CapsLink>
             </span>
             <span>{fr ? 'en cuisine, tenue' : 'cuisine, cooked'}</span>
-            <span className="ed-statement-row">
-              <CapsLink href={withLocale(places[1].href, locale)}>{fr ? places[1].fr : places[1].en}</CapsLink>
+            <span className="ed-statement-row ed-statement-aside">
               <span className="ed-statement-rest">{fr ? 'avec une précision' : 'with fine-dining'}</span>
+              <CapsLink href={withLocale(places[1].href, locale)}>{fr ? places[1].fr : places[1].en}</CapsLink>
             </span>
             <span className="ed-statement-row">
               <span>{fr ? 'gastronomique.' : 'precision.'}</span>
