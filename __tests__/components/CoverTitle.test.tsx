@@ -68,17 +68,15 @@ describe('gallery photographs', () => {
     }
 
     const { container } = render(<HybridPage />)
-    const gallery = container.querySelector('section[aria-label="Gallery"]')
-    expect(gallery).toBeTruthy()
-    expect(gallery!.querySelector('.brand-cover')).toBeNull()
-    const cards = gallery!.querySelectorAll(':scope > a')
+    const list = container.querySelector('.ed-plate-list')
+    expect(list).toBeTruthy()
+    const cards = list!.querySelectorAll(':scope > li > a')
     expect(cards.length).toBe(6)
     cards.forEach((card) => {
-      const img = card.querySelector('img')
-      expect(img).toBeTruthy()
-      const src = `${img!.getAttribute('src') || ''} ${img!.getAttribute('srcset') || ''}`
-      expect(src).toMatch(/gallery/)
+      expect(card.querySelector('img')).toBeNull()
+      expect(card.getAttribute('href')).toBe('/gallery')
       expect(card.textContent?.trim().length).toBeGreaterThan(0)
     })
+    expect(container.innerHTML).not.toMatch(/\/gallery\/[^"']+\.(jpe?g|png|webp)/)
   })
 })

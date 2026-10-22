@@ -32,6 +32,10 @@ export const LOCALE_PAIRS = [
   ['/masterclass', '/fr/cours-de-cuisine'],
   ['/chefs-kitchen', '/fr/cuisine-du-chef'],
   ['/shop/recipe-books', '/fr/livres-de-recettes'],
+  ['/shop/recipe-books/riviera-summer', '/fr/livres-de-recettes/riviera-summer'],
+  ['/shop/recipe-books/christmas-dinner', '/fr/livres-de-recettes/christmas-dinner'],
+  ['/shop/recipe-books/market-week', '/fr/livres-de-recettes/market-week'],
+  ['/shop/recipe-books/dinner-party-playbook', '/fr/livres-de-recettes/dinner-party-playbook'],
   ['/plans', '/fr/programmes'],
   ['/plans/steady-energy-menu', '/fr/programmes/menu-energie-stable'],
   ['/plans/hormone-aware-kitchen', '/fr/programmes/cuisine-attentive-aux-hormones'],
@@ -111,6 +115,11 @@ export function toLocalePath(pathname: string, locale: Locale): string {
     return (stripped.startsWith('/') ? stripped : `/${stripped}`) + hash
   }
   return path + hash
+}
+
+export function bookPath(id: string, locale: Locale) {
+  const root = locale === 'fr' ? '/fr/livres-de-recettes' : '/shop/recipe-books'
+  return id ? `${root}/${id}` : root
 }
 
 export function localeAlternates(canonicalPath: string, enPath: string, frPath: string) {

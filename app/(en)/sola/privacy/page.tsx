@@ -10,17 +10,19 @@ export const metadata: Metadata = {
 
 export default function SolaPrivacyPage() {
   return (
-    <LegalDoc eyebrow="Sola app" title="Privacy Policy" updated="11 October 2026">
+    <LegalDoc eyebrow="Sola app" title="Privacy Policy" updated="22 October 2026">
       <p>
         Sola is nutrition guidance for adults, published by Table d&apos;Adrian, for iPhone, iPad and
         Mac. Sola is not medical advice, and it is not a medical device. This policy describes what
         the app sends.
       </p>
 
-      <h2>The chef on your device</h2>
+      <h2>Ask the chef</h2>
       <p>
-        The chef uses Apple Intelligence on the device. It needs a device that supports Apple
-        Intelligence. Your conversations and profile are not sent to Sola or any third party.
+        Ask the chef uses Apple Intelligence on the device first. It needs a device that supports
+        Apple Intelligence. Only if you allow it, your question and the health and diet details you
+        entered are sent to Google Gemini, via Firebase, to answer. Sola does not store them. You
+        can turn this off in Me.
       </p>
 
       <h2>Sign-in</h2>
@@ -32,11 +34,17 @@ export default function SolaPrivacyPage() {
         so it can show the product. This is separate from the chef.
       </p>
 
+      <h2>Food log</h2>
+      <p>The food log stays on the device. CloudKit sync is off.</p>
+
       <h2>Apple Health</h2>
       <p>
-        If you connect Apple Health, you choose what Sola may read or write in the Health app. Sync
-        is available on iPhone and iPad.
+        Apple Health data is read-only. Sola never writes to Health, and Health data is never used
+        for ads or tracking.
       </p>
+
+      <h2>Account deletion</h2>
+      <p>Account deletion is under Me &gt; Privacy and clears all local data.</p>
 
       <h2>What we do not do</h2>
       <ul>

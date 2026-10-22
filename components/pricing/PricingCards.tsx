@@ -27,7 +27,7 @@ export function PricingCards() {
     <div>
       <p className="text-sm text-foreground-muted">{t.quoteNote}</p>
 
-      <div className="mt-12 flex gap-8 border-b border-border" role="tablist" aria-label="Pricing view">
+      <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-b border-border" role="tablist" aria-label="Pricing view">
         <button
           type="button"
           role="tab"

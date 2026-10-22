@@ -6,6 +6,12 @@ import { usePathname } from 'next/navigation'
 import { copy, type Locale } from '@/lib/copy'
 import { useLocale, withLocale } from '@/lib/i18n'
 import { Arrow, LemonBox } from '@/components/b2/ui'
+import { EditorialNav } from '@/components/editorial/SiteChrome'
+
+function isSolaPath(pathname: string | null) {
+  if (!pathname) return false
+  return pathname === '/sola' || pathname.startsWith('/sola/') || pathname === '/fr/sola' || pathname.startsWith('/fr/sola/')
+}
 
 type NavItem = { href: string; en: string; fr: string }
 
@@ -47,8 +53,14 @@ function Chevron() {
   )
 }
 
-/* Mockup B header: one 64px card pill — lemon brand, dotted-divider links, gold Enquire button. */
 export function MaisonNav() {
+  const pathname = usePathname()
+  if (!isSolaPath(pathname)) return <EditorialNav />
+  return <LegacyMaisonNav />
+}
+
+/* Sola keeps the previous header. The maison site uses the editorial nav. */
+function LegacyMaisonNav() {
   const pathname = usePathname()
   const locale = useLocale()
   const t = copy[locale]

@@ -18,21 +18,15 @@ describe('recipe detail hero', () => {
         const headings = screen.getAllByRole('heading', { level: 1 })
         expect(headings).toHaveLength(1)
         expect(headings[0]).toHaveTextContent(title)
-        expect(headings[0]).toHaveClass('ra-hero-title')
-        expect(headings[0].className).not.toMatch(/font-display/)
-        expect(screen.getAllByText(title)).toHaveLength(1)
-        expect(screen.getByText(intro).closest('.ra-hero')).toBeTruthy()
-        expect(screen.getByText(categoryOf(recipe)).closest('.ra-hero')).toBeTruthy()
-        expect(container.querySelector('.brand-cover, .cover-word, .ra-kicker, .ra-title')).toBeNull()
-        const hero = container.querySelector('.ra-hero')
-        expect(hero).toBeTruthy()
+        expect(screen.getByText(intro)).toBeTruthy()
+        expect(screen.getByText(new RegExp(categoryOf(recipe).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')))).toBeTruthy()
+        expect(screen.getByRole('group', { name: locale === 'fr' ? 'Pour' : 'Serves' })).toBeTruthy()
+        expect(container.querySelector('.brand-cover, .cover-word')).toBeNull()
+        const photo = container.querySelector('img.ra-hero-photo')
         if (recipe.image.src) {
-          expect(hero).toHaveClass('is-photo')
-          const src = hero?.querySelector('img.ra-hero-photo')?.getAttribute('src') || ''
-          expect(decodeURIComponent(src)).toContain(recipe.image.src)
+          expect(decodeURIComponent(photo?.getAttribute('src') || '')).toContain(recipe.image.src)
         } else {
-          expect(hero).toHaveClass('is-cream')
-          expect(hero?.querySelector('img')).toBeNull()
+          expect(photo).toBeNull()
         }
         unmount()
       }

@@ -1,13 +1,21 @@
-import { RECIPES_COPY, recipeItems } from '@/lib/view-copy'
-import { Band, Bento } from '@/components/b2/Tiles'
+import { stockSrc } from '@/lib/cover'
+import { libraryRecipePath, libraryRecipes } from '@/lib/library'
+import { RecipeIndexView, type RecipeCard } from './RecipeIndexView'
 
 export function RecipeIndex({ locale }: { locale: 'en' | 'fr' }) {
-  const c = RECIPES_COPY[locale]
-  const items = recipeItems(locale).map((r) => ({ key: r.slug, href: r.href, title: r.name, text: r.full ? `${r.cuisine} · ${r.full}` : r.cuisine, src: r.src, alt: r.alt, meta: r.cuisine }))
-  return (
-    <div className="wrap b2-page">
-      <Band kicker="Table d'Adrian" title={c.title} text={c.lede} />
-      <Bento items={items.map((it, i) => ({ ...it, tag: String(i + 1).padStart(2, '0') }))} label={c.title} />
-    </div>
-  )
+  const items: RecipeCard[] = libraryRecipes.map((recipe) => ({
+    key: recipe.slug,
+    href: libraryRecipePath(recipe, locale),
+    title: locale === 'fr' ? recipe.titleFr : recipe.title,
+    intro: locale === 'fr' ? recipe.introFr : recipe.intro,
+    cuisine: recipe.cuisine,
+    course: recipe.course,
+    servings: recipe.servings,
+    prep: recipe.prepMin,
+    cook: recipe.cookMin,
+    free: recipe.free,
+    image: stockSrc(recipe.image.src) || undefined,
+    alt: (locale === 'fr' ? recipe.image.altFr : recipe.image.alt) || recipe.title,
+  }))
+  return <RecipeIndexView items={items} locale={locale} />
 }

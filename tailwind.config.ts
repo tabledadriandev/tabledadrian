@@ -90,6 +90,7 @@ const config = {
         body: ["var(--font-body)", "Hanken Grotesk", "Helvetica Neue", "sans-serif"],
         sola: ["var(--font-sola)", "Source Serif 4", "Georgia", "serif"],
         mono: ["JetBrains Mono", "Menlo", "monospace"],
+        script: ["var(--font-script)", "cursive"],
       },
       letterSpacing: {
         caps: "0.22em",

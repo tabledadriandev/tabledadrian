@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
-import { Source_Serif_4 } from "next/font/google"
 import localFont from "next/font/local"
+import { DM_Mono, Instrument_Sans, Instrument_Serif, Pinyon_Script, Source_Serif_4 } from "next/font/google"
 import "./globals.css"
 import "./design.css"
+import "./editorial.css"
 import { SmoothScroll } from "@/components/layout/SmoothScroll"
 import { Navbar } from "@/components/layout/Navbar"
 import { Footer } from "@/components/layout/Footer"
@@ -25,17 +26,46 @@ import { WhatsAppFloat } from "@/components/contact/WhatsAppLink"
 
 const GA_ID = "G-NH43C2N8ND"
 
-const display = localFont({
+const jostDisplay = localFont({
   src: './fonts/Jost-Variable.woff',
   weight: '100 900',
   variable: '--font-display',
   display: 'swap',
 })
 
-const body = localFont({
+const jostBody = localFont({
   src: './fonts/Jost-Variable.woff',
   weight: '100 900',
   variable: '--font-body',
+  display: 'swap',
+})
+
+const display = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
+  display: 'swap',
+})
+
+const body = Instrument_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const mono = DM_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-dm',
+  display: 'swap',
+})
+
+const script = Pinyon_Script({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-script',
   display: 'swap',
 })
 
@@ -105,7 +135,7 @@ export function RootShell({ children, lang }: { children: React.ReactNode; lang:
   const business = localBusinessJsonLd()
 
   return (
-    <html lang={lang} className={`${display.variable} ${body.variable} ${sola.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={`${jostDisplay.variable} ${jostBody.variable} ${display.variable} ${body.variable} ${mono.variable} ${script.variable} ${sola.variable}`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
@@ -116,7 +146,7 @@ export function RootShell({ children, lang }: { children: React.ReactNode; lang:
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var p=location.pathname;document.documentElement.dataset.brand="maison";document.documentElement.lang=(p==="/fr"||p.indexOf("/fr/")===0)?"fr":"en";var stored=null;try{stored=localStorage.getItem("tda-theme")}catch(err){}var choice=stored==="light"||stored==="dark"||stored==="system"?stored:"system";document.documentElement.dataset.theme=choice;var systemDark=window.matchMedia("(prefers-color-scheme: dark)").matches;var dark=choice==="dark"||(choice==="system"&&systemDark);document.documentElement.dataset.resolved=dark?"dark":"light";document.documentElement.style.colorScheme=dark?"dark":"light";var dismissed=false;try{dismissed=localStorage.getItem("tda-sola-banner")==="dismissed"}catch(err){}document.documentElement.dataset.solaBanner=dismissed||p==="/sola"||p.indexOf("/sola/")===0||p==="/fr/sola"||p.indexOf("/fr/sola/")===0?"0":"1"}catch(e){}`,
+            __html: `try{var p=location.pathname;document.documentElement.dataset.brand=(p==="/sola"||p.indexOf("/sola/")===0||p==="/fr/sola"||p.indexOf("/fr/sola/")===0)?"sola":"maison";document.documentElement.lang=(p==="/fr"||p.indexOf("/fr/")===0)?"fr":"en";var stored=null;try{stored=localStorage.getItem("tda-theme")}catch(err){}var choice=stored==="light"||stored==="dark"||stored==="system"?stored:"system";document.documentElement.dataset.theme=choice;var systemDark=window.matchMedia("(prefers-color-scheme: dark)").matches;var dark=choice==="dark"||(choice==="system"&&systemDark);document.documentElement.dataset.resolved=dark?"dark":"light";document.documentElement.style.colorScheme=document.documentElement.dataset.brand==="sola"?"light":(dark?"dark":"light");var dismissed=false;try{dismissed=localStorage.getItem("tda-sola-banner")==="dismissed"}catch(err){}document.documentElement.dataset.solaBanner=dismissed||p==="/sola"||p.indexOf("/sola/")===0||p==="/fr/sola"||p.indexOf("/fr/sola/")===0?"0":"1"}catch(e){}`,
           }}
         />
         <script

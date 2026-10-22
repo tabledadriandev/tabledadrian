@@ -1,18 +1,18 @@
-import Link from 'next/link'
-import { BrandCover } from '@/components/brand/BrandCover'
-import { COVER_OG, splitCover } from '@/lib/cover'
-import { coverPhoto } from '@/lib/cover-photos'
-import { BookChefCta } from '@/components/monetisation/BookChefCta'
 import type { JournalPost } from '@/data/library/journal'
+import { COVER_OG } from '@/lib/cover'
+import { editorialJournal } from '@/lib/journal-index'
 import { articleJsonLd } from '@/lib/schema'
+import { EditorialArticle } from './EditorialArticle'
 
 export function JournalArticle({ post, locale }: { post: JournalPost; locale: 'en' | 'fr' }) {
-  const title = locale === 'fr' ? post.titleFr : post.title
+  const items = editorialJournal(locale)
+  const current = items.find((item) => item.key === post.slug)
+  const related = items.filter((item) => item.key !== post.slug).slice(0, 3)
   const paragraphs = locale === 'fr' ? post.bodyFr : post.body
+  const title = locale === 'fr' ? post.titleFr : post.title
   const excerpt = locale === 'fr' ? post.excerptFr : post.excerpt
-  const category = locale === 'fr' ? post.categoryFr : post.category
+  const indexHref = locale === 'fr' ? '/fr/articles' : '/articles'
   const path = locale === 'fr' ? `/fr/articles/${post.slugFr}` : `/articles/${post.slug}`
-  const credit = locale === 'fr' ? 'Adrian Stefan, Table d’Adrian' : "Adrian Stefan, Table d'Adrian"
   const schema = articleJsonLd({
     headline: title,
     description: excerpt,
@@ -21,40 +21,22 @@ export function JournalArticle({ post, locale }: { post: JournalPost; locale: 'e
     datePublished: post.publishedAt,
     locale,
   })
-
   return (
-    <article className="bg-background pb-20 pt-28 text-foreground sm:pt-32">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <div className="container max-w-3xl">
-        <p className="text-[11px] uppercase tracking-caps text-foreground-subtle">{category}</p>
-        <h1 className="mt-3 font-display text-4xl tracking-tight sm:text-6xl">{title}</h1>
-        <p className="mt-4 text-sm text-foreground-muted">
-          {post.publishedAt} · {credit}
-        </p>
-        <figure className="mt-8">
-          <BrandCover
-            {...splitCover(title)}
-            meta={category}
-            cover={coverPhoto(`journal-${post.slug}`)}
-            seed={post.slug}
-            priority
-            entrance
-            sizes="(max-width: 768px) 100vw, 768px"
-            className="journal-cover"
-          />
-        </figure>
-        {paragraphs.map((paragraph) => (
-          <p key={paragraph.slice(0, 48)} className="mt-6 text-lg leading-relaxed text-foreground-muted">
-            {paragraph}
-          </p>
-        ))}
-        <BookChefCta locale={locale} />
-        <p className="mt-10 text-sm">
-          <Link href={locale === 'fr' ? '/fr/articles' : '/articles'} className="underline-offset-4 hover:underline">
-            {locale === 'fr' ? 'Retour au journal' : 'Back to the journal'}
-          </Link>
-        </p>
-      </div>
-    </article>
+    <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+    <EditorialArticle
+      locale={locale}
+      category={current?.category || (locale === 'fr' ? post.categoryFr : post.category)}
+      number={current?.number || '01'}
+      title={locale === 'fr' ? post.titleFr : post.title}
+      standfirst={locale === 'fr' ? post.excerptFr : post.excerpt}
+      date={current?.date || post.publishedAt}
+      image={current?.image}
+      blocks={paragraphs.map((text, index) => ({ type: 'p' as const, text, drop: index === 0 }))}
+      related={related}
+      indexHref={indexHref}
+      indexLabel={locale === 'fr' ? `Les ${items.length} articles` : `All ${items.length} articles`}
+    />
+    </>
   )
 }

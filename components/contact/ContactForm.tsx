@@ -1,19 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { motion } from 'framer-motion'
-import { Loader2, CheckCircle } from 'lucide-react'
-import { fadeInUp } from '@/lib/animations'
-import { WhatsAppEnquiry } from '@/components/contact/WhatsAppLink'
-import { CONTACT_INFO, INSTAGRAM_URL } from '@/lib/constants'
+import { LemonSymbol, LineIcon } from '@/components/editorial/ui'
+import { WHATSAPP_URL } from '@/lib/constants'
 import { copy } from '@/lib/copy'
-import { useLocale } from '@/lib/i18n'
+import { useLocale, withLocale } from '@/lib/i18n'
 
 function contactSchema(locale: 'en' | 'fr') {
-  const copy = locale === 'fr'
+  const messages = locale === 'fr'
     ? {
         name: 'Indiquez votre nom',
         email: 'Indiquez un e-mail valide',
@@ -29,15 +27,15 @@ function contactSchema(locale: 'en' | 'fr') {
         location: 'Please enter the location',
       }
   return z.object({
-    name: z.string().min(2, copy.name),
-    email: z.string().email(copy.email),
+    name: z.string().min(2, messages.name),
+    email: z.string().email(messages.email),
     phone: z.string().optional(),
-    eventDate: z.string().trim().min(1, copy.date),
-    location: z.string().trim().min(2, copy.location),
+    eventDate: z.string().trim().min(1, messages.date),
+    location: z.string().trim().min(2, messages.location),
     serviceType: z.string().optional(),
     guests: z.preprocess(
       (value) => (value === '' || value === undefined || value === null || Number.isNaN(value) ? undefined : Number(value)),
-      z.number({ required_error: copy.guests, invalid_type_error: copy.guests }).int().min(1, copy.guests).max(200)
+      z.number({ required_error: messages.guests, invalid_type_error: messages.guests }).int().min(1, messages.guests).max(200)
     ),
     budget: z.string().optional(),
     dietaryRequirements: z.string().optional(),
@@ -105,47 +103,91 @@ const ENQUIRY_PRESET = {
   },
 } as const
 
+const SERVICES = [
+  { value: 'dinner-party', en: 'Private dinner', fr: 'Dîner privé' },
+  { value: 'meal-prep', en: 'Weekly meals', fr: 'Repas de la semaine' },
+  { value: 'special', en: 'Celebration', fr: 'Célébration' },
+  { value: 'corporate', en: 'Corporate', fr: 'Entreprise' },
+  { value: 'gift', en: 'Gift', fr: 'Cadeau' },
+  { value: 'masterclass', en: 'Class', fr: 'Cours' },
+  { value: 'chefs-table', en: "Chef's table", fr: 'Table du chef' },
+] as const
+
+type Summary = {
+  eventDate: string
+  guests: number
+  location: string
+  serviceType?: string
+}
+
 export function ContactForm() {
   const locale = useLocale()
+  const fr = locale === 'fr'
   const t = copy[locale]
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [summary, setSummary] = useState<Summary | null>(null)
   const [serverError, setServerError] = useState<string | null>(null)
   const [intentNote, setIntentNote] = useState<string | null>(null)
   const startedAt = useRef(Date.now())
 
-  const labels = locale === 'fr'
+  const labels = fr
     ? {
-        name: 'Nom',
-        email: 'E-mail',
-        phone: 'Téléphone',
-        date: 'Date de l’événement',
-        guests: 'Convives',
-        location: 'Lieu',
-        service: 'Type de service',
-        serviceEmpty: 'Choisir un service',
-        dietary: 'Régime et allergies',
-        details: 'Précisions',
-        detailsPlaceholder: 'Ce que vous voulez ajouter',
+        name: '01 · Nom',
+        email: '02 · E-mail',
+        phone: '03 · Téléphone',
+        location: '04 · Lieu',
+        date: '05 · Date',
+        guests: '06 · Convives',
+        occasion: '07 · Occasion',
+        dietary: '08 · Régime et allergies',
+        details: '09 · Précisions',
+        required: 'Requis',
+        optional: 'Facultatif',
+        choose: 'Un seul',
+        range: '1 – 200',
+        sent: 'Demande envoyée',
+        thanks: 'Merci —',
+        replyName: 'Adrian répondra personnellement.',
         reply: 'Réponse sous 24 heures',
+        fees: 'Honoraires sur demande · €',
+        head: "Demande · Table d'Adrian",
+        dateLabel: 'Date',
+        guestsLabel: 'Convives',
+        locationLabel: 'Lieu',
+        occasionLabel: 'Occasion',
+        whatsapp: 'Message sur WhatsApp',
+        menus: 'Voir les menus',
         sending: 'Envoi',
-        sent: 'Message envoyé',
+        another: 'Envoyer une autre demande',
       }
     : {
-        name: 'Name',
-        email: 'Email',
-        phone: 'Phone',
-        date: 'Event date',
-        guests: 'Guests',
-        location: 'Location',
-        service: 'Service type',
-        serviceEmpty: 'Select a service',
-        dietary: 'Dietary requirements',
-        details: 'Additional details',
-        detailsPlaceholder: 'Tell us about your table',
+        name: '01 · Name',
+        email: '02 · Email',
+        phone: '03 · Phone',
+        location: '04 · Location',
+        date: '05 · Date',
+        guests: '06 · Guests',
+        occasion: '07 · Occasion',
+        dietary: '08 · Dietary requirements',
+        details: '09 · Additional details',
+        required: 'Required',
+        optional: 'Optional',
+        choose: 'Choose one',
+        range: '1 – 200',
+        sent: 'Enquiry sent',
+        thanks: 'Thank you —',
+        replyName: 'Adrian will reply personally.',
         reply: 'Reply within 24 hours',
+        fees: 'Fees on request · €',
+        head: "Enquiry · Table d'Adrian",
+        dateLabel: 'Event date',
+        guestsLabel: 'Guests',
+        locationLabel: 'Location',
+        occasionLabel: 'Occasion',
+        whatsapp: 'Message on WhatsApp',
+        menus: 'View the menus',
         sending: 'Sending',
-        sent: 'Message sent',
+        another: 'Send another enquiry',
       }
 
   const {
@@ -154,9 +196,14 @@ export function ContactForm() {
     formState: { errors },
     reset,
     setValue,
+    watch,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema(locale)),
+    defaultValues: { guests: 2, budget: 'on-request', serviceType: '' },
   })
+
+  const guests = Number(watch('guests') || 2)
+  const serviceType = watch('serviceType') || ''
 
   useEffect(() => {
     const intent = new URLSearchParams(window.location.search).get('intent')
@@ -179,196 +226,207 @@ export function ContactForm() {
       })
       const payload = (await res.json().catch(() => ({}))) as { error?: string }
       if (!res.ok) {
-        setServerError(payload.error || 'Something went wrong. Please email us instead.')
+        setServerError(payload.error || (fr ? 'L’envoi a échoué. Écrivez-nous par e-mail.' : 'Something went wrong. Please email us instead.'))
         return
       }
-      setIsSuccess(true)
-      reset()
+      setSummary({
+        eventDate: data.eventDate,
+        guests: Number(data.guests),
+        location: data.location,
+        serviceType: data.serviceType,
+      })
+      reset({ guests: 2, budget: 'on-request', serviceType: '' })
       startedAt.current = Date.now()
-      setTimeout(() => setIsSuccess(false), 6000)
     } catch {
-      setServerError('We could not send that. Please email adrian@tabledadrian.com.')
+      setServerError(fr ? 'L’envoi a échoué. Écrivez à adrian@tabledadrian.com.' : 'We could not send that. Please email adrian@tabledadrian.com.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  const occasion = SERVICES.find((item) => item.value === summary?.serviceType)
+
   return (
-    <motion.form
-      variants={fadeInUp}
-      onSubmit={handleSubmit(onSubmit)}
-      className="surface relative space-y-6 p-6 sm:p-8"
-      noValidate
-    >
-      {intentNote ? <p className="text-sm text-foreground-muted">{intentNote}</p> : null}
-      <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+    <form className="ed-reserve" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <div className="ed-reserve-head">
+        <p>{labels.head}</p>
+        <LemonSymbol className="ed-symbol-sm" />
+        <p>{labels.fees}</p>
+      </div>
+      <input type="hidden" value="on-request" {...register('budget')} />
+      <div className="ed-hp" aria-hidden="true">
         <label htmlFor="website">Website</label>
         <input id="website" tabIndex={-1} autoComplete="off" {...register('website')} />
       </div>
 
-      <div>
-        <label htmlFor="name" className="mb-2 block text-sm font-medium">
-          {labels.name} <span className="text-primary">*</span>
-        </label>
-        <input
-          id="name"
-          {...register('name')}
-          type="text"
-          autoComplete="name"
-          className="field"
-          placeholder="Your name"
-          aria-invalid={!!errors.name}
-        />
-        {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="email" className="mb-2 block text-sm font-medium">
-          {labels.email} <span className="text-primary">*</span>
-        </label>
-        <input
-          id="email"
-          {...register('email')}
-          type="email"
-          autoComplete="email"
-          className="field"
-          placeholder="your@email.com"
-          aria-invalid={!!errors.email}
-        />
-        {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="phone" className="mb-2 block text-sm font-medium">
-          {labels.phone}
-        </label>
-        <input
-          id="phone"
-          {...register('phone')}
-          type="tel"
-          autoComplete="tel"
-          className="field"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div>
-          <label htmlFor="eventDate" className="mb-2 block text-sm font-medium">
-            {labels.date} <span className="text-primary">*</span>
-          </label>
-          <input id="eventDate" {...register('eventDate')} type="text" placeholder="08/08/2008" className="field" aria-invalid={!!errors.eventDate} />
-          {errors.eventDate && <p className="mt-1 text-sm text-destructive">{errors.eventDate.message}</p>}
+      {summary ? (
+        <div className="ed-reserve-success">
+          <img src="/editorial/contact-terrace.webp" alt={fr ? 'Table de terrasse au crépuscule' : 'Terrace table set at dusk'} />
+          <p className="ed-reserve-kicker">{labels.sent}</p>
+          <h2>
+            {labels.thanks}
+            <em>{labels.replyName}</em>
+          </h2>
+          <p className="ed-mono">{labels.reply}</p>
+          <dl>
+            <div>
+              <dt>{labels.dateLabel}</dt>
+              <dd>{summary.eventDate}</dd>
+            </div>
+            <div>
+              <dt>{labels.guestsLabel}</dt>
+              <dd>{summary.guests}</dd>
+            </div>
+            <div>
+              <dt>{labels.locationLabel}</dt>
+              <dd>{summary.location}</dd>
+            </div>
+            <div>
+              <dt>{labels.occasionLabel}</dt>
+              <dd>{occasion ? (fr ? occasion.fr : occasion.en) : '—'}</dd>
+            </div>
+          </dl>
+          <div className="ed-reserve-actions">
+            <a className="ed-pill ed-pill-outline" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <span>{labels.whatsapp}</span>
+              <span className="ed-arrow" aria-hidden="true">→</span>
+            </a>
+            <Link className="ed-caps" href={withLocale('/menus', locale)}>
+              {labels.menus}
+            </Link>
+          </div>
+          <button type="button" className="ed-caps" onClick={() => setSummary(null)}>
+            {labels.another}
+          </button>
         </div>
-        <div>
-          <label htmlFor="guests" className="mb-2 block text-sm font-medium">
-            {labels.guests} <span className="text-primary">*</span>
+      ) : (
+        <>
+          {intentNote ? <p className="ed-reserve-note">{intentNote}</p> : null}
+          <div className="ed-reserve-grid">
+            <Field id="name" label={labels.name} hint={labels.required} error={errors.name?.message}>
+              <input id="name" {...register('name')} type="text" autoComplete="name" aria-invalid={!!errors.name} />
+            </Field>
+            <Field id="email" label={labels.email} hint={labels.required} error={errors.email?.message}>
+              <input id="email" {...register('email')} type="email" autoComplete="email" aria-invalid={!!errors.email} />
+            </Field>
+            <Field id="phone" label={labels.phone} hint={labels.optional} error={errors.phone?.message}>
+              <input id="phone" {...register('phone')} type="tel" autoComplete="tel" />
+            </Field>
+            <Field id="location" label={labels.location} hint={labels.required} error={errors.location?.message}>
+              <input
+                id="location"
+                {...register('location')}
+                type="text"
+                autoComplete="address-level2"
+                placeholder={fr ? 'Antibes, une villa, un yacht' : 'Antibes, a villa, a yacht'}
+                aria-invalid={!!errors.location}
+              />
+            </Field>
+            <Field id="eventDate" label={labels.date} hint={labels.required} error={errors.eventDate?.message} icon="calendar">
+              <input id="eventDate" {...register('eventDate')} type="text" placeholder="dd / mm / yyyy" aria-invalid={!!errors.eventDate} />
+            </Field>
+            <div className={`ed-field ${errors.guests ? 'is-error' : ''}`}>
+              <div className="ed-field-label">
+                <label htmlFor="guests">{labels.guests}</label>
+                <span>{labels.range}</span>
+              </div>
+              <div className="ed-stepper">
+                <button
+                  type="button"
+                  aria-label={fr ? 'Moins de convives' : 'Fewer guests'}
+                  onClick={() => setValue('guests', Math.max(1, guests - 1), { shouldValidate: true })}
+                >
+                  <LineIcon name="minus" size={12} />
+                </button>
+                <input id="guests" {...register('guests')} inputMode="numeric" aria-invalid={!!errors.guests} />
+                <button
+                  type="button"
+                  aria-label={fr ? 'Plus de convives' : 'More guests'}
+                  onClick={() => setValue('guests', Math.min(200, guests + 1), { shouldValidate: true })}
+                >
+                  <LineIcon name="plus" size={12} />
+                </button>
+              </div>
+              {errors.guests ? <p>{errors.guests.message}</p> : null}
+            </div>
+          </div>
+
+          <fieldset className="ed-chips">
+            <div className="ed-field-label">
+              <legend>{labels.occasion}</legend>
+              <span>{labels.choose}</span>
+            </div>
+            <div>
+              {SERVICES.map((item) => {
+                const on = serviceType === item.value
+                return (
+                  <button key={item.value} type="button" className={on ? 'is-on' : undefined} aria-pressed={on} onClick={() => setValue('serviceType', on ? '' : item.value)}>
+                    {fr ? item.fr : item.en}
+                  </button>
+                )
+              })}
+            </div>
+            <input type="hidden" {...register('serviceType')} />
+          </fieldset>
+
+          <label className="ed-area" htmlFor="dietaryRequirements">
+            <span className="ed-field-label">
+              <span>{labels.dietary}</span>
+              <span>{labels.optional}</span>
+            </span>
+            <textarea id="dietaryRequirements" {...register('dietaryRequirements')} rows={3} />
           </label>
-          <input id="guests" {...register('guests')} type="number" min="1" max="200" className="field" placeholder="6" aria-invalid={!!errors.guests} />
-          {errors.guests && <p className="mt-1 text-sm text-destructive">{errors.guests.message}</p>}
-        </div>
+          <label className="ed-area" htmlFor="message">
+            <span className="ed-field-label">
+              <span>{labels.details}</span>
+              <span>{labels.optional}</span>
+            </span>
+            <textarea id="message" {...register('message')} rows={3} />
+          </label>
+
+          {serverError ? <p className="ed-reserve-error">{serverError}</p> : null}
+          <div className="ed-reserve-submit">
+            <button className="ed-pill ed-pill-filled" type="submit" disabled={isSubmitting}>
+              <span>{isSubmitting ? labels.sending : t.bookCta}</span>
+              <span className="ed-arrow" aria-hidden="true">→</span>
+            </button>
+            <p>
+              <span>{labels.reply}</span>
+              <span>{t.quoteNote}</span>
+            </p>
+          </div>
+        </>
+      )}
+    </form>
+  )
+}
+
+function Field({
+  id,
+  label,
+  hint,
+  error,
+  icon,
+  children,
+}: {
+  id: string
+  label: string
+  hint: string
+  error?: string
+  icon?: 'calendar'
+  children: React.ReactNode
+}) {
+  return (
+    <div className={`ed-field ${error ? 'is-error' : ''}`}>
+      <div className="ed-field-label">
+        <label htmlFor={id}>{label}</label>
+        <span>{hint}</span>
       </div>
-
-      <div>
-        <label htmlFor="location" className="mb-2 block text-sm font-medium">
-          {labels.location} <span className="text-primary">*</span>
-        </label>
-        <input
-          id="location"
-          {...register('location')}
-          type="text"
-          autoComplete="address-level2"
-          className="field"
-          placeholder={locale === 'fr' ? 'Antibes, une villa, un yacht' : 'Antibes, a villa, a yacht'}
-          aria-invalid={!!errors.location}
-        />
-        {errors.location && <p className="mt-1 text-sm text-destructive">{errors.location.message}</p>}
+      <div className="ed-field-control">
+        {children}
+        {icon ? <LineIcon name={icon} size={20} /> : null}
       </div>
-
-      <div>
-        <label htmlFor="serviceType" className="mb-2 block text-sm font-medium">
-          {labels.service}
-        </label>
-        <select id="serviceType" {...register('serviceType')} className="field">
-          <option value="">{labels.serviceEmpty}</option>
-          <option value="dinner-party">Private dinner party</option>
-          <option value="gift">Gift voucher</option>
-          <option value="masterclass">Cooking class</option>
-          <option value="chefs-table">Chef&apos;s table</option>
-          <option value="meal-prep">Weekly meal prep</option>
-          <option value="corporate">Corporate event</option>
-          <option value="special">Special occasion</option>
-        </select>
-      </div>
-
-      <div>
-        <p className="text-sm text-foreground-muted">{t.quoteNote}</p>
-        <input type="hidden" value="on-request" {...register('budget')} />
-      </div>
-
-      <div>
-        <label htmlFor="dietaryRequirements" className="mb-2 block text-sm font-medium">
-          {labels.dietary}
-        </label>
-        <textarea
-          id="dietaryRequirements"
-          {...register('dietaryRequirements')}
-          rows={2}
-          className="field"
-          placeholder="Dietary preferences and allergies, on request"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="message" className="mb-2 block text-sm font-medium">
-          {labels.details}
-        </label>
-        <textarea
-          id="message"
-          {...register('message')}
-          rows={4}
-          className="field"
-          placeholder={labels.detailsPlaceholder}
-        />
-      </div>
-
-      {serverError && <p className="text-sm text-destructive">{serverError}</p>}
-
-      <button
-        type="submit"
-        disabled={isSubmitting || isSuccess}
-        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-ink text-sm font-medium text-ink-foreground transition-colors hover:bg-ink-soft disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {isSubmitting ? (
-          <>
-            <Loader2 size={20} className="animate-spin" />
-            <span>Sending</span>
-          </>
-        ) : isSuccess ? (
-          <>
-            <CheckCircle size={20} />
-            <span>Message sent</span>
-          </>
-        ) : (
-          <span>{t.bookCta}</span>
-        )}
-      </button>
-      <p className="text-center text-sm text-foreground-muted">{labels.reply}</p>
-      <WhatsAppEnquiry />
-      <p className="text-center text-sm text-foreground-muted">
-        {t.bookingIntro}{' '}
-        <a href={`mailto:${CONTACT_INFO.email}`} className="text-foreground underline underline-offset-4">
-          {CONTACT_INFO.email}
-        </a>
-        {' · '}
-        <a
-          href={INSTAGRAM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-foreground underline underline-offset-4"
-        >
-          {t.instagramLabel} {t.instagramHandle}
-        </a>
-      </p>
-    </motion.form>
+      {error ? <p>{error}</p> : null}
+    </div>
   )
 }
